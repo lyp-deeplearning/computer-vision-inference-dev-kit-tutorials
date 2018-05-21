@@ -1,4 +1,5 @@
 # Create variables for all models used by the tutorials to make 
+#  it easier to reference them with short names
 
 # check for variable set by setupvars.sh in the SDK, need it to find models
 : ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}

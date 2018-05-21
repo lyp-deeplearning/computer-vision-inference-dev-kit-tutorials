@@ -510,7 +510,8 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 
 4. Next, we prepare the input data format to configure it for the proper precision (U8 = 8-bit per BGR channel) and memory layout for the model (NCHW).  
 
-```        slog::info << "Checking Face Detection outputs" << slog::endl;
+```cpp
+slog::info << "Checking Face Detection outputs" << slog::endl;
         InferenceEngine::OutputsDataMap outputInfo(netReader.getNetwork().getOutputsInfo());
         if (outputInfo.size() != 1) {
             throw std::logic_error("Face Detection network should have only one output");
@@ -633,15 +634,10 @@ The last function we define for FaceDetectionClass is fetchResults().
 4. Here, we retrieve the results from the output blob buffer.  The output format is determined by the model.  For this sample we are expecting to get the following:
 
     1. Image_id
-
     2. Label
-
     3. Confidence 
-
     4. X coordinate of ROI
-
     5. Y coordinate of ROI
-
     6. Width of ROI
 
 ```cpp
@@ -751,14 +747,13 @@ FaceDetectionClass FaceDetection;
            plugin.AddExtension(std::make_shared<Extensions::Cpu::CpuExtensions>());
        }
     ```
-    
 
     4. Finish by saving the plugin into the map pluginsForDevices to be used later when loading the model.
 
-      ```cpp
+    ```cpp
          pluginsForDevices[deviceName] = plugin;
       }
-      ```
+    ```
       
 
 8. Once we have verified that we have the proper plugin, it is time to load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
@@ -909,6 +904,7 @@ make
     3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
     ```bash
     # Create variables for all models used by the tutorials to make
+    #  it easier to reference them with short names
     
     # check for variable set by setupvars.sh in the SDK, need it to find models
     : ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
