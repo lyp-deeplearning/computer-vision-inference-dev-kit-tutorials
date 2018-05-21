@@ -102,7 +102,7 @@ svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/trunk/face_d
 4. Change to the face detection tutorial folder:
 
 ```Bash
-cd trunk/face_detection_tutorial
+cd face_detection_tutorial
 ```
 
 
