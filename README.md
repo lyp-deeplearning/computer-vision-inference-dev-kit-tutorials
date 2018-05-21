@@ -3,8 +3,8 @@
 ## [Face Detection Tutorial](face_detection_tutorial/Readme.md)
 - Inference Engine Overview
 - Key Concepts
- + Floating Point Precision
- + Batch Size (brief)
+  + Floating Point Precision
+  + Batch Size (brief)
 - Tutorial Steps
 - Tutorial Step 1: Create the Base OpenCV Application
   + gflags library to parse command line arguments
