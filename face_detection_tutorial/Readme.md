@@ -1,8 +1,8 @@
 # Introduction
 
-The purpose of this tutorial is to examine a sample application that was created using the Intel OpenVINO toolkit and UP Squared hardware included in the UP Squared AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and Myriad devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Face Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared hardware.
+The purpose of this tutorial is to examine a sample application that was created using the OpenVINO(TM) toolkit and UP Squared hardware included in the UP Squared AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Face Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared hardware.
 
-This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds Inference Engine models that will process the image data and make inferences.  In the final step, the complete application will be able to detect a face, reports age and gender for the face, and draws a 3D axis representing the head pose for the face.  Before that, some key concepts related to and for using OpenVINO will be first introduced and later seen along the way within the steps.  
+This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the final step, the complete application will be able to detect a face, reports age and gender for the face, and draws a 3D axis representing the head pose for the face.  Before that, some key concepts related to and for using the OpenVINO toolkit will be first introduced and later seen along the way within the steps.  
 
 # Getting Started
 
@@ -30,9 +30,9 @@ The UP Squared AI Vision Development Kit comes ready to go with all the hardware
 
         * Ethernet cable
 
-* Software
+* Software (pre-installed in the kit)
 
-    * OpenVINO 
+    * OpenVINO toolkit
 
         * Inference Engine with plugins support for CPU, GPU, and Myriad
 
