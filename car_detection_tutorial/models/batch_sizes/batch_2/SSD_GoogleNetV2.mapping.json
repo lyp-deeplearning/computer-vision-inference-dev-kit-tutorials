@@ -1,0 +1,2136 @@
+[
+    {
+        "IR": {
+            "id": 314,
+            "name": "inception_3b/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/double3x3a/bn/sc/relu",
+            "port": "inception_3b/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 23,
+            "name": "inception_3a/1x1/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/1x1/bn/sc/relu",
+            "port": "inception_3a/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 503,
+            "name": "inception_4c/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4c/3x3/bn/sc",
+            "port": "inception_4c/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 284,
+            "name": "inception_4d/pool_proj",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4d/pool_proj/bn/sc",
+            "port": "inception_4d/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 202,
+            "name": "inception_3a/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/3x3_reduce/bn/sc/relu",
+            "port": "inception_3a/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 367,
+            "name": "inception_4b/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/double3x3a/bn/sc/relu",
+            "port": "inception_4b/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 419,
+            "name": "conv7_2",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv7_2",
+            "port": "conv7_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 280,
+            "name": "inception_4c/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4c/3x3_reduce/bn/sc",
+            "port": "inception_4c/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 15,
+            "name": "conv6_2_mbox_conf",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv6_2_mbox_conf",
+            "port": "conv6_2_mbox_conf"
+        }
+    },
+    {
+        "IR": {
+            "id": 353,
+            "name": "fc7_mbox_loc",
+            "port": 3
+        },
+        "framework": {
+            "name": "fc7_mbox_loc",
+            "port": "fc7_mbox_loc"
+        }
+    },
+    {
+        "IR": {
+            "id": 346,
+            "name": "conv6_2_mbox_priorbox",
+            "port": 2
+        },
+        "framework": {
+            "name": "conv6_2_mbox_priorbox",
+            "port": "conv6_2_mbox_priorbox"
+        }
+    },
+    {
+        "IR": {
+            "id": 449,
+            "name": "inception_3a/1x1",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3a/1x1/bn/sc",
+            "port": "inception_3a/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 398,
+            "name": "inception_4c/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/pool",
+            "port": "inception_4c/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 335,
+            "name": "inception_3a/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3a/double3x3_reduce/bn/sc",
+            "port": "inception_3a/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 44,
+            "name": "inception_3b/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/double3x3b/bn/sc/relu",
+            "port": "inception_3b/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 174,
+            "name": "fc7_mbox_priorbox",
+            "port": 2
+        },
+        "framework": {
+            "name": "fc7_mbox_priorbox",
+            "port": "fc7_mbox_priorbox"
+        }
+    },
+    {
+        "IR": {
+            "id": 514,
+            "name": "inception_3b/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/3x3_reduce/bn/sc/relu",
+            "port": "inception_3b/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 414,
+            "name": "inception_4e/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4e/double3x3_reduce/bn/sc/relu",
+            "port": "inception_4e/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 370,
+            "name": "conv4_3_norm_mbox_conf_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv4_3_norm_mbox_conf_flat",
+            "port": "conv4_3_norm_mbox_conf_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 133,
+            "name": "conv6_2_mbox_loc_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv6_2_mbox_loc_perm",
+            "port": "conv6_2_mbox_loc_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 61,
+            "name": "inception_3c/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3c/3x3_reduce/bn/sc/relu",
+            "port": "inception_3c/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 192,
+            "name": "conv2/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv2/3x3_reduce/bn/sc/relu",
+            "port": "conv2/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 387,
+            "name": "inception_4c/1x1",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4c/1x1/bn/sc",
+            "port": "inception_4c/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 331,
+            "name": "inception_3b/1x1",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3b/1x1/bn/sc",
+            "port": "inception_3b/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 513,
+            "name": "conv8_2_mbox_loc_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv8_2_mbox_loc_perm",
+            "port": "conv8_2_mbox_loc_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 410,
+            "name": "inception_3a/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/3x3/bn/sc/relu",
+            "port": "inception_3a/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 459,
+            "name": "inception_4b/pool_proj/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/pool_proj/bn/sc/relu",
+            "port": "inception_4b/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 76,
+            "name": "inception_3a/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/double3x3b/bn/sc/relu",
+            "port": "inception_3a/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 34,
+            "name": "conv2/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv2/3x3/bn/sc/relu",
+            "port": "conv2/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 409,
+            "name": "inception_4a/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4a/double3x3a/bn/sc",
+            "port": "inception_4a/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 223,
+            "name": "inception_4c/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/3x3_reduce/bn/sc/relu",
+            "port": "inception_4c/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 347,
+            "name": "inception_3b/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3b/double3x3b/bn/sc",
+            "port": "inception_3b/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 94,
+            "name": "inception_4a/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/3x3_reduce/bn/sc/relu",
+            "port": "inception_4a/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 326,
+            "name": "inception_4d/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/pool",
+            "port": "inception_4d/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 194,
+            "name": "conv9_2",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv9_2",
+            "port": "conv9_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 131,
+            "name": "conv9_1_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv9_1_relu",
+            "port": "conv9_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 319,
+            "name": "conv6_2_mbox_loc",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv6_2_mbox_loc",
+            "port": "conv6_2_mbox_loc"
+        }
+    },
+    {
+        "IR": {
+            "id": 54,
+            "name": "inception_3a/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3a/3x3_reduce/bn/sc",
+            "port": "inception_3a/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 248,
+            "name": "conv9_2_mbox_priorbox",
+            "port": 2
+        },
+        "framework": {
+            "name": "conv9_2_mbox_priorbox",
+            "port": "conv9_2_mbox_priorbox"
+        }
+    },
+    {
+        "IR": {
+            "id": 236,
+            "name": "conv8_2_mbox_conf_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv8_2_mbox_conf_perm",
+            "port": "conv8_2_mbox_conf_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 515,
+            "name": "conv7_2_mbox_loc_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv7_2_mbox_loc_flat",
+            "port": "conv7_2_mbox_loc_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 0,
+            "name": "inception_4c/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/double3x3_reduce/bn/sc/relu",
+            "port": "inception_4c/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 65,
+            "name": "conv8_2_mbox_loc",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv8_2_mbox_loc",
+            "port": "conv8_2_mbox_loc"
+        }
+    },
+    {
+        "IR": {
+            "id": 361,
+            "name": "fc7_mbox_loc_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "fc7_mbox_loc_flat",
+            "port": "fc7_mbox_loc_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 41,
+            "name": "inception_4b/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/double3x3_reduce/bn/sc/relu",
+            "port": "inception_4b/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 337,
+            "name": "mbox_conf_flatten",
+            "port": 1
+        },
+        "framework": {
+            "name": "mbox_conf_flatten",
+            "port": "mbox_conf_flatten"
+        }
+    },
+    {
+        "IR": {
+            "id": 290,
+            "name": "inception_4c/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/double3x3a/bn/sc/relu",
+            "port": "inception_4c/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 272,
+            "name": "conv9_2_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv9_2_relu",
+            "port": "conv9_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 238,
+            "name": "inception_3c/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3c/3x3_reduce/bn/sc",
+            "port": "inception_3c/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 99,
+            "name": "inception_4a/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/3x3/bn/sc/relu",
+            "port": "inception_4a/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 296,
+            "name": "fc7_mbox_loc_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "fc7_mbox_loc_perm",
+            "port": "fc7_mbox_loc_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 318,
+            "name": "inception_4b/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4b/double3x3b/bn/sc",
+            "port": "inception_4b/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 63,
+            "name": "conv7_2_mbox_loc",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv7_2_mbox_loc",
+            "port": "conv7_2_mbox_loc"
+        }
+    },
+    {
+        "IR": {
+            "id": 188,
+            "name": "conv6_2_mbox_conf_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv6_2_mbox_conf_flat",
+            "port": "conv6_2_mbox_conf_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 524,
+            "name": "inception_4c/1x1/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/1x1/bn/sc/relu",
+            "port": "inception_4c/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 525,
+            "name": "pool1/3x3_s2",
+            "port": 1
+        },
+        "framework": {
+            "name": "pool1/3x3_s2",
+            "port": "pool1/3x3_s2"
+        }
+    },
+    {
+        "IR": {
+            "id": 104,
+            "name": "inception_4d/1x1/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/1x1/bn/sc/relu",
+            "port": "inception_4d/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 253,
+            "name": "inception_3c/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3c/double3x3_reduce/bn/sc/relu",
+            "port": "inception_3c/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 373,
+            "name": "inception_4e/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4e/double3x3_reduce/bn/sc",
+            "port": "inception_4e/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 210,
+            "name": "inception_4e/output",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4e/output",
+            "port": "inception_4e/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 262,
+            "name": "fc7_mbox_conf_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "fc7_mbox_conf_perm",
+            "port": "fc7_mbox_conf_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 472,
+            "name": "inception_4d/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4d/double3x3a/bn/sc",
+            "port": "inception_4d/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 392,
+            "name": "inception_3b/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/double3x3_reduce/bn/sc/relu",
+            "port": "inception_3b/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 299,
+            "name": "conv6_1",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv6_1",
+            "port": "conv6_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 245,
+            "name": "inception_3b/output",
+            "port": 4
+        },
+        "framework": {
+            "name": "inception_3b/output",
+            "port": "inception_3b/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 13,
+            "name": "inception_4c/output",
+            "port": 4
+        },
+        "framework": {
+            "name": "inception_4c/output",
+            "port": "inception_4c/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 444,
+            "name": "conv7_2_mbox_conf_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv7_2_mbox_conf_perm",
+            "port": "conv7_2_mbox_conf_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 144,
+            "name": "inception_3b/pool_proj",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3b/pool_proj/bn/sc",
+            "port": "inception_3b/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 116,
+            "name": "conv9_2_mbox_conf_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv9_2_mbox_conf_flat",
+            "port": "conv9_2_mbox_conf_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 56,
+            "name": "inception_4b/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/double3x3b/bn/sc/relu",
+            "port": "inception_4b/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 497,
+            "name": "inception_4e/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4e/double3x3a/bn/sc",
+            "port": "inception_4e/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 529,
+            "name": "conv8_2_mbox_loc_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv8_2_mbox_loc_flat",
+            "port": "conv8_2_mbox_loc_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 324,
+            "name": "conv7_2_mbox_loc_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv7_2_mbox_loc_perm",
+            "port": "conv7_2_mbox_loc_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 430,
+            "name": "inception_3c/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3c/double3x3b/bn/sc",
+            "port": "inception_3c/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 277,
+            "name": "inception_3a/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3a/3x3/bn/sc",
+            "port": "inception_3a/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 300,
+            "name": "inception_3c/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3c/double3x3a/bn/sc",
+            "port": "inception_3c/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 134,
+            "name": "inception_4a/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/double3x3a/bn/sc/relu",
+            "port": "inception_4a/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 204,
+            "name": "inception_4b/1x1",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4b/1x1/bn/sc",
+            "port": "inception_4b/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 516,
+            "name": "inception_4a/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4a/3x3/bn/sc",
+            "port": "inception_4a/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 378,
+            "name": "inception_4e/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4e/3x3/bn/sc",
+            "port": "inception_4e/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 475,
+            "name": "inception_3a/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/double3x3_reduce/bn/sc/relu",
+            "port": "inception_3a/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 308,
+            "name": "conv8_2_mbox_conf_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv8_2_mbox_conf_flat",
+            "port": "conv8_2_mbox_conf_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 221,
+            "name": "conv8_2_mbox_priorbox",
+            "port": 2
+        },
+        "framework": {
+            "name": "conv8_2_mbox_priorbox",
+            "port": "conv8_2_mbox_priorbox"
+        }
+    },
+    {
+        "IR": {
+            "id": 154,
+            "name": "inception_4a/pool_proj/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/pool_proj/bn/sc/relu",
+            "port": "inception_4a/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 102,
+            "name": "inception_4c/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4c/double3x3b/bn/sc",
+            "port": "inception_4c/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 242,
+            "name": "inception_4c/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4c/double3x3_reduce/bn/sc",
+            "port": "inception_4c/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 501,
+            "name": "conv6_1_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv6_1_relu",
+            "port": "conv6_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 407,
+            "name": "inception_4e/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4e/pool",
+            "port": "inception_4e/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 14,
+            "name": "inception_3c/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3c/double3x3a/bn/sc/relu",
+            "port": "inception_3c/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 249,
+            "name": "conv8_2",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv8_2",
+            "port": "conv8_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 186,
+            "name": "conv4_3_norm_mbox_conf_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv4_3_norm_mbox_conf_perm",
+            "port": "conv4_3_norm_mbox_conf_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 230,
+            "name": "conv2/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv2/3x3/bn/sc",
+            "port": "conv2/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 494,
+            "name": "conv4_3_norm_mbox_loc_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv4_3_norm_mbox_loc_perm",
+            "port": "conv4_3_norm_mbox_loc_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 48,
+            "name": "conv9_2_mbox_conf",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv9_2_mbox_conf",
+            "port": "conv9_2_mbox_conf"
+        }
+    },
+    {
+        "IR": {
+            "id": 423,
+            "name": "data",
+            "port": 0
+        },
+        "framework": {
+            "name": "data",
+            "port": "data"
+        }
+    },
+    {
+        "IR": {
+            "id": 113,
+            "name": "inception_3a/pool_proj/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/pool_proj/bn/sc/relu",
+            "port": "inception_3a/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 473,
+            "name": "mbox_loc",
+            "port": 6
+        },
+        "framework": {
+            "name": "mbox_loc",
+            "port": "mbox_loc"
+        }
+    },
+    {
+        "IR": {
+            "id": 311,
+            "name": "inception_3c/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3c/double3x3_reduce/bn/sc",
+            "port": "inception_3c/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 323,
+            "name": "inception_3a/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3a/double3x3a/bn/sc",
+            "port": "inception_3a/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 251,
+            "name": "inception_4d/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/double3x3a/bn/sc/relu",
+            "port": "inception_4d/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 75,
+            "name": "conv6_2",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv6_2",
+            "port": "conv6_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 351,
+            "name": "inception_4d/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/double3x3_reduce/bn/sc/relu",
+            "port": "inception_4d/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 265,
+            "name": "inception_4a/1x1",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4a/1x1/bn/sc",
+            "port": "inception_4a/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 399,
+            "name": "inception_4d/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4d/3x3_reduce/bn/sc",
+            "port": "inception_4d/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 241,
+            "name": "conv7_2_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv7_2_relu",
+            "port": "conv7_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 169,
+            "name": "inception_4b/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4b/double3x3_reduce/bn/sc",
+            "port": "inception_4b/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 358,
+            "name": "inception_4c/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/double3x3b/bn/sc/relu",
+            "port": "inception_4c/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 247,
+            "name": "conv6_2_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv6_2_relu",
+            "port": "conv6_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 110,
+            "name": "inception_4c/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4c/double3x3a/bn/sc",
+            "port": "inception_4c/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 176,
+            "name": "inception_3b/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/3x3/bn/sc/relu",
+            "port": "inception_3b/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 171,
+            "name": "inception_4e/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4e/3x3_reduce/bn/sc",
+            "port": "inception_4e/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 322,
+            "name": "inception_4c/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/3x3/bn/sc/relu",
+            "port": "inception_4c/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 510,
+            "name": "inception_3c/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3c/3x3/bn/sc/relu",
+            "port": "inception_3c/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 206,
+            "name": "inception_3c/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3c/double3x3b/bn/sc/relu",
+            "port": "inception_3c/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 348,
+            "name": "inception_4e/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4e/double3x3b/bn/sc",
+            "port": "inception_4e/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 528,
+            "name": "conv4_3_norm_mbox_conf",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv4_3_norm_mbox_conf",
+            "port": "conv4_3_norm_mbox_conf"
+        }
+    },
+    {
+        "IR": {
+            "id": 19,
+            "name": "conv9_2_mbox_loc_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv9_2_mbox_loc_perm",
+            "port": "conv9_2_mbox_loc_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 506,
+            "name": "inception_4a/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/double3x3b/bn/sc/relu",
+            "port": "inception_4a/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 80,
+            "name": "conv4_3_norm_mbox_loc",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv4_3_norm_mbox_loc",
+            "port": "conv4_3_norm_mbox_loc"
+        }
+    },
+    {
+        "IR": {
+            "id": 431,
+            "name": "inception_4d/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4d/3x3/bn/sc",
+            "port": "inception_4d/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 273,
+            "name": "inception_4d/pool_proj/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/pool_proj/bn/sc/relu",
+            "port": "inception_4d/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 69,
+            "name": "inception_4a/pool_proj",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4a/pool_proj/bn/sc",
+            "port": "inception_4a/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 505,
+            "name": "inception_3a/pool_proj",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3a/pool_proj/bn/sc",
+            "port": "inception_3a/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 344,
+            "name": "conv1/7x7_s2",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv1/7x7_s2/bn/sc",
+            "port": "conv1/7x7_s2/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 467,
+            "name": "conv9_2_mbox_conf_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv9_2_mbox_conf_perm",
+            "port": "conv9_2_mbox_conf_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 163,
+            "name": "inception_4a/output",
+            "port": 4
+        },
+        "framework": {
+            "name": "inception_4a/output",
+            "port": "inception_4a/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 123,
+            "name": "fc7_mbox_conf",
+            "port": 3
+        },
+        "framework": {
+            "name": "fc7_mbox_conf",
+            "port": "fc7_mbox_conf"
+        }
+    },
+    {
+        "IR": {
+            "id": 480,
+            "name": "inception_3b/1x1/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/1x1/bn/sc/relu",
+            "port": "inception_3b/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 196,
+            "name": "inception_4d/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4d/double3x3b/bn/sc",
+            "port": "inception_4d/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 9,
+            "name": "inception_3b/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3b/double3x3a/bn/sc",
+            "port": "inception_3b/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 332,
+            "name": "inception_4b/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/3x3/bn/sc/relu",
+            "port": "inception_4b/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 526,
+            "name": "mbox_conf",
+            "port": 6
+        },
+        "framework": {
+            "name": "mbox_conf",
+            "port": "mbox_conf"
+        }
+    },
+    {
+        "IR": {
+            "id": 454,
+            "name": "fc7_mbox_conf_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "fc7_mbox_conf_flat",
+            "port": "fc7_mbox_conf_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 124,
+            "name": "inception_4d/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/3x3/bn/sc/relu",
+            "port": "inception_4d/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 47,
+            "name": "inception_4a/1x1/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/1x1/bn/sc/relu",
+            "port": "inception_4a/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 384,
+            "name": "conv8_1_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv8_1_relu",
+            "port": "conv8_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 178,
+            "name": "inception_4d/output",
+            "port": 4
+        },
+        "framework": {
+            "name": "inception_4d/output",
+            "port": "inception_4d/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 435,
+            "name": "inception_3b/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3b/double3x3_reduce/bn/sc",
+            "port": "inception_3b/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 139,
+            "name": "inception_3b/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3b/3x3_reduce/bn/sc",
+            "port": "inception_3b/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 149,
+            "name": "inception_3a/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/pool",
+            "port": "inception_3a/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 175,
+            "name": "conv2/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv2/3x3_reduce/bn/sc",
+            "port": "conv2/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 350,
+            "name": "inception_4e/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4e/double3x3b/bn/sc/relu",
+            "port": "inception_4e/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 11,
+            "name": "conv8_2_mbox_conf",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv8_2_mbox_conf",
+            "port": "conv8_2_mbox_conf"
+        }
+    },
+    {
+        "IR": {
+            "id": 51,
+            "name": "conv7_2_mbox_conf",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv7_2_mbox_conf",
+            "port": "conv7_2_mbox_conf"
+        }
+    },
+    {
+        "IR": {
+            "id": 256,
+            "name": "inception_4b/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4b/3x3_reduce/bn/sc",
+            "port": "inception_4b/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 117,
+            "name": "inception_3c/output",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3c/output",
+            "port": "inception_3c/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 523,
+            "name": "pool2/3x3_s2",
+            "port": 1
+        },
+        "framework": {
+            "name": "pool2/3x3_s2",
+            "port": "pool2/3x3_s2"
+        }
+    },
+    {
+        "IR": {
+            "id": 17,
+            "name": "inception_4e/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4e/double3x3a/bn/sc/relu",
+            "port": "inception_4e/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 341,
+            "name": "conv7_1",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv7_1",
+            "port": "conv7_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 199,
+            "name": "mbox_priorbox",
+            "port": 6
+        },
+        "framework": {
+            "name": "mbox_priorbox",
+            "port": "mbox_priorbox"
+        }
+    },
+    {
+        "IR": {
+            "id": 297,
+            "name": "inception_4a/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4a/double3x3b/bn/sc",
+            "port": "inception_4a/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 228,
+            "name": "inception_4b/double3x3a",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4b/double3x3a/bn/sc",
+            "port": "inception_4b/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 474,
+            "name": "inception_4b/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4b/3x3/bn/sc",
+            "port": "inception_4b/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 35,
+            "name": "conv7_1_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv7_1_relu",
+            "port": "conv7_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 413,
+            "name": "inception_3c/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3c/pool",
+            "port": "inception_3c/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 31,
+            "name": "inception_4c/pool_proj/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4c/pool_proj/bn/sc/relu",
+            "port": "inception_4c/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 443,
+            "name": "conv9_1",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv9_1",
+            "port": "conv9_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 432,
+            "name": "inception_4b/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/pool",
+            "port": "inception_4b/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 478,
+            "name": "conv9_2_mbox_loc_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv9_2_mbox_loc_flat",
+            "port": "conv9_2_mbox_loc_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 306,
+            "name": "inception_4b/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/3x3_reduce/bn/sc/relu",
+            "port": "inception_4b/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 462,
+            "name": "inception_4a/double3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/double3x3_reduce/bn/sc/relu",
+            "port": "inception_4a/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 281,
+            "name": "inception_4d/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/3x3_reduce/bn/sc/relu",
+            "port": "inception_4d/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 406,
+            "name": "mbox_conf_softmax",
+            "port": 1
+        },
+        "framework": {
+            "name": "mbox_conf_softmax",
+            "port": "mbox_conf_softmax"
+        }
+    },
+    {
+        "IR": {
+            "id": 386,
+            "name": "inception_4b/output",
+            "port": 4
+        },
+        "framework": {
+            "name": "inception_4b/output",
+            "port": "inception_4b/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 416,
+            "name": "inception_3a/output",
+            "port": 4
+        },
+        "framework": {
+            "name": "inception_3a/output",
+            "port": "inception_3a/output"
+        }
+    },
+    {
+        "IR": {
+            "id": 198,
+            "name": "inception_3a/double3x3b",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3a/double3x3b/bn/sc",
+            "port": "inception_3a/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 328,
+            "name": "inception_4c/pool_proj",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4c/pool_proj/bn/sc",
+            "port": "inception_4c/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 485,
+            "name": "inception_4a/3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4a/3x3_reduce/bn/sc",
+            "port": "inception_4a/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 243,
+            "name": "conv8_2_relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv8_2_relu",
+            "port": "conv8_2"
+        }
+    },
+    {
+        "IR": {
+            "id": 440,
+            "name": "conv1/7x7_s2/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv1/7x7_s2/bn/sc/relu",
+            "port": "conv1/7x7_s2/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 393,
+            "name": "inception_4d/double3x3b/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4d/double3x3b/bn/sc/relu",
+            "port": "inception_4d/double3x3b/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 77,
+            "name": "inception_3a/double3x3a/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3a/double3x3a/bn/sc/relu",
+            "port": "inception_3a/double3x3a/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 184,
+            "name": "mbox_conf_reshape",
+            "port": 1
+        },
+        "framework": {
+            "name": "mbox_conf_reshape",
+            "port": "mbox_conf_reshape"
+        }
+    },
+    {
+        "IR": {
+            "id": 403,
+            "name": "conv6_2_mbox_loc_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv6_2_mbox_loc_flat",
+            "port": "conv6_2_mbox_loc_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 340,
+            "name": "inception_3b/pool_proj/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/pool_proj/bn/sc/relu",
+            "port": "inception_3b/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 429,
+            "name": "inception_4e/3x3_reduce/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4e/3x3_reduce/bn/sc/relu",
+            "port": "inception_4e/3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 362,
+            "name": "conv8_1",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv8_1",
+            "port": "conv8_1"
+        }
+    },
+    {
+        "IR": {
+            "id": 55,
+            "name": "inception_4a/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4a/pool",
+            "port": "inception_4a/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 107,
+            "name": "conv4_3_norm_mbox_priorbox",
+            "port": 2
+        },
+        "framework": {
+            "name": "conv4_3_norm_mbox_priorbox",
+            "port": "conv4_3_norm_mbox_priorbox"
+        }
+    },
+    {
+        "IR": {
+            "id": 330,
+            "name": "conv9_2_mbox_loc",
+            "port": 3
+        },
+        "framework": {
+            "name": "conv9_2_mbox_loc",
+            "port": "conv9_2_mbox_loc"
+        }
+    },
+    {
+        "IR": {
+            "id": 235,
+            "name": "detection_out",
+            "port": 3
+        },
+        "framework": {
+            "name": "detection_out",
+            "port": "detection_out"
+        }
+    },
+    {
+        "IR": {
+            "id": 5,
+            "name": "inception_4a/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4a/double3x3_reduce/bn/sc",
+            "port": "inception_4a/double3x3_reduce/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 20,
+            "name": "conv7_2_mbox_priorbox",
+            "port": 2
+        },
+        "framework": {
+            "name": "conv7_2_mbox_priorbox",
+            "port": "conv7_2_mbox_priorbox"
+        }
+    },
+    {
+        "IR": {
+            "id": 304,
+            "name": "conv7_2_mbox_conf_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv7_2_mbox_conf_flat",
+            "port": "conv7_2_mbox_conf_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 359,
+            "name": "inception_4b/pool_proj",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4b/pool_proj/bn/sc",
+            "port": "inception_4b/pool_proj/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 57,
+            "name": "inception_4d/1x1",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4d/1x1/bn/sc",
+            "port": "inception_4d/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 187,
+            "name": "inception_3c/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3c/3x3/bn/sc",
+            "port": "inception_3c/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 148,
+            "name": "inception_3b/3x3",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_3b/3x3/bn/sc",
+            "port": "inception_3b/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 66,
+            "name": "inception_4b/1x1/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4b/1x1/bn/sc/relu",
+            "port": "inception_4b/1x1/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 89,
+            "name": "conv6_2_mbox_conf_perm",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv6_2_mbox_conf_perm",
+            "port": "conv6_2_mbox_conf_perm"
+        }
+    },
+    {
+        "IR": {
+            "id": 267,
+            "name": "conv4_3_norm_mbox_loc_flat",
+            "port": 1
+        },
+        "framework": {
+            "name": "conv4_3_norm_mbox_loc_flat",
+            "port": "conv4_3_norm_mbox_loc_flat"
+        }
+    },
+    {
+        "IR": {
+            "id": 224,
+            "name": "inception_3b/pool",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_3b/pool",
+            "port": "inception_3b/pool"
+        }
+    },
+    {
+        "IR": {
+            "id": 493,
+            "name": "inception_4e/3x3/bn/sc/relu",
+            "port": 1
+        },
+        "framework": {
+            "name": "inception_4e/3x3/bn/sc/relu",
+            "port": "inception_4e/3x3/bn/sc"
+        }
+    },
+    {
+        "IR": {
+            "id": 27,
+            "name": "inception_4d/double3x3_reduce",
+            "port": 3
+        },
+        "framework": {
+            "name": "inception_4d/double3x3_reduce/bn/sc",
+            "port": "inception_4d/double3x3_reduce/bn/sc"
+        }
+    }
+]
