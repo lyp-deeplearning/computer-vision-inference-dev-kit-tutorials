@@ -19,3 +19,21 @@
     + HeadPoseDetection class
     + Picking the Right Models for the Right Devices
 
+## [Car Detection Tutorial](car_detection_tutorial/Readme.md)
+- Inference Engine Overview
+- Key Concepts
+  + Batch Size (brief)
+  + Image Processing Pipeline
+  + Synchronous vs. Asynchronous API
+- Tutorial Steps
+  + Tutorial Step 1: Create the Base OpenCV Application
+    + gflags library to parse command line arguments
+    + Using OpenCV for video input and output to window
+  + Tutorial Step 2: Add the first Model, Vehicle Detection
+    + Helper functions matU9ToBlob() and Load()
+    + BaseDetection class
+    + VehicleDetection class
+  + Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection
+    + VehicleAttribsDetection class 
+  + Tutorial Step 4: Using the Asynchronous API
+    + Changes made to Tutorial Step 3 for converting from synchronouse to asynchronous
