@@ -684,7 +684,7 @@ int main(int argc, char *argv[]) {
 				}
         	}
 
-			/* *** Pipeline Stage 2: Infer Vehicle Attributes *** */
+			/* *** Pipeline Stage 2: Start Inferring Vehicle Attributes *** */
             // ----------------------------Process the results down the pipeline---------------------------------
             ms AttribsNetworkTime(0);
             int AttribsInferred = 0;
@@ -899,19 +899,21 @@ int main(int argc, char *argv[]) {
             done = !haveMoreFrames && pipeS0toS1Fifo.empty() && pipeS1toS2Fifo.empty() && pipeS2toS3Fifo.empty()
 						&& pipeS3toS4Fifo.empty();
             // end of file we just keep last image/frame displayed to let user check what was shown
-            if (done && !FLAGS_no_wait && !FLAGS_no_show) {
+            if (done) {
             	// done processing, save time
             	wallclockEnd = std::chrono::high_resolution_clock::now();
-                slog::info << "Press 's' key to save a snapshot, press any other key to exit" << slog::endl;
-                while (cv::waitKey(0) == 's') {
-            		// save screen to output file
-            		slog::info << "Saving snapshot of image" << slog::endl;
-            		cv::imwrite("snapshot.bmp", *lastOutputFrame);
-                }
-                haveMoreFrames = false;
-                break;
-            }
 
+				if (!FLAGS_no_wait && !FLAGS_no_show) {
+	                slog::info << "Press 's' key to save a snapshot, press any other key to exit" << slog::endl;
+	                while (cv::waitKey(0) == 's') {
+	            		// save screen to output file
+	            		slog::info << "Saving snapshot of image" << slog::endl;
+	            		cv::imwrite("snapshot.bmp", *lastOutputFrame);
+	                }
+	                haveMoreFrames = false;
+	                break;
+				}
+            }
         } while(!done);
 
         // calculate total run time
