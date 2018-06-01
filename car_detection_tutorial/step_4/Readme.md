@@ -320,7 +320,7 @@ The VehicleAttribsDetection class needs to be updated to work with multiple requ
 
 enqueue() has the changes:
 
-3. Instead of creating a single request, it will populate "requests[]" whenever a request object has not been created yet.
+1. Instead of creating a single request, it will populate "requests[]" whenever a request object has not been created yet.
 
 ```cpp
         if (nullptr == requests[inputRequestIdx]) {
@@ -329,7 +329,7 @@ enqueue() has the changes:
 ```
 
 
-4. Replace single "request" to use current input request “requests[inputRequestIdx]”:
+2. Replace single "request" to use current input request “requests[inputRequestIdx]”:
 
 ```cpp
         auto  inputBlob = requests[inputRequestIdx]->GetBlob(input);
@@ -340,7 +340,7 @@ enqueue() has the changes:
 
 fetchResults() has the changes:
 
-4. Replace "resultsFetched" with check that “outputRequest” is valid
+1. Replace "resultsFetched" with check that “outputRequest” is valid
 
 ```cpp
         if (nullptr == outputRequest) {
@@ -349,7 +349,7 @@ fetchResults() has the changes:
 ```
 
 
-5. Replace single "request" to use “outputRequest” now set to current output request:
+2. Replace single "request" to use “outputRequest” now set to current output request:
 
 ```Cpp
 			// 7 possible colors for each vehicle and we should select the one with the maximum probability
@@ -363,8 +363,7 @@ fetchResults() has the changes:
 \\ ...same processing of results...
 ```
 
-
-6. Mark output request as done by setting to nullptr:
+3. Mark output request as done by setting to nullptr:
 
 ```Cpp
 		// done with request
