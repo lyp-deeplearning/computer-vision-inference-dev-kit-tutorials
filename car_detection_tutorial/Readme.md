@@ -166,39 +166,39 @@ Using the Inference API follows the basic steps:
 
 1. Load plugin
 
-    1. Load the plugin for a specified device
+    a. Load the plugin for a specified device
 
 2. Read model IR
 
-    2. Read in IR files
+    a. Read in IR files
 
 3. Configure input and output
 
-    3. Probe model for input and output information
+    a. Probe model for input and output information
 
-    4. Optionally configure the precision and memory layout of inputs and outputs
+    b. Optionally configure the precision and memory layout of inputs and outputs
 
 4. Load model
 
-    5. Load the model into the plugin
+    a. Load the model into the plugin
 
 5. Create inference request
 
-    6. Have plugin create a request object that holds input and output blobs
+    a. Have plugin create a request object that holds input and output blobs
 
 6. Prepare input
 
-    7. Get an input blob to hold input data
+    a. Get an input blob to hold input data
 
-    8. Transfer data from source into input blob
+    b. Transfer data from source into input blob
 
 7. Infer
 
-    9. Request plugin to perform inference and wait for results
+    a. Request plugin to perform inference and wait for results
 
 8. Process output
 
-    10. Get output blobs and process results
+    a. Get output blobs and process results
 
 In tutorial Steps 2, and 3 we will walkthrough the code that specifically integrates each of the models used in our application.  More details can also be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
 
