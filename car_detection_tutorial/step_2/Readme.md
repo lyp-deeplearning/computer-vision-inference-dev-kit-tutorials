@@ -1116,51 +1116,50 @@ make
 
 1. You now have the executable file to run ./intel64/Release/car_detection_tutorial.  In order to have it run the vehicle detection model, we need to add arguments to the command line:
 
-    1. "-i <input-image-or-video-file>" to specify an input image or video file instead of using the USB camera by default
+    i. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
 
-    2. "-m <model-xml-file>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml”
+    ii. "-m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml”
 
-    3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
+    iii. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
 
-```bash
-# Create variables for all models used by the tutorials to make
-#  it easier to reference them with short names
+    ```bash
+    # Create variables for all models used by the tutorials to make
+    #  it easier to reference them with short names
+    
+    # check for variable set by setupvars.sh in the SDK, need it to find models
+    : ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
+    
+    modelDir=$InferenceEngine_DIR/../../intel_models
+    
+    # Vehicle and License Plates Detection Model
+    modName=vehicle-license-plate-detection-barrier-0007
+    export mVLP16=$modelDir/$modName/FP16/$modName.xml
+    export mVLP32=$modelDir/$modName/FP32/$modName.xml
+    
+    # Vehicle Attributes Detection Model
+    modName=vehicle-attributes-recognition-barrier-0010
+    export mVA16=$modelDir/$modName/FP16/$modName.xml
+    export mVA32=$modelDir/$modName/FP32/$modName.xml
+    
+    # Batch size models (Vehicle Detection, all FP32)
+    scriptDir=$(dirname "$(readlink -f ${BASH_SOURCE[0]})")
+    batchModelsDir=$scriptDir/../models/batch_sizes
+    modName=SSD_GoogleNetV2
+    export mVB1=$batchModelsDir/batch_1/$modName.xml
+    export mVB2=$batchModelsDir/batch_2/$modName.xml
+    export mVB4=$batchModelsDir/batch_4/$modName.xml
+    export mVB8=$batchModelsDir/batch_8/$modName.xml
+    export mVB16=$batchModelsDir/batch_16/$modName.xml
+    ```
 
-# check for variable set by setupvars.sh in the SDK, need it to find models
-: ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
+    iv. To use the script we source it using the command: 
 
-modelDir=$InferenceEngine_DIR/../../intel_models
+    ```bash
+    source ../../scripts/setupenv.sh 
+    ```
+    
 
-# Vehicle and License Plates Detection Model
-modName=vehicle-license-plate-detection-barrier-0007
-export mVLP16=$modelDir/$modName/FP16/$modName.xml
-export mVLP32=$modelDir/$modName/FP32/$modName.xml
-
-# Vehicle Attributes Detection Model
-modName=vehicle-attributes-recognition-barrier-0010
-export mVA16=$modelDir/$modName/FP16/$modName.xml
-export mVA32=$modelDir/$modName/FP32/$modName.xml
-
-# Batch size models (Vehicle Detection, all FP32)
-scriptDir=$(dirname "$(readlink -f ${BASH_SOURCE[0]})")
-batchModelsDir=$scriptDir/../models/batch_sizes
-modName=SSD_GoogleNetV2
-export mVB1=$batchModelsDir/batch_1/$modName.xml
-export mVB2=$batchModelsDir/batch_2/$modName.xml
-export mVB4=$batchModelsDir/batch_4/$modName.xml
-export mVB8=$batchModelsDir/batch_8/$modName.xml
-export mVB16=$batchModelsDir/batch_16/$modName.xml
-```
-
-
-    4. To use the script we source it using the command: 
-
-```bash
-source ../../scripts/setupenv.sh 
-```
-
-
-    5. You will notice that the script file defines seven variables that can be used to reference vehicle detection models and two for vehicle attributes.  We will be using $mVB1* only for a later step to go over how batch size affects the performance.  
+    v. You will notice that the script file defines seven variables that can be used to reference vehicle detection models and two for vehicle attributes.  We will be using $mVB1* only for a later step to go over how batch size affects the performance.  
 
 2. We will be using images and video files that are included with this tutorial.  Once you have seen the application working, feel free to try it on your own images and videos.
 
@@ -1217,7 +1216,6 @@ Note: The $mVB* model will only detect vehicles that will have red boxes drawn a
 ./intel64/Release/vehicle_detection_tutorial -m $mVB8 -i ../../data/car_1.bmp
 ./intel64/Release/vehicle_detection_tutorial -m $mVB16 -i ../../data/car_1.bmp
 ```
-
 
 As you run each command, you should notice it takes longer each time the batch size increases and is also reflected in the performance metrics reporting slower performance.  This is because inference is run on the entire batch, even if only one input frame is present all inputs are inferred.  The increasingly longer time is also shows you is increasing latency from the time the image is input to the time the output is displayed.
 
