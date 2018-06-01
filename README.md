@@ -17,12 +17,12 @@
     + AgeGenderDetection class
   + Tutorial Step 4: Add the Third Model, Head Pose 
     + HeadPoseDetection class
-    + Picking the Right Models for the Right Devices
+    + Picking the Right Models for the Right Devices 
 
 ## [Car Detection Tutorial](car_detection_tutorial/Readme.md)
 - Inference Engine Overview
 - Key Concepts
-  + Batch Size (brief)
+  + Batch Size (detailed)
   + Image Processing Pipeline
   + Synchronous vs. Asynchronous API
 - Tutorial Steps
@@ -33,7 +33,10 @@
     + Helper functions matU9ToBlob() and Load()
     + BaseDetection class
     + VehicleDetection class
+    + Batch size (exercise)
   + Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection
     + VehicleAttribsDetection class 
+    + Running combinations of models on devices (exercise)
   + Tutorial Step 4: Using the Asynchronous API
     + Changes made to Tutorial Step 3 for converting from synchronouse to asynchronous
+    + Synchronous vs. Asynchronous performance (exercise)
