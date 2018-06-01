@@ -4,8 +4,7 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#the-basic-opencv-application-input-and-output">The Basic OpenCV Application, Input and Output</a><ul><li><a href="#parsing-command-line-arguments">Parsing Command Line Arguments</a><ul><li><a href="#create-the-argument">Create the Argument</a></li><li><a href="#parse-arguments">Parse Arguments</a></li></ul></li><li><a href="#opencv-input-to-output">OpenCV Input to Output</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
-
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#the-basic-opencv-application-input-and-output">The Basic OpenCV Application, Input and Output</a><ul><li><a href="#parsing-command-line-arguments">Parsing Command Line Arguments</a><ul><li><a href="#create-the-argument">Create the Argument</a></li><li><a href="#parse-arguments">Parse Arguments</a></li></ul></li><li><a href="#opencv-input-to-output">OpenCV Input to Output</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li></ul></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
@@ -15,27 +14,27 @@ This tutorial will show you the basics of what is needed to include and use Open
 
 Every application needs some way of getting data in and data out.  Let us now take a look at the code we will be using to do the input and output in our OpenCV application.  Then we can compile and run our program to see how it works using the base input and output settings.  
 
-### Parsing Command Line Arguments
+## Parsing Command Line Arguments
 
-To make it easier to set everything from the input video file to which model and device is to be used, we will use command line arguments to our application.  To parse the command line arguments we make use of the "gflags" helper library that comes with the OpenVINO toolkit samples.  Here we will briefly go over the primary functions that were used, for reference the full source code for the gflags library may be found in the OpenVINO toolkit samples directory: 
+To make it easier to set everything from the input video file to which model and device is to be used, command line arguments to the application will be used.  To parse the command line arguments, the application will use the "gflags" helper library that comes with the OpenVINO toolkit samples.  Here we will briefly go over the primary functions that are used, for reference the full source code for the gflags library may be found in the OpenVINO toolkit samples directory: 
 
 ```bash
 /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/thirdparty/gflags
 ```
 
 
-To make use of the gflags library and use the supplied functions and classes, we must include the main header file:
+To make use of the gflags library and use the supplied functions and classes, include the main header file:
 
 ```cpp
 #include <gflags/gflags.h>
 ```
 
 
-We do this in the main header file "car_detection.hpp" where we will define all the command line arguments using these same steps:
+This is done in the main header file "car_detection.hpp" where all the command line arguments are defined using the following steps.
 
-#### Create the Argument
+### Create the Argument
 
-Create the argument using the macro "DEFINE_string".  Here we see how the “-i \<video filename\>” argument that we will use to specify the input video is defined:
+Create the argument using the macro "DEFINE_string".  Here the “-i \<video filename\>” argument that will be used to specify the input video is defined:
 
 ```cpp
 /// @brief message for images argument
@@ -63,7 +62,7 @@ In the above code:
 
     * Creates the variable FLAGS_i to hold the string value for the "i" argument
 
-#### Parse Arguments
+### Parse Arguments
 
 In main.cpp’s main() function, ParseAndCheckCommandLine() is called to do command line argument parsing and checking for valid arguments. The actual argument parsing and setting variables is done by the call:
 
@@ -72,7 +71,7 @@ gflags::ParseCommandLineNonHelpFlags(&argc, &argv, true);
 ```
 
 
-After returning, the FLAGS_i variable will be set with the "-i" command line arguments “\<video filename\>” value, or if not specified, the default value of “cam”.
+After returning, the FLAGS_i variable will be set with the "-i" command line arguments “\<video filename\>” value, or if not specified, it will be set to the default value of “cam”.
 
 This is how the "-i" argument is done, all other arguments are handled similarly using the other forms of the gflags macro according to data type needed as follows:
 
@@ -84,7 +83,7 @@ This is how the "-i" argument is done, all other arguments are handled similarly
 
 * DEFINE_bool() for boolean arguments
 
-### OpenCV Input to Output
+## OpenCV Input to Output
 
 1. Open up an Xterm window or use an existing window to get to a command shell prompt.
 
@@ -98,7 +97,9 @@ cd step_1
 
 3. Open the files "main.cpp" and “car_detection.hpp” in the editor of your choice such as ‘gedit’, ‘gvim’, or ‘vim’.
 
-4. First, we include a couple of header files that define some helpful utility classes we can use to simplify some of the day-to-day programming tasks, as well as some functions for making logging easier.
+### Header Files
+
+1. Include header files that define some helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
 
 ```cpp
 #include <samples/common.hpp>
@@ -106,14 +107,16 @@ cd step_1
 ```
 
 
-5. Then we are going to pull in the opencv.hpp file from the Intel OpenCV SDK.  This will give us access to the optimized OpenCV functions that Intel provides.
+2. Include the opencv.hpp file for the Intel optimized OpenCV libraries included in the OpenVINO toolkit.
 
 ```cpp
 #include <opencv2/opencv.hpp>
 ```
 
 
-6. Now we jump down to the main function.  The first thing we need to do is to create an OpenCV video capture object that we will use to get image data.  Then we need to tell that object where to get the data.
+### main()
+
+1. First create an OpenCV video capture object that will be used to source the image data.  Then open the image source.  FLAGS_i is the command line parameter that tells the application the source of where the image.  The source can be the path to an image file, the path to a video file, or "cam" for the USB camera.
 
 ```cpp
 cv::VideoCapture cap;
@@ -123,9 +126,7 @@ if (!(FLAGS_i == "cam" ? cap.open(0) : cap.open(FLAGS_i))) {
 ```
 
 
-7. FLAGS_i is a command line parameter that tells the program where the image data from is coming from.  It can be the path to an image file, the path to a video file, or cam.  If the parameter is cam, then the program will try to get input from the USB camera.
-
-8. The next step is to create a place to store the image data and then read in the data.
+2. Get the width and height of the image source for use later.  
 
 ```cpp
 const size_t width  = (size_t) cap.get(CV_CAP_PROP_FRAME_WIDTH);
@@ -133,7 +134,7 @@ const size_t height = (size_t) cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 ```
 
 
-9. Here, you can see that we are getting the width and height of the image file, or the camera resolution, and storing that for use later.  We also use cv::Mat to create an array that we can use to store the image data.  Then we read in the image data by calling "cap.read(frame)".
+3. Create storage for the image frame and then read in the first frame. 
 
 ```cpp
 cv::Mat frame;
@@ -143,16 +144,18 @@ if (!cap.read(frame)) {
 ```
 
 
-10. At this point, we have created OpenCV objects to read data, and store data, so we are ready to create our main loop to read in and then write out the image.  The loop will run while there are more frames to process or until you press any key except for ‘s’ which will take a snapshot of the current output and save it as "snapshot.bmp".  This is a convenient tool for saving results to be used later. The main loop looks like:
+### Main Loop
 
-    1. Run until we meet the conditions specified at the bottom of the loop:
+The main loop will read in and then write out the image frames until there are not more to available. 
+
+1. Run until the conditions specified at the bottom of the loop are met:
 
 ```cpp
 do {
 ```
 
 
-    2. Let the user know they can stop a multi-image source like video or camera
+2. Let the user know they can stop a multi-image source like video or camera
 
 ```cpp
     if (firstFrame) {
@@ -163,7 +166,7 @@ do {
 ```
 
 
-    3. Initialize the variables we will be using to store the timing results.
+3. Initialize the variables used to store the timing results.
 
 ```cpp
       t0 = std::chrono::high_resolution_clock::now();
@@ -175,7 +178,7 @@ do {
 ```
 
 
-    4. We check to see if there is another image available from the source:
+4. Check to see if there is another image available from the source:
 
 ```cpp
       // get next frame            
@@ -183,7 +186,7 @@ do {
 ```
 
 
-    5. Check for key press to either snapshot (pressing ‘s’) or stop (any other key)
+5. Check for key press to either snapshot (pressing ‘s’) or stop (any other key)
 
 ```cpp
     int keyPressed;
@@ -200,7 +203,7 @@ do {
 ```
 
 
-    6. Check to see if there was another image to process.  If there is not, then we wait for a key press in the command window.  If "-no_wait" was used, then we just exit immediately..
+6. Check to see if there was another image to process.  If there is not, then wait for a key press in the command window.  If "-no_wait" was used, then exit immediately.
 
 ```cpp
       // end of file we just keep last image/frame displayed to let user check what was shown
@@ -217,7 +220,7 @@ do {
 ```
 
 
-    7. End loop if "doMoreFrames" is false, or go back to “do” and run again
+7. If there are more frames to do, loop.  If not, exit the main loop.
 
 ```cpp
    } while(doMoreFrames);
@@ -287,7 +290,7 @@ make
 ```
 
 
-    2. Or we can still specify the camera using "cam":
+Or we can still specify the camera using "cam":
 
 ```bash
 ./intel64/Release/car_detection_tutorial -i cam
@@ -301,6 +304,8 @@ make
 Now we have seen what it takes to create a basic application that uses OpenCV to read and display image data.  We have also seen how our application works with each type of image input it accepts including still images, video files, and live video from the USB camera.  We will be using the basic framework from this step of the tutorial as we move forward building up the application step-by-step.  Next, in Tutorial Step 2 we will be adding the ability to process images and actually detect cars.
 
 # Navigation
+
 [Car Detection Tutorial](../Readme.md)
 
 [Car Detection Tutorial Step 2](../step_2/Readme.md)
+
