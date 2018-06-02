@@ -61,7 +61,7 @@ DEFINE_bool(no_show, false, no_show_processed_video);
 */
 static void showUsage() {
     std::cout << std::endl;
-    std::cout << "interactive_face_detection [OPTION]" << std::endl;
+    std::cout << "face_detection_tutorial [OPTION]" << std::endl;
     std::cout << "Options:" << std::endl;
     std::cout << std::endl;
     std::cout << "    -h                         " << help_message << std::endl;
