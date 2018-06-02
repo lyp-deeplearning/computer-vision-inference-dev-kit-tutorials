@@ -2,7 +2,7 @@
 #  it easier to reference them with short names
 
 # check for variable set by setupvars.sh in the SDK, need it to find models
-: ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
+: ${InferenceEngine_DIR:?"Must source the setupvars.sh in the SDK to set InferenceEngine_DIR"}
 
 modelDir=$InferenceEngine_DIR/../../intel_models
 
