@@ -293,7 +293,7 @@ struct FaceDetectionClass : BaseDetection {
             r.location.width = detections[i * objectSize + 5] * width - r.location.x;
             r.location.height = detections[i * objectSize + 6] * height - r.location.y;
 
-            if (image_id < 0) {
+            if ((image_id < 0) || (image_id >= maxBatch)) {  // indicates end of detections
                 break;
             }
             if (FLAGS_r) {
