@@ -460,9 +460,8 @@ int main(int argc, char *argv[]) {
                             cv::Scalar(0, 0, 255));
 
                 auto genderColor =
-                              cv::Scalar(100, 100, 100);
-
-                cv::rectangle(frame, result.location, genderColor, 1);
+                              cv::Scalar(0, 255, 0);
+                cv::rectangle(frame, result.location, genderColor, 2);
                 i++;
             }
             int keyPressed;

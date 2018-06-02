@@ -834,10 +834,9 @@ int main(int argc, char *argv[]) {
 
                 auto genderColor =
                 		(AgeGender.enabled() && (i < AgeGender.maxBatch)) ?
-                              ((AgeGender[i].maleProb < 0.5) ? cv::Scalar(147, 20, 255) : cv::Scalar(255, 0, 0)) :
-                              cv::Scalar(100, 100, 100);
-
-                cv::rectangle(frame, result.location, genderColor, 1);
+                              ((AgeGender[i].maleProb < 0.5) ? cv::Scalar(0, 0, 255) : cv::Scalar(255, 0, 0)) :
+                              cv::Scalar(0, 255, 0);
+                cv::rectangle(frame, result.location, genderColor, 2);
                 i++;
             }
             int keyPressed;
