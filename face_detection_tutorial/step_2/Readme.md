@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first model, Face Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#face-detection-models">Face Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-face-detection-model">Adding the Face Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a></li></ul></li><li><a href="#facedetectionclass">FaceDetectionClass</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#facedetectionclass">FaceDetectionClass()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-facedetectionclass">Using FaceDetectionClass</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first model, Face Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#face-detection-models">Face Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-face-detection-model">Adding the Face Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#facedetectionclass">FaceDetectionClass</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#facedetectionclass">FaceDetectionClass()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-facedetectionclass">Using FaceDetectionClass</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
@@ -319,14 +319,18 @@ struct BaseDetection {
 ```
 
 
-3. Since the networks used by the detectors will have different requirements for loading, declare the read() function to be pure virtual.  This ensures that each detector class will have a read function appropriate to the model and IR it will be using.
+#### read()
+
+Since the networks used by the detectors will have different requirements for loading, declare the read() function to be pure virtual.  This ensures that each detector class will have a read function appropriate to the model and IR it will be using.
 
 ```cpp
     virtual InferenceEngine::CNNNetwork read()  = 0;
 ```
 
 
-4. The submitRequest() function checks to see if the model is enabled and that there is a valid request to start.  If there is, it requests the model to start running the model asynchronously with startAsync() which returns immediately (we will show how to wait on the results next).
+#### submitRequest()
+
+The submitRequest() function checks to see if the model is enabled and that there is a valid request to start.  If there is, it requests the model to start running the model asynchronously with startAsync() which returns immediately (we will show how to wait on the results next).
 
 ```cpp
     virtual void submitRequest() {
@@ -336,7 +340,9 @@ struct BaseDetection {
 ```
 
 
-5. wait() will wait until results from the model are ready.  First check to see if the model is enabled and there is a valid request before actually waiting on the request.
+#### wait()
+
+wait() will wait until results from the model are ready.  First check to see if the model is enabled and there is a valid request before actually waiting on the request.
 
 ```cpp
     virtual void wait() {
@@ -346,7 +352,9 @@ struct BaseDetection {
 ```
 
 
-6. Define variables and the "enabled()" function to track and check if the model is enabled or not.  The model is disabled if “commandLineFlag”, the command line argument specifying the model IR .xml file (e.g. “-m”) , has not been set.
+#### enabled()
+
+Define variables and the "enabled()" function to track and check if the model is enabled or not.  The model is disabled if “commandLineFlag”, the command line argument specifying the model IR .xml file (e.g. “-m”) , has not been set.
 
 ```cpp
     mutable bool enablingChecked = false;
@@ -365,7 +373,9 @@ struct BaseDetection {
 ```
 
 
-7. Finally, the printPerformancCount() function checks to see if the detector is enabled, and if it is, then we print out the overall performance statistics for the model.
+#### printPerformancCount()
+
+The printPerformancCount() function checks to see if the detector is enabled, and if it is, then we print out the overall performance statistics for the model.
 
 ```cpp
     void printPerformanceCounts() {
@@ -873,7 +883,7 @@ ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 ```
 
 
-Post-Main Loop
+## Post-Main Loop
 
 After all the images have been processed (or you have chosen to stop analyzing input from the camera), if the "-pc" command line argument was used, print out the performance statistics to the command window and exit the application.
 
