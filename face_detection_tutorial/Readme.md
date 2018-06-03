@@ -1,8 +1,12 @@
+# Table of Contents
+
+<p></p><div class="table-of-contents"><ul><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#using-git-clone-to-clone-the-entire-repository">Using Git Clone to Clone the Entire Repository</a></li><li><a href="#using-svn-export-to-download-only-this-tutorial">Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#intel-opencv">Intel OpenCV</a></li><li><a href="#floating-point-precision">Floating Point Precision</a><ul><li><a href="#why-would-we-choose-one-precision-over-the-other">Why Would We Choose One Precision Over the Other?</a></li><li><a href="#what-if-we-specify-the-wrong-precision-for-a-device">What If We Specify the Wrong Precision for a Device?</a></li></ul></li><li><a href="#batch-size">Batch Size</a></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first Model, Face Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-age-and-gender">Tutorial Step 3: Add the Second Model, Age and Gender</a></li><li><a href="#tutorial-step-4-add-the-third-model-head-pose">Tutorial Step 4: Add the Third Model, Head Pose</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
+
 # Introduction
 
-The purpose of this tutorial is to examine a sample application that was created using the Intel OpenVINO toolkit and UP Squared hardware included in the UP Squared AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and Myriad devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Face Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared hardware.
+The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared hardware included in the UP Squared AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Face Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running on the UP Squared hardware.
 
-This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds Inference Engine models that will process the image data and make inferences.  In the final step, the complete application will be able to detect a face, reports age and gender for the face, and draws a 3D axis representing the head pose for the face.  Before that, some key concepts related to and for using OpenVINO will be first introduced and later seen along the way within the steps.  
+This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the final step, the complete application will be able to detect a face, report age and gender for the face, and draw a 3D axis representing the head pose for each face.  Before that, some key concepts related to using the OpenVINO toolkit will be introduced and later seen along the way within the steps.  
 
 # Getting Started
 
@@ -30,9 +34,9 @@ The UP Squared AI Vision Development Kit comes ready to go with all the hardware
 
         * Ethernet cable
 
-* Software
+* Software (pre-installed in the kit)
 
-    * OpenVINO 
+    * OpenVINO toolkit
 
         * Inference Engine with plugins support for CPU, GPU, and Myriad
 
@@ -52,7 +56,7 @@ By now you should have completed the setup and getting starting guide for the ki
 
 ## Downloading the Tutorial from the Git Repository
 
-The first thing we need to do is create a place for the Face Detection tutorial and then download it.  To do this, we will create a directory called "tutorials" and use it to store the files that we download from the “cvs-sdk-tutorial” GitHub repository.  There are two options to download this tutorial: 1) Download as part of the entire repository using “git clone”, or 2) Use “svn export” to download just this tutorial (smaller)
+The first thing we need to do is create a place for the Face Detection tutorial and then download it.  To do this, we will create a directory called "tutorials" and use it to store the files that are downloaded from the “cvs-sdk-tutorial” GitHub repository.  There are two options to download this tutorial: 1) Download as part of the entire repository using “git clone”, or 2) Use “svn export” to download just this tutorial (smaller)
 
 ### Using Git Clone to Clone the Entire Repository
 
@@ -132,7 +136,7 @@ In the "face_detection_tutorial" directory you will see:
 
 ## OpenVINO Toolkit Overview and Terminology 
 
-Let us begin with a brief overview of OpenVINO toolkit and what this tutorial will be covering.  The Open Visual Inference & Neural Network Optimization (OpenVINO) toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel hardware while maximizing performance. This is done using the Intel Deep Learning Deployment Toolkit included within OpenVINO with its main components shown below.
+Let us begin with a brief overview of the OpenVINO toolkit and what this tutorial will be covering.  The OpenVINO toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel hardware while maximizing performance. This is done using the Intel Deep Learning Deployment Toolkit included within the OpenVINO toolkit with its main components shown below.
 
 ![image alt text](./doc_support/step0_image_0.png)
 
@@ -156,56 +160,58 @@ The Inference Engine includes a plugin library for each supported device that ha
 
 #### Inference Engine API Integration Flow
 
-Using the Inference API follows the basic steps:
+Using the Inference Engine API follows the basic steps:
 
 1. Load plugin
 
-    1. Load the plugin for a specified device
+    a. Load the plugin for a specified device
 
 2. Read model IR
 
-    2. Read in IR files
+    a. Read in IR files
 
 3. Configure input and output
 
-    3. Probe model for input and output information
+    a. Probe model for input and output information
 
-    4. Optionally configure the precision and memory layout of inputs and outputs
+    b. Optionally configure the precision and memory layout of inputs and outputs
 
 4. Load model
 
-    5. Load the model into the plugin
+    a. Load the model into the plugin
 
 5. Create inference request
 
-    6. Have plugin create a request object that holds input and output blobs
+    a. Have plugin create a request object that holds input and output blobs
 
 6. Prepare input
 
-    7. Get an input blob to hold input data
+    a. Get the input blob to hold input data
 
-    8. Transfer data from source into input blob
+    b. Transfer data from the data source into input blob
 
 7. Infer
 
-    9. Request plugin to perform inference and wait for results
+    a. Request plugin to perform inference and wait for results
 
 8. Process output
 
-    10. Get output blobs and process results
+    a. Get output blobs and process results
 
-In tutorial Steps 2, 3, and 4 we will walkthrough the code that specifically integrates each of the models used in our application.  More details can also be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
+In tutorial Steps 2, 3, and 4 we will walkthrough the code that specifically integrates each of the models used in the application.  
 
-#### Setting Up Command Line to Use OpenVINO Executables and Libraries
+More details can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
 
-Whenever running the OpenVINO tools, compiling, or running the user application, always remember to source the script:
+#### Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries
+
+Whenever running the OpenVINO toolkit tools, compiling, or running the user application, always remember to source the script:
 
 ```Bash
 source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
-This script sets up the executable and library paths along with environment variables used by the OpenVINO tools as well as this tutorial.
+This script sets up the executable and library paths along with environment variables used by the OpenVINO toolkit tools as well as this tutorial.
 
 ### Where Do the Inference Models Come from?
 
@@ -213,20 +219,21 @@ An inference model may come from any of the supported sources and workflows such
 
 # Key Concepts
 
-Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered.
+Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.
 
 ## Intel OpenCV
 
 For the application that we will cover in Step 1, the OpenCV libraries included in the Intel CV SDK will be used.  You may be wondering: Why is OpenCV included in the CV SDK along with the Inference Engine?  The first big reason is: They are the fastest for Intel devices.  The Intel libraries have been optimized to run on each Intel CPU, GPU, and Myriad device.  It also helps that by including in the libraries in the CV SDK, you get the complete set of libraries and always get the necessary version.  
 
-The second big reason: All the extensions and additional libraries that come with Intel’s OpenCV.  One such library is the Photography Vision Library (PVL).  PCL includes advanced implementations by Intel already optimized for power and performance on Intel devices to do face, blink, and smile detection along with recognizing faces.
+The second big reason: All the extensions and additional libraries that come with Intel’s OpenCV.  One such library is the Photography Vision Library (PVL).  PVL includes advanced implementations by Intel already optimized for power and performance on Intel devices to do face, blink, and smile detection along with recognizing faces.
 
 More detail on the PVL library provided with Intel OpenCV may be found at:
+
 [https://software.intel.com/en-us/cvsdk-devguide-advanced-face-capabilities-in-intels-opencv](https://software.intel.com/en-us/cvsdk-devguide-advanced-face-capabilities-in-intels-opencv)
 
 ## Floating Point Precision
 
-Very briefly, floating point is a way to represent a wide range of real numbers with fraction within a fixed number of bits.  The upside to floating point is that a much larger range of numbers can be represented by the fewer bits, while the downside is that some amount of precision may be lost.  Here we we are talking about floating point being represented in either 32-bit, also referred to as "single-precision" and here we use “FP32”, or 16-bits, also referred to “half-precision” and here we use “FP16”.  Without going down to the bit-level details, just from the number of bits we can presume that 32-bits can represent more numbers than 16-bits.  
+Very briefly, floating point is a way to represent a wide range of real numbers with fraction within a fixed number of bits.  The upside to floating point is that a much larger range of numbers can be represented by fewer bits, while the downside is that some amount of precision may be lost.  Here we we are talking about floating point being represented in either 32-bit, also referred to as "single-precision" and here we use “FP32”, or 16-bits, also referred to “half-precision” and here we use “FP16”.  Without going down to the bit-level details, just from the number of bits we can presume that 32-bits can represent more numbers than 16-bits.  
 
 The question now becomes: why does 32 vs 16 bits matter?  First, because when a model’s IR is created using Intel’s Model Optimizer, it is told to target either FP16 or FP32.    For our purposes we will assume the model will work well as intended within the number of bits available (there may be differences in output of course, which are assumed to be small enough to ignore).  So now it comes down to what precision(s) are supported by the device that the model will be run on. The precisions that the CPU, GPU, and Myriad devices support is summarized in the table below:
 
@@ -256,11 +263,11 @@ The question now becomes: why does 32 vs 16 bits matter?  First, because when a 
 
 ### Why Would We Choose One Precision Over the Other?  
 
-Primarily for speed.  FP16 is generally smaller and faster in hardware than FP32 while the smaller data size can also reduce by up to 2x the amount of memory required for storage and the bandwidth required for transferring data to and from memory.  However if the difference between FP32 and FP16 does affect the application’s results enough, then FP32 would be chosen to prioritize accuracy over speed.  Lastly, we would always choose FP16 vs. FP32 depending upon which precision the targeted device requires.
+Primarily for speed.  FP16 is generally smaller and faster in hardware than FP32 while the smaller data size can also reduce by up to 2x the amount of memory required for storage and the bandwidth required for transferring data to and from memory.  However if the difference between FP32 and FP16 does affect the application’s results enough to cause undesired results, then FP32 would be chosen to prioritize accuracy over speed.  Lastly, we would always choose FP16 vs. FP32 depending upon which precision the targeted device requires.
 
 ### What If We Specify the Wrong Precision for a Device?  
 
-Nothing really will happen other than getting an error message when loading the model’s IR using the Inference Engine API which look similar to below:
+Nothing really will happen other than getting an error message when loading the model’s IR using the Inference Engine API which looks similar to below:
 
 ```bash
 [ INFO ] Loading Face Detection model to the MYRIAD plugin
@@ -276,9 +283,11 @@ In Step 4 we will see how precision may affect performance as well as device sel
 For more detail on 32-bit "single-precision" floating point down to the bit-level, see [https://en.wikipedia.org/wiki/Single-precision_floating-point_format](https://en.wikipedia.org/wiki/Single-precision_floating-point_format)
 
 For more detail on 16-bit "half-precision" floating point down to the bit-level, see
+
 [https://en.wikipedia.org/wiki/Half-precision_floating-point_format](https://en.wikipedia.org/wiki/Half-precision_floating-point_format)
 
 For more detail on the Model Optimizer, see the OpenVINO documentation at:
+
 [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
 
 ## Batch Size
@@ -289,17 +298,15 @@ Batch size refers to the number of input data to be inferred during a single inf
 
     * The default setting is located in the model’s IR which is set either by:
 
-        * The Model Optimizer command-line option when creating the IR 
+        * The Model Optimizer command line option when creating the IR 
 
         * Or from the original source (e.g. Caffe) in which can be read using the Inference Engine API 
 
     * May be set explicitly using the Inference Engine API setBatchSize() function (see InferenceEngine::ICNNNetwork class)
 
-* Will act as a maximum for the model once loaded and limit the number of inputs that will be inferred for each submitted request to the Inference Engine API
+* Batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.
 
-In this tutorial, face detection is done frame-by-frame expecting few results so batch size is primarily about device support such as the Myriad which requires batch size set to 1.  In a later tutorial (be sure to look forward to the Car Detection Tutorial), batch size will be explored further to show how it affects latency and performance. 
-
-For more information on an example of batch size effects on performance for clDNN running on GPU, see the whitepaper: [https://software.intel.com/en-us/articles/accelerating-deep-learning-inference-with-intel-processor-graphics](https://software.intel.com/en-us/articles/accelerating-deep-learning-inference-with-intel-processor-graphics)
+In this tutorial, face detection is done frame-by-frame expecting few results so batch size >1 will generally not give any improvements.  This makes batch size primarily about device support, such as the Myriad which requires batch size set to 1.  In a later tutorial (be sure to look forward to the Car Detection Tutorial), batch size will be explored further to show how it affects latency and performance. 
 
 ## Tutorial Step 1: Create the Base OpenCV Application
 
@@ -313,7 +320,7 @@ The first tutorial will show how the Intel OpenCV libraries are used by an appli
 
 ![image alt text](./doc_support/step0_image_3.png)
 
-The second tutorial takes the framework in Tutorial Step 1 and add face detection and labeling to processed images.  This step shows how an inference model has been added to use the Inference Engine to run the model on hardware.  We will also learn how to specify which device the model is run on: CPU, GPU,  the Myriad.  
+The second tutorial takes the framework in Tutorial Step 1 and adds face detection and labeling to processed images.  This step shows how an inference model has been added to use the Inference Engine to run the model on hardware.  We will also learn how to specify which device the model is run on: CPU, GPU,  the Myriad.  
 
 [Face Detection Tutorial Step 2](./step_2/Readme.md)
 
@@ -321,7 +328,7 @@ The second tutorial takes the framework in Tutorial Step 1 and add face detectio
 
 ![image alt text](./doc_support/step0_image_4.png)
 
-The third tutorial step will show how a second model is added to the application by including a model that infers age and gender of the detected face output from the face detection model.  
+The third tutorial step will show how a second model is added to the application by including a model that infers age and gender of each detected face.  
 
 [Face Detection Tutorial Step 3](./step_3/Readme.md)
 
@@ -350,7 +357,10 @@ Congratulations! you have completed the Face Detection Tutorial.  After going th
     * How to load the analysis models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
 
 # References and More Information
-OpenVINO main page: [https://software.intel.com/openvino-toolkit](https://software.intel.com/openvino-toolkit)
-OpenVINO documentation page: [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
+
+OpenVINO toolkit main page: [https://software.intel.com/openvino-toolkit](https://software.intel.com/openvino-toolkit)
+
+OpenVINO toolkit documentation page: [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
+
 Deep Learning Deployment Toolkit: [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/openvino-toolkit/deep-learning-cv)
 

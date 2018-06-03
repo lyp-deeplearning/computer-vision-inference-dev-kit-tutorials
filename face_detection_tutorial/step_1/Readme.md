@@ -1,18 +1,27 @@
-# Step 1: Create the Base OpenCV Application
+# Tutorial Step 1: Create the Base OpenCV Application
 
 ![image alt text](../doc_support/step1_image_0.png)
 
+# Table of Contents
+
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#the-basic-opencv-application-input-and-output">The Basic OpenCV Application, Input and Output</a><ul><li><a href="#parsing-command-line-arguments">Parsing Command Line Arguments</a><ul><li><a href="#create-the-argument">Create the Argument</a></li><li><a href="#parse-arguments">Parse Arguments</a></li></ul></li><li><a href="#opencv-input-to-output">OpenCV Input to Output</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li></ul></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+
 # Introduction
 
-This tutorial will show you the basics of what is needed to include and use OpenCV into an application. We will be working from the sample application that has already been created.  The sample is designed to be a minimal application that demonstrates how to use OpenCV functions to read image data and then display image data.  This tutorial will take a look at the OpenCV portions of the code and explain what is happening.  Then we will build and run the tutorial so we can see it in action.  In later tutorials, we will be adding the processing of the input image to this basic framework.
+This tutorial will show the basics of what is needed to include and use OpenCV in an application. We will be walking through the sample application that has already been created.  The sample is designed to be a minimal application that demonstrates how to use OpenCV functions to read image data and then display the image data.  This tutorial will walkthrough the OpenCV portions of the code and explain what it does.  Then we will build and run the tutorial so we can see it in action.  In later tutorials, we will be adding processing of the input image to this basic framework.
 
 # The Basic OpenCV Application, Input and Output
 
 Every application needs some way of getting data in and data out.  Let us now take a look at the code we will be using to do the input and output in our OpenCV application.  Then we can compile and run our program to see how it works using the base input and output settings.  
 
-### Parsing Command Line Arguments
+## Parsing Command Line Arguments
 
-To make it easier to set everything from the input video file to which model and device is to be used, we will use command line arguments to our application.  To parse the command line arguments we make use of the "gflags" helper library that comes with the OpenVINO samples.  Here we will briefly go over the primary functions that were used, for reference the full source code for the gflags library may be found in the OpenVINO samples directory: /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/thirdparty/gflags
+To make it easier to set everything from the input video file to which model and device is to be used, we will use command line arguments to the application.  To parse the command line arguments we make use of the "gflags" helper library that comes with the OpenVINO toolkit samples.  Here we will briefly go over the primary functions that were used, for reference the full source code for the gflags library may be found in the OpenVINO tookit samples directory: 
+
+```bash
+/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/thirdparty/gflags
+```
+
 
 To make use of the gflags library and use the supplied functions and classes, we must include the main header file:
 
@@ -21,11 +30,11 @@ To make use of the gflags library and use the supplied functions and classes, we
 ```
 
 
-We do this in the main header file "face_detection.hpp" where we will define all the command line arguments using these same steps:
+This is done in the main header file "face_detection.hpp" where all the command line arguments are defined using the following steps:
 
-#### Create the Argument
+### Create the Argument
 
-Create the argument using the macro "DEFINE_string".  Here we see how the “-i \<video filename\>” argument that we will use to specify the input video is defined:
+Create the argument using the macro "DEFINE_string".  Here the “-i \<video filename\>” argument that will be used to specify the input video is defined:
 
 ```cpp
 /// @brief message for images argument
@@ -53,13 +62,16 @@ In the above code:
 
     * Creates the variable FLAGS_i to hold the string value for the "i" argument
 
-#### Parse Arguments
+### Parse Arguments
 
 In main.cpp’s main() function, ParseAndCheckCommandLine() is called to do command line argument parsing and checking for valid arguments. The actual argument parsing and setting variables is done by the call:
+
 ```cpp
 gflags::ParseCommandLineNonHelpFlags(&argc, &argv, true);
 ```
-After returning, the FLAGS_i variable will be set with the "-i" command line arguments “\<video filename\>” value, or if not specified, the default value of “cam”.
+
+
+After returning, the FLAGS_i variable will be set with the "-i" command line arguments “<video filename>” value, or if not specified, the default value of “cam”.
 
 This is how the "-i" argument is done, all other arguments are handled similarly using the other forms of the gflags macro according to data type needed as follows:
 
@@ -71,18 +83,22 @@ This is how the "-i" argument is done, all other arguments are handled similarly
 
 * DEFINE_bool() for boolean arguments
 
-### OpenCV Input to Output
+## OpenCV Input to Output
 
 1. Open up an Xterm window or use an existing window to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 1:
+
 ```bash
 cd tutorials/face_detection_tutorial/cd step_1
 ```
 
+
 3. Open the files "main.cpp" and “face_detection.hpp” in the editor of your choice such as ‘gedit’, ‘gvim’, or ‘vim’.
 
-4. First, we include a couple of header files that define some helpful utility classes we can use to simplify some of the day-to-day programming tasks, as well as some functions for making logging easier.
+### Header Files
+
+1. Include header files that define some helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
 
 ```cpp
 #include <samples/common.hpp>
@@ -90,14 +106,16 @@ cd tutorials/face_detection_tutorial/cd step_1
 ```
 
 
-5. Then we are going to pull in the opencv.hpp file from the Intel OpenCV SDK.  This will give us access to the optimized OpenCV functions that Intel provides.
+2. Include the opencv.hpp file for the Intel optimized OpenCV libraries included in the OpenVINO toolkit. 
 
 ```cpp
 #include <opencv2/opencv.hpp>
 ```
 
 
-6. Now we jump down to the main function.  The first thing we need to do is to create an OpenCV video capture object that we will use to get image data.  Then we need to tell that object where to get the data.
+### main()
+
+1. First create an OpenCV video capture object that will be used to source the image data.  Then open the image source.  FLAGS_i is the command line parameter that tells the application the source of where the image.  The source can be the path to an image file, the path to a video file, or "cam" for the USB camera.
 
 ```cpp
 cv::VideoCapture cap;
@@ -107,32 +125,46 @@ if (!(FLAGS_i == "cam" ? cap.open(0) : cap.open(FLAGS_i))) {
 ```
 
 
-7. FLAGS_i is a command line parameter that tells the program where the image data from is coming from.  It can be the path to an image file, the path to a video file, or cam.  If the parameter is cam, then the program will try to get input from the USB camera.
-
-8. The next step is to create a place to store the image data and then read in the data.
+2. Get the width and height of the image source for use later.  
 
 ```cpp
 const size_t width  = (size_t) cap.get(CV_CAP_PROP_FRAME_WIDTH);
 const size_t height = (size_t) cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+```
+
+
+3. Create storage for the image frame and then read in the first frame. 
+
+```cpp
 cv::Mat frame;
-cap.read(frame);
+if (!cap.read(frame)) {
+   throw std::logic_error("Failed to get frame from cv::VideoCapture");
+}
 ```
 9. Here, you can see that we are getting the width and height of the image file, or the camera resolution, and storing that for use later.  We also use cv::Mat to create an array that we can use to store the image data.  Then we read in the image data by calling "cap.read(frame)".
 
-10. At this point, we have created OpenCV objects to read data, and store data, so we are ready to create our main loop to read in and then write out the image.  The loop will run forever until you press any key except for ‘s’ which will take a snapshot of the current output and save it as "snapshot.bmp", convenient for saving results to be used later. The main loop looks like:
-    1. Run forever until we decide to break elsewhere inside the loop:
-    ```cpp
-    while (true) {
-    ```
-    2. We grab an available image from the source:
-   
-    ```cpp
+### Main Loop
+
+The main loop will read in and then write out the image frames until there are not more to available. 
+
+1. Run forever until break elsewhere inside the loop when there is no more images:
+
+```cpp
+while (true) {
+```
+
+
+2. Grab an available image from the source:
+
+```cpp
     /** requesting new frame if any*/
     cap.grab();
-    ```
-    3. Check for key press to either snapshot (pressing ‘s’) or stop (any other key)
+```
 
-    ```cpp
+
+3. Check for key press to either snapshot (pressing ‘s’) or stop (any other key)
+
+```cpp
     int keyPressed;
     if (-1 != (keyPressed = cv::waitKey(1)))
     {
@@ -144,22 +176,24 @@ cap.read(frame);
    		 break;
    	 }
     }
-    ```
-    4. Show the output, we also wrap it with time functions to measure the time it took to do:
+```
 
-    ```cpp
+
+4. Show the output, wrapping it with time functions to measure the time it took to do:
+
+```cpp
     auto t0 = std::chrono::high_resolution_clock::now();
     if (!FLAGS_no_show) {
    	  cv::imshow("Detection results", frame);
     }
     auto t1 = std::chrono::high_resolution_clock::now();
     ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
-    ```
+```
 
 
-    6. Check for another image by retrieving it, if nothing to retrieve we wait for a key press if the command line "-no_wait" was not used.
+5. Check for another image by retrieving it, if there is nothing to retrieve then wait for a key press if the command line parameter "-no_wait" was not used.
 
-    ```cpp
+```cpp
     // end of file, for single frame file, like image we just keep it displayed to let user check what was shown
     cv::Mat newFrame;
     if (!cap.retrieve(newFrame)) {
@@ -174,32 +208,34 @@ cap.read(frame);
    	  break;
     }
     frame = newFrame;  // shallow copy
-    ```
+```
 
 
-    7. Let user know they can stop a multi-image source like video or camera
+6. Let user know they can stop a multi-image source like video or camera
 
-    ```cpp
+```cpp
     if (firstFrame) {
    	  slog::info << "Press 's' key to save a snapshot, press any other key to stop" << slog::endl;
     }
 
     firstFrame = false;
-    ```
+```
 
 
-    8. End of loop, go back to while() to run again
+7. End of loop, go back to while(true) to run again
 
-    ```cpp
-    }
-    ```
+```cpp
+}
+```
 
 
 # Building and Running
 
-Now that we have looked at the code and understand how the program works, let us compile it and see it in action.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.
 
-1. First, we need to configure the build environment when using OpenVINO by running the "setupvars.sh" script.
+## Build
+
+1. First, we need to configure the build environment when using the OpenVINO toolkit by running the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -224,45 +260,53 @@ make
 
 4. You should now have the executable "face_detection_tutorial" file in the “./intel64/Release/” directory.  We will be using that executable to run our base OpenCV application.
 
-5. Now, it is time to run our application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with OpenVINO and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
+## Run
 
-6. First, let us use our application to view a single image file.  We do this by using a "-i" parameter followed by the name of an image file.
+1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO toolkit and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
+
+2. First, let us use the application to view a single image file.  We do this by using a "-i" parameter followed by the name of an image file.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -i ../../data/face.jpg
 ```
 
 
-7. You should now see a new window with an image.  You should also see a "Press 's' key to save a snapshot, press any other key to exit" prompt in the console window.  The application will now wait for you to press a key with the image window active.
+3. You should now see a new window with an image.  You should also see a "Press 's' key to save a snapshot, press any other key to exit" prompt in the console window.  The application will now wait for you to press a key with the image window active.
 
     1. Note: Pressing a key in the console window will not do anything because the image window is detecting key presses.  Use Ctrl+C to exit.
 
-8. Next, let us see how our application handles a video file:
+4. Next, let us see how the application handles a video file:
 
 ```bash
 ./intel64/Release/face_detection_tutorial -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-9. You will now see a window appear and play the video.  After the video has finished playing, the window will continue to display the final frame of the video, waiting for you to press a key with the image window active.
+5. You will now see a window appear and play the video.  After the video has finished playing, the window will continue to display the final frame of the video, waiting for you to press a key with the image window active.
 
-10. Finally, we can use the application to view live video from the USB camera connected to the UP Squared board.  The camera is the default source, so we do this by running the application without using any parameters.
-    ```bash
-    ./intel64/Release/face_detection_tutorial
-    ```
-    2. Or we can still specify the camera using "cam":
-    ```bash
-    ./intel64/Release/face_detection_tutorial -i cam
-    ```
-11. You will now see the output window appear displaying live input from the USB camera.  When you are ready to exit the application, make sure the output window is active and press a key.
+6. Finally, we can use the application to view live video from the USB camera connected to the UP Squared board.  The camera is the default source, so we do this by running the application without using any parameters.
+
+```bash
+./intel64/Release/face_detection_tutorial
+```
+
+
+Or we can still specify the camera using "cam":
+
+```bash
+./intel64/Release/face_detection_tutorial -i cam
+```
+
+
+7. You will now see the output window appear displaying live input from the USB camera.  When you are ready to exit the application, make sure the output window is active and press a key.
 
 # Conclusion
 
-Now we have seen what it takes to create a basic application that uses OpenCV to read and display image data.  We have also seen how our application works with each type of image input it accepts including still images, video files, and live video from the USB camera.  We will be using the basic framework from this step of the tutorial as we move forward building up the application step-by-step.  Next, in Tutorial Step 2 we will be adding the ability to process images and actually detect faces.
+Now we have seen what it takes to create a basic application that uses OpenCV to read and display image data.  We have also seen how the application works with each type of image input it accepts including still images, video files, and live video from the USB camera.  We will be using the basic framework from this step of the tutorial as we move forward building up the application step-by-step.  Next, in Tutorial Step 2 we will be adding the ability to process images and actually detect faces.
 
 # Navigation
+
 [Face Detection Tutorial](../Readme.md)
 
 [Face Detection Tutorial Step 2](../step_2/Readme.md)
-
 

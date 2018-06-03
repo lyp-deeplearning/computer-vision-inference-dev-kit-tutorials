@@ -8,7 +8,7 @@
 
 # Introduction
 
-This tutorial will show you the basics of what is needed to include and use OpenCV into an application. We will be working from the sample application that has already been created.  The sample is designed to be a minimal application that demonstrates how to use OpenCV functions to read image data and then display image data.  This tutorial will take a look at the OpenCV portions of the code and explain what is happening.  Then we will build and run the tutorial so we can see it in action.  In later tutorials, we will be adding the processing of the input image to this basic framework.
+This tutorial will show the basics of what is needed to include and use OpenCV in an application. We will be walking through the sample application that has already been created.  The sample is designed to be a minimal application that demonstrates how to use OpenCV functions to read image data and then display the image data.  This tutorial will walkthrough the OpenCV portions of the code and explain what it does.  Then we will build and run the tutorial so we can see it in action.  In later tutorials, we will be adding processing of the input image to this basic framework.
 
 # The Basic OpenCV Application, Input and Output
 
@@ -257,13 +257,13 @@ make
 ```
 
 
-4. You will now have the executable "car_detection_tutorial" file in the “./intel64/Release/” directory.  We will be using that executable to run our base OpenCV application.
+4. You should now have the executable "car_detection_tutorial" file in the “./intel64/Release/” directory.  We will be using that executable to run our base OpenCV application.
 
 ## Run
 
-1. Now, it is time to run our application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO toolkit and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
+1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO toolkit and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
 
-2. First, let us use our application to view a single image file.  We do this by using a "-i" parameter followed by the name of an image file.
+2. First, let us use the application to view a single image file.  We do this by using a "-i" parameter followed by the name of an image file.
 
 ```bash
 ./intel64/Release/car_detection_tutorial -i ../../data/car_1.bmp
@@ -274,7 +274,7 @@ make
 
     1. Note: Pressing a key in the console window will not do anything because the image window is detecting key presses.  Use Ctrl+C to exit.
 
-4. Next, let us see how our application handles a video file:
+4. Next, let us see how the application handles a video file:
 
 ```bash
 ./intel64/Release/car_detection_tutorial -i ../../data/car-detection.mp4
@@ -301,7 +301,7 @@ Or we can still specify the camera using "cam":
 
 # Conclusion
 
-Now we have seen what it takes to create a basic application that uses OpenCV to read and display image data.  We have also seen how our application works with each type of image input it accepts including still images, video files, and live video from the USB camera.  We will be using the basic framework from this step of the tutorial as we move forward building up the application step-by-step.  Next, in Tutorial Step 2 we will be adding the ability to process images and actually detect cars.
+Now we have seen what it takes to create a basic application that uses OpenCV to read and display image data.  We have also seen how the application works with each type of image input it accepts including still images, video files, and live video from the USB camera.  We will be using the basic framework from this step of the tutorial as we move forward building up the application step-by-step.  Next, in Tutorial Step 2 we will be adding the ability to process images and actually detect cars.
 
 # Navigation
 

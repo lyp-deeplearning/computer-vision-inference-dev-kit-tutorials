@@ -6,7 +6,7 @@
 
 The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared hardware included in the UP Squared AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Car Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared hardware.
 
-This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the third step, the application will be able to detect a vehicle and report the vehicle type (e.g. car, van, etc) and color.  In the final step, the application is improved further using the Inference Engine asynchronous API to perform inference in parallel with the main processing loop.  Before that, some key concepts related to and for using the OpenVINO toolkit will be first introduced and later seen along the way within the steps.  
+This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the third step, the application will be able to detect a vehicle and report the vehicle type (e.g. car, van, etc) and color.  In the final step, the application is improved using the Inference Engine asynchronous API to perform inference in parallel with the main processing loop.  Before that, some key concepts related to using the OpenVINO toolkit will be introduced and later seen along the way within the steps.  
 
 # Getting Started
 
@@ -56,7 +56,7 @@ By now you should have completed the setup and getting starting guide for the ki
 
 ## Downloading the Tutorial from the Git Repository
 
-The first thing we need to do is create a place for the Car Detection tutorial and then download it.  To do this, we will create a directory called "tutorials" and use it to store the files that we download from the “cvs-sdk-tutorial” GitHub repository.  There are two options to download this tutorial: 1) Download as part of the entire repository using “git clone”, or 2) Use “svn export” to download just this tutorial (smaller)
+The first thing we need to do is create a place for the Car Detection tutorial and then download it.  To do this, we will create a directory called "tutorials" and use it to store the files that are downloaded from the “cvs-sdk-tutorial” GitHub repository.  There are two options to download this tutorial: 1) Download as part of the entire repository using “git clone”, or 2) Use “svn export” to download just this tutorial (smaller)
 
 ### Using Git Clone to Clone the Entire Repository
 
@@ -162,7 +162,7 @@ The Inference Engine includes a plugin library for each supported device that ha
 
 #### Inference Engine API Integration Flow
 
-Using the Inference API follows the basic steps:
+Using the Inference Engine API follows the basic steps:
 
 1. Load plugin
 
@@ -188,9 +188,9 @@ Using the Inference API follows the basic steps:
 
 6. Prepare input
 
-    a. Get an input blob to hold input data
+    a. Get the input blob to hold input data
 
-    b. Transfer data from source into input blob
+    b. Transfer data from the data source into input blob
 
 7. Infer
 
@@ -200,7 +200,9 @@ Using the Inference API follows the basic steps:
 
     a. Get output blobs and process results
 
-In tutorial Steps 2, and 3 we will walkthrough the code that specifically integrates each of the models used in our application.  More details can also be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
+In tutorial Steps 2, and 3 we will walkthrough the code that specifically integrates each of the models used in the application.  
+
+More details can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
 
 #### Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries
 
@@ -211,7 +213,7 @@ source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
-This script sets up the executable and library paths along with environment variables used by the OpenVINO toolkit as well as this tutorial.
+This script sets up the executable and library paths along with environment variables used by the OpenVINO toolkit tools as well as this tutorial.
 
 ### Where Do the Inference Models Come from?
 
@@ -219,13 +221,11 @@ An inference model may come from any of the supported sources and workflows such
 
 # Key Concepts
 
-Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.  For other related concepts, please see the Face Detection Tutorials that covers and answers the questions:
+Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.  For more related concepts, please see the Face Detection Tutorials that covers and answers the questions:
 
-* Batch Size - What is it and how does it affect latency and performance?
+* Intel OpenCV - Why is it included in the OpenVION toolkit?
 
-* Image Processing Pipeline - What is it and how does it affect performance?
-
-* Synchronous vs. Asynchronous API - What is it how does it affect performance?
+* Floating Point Precision - What is it and why does it matter?
 
 ## Batch Size
 
