@@ -761,7 +761,6 @@ int main(int argc, char *argv[]) {
             }
 
             // ----------------------------Run age-gender, and head pose detection simultaneously----------------
-            // TODO: run in parallel
             t0 = std::chrono::high_resolution_clock::now();
             if (AgeGender.enabled()) {
                 AgeGender.submitRequest();
