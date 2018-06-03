@@ -761,17 +761,20 @@ int main(int argc, char *argv[]) {
             }
 
             // ----------------------------Run age-gender, and head pose detection simultaneously----------------
+            // TODO: run in parallel
             t0 = std::chrono::high_resolution_clock::now();
             if (AgeGender.enabled()) {
                 AgeGender.submitRequest();
-                AgeGender.wait();
             }
-
             if (HeadPose.enabled()) {
                 HeadPose.submitRequest();
+            }
+            if (AgeGender.enabled()) {
+                AgeGender.wait();
+            }
+            if (HeadPose.enabled()) {
                 HeadPose.wait();
             }
-
             t1 = std::chrono::high_resolution_clock::now();
             ms secondDetection = std::chrono::duration_cast<ms>(t1 - t0);
 
