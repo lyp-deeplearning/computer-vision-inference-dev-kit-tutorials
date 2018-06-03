@@ -1,10 +1,14 @@
-# Step 2: Add the first model, Face Detection
+# Tutorial Step 2: Add the first model, Face Detection
 
 ![image alt text](../doc_support/step2_image_0.png)
 
+# Table of Contents
+
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first model, Face Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#face-detection-models">Face Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-face-detection-model">Adding the Face Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a></li></ul></li><li><a href="#facedetectionclass">FaceDetectionClass</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#facedetectionclass">FaceDetectionClass()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-facedetectionclass">Using FaceDetectionClass</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+
 # Introduction
 
-Welcome to the Face Detection Tutorial Step 2.  This is the step of the tutorial where it gets its name by processing image data and detecting faces.  We get this ability by having our application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad to perform face detection.  You may recall from the OpenVINO overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO toolkit to load and run models on devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do face detection on the input image and then output the results.  
+Welcome to the Face Detection Tutorial Step 2.  This is the step of the tutorial where it gets its name by processing image data and detecting faces.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad to perform face detection.  You may recall from the OpenVINO toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO toolkit to load and run models on devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do face detection on the input image and then output the results.  
 
 A sample output showing the results where a Region of Interest (ROI) box appears around the detected face below.  The metrics reported include the time for OpenCV capture and display along with the time to run the face detection model.  The detected face gets a box around it along with a label as shown below.
 
@@ -22,7 +26,7 @@ The Intel CV SDK includes two pre-compiled face detection models located at:
 
         * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml
 
-    * More detail may be found in the CV SDK installation at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
+    * More detail may be found the OpenVINO toolkit at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004
 
@@ -32,7 +36,7 @@ The Intel CV SDK includes two pre-compiled face detection models located at:
 
         * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/FP32/face-detection-retail-0004.xml
 
-    * More detail may be found in the CV SDK installation at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
+    * More detail may be found in the OpenVINO toolkit at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
 
 Each model may be used to perform face detection, the difference is how complex each underlying model is for the results it is capable of producing as shown in the summary below (for more details, see the descriptions HTML pages for each model): 
 
@@ -63,9 +67,9 @@ Note that each model comes pre-compiled for both FP16 and FP32, when choosing wh
 
 ## How Do I Specify Which Device the Model Will Run On?
 
-To make it easier to try different assignments, we will make our application be able to set which device a model is to be run on using command line arguments.  The default device will be the CPU when not set.  Now we will do a brief walkthrough how this is done in the code starting from the command line arguments to the Inference Engine API calls.  Here we are highlighting the specific code, so some code will be skipped over for now to be covered later in other walkthroughs.
+To make it easier to try different assignments, the application will use command line arguments to specify which device a model is to be run on.  The default device will be the CPU when not set.  Now we will do a brief walkthrough how this is done in the code starting from the command line arguments to the Inference Engine API calls.  Here we are highlighting the specific code, so some code will be skipped over for now to be covered later in other walkthroughs.
 
-To create the command line arguments, we use the previously described gflags helper library to define the arguments for specifying both the face detection model and the device to run it on.  The code appears in "face_detection.hpp":
+To create the command line arguments, the previously mentioned gflags helper library is used to define the arguments for specifying both the face detection model and the device to run it on.  The code appears in "face_detection.hpp":
 
 ```cpp
 /// @brief message for plugin argument
@@ -78,7 +82,7 @@ DEFINE_string(m, "", face_detection_model_message);
 ```
 
 
-To create the command line argument: -m <model-IR-xml-file>, where <model-IR-xml-file> is the face detection model’s .xml file
+To create the command line argument: -m \<model-IR-xml-file\>, where \<model-IR-xml-file\> is the face detection model’s .xml file
 
 ```bash
 /// @brief message for assigning face detection calculation to device
@@ -90,17 +94,19 @@ DEFINE_string(d, "CPU", target_device_message);
 ```
 
 
-To create the argument: -d <device>, where <device> is set to "CPU", "GPU", or "MYRIAD" which we will see conveniently matches what will be passed to the Inference Engine later.
+To create the argument: -d \<device\>, where <device> is set to "CPU", "GPU", or "MYRIAD" which we will see conveniently matches what will be passed to the Inference Engine later.
 
 As a result of the macros used in the code above, the variables "FLAGS_m" and “FLAGS_d” have been created to hold the argument values.  Focusing primarily on how the “FLAGS_d” is used to tell the Inference Engine which device to use, we follow the code in “main()” of “main.cpp”:
 
-1. First we declare a map to hold the plugins as they are loaded.  The mapping will allow the associated plugin InferencePlugin object to be found by name (e.g. "CPU") 
+1. First declare a map to hold the plugins as they are loaded.  The mapping will allow the associated plugin InferencePlugin object to be found by name (e.g. "CPU")    
+
 ```cpp
      // ---------------------Load plugins for inference engine------------------------------------------------
         std::map<std::string, InferencePlugin> pluginsForDevices;
 ```
 
-2. We use a vector to pair the device and model command line arguments so we can iterate through them:     
+
+2. A vector is used to pair the device and model command line arguments to iterate through them:     
 
 ```cpp
    std::vector<std::pair<std::string, std::string>> cmdOptions = {
@@ -109,7 +115,7 @@ As a result of the macros used in the code above, the variables "FLAGS_m" and �
 ```
 
 
-3. We iterate through device and model the argument pairs:
+3. Iterate through device and model the argument pairs:
 
 ```cpp
 for (auto && option : cmdOptions) {
@@ -118,15 +124,16 @@ for (auto && option : cmdOptions) {
 ```
 
 
-4. We make sure the plugin has not already been created and put into the pluginsForDevices map: 
-        
+4. Make sure the plugin has not already been created and put into the pluginsForDevices map:            
+
 ```cpp
  if (pluginsForDevices.find(deviceName) != pluginsForDevices.end()) {
                 continue;
             }
 ```
 
-5. We create the plugin using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “FLAGS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
+
+5. Create the plugin using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “FLAGS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
 
 ```cpp
          slog::info << "Loading plugin " << deviceName << slog::endl;
@@ -143,7 +150,7 @@ for (auto && option : cmdOptions) {
 ```cpp
             pluginsForDevices[deviceName] = plugin;
 ```
-8. Finally load the model passing the plugin created for the specified device, again using the name given same as it is on the command line ("Load" class will be described later):
+8. Finally load the model passing the plugin created for the specified device, again using the name given same as it appears on the command line ("Load" class will be described later):
 
 ```cpp
        // --------------------Load networks (Generated xml/bin files)-------------------------------------------
@@ -152,7 +159,7 @@ for (auto && option : cmdOptions) {
 
 ### Verifying Which Device is Running the Model
 
-Our application will give output saying what Inference Engine plugins (devices) were loaded and which models were loaded on which plugins.
+The application will give output saying what Inference Engine plugins (devices) were loaded and which models were loaded on which plugins.
 
 Here is a sample of the output in the console window:
 
@@ -165,11 +172,11 @@ InferenceEngine:
 [ INFO ] Parsing input parameters
 [ INFO ] Reading input
 ```
-Our application reporting it is loading the CPU plugin:
+The application reporting that it is loading the CPU plugin:
 ```bash
 [ INFO ] Loading plugin CPU
 ```
-Inference Engine reports it has loaded the CPU plugin (MKLDNNPlugin) and its version:
+Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and its version:
 ```bash
 	API version ............ 1.0
 	Build .................. lnx_20180314
@@ -179,7 +186,7 @@ Inference Engine reports it has loaded the CPU plugin (MKLDNNPlugin) and its ver
 [ INFO ] Checking Face Detection inputs
 [ INFO ] Checking Face Detection outputs
 ```
-Our application reporting it is loading the CPU plugin for the face detection model:
+The application reporting that it is loading the CPU plugin for the face detection model:
 ```bash
 [ INFO ] Loading Face Detection model to the CPU plugin
 [ INFO ] Start inference
@@ -189,13 +196,15 @@ Later in Tutorial Step 4, we cover loading multiple models onto different device
 
 # Adding the Face Detection Model
 
-From Tutorial Step 1, we have the base application that can read and display image data, now it is time process the images.  This step of the tutorial expands the capabilities of our application to use the Inference Engine and the face detection model to process images.  To accomplish this, first we are going to introduce some helper functions and classes.  The code may be found in the main.cpp file.
+From Tutorial Step 1, we have the base application that can read and display image data, now it is time process the images.  This step of the tutorial expands the capabilities of the application to use the Inference Engine and the face detection model to process images.  To help accomplish this, first we are going to walkthrough the helper functions and classes.  The code may be found in the main.cpp file.
 
-### Helper Functions and Classes
+## Helper Functions and Classes
 
-We are going to need a function that takes our input image and turns it into a "blob".  Which begs the question “What is a blob?”  In short, a blob, specifically the class InferenceEngine::Blob, is the data container type used by the Inference Engine for holding input and output data.  To get data into our model, we will need to first convert the image data from the OpenCV cv::Mat to an InferenceEngine::Blob.  To do that we have the provided helper function “matU8ToBlob” in main.cpp: 
+There will need to be a function that takes the input image and turns it into a "blob".  Which begs the question “What is a blob?”  In short, a blob, specifically the class InferenceEngine::Blob, is the data container type used by the Inference Engine for holding input and output data.  To get data into the model, the image data will need to be converted from the OpenCV cv::Mat to an InferenceEngine::Blob.  For doing that is the helper function “matU8ToBlob” in main.cpp: 
 
-#### matU8ToBlob
+### matU8ToBlob
+
+1. Define variables that store the dimensions for the images that the IR is optimized to work with.  Then assign "blob_data" to the blob’s data buffer.
 
 ```cpp
 // Returns 1 on success, 0 on failure
@@ -209,7 +218,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-1. Here we define variables that store the dimensions for the images that the IR is optimized to work with.  Then we assign "blob_data" to the blob’s data buffer.
+2. Check to see if the input image matches the dimensions of images that the IR is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  Make sure that an input with either height or width <1 is not stored, returning 0 to indicate nothing was done.
 
 ```cpp
     cv::Mat resized_image(orig_image);
@@ -223,7 +232,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-2. Next, we check to see if the input image matches the dimensions of images that the IR is expecting.  If the dimensions do not match, then we use the OpenCV functions to resize it.  We also make sure that a input with either height or width are <1 is not stored, returning 0 to indicate nothing was done.
+1. Now that the image data is the proper size, copy the data from the input image into the blob’s buffer.  A blob will hold the entire batch for a run through the inference model, so for each batch item first calculate "batchOffset" as an offset into the blob’s buffer before copying the data.
 
 ```cpp
     int batchOffset = batchIndex * width * height * channels;
@@ -241,13 +250,11 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-3. Now that we have the image data in the proper size, we copy the data from the input image into the blob’s buffer.  A blob will hold the entire batch for a run through the inference model, so for each batch item we first calculate "batchOffset" as an offset into the blob’s buffer before copying the data.
+For more details on the InferenceEngine::Blob class, see "Inference Engine Memory primitives" in the documentation: [https://software.intel.com/en-us/articles/OpenVINO-InferEngine](https://software.intel.com/en-us/articles/OpenVINO-InferEngine)
 
-For more details on the InferenceEngine::Blob class, see "Inference Engine Memory primitives" in the documentation.
+### Load
 
-#### Load
-
-The next helper function we are going to define loads the model onto the device we want it to execute on.  
+The helper class "Load" loads the model onto the device to be executed on.  
 
 ```cpp
 struct Load {
@@ -271,7 +278,7 @@ Load(FaceDetection).into(pluginsForDevices[FLAGS_d]);
 ```
 
 
-Which is read as "Load FaceDetection into the plugin pluginsForDevices[FLAGS_d]" which is done as follows:
+The line is read as "Load FaceDetection into the plugin pluginsForDevices[FLAGS_d]" which is done as follows:
 
 1. Load(FaceDetection) is a constructor to initialize model object "detector" and returns a “Load” object
 
@@ -281,11 +288,11 @@ Which is read as "Load FaceDetection into the plugin pluginsForDevices[FLAGS_d]"
 
     2. Sets the model object’s plugin (detector.plugin) to the one used
 
-#### BaseDetection Class
+### BaseDetection Class
 
-Now we are going to walkthrough the BaseDetection class that we use to abstract common features and functionality when using a model which the code also refers to as "detector".  
+Now we are going to walkthrough the BaseDetection class that is used to abstract common features and functionality when using a model which the code also refers to as "detector".  
 
-1. Here we declare the class and define its member variables and the default constructor and destructor.
+1. Declare the class and define its member variables, the constructor and destructor.  The ExecutableNetwork holds the model that will be used to process the data and make inferences.  The InferencePlugin is the Inference Engine plugin that will be executing the Intermediate Reference on a specific device.  InferRequest is the object that will be used to hold input and output data, start inference, and wait for results.  The name of the model is stored in topoName and the command line argument for the model is stored in commandLineFlag.  Finally, maxBatch is used to set the number of inputs to infer during each run. 
 
 ```cpp
 struct BaseDetection {
@@ -303,7 +310,7 @@ struct BaseDetection {
 ```
 
 
-2. The ExecutableNetwork holds the model that will be used to process the data and make inferences.  The InferencePlugin is the Inference Engine plugin that will be executing the Intermediate Reference on a specific device.  InferRequest is an object that we will use to tell the model that we want it to make inferences on some data.  The name of the model is stored in topoName and the command line parameters for this model are stored in commandLineFlag.  Finally, maxBatch is used to limit the number of items to that we will try to process, so we do not exceed the limits of the models or the hardware.
+2. Override operator -> for a convenient way to get access to the network.
 
 ```cpp
     ExecutableNetwork* operator ->() {
@@ -312,14 +319,14 @@ struct BaseDetection {
 ```
 
 
-3. We override operator -> so that we have a convenient way to get access to the network.
+3. Since the networks used by the detectors will have different requirements for loading, declare the read() function to be pure virtual.  This ensures that each detector class will have a read function appropriate to the model and IR it will be using.
 
 ```cpp
     virtual InferenceEngine::CNNNetwork read()  = 0;
 ```
 
 
-4. Since the networks used by the detectors could have different requirements for loading, we declare the read() function to be pure virtual.  This ensures that each detector class will have a read function appropriate to the IR it will be using.
+4. The submitRequest() function checks to see if the model is enabled and that there is a valid request to start.  If there is, it requests the model to start running the model asynchronously with startAsync() which returns immediately (we will show how to wait on the results next).
 
 ```cpp
     virtual void submitRequest() {
@@ -329,7 +336,7 @@ struct BaseDetection {
 ```
 
 
-5. The submitRequest() function checks to see if the model is enabled and that there is a valid request to start.  If there is, it requests the model to start running the model asynchronously (we will show how to wait on the results next).
+5. wait() will wait until results from the model are ready.  First check to see if the model is enabled and there is a valid request before actually waiting on the request.
 
 ```cpp
     virtual void wait() {
@@ -339,7 +346,7 @@ struct BaseDetection {
 ```
 
 
-6. We use wait() to wait until results from the model are ready.  Wait first checks to see if the model is enabled and there is a valid request before actually waiting on the request.
+6. Define variables and the "enabled()" function to track and check if the model is enabled or not.  The model is disabled if “commandLineFlag”, the command line argument specifying the model IR .xml file (e.g. “-m”) , has not been set.
 
 ```cpp
     mutable bool enablingChecked = false;
@@ -358,7 +365,7 @@ struct BaseDetection {
 ```
 
 
-7. Here we define variables and the "enabled()" function to track and check if the model is enabled or not.  The model is disabled if “commandLineFlag”, the command line argument specifying the model IR .xml file (e.g. “-m”) , has not been set.
+7. Finally, the printPerformancCount() function checks to see if the detector is enabled, and if it is, then we print out the overall performance statistics for the model.
 
 ```cpp
     void printPerformanceCounts() {
@@ -371,13 +378,11 @@ struct BaseDetection {
 ```
 
 
-8. Finally, the printPerformancCount() function checks to see if the detector is enabled, and if it is, then we print out the overall performance statistics for the model.
-
-#### FaceDetectionClass 
+## FaceDetectionClass 
 
 Now that we have seen what the base class provides, we will now walkthrough the code for the derived FaceDetectionClass class to see how a model is implemented.
 
-We will start by deriving it from the BaseDetection class and adding some new member variables that we will need.
+Start by deriving FaceDetectionClass from the BaseDetection class and adding some new member variables that will be needed.
 
 ```cpp
 struct FaceDetectionClass : BaseDetection {
@@ -404,7 +409,9 @@ struct FaceDetectionClass : BaseDetection {
 
 Notice the "Result" struct and the vector “results” that will be used since the face detection model can find more than one face in an image.  Each Result will include a cvRect indicating the location and size of the face in the input image.  It will also have a label and a value indicating the confidence that the result is a face.
 
-##### submitRequest()
+### submitRequest()
+
+Override the submitRequest() function to make sure there is input data ready and clear out any previous results before calling BaseDetection::submitRequest() to start inference.
 
 ```cpp
     void submitRequest() override {
@@ -417,21 +424,26 @@ Notice the "Result" struct and the vector “results” that will be used since 
 ```
 
 
-We override the submitRequest() function to make sure there is input data ready and clear out any previous results before calling BaseDetection::submitRequest() to start inference.
+### enqueue()
 
-##### enqueue()
+Check to see that the face detection model is enabled. 
 
 ```cpp
     void enqueue(const cv::Mat &frame) {
         if (!enabled()) return;
+```
 
+
+Create an inference request object if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+
+```cpp
         if (!request) {
             request = net.CreateInferRequestPtr();
         }
 ```
 
 
-We check to see that the face detection model is enabled.  If it has, then we create an inference request object if one has not been already.  The request object is is how we communicate with the model, sending and receiving data and starting inferences and waiting on completion.
+Get the input blob from the request and then use matU8ToBlob() to copy the image image data into the blob.
 
 ```cpp
         width = frame.cols;
@@ -445,20 +457,20 @@ We check to see that the face detection model is enabled.  If it has, then we cr
 ```
 
 
-Here, we get an input blob from the model and then use matU8ToBlob() to copy the image image data into the blob.
+### FaceDetectionClass()
 
-##### FaceDetectionClass()
+On construction of a FaceDetectionClassobject, call the base class constructor passing in the model to load specified in the command line argument FLAGS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for FaceDetectionClass class.
 
 ```cpp
     FaceDetectionClass() : BaseDetection(FLAGS_m, "Face Detection", 1) {}
 ```
 
 
-We call the base class constructor, passing in the model to load specified in the command line argument FLAGS_m, the name we want to call it when we print out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for FaceDetectionClass.
-
-##### read()
+### read()
 
 The next function we will walkthrough is the FaceDetectorClass::read() function which must be specialized specifically to the model that it will load and run. 
+
+1. Use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that we specified on the command line, using the "-m" parameter.  
 
 ```cpp
     InferenceEngine::CNNNetwork read() override {
@@ -469,7 +481,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-1. We use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that we specified on the command line, using the "-m" parameter.  
+2. Set the maximum batch size to the value given in the constructor which is fixed at 1.
 
 ```cpp
         /** Set batch size to 1 **/
@@ -478,7 +490,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-2. We set the maximum batch size to 1 because the face detection models to be used are designed to infer one image at a time.
+3. Generate file names for the model IR .bin and optional .label files based on the model name from the "-m" parameter.
 
 ```cpp
         /** Extract model name and load it's weights **/
@@ -494,7 +506,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-3. We generate names for the model IR .bin file and optional .label file based on the model name from the "-m" parameter.  
+4. Prepare the input data format configuring it for the proper precision (U8 = 8-bit per BGR channel) and memory layout (NCHW) for the model.
 
 ```cpp
         slog::info << "Checking Face Detection inputs" << slog::endl;
@@ -508,10 +520,10 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-4. Next, we prepare the input data format to configure it for the proper precision (U8 = 8-bit per BGR channel) and memory layout for the model (NCHW).  
+5. Make sure that there is only one output result defined for the model.
 
 ```cpp
-slog::info << "Checking Face Detection outputs" << slog::endl;
+        slog::info << "Checking Face Detection outputs" << slog::endl;
         InferenceEngine::OutputsDataMap outputInfo(netReader.getNetwork().getOutputsInfo());
         if (outputInfo.size() != 1) {
             throw std::logic_error("Face Detection network should have only one output");
@@ -519,7 +531,7 @@ slog::info << "Checking Face Detection outputs" << slog::endl;
 ```
 
 
-5. We make sure that there is only one output result defined for the model.
+6. Check to make sure that the output layers are what is expected.
 
 ```cpp
         auto& _output = outputInfo.begin()->second;
@@ -538,7 +550,7 @@ slog::info << "Checking Face Detection outputs" << slog::endl;
 ```
 
 
-6. We check to make sure that the output layers are what we expect them to be.
+7. Make sure that the the number of labels read from the label file match the number of classes in the model.  If not, then clear the labels and do not use them.  
 
 ```cpp
         const int num_classes = outputLayer->GetParamAsInt("num_classes");
@@ -551,7 +563,7 @@ slog::info << "Checking Face Detection outputs" << slog::endl;
 ```
 
 
-7. Now, we make sure that the the number of labels we read from the label file match the number of classes in the model.  If not, then we clear the labels and do not use them.  
+8. Check that the output the model will return matches as expected.
 
 ```cpp
         const InferenceEngine::SizeVector outputDims = _output->dims;
@@ -566,7 +578,7 @@ slog::info << "Checking Face Detection outputs" << slog::endl;
 ```
 
 
-8. We need to check the output the model is configured to provide and make sure it matches what we are expecting.
+9. Configure the output format to use the output precision and memory layout that we expect for results.
 
 ```cpp
         _output->setPrecision(Precision::FP32);
@@ -574,7 +586,7 @@ slog::info << "Checking Face Detection outputs" << slog::endl;
 ```
 
 
-9. We configure the output format to use the output precision and memory layout that we expect for results.
+10. Save the name of the input blob (inputInfo.begin()->first) for later use when getting a blob for input data.  Finally, return the InferenceEngine::CNNNetwork object that references this model’s IR.
 
 ```cpp
         slog::info << "Loading Face Detection model to the "<< FLAGS_d << " plugin" << slog::endl;
@@ -584,36 +596,54 @@ slog::info << "Checking Face Detection outputs" << slog::endl;
 ```
 
 
-10. We save the name of the input blob (inputInfo.begin()->first) for later use when getting a blob for input data.  Finally, we return the InferenceEngine::CNNNetwork object that references this model’s IR.
+### fetchResults()
 
-##### fetchResults()
+fetchResults() will parse the inference results saving in the "Results" variable.
 
-The last function we define for FaceDetectionClass is fetchResults().
+1. Make sure that the model is enabled.  If so, clear out any previous results. 
 
 ```cpp
     void fetchResults() {
         if (!enabled()) return;
         results.clear();
+```
+
+
+2. Track whether results have been fetched and only fetch once.  submitRequest() resets resultsFetched=false  to indicate results have not been fetched yet for each request.
+
+```cpp
         if (resultsFetched) return;
         resultsFetched = true;
 ```
 
 
-1. First, we make sure that the model is enabled.  If so, we clear out any previous results and track whether results have been fetched which is set to false by submitRequest() to indicate results have not been fetched yet for a request.
+3. Get a pointer to the inference model output results held in the output blob. 
 
 ```cpp
         const float *detections = request->GetBlob(output)->buffer().as<float *>();
 ```
 
 
-2. We get a pointer to the inference model results held in the output blob. 
+4. Start looping through the results from the face detection model.  "maxProposalCount" has been set to the maximum number of results that the model can return.  
 
 ```cpp
         for (int i = 0; i < maxProposalCount; i++) {
 ```
 
 
-3. Now we are going to start looping through the results we got from the face detection model.  "maxProposalCount" has been set to the number of results, or faces, that the model has returned.  
+5. Loop to retrieve all the results from the output blob buffer.  The output format is determined by the model.  For the face detection model used, the following fields are expected:
+
+    1. Image_id
+
+    2. Label
+
+    3. Confidence 
+
+    4. X coordinate of ROI
+
+    5. Y coordinate of ROI
+
+    6. Width of ROI
 
 ```cpp
             float image_id = detections[i * objectSize + 0];
@@ -631,14 +661,7 @@ The last function we define for FaceDetectionClass is fetchResults().
 ```
 
 
-4. Here, we retrieve the results from the output blob buffer.  The output format is determined by the model.  For this sample we are expecting to get the following:
-
-    1. Image_id
-    2. Label
-    3. Confidence 
-    4. X coordinate of ROI
-    5. Y coordinate of ROI
-    6. Width of ROI
+6. If the returned image_id is not valid, no more valid outputs are expected so exit the loop.
 
 ```cpp
             if (image_id < 0) {
@@ -647,7 +670,7 @@ The last function we define for FaceDetectionClass is fetchResults().
 ```
 
 
-5. If the returned image_id is not valid, we have run out of data returned from the model, so we exit the loop.
+7. Check to see if the application was requested to display the raw information (-r) and print it to the console if necessary.
 
 ```cpp
             if (FLAGS_r) {
@@ -659,7 +682,7 @@ The last function we define for FaceDetectionClass is fetchResults().
 ```
 
 
-6. Then we check to see if the application was requested to display the confidence information from the model’s inference, and print it to the console if necessary.
+8. Add the populated Result object to the vector of results to be used later by the application.
 
 ```cpp
             results.push_back(r);
@@ -668,13 +691,11 @@ The last function we define for FaceDetectionClass is fetchResults().
 ```
 
 
-7. And finally, we take the populated Result object and add it to the vector of results, so we can use it later.
+See the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide) for more information on the steps when using a model with the Inference Engine API.
 
 # Using FaceDetectionClass
 
-Now that we have seen what happens behind the scenes in the FaceDetectionClass, we will move into the application code and see how we use it.
-
-See <link to "Integrating Inference Engine in Your Application (Current API)"> for more information on the steps when using a model with the Inference Engine API..
+We have now seen what happens behind the scenes in the FaceDetectionClass, we will move into the application code and see how it is used.
 
 1. Open up an Xterm window or use an existing window to get to a command shell prompt.
 
@@ -687,14 +708,16 @@ cd tutorials/face_detection_tutorial/step_2
 
 3. Open the files "main.cpp" and “face_detection.hpp” in the editor of your choice such as ‘gedit’, ‘gvim’, or ‘vim’.
 
-4. The first set of new header files we need to include are necessary to enable the Inference Engine so that we can load models and use them to analyze the images.
+## Header Files
+
+1. The first set of header files to include are necessary to enable the Inference Engine so that models can be loaded and then run.
 
 ```cpp
 #include <inference_engine.hpp>
 ```
 
 
-5. There are three headers that let us work with the face detection model and the data it gives us.
+2. There are three more headers that for using the vehicle detection model and the data it gives.
 
 ```cpp
 #include "face_detection.hpp"
@@ -704,7 +727,9 @@ using namespace InferenceEngine;
 ```
 
 
-6. Next, we move into the main() function, where we have a few lines that help make it easier to reference plugins for the Inference Engine. The code pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use throught he Inference Engine API).  Then we instantiate our FaceDetection object of type FaceDetectionClass.
+## main()
+
+1. In the main() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map will store plugins created to be index by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the FaceDetection object of type FaceDetectionClass.
 
 ```cpp
 std::map<std::string, InferencePlugin> pluginsForDevices;
@@ -716,62 +741,60 @@ FaceDetectionClass FaceDetection;
 ```
 
 
-7. Now it is time to run through the device/model pairs to create the appropriate plugin for the device that we want to perform inference for the image.  
+2. Loop through the device/model pairs and check if a plugin for the device already exists.  if not, create the appropriate plugin.  
 
-    1. Loop through pairs pulling device and model arguments to create a new plugin for the specified device if one does not already exist.
-    ```cpp
-    for (auto && option : cmdOptions) {
-       auto deviceName = option.first;
-       auto networkName = option.second;
-       if (deviceName == "" || networkName == "") {
-          continue;
-       }
-       if (pluginsForDevices.find(deviceName) != pluginsForDevices.end()) {
-          continue;
-       }
-    ```
+```cpp
+for (auto && option : cmdOptions) {
+   auto deviceName = option.first;
+   auto networkName = option.second;
+   if (deviceName == "" || networkName == "") {
+      continue;
+   }
+   if (pluginsForDevices.find(deviceName) != pluginsForDevices.end()) {
+      continue;
+   }
+```
 
-    2. Load the plugin for the given deviceName then report its version.
 
-    ```cpp
-    slog::info << "Loading plugin " << deviceName << slog::endl;
-    InferencePlugin plugin = PluginDispatcher({"../../../lib/intel64", ""}).getPluginByDevice(deviceName);
-    std::cout << plugin.GetVersion() << std::endl << std::endl;
-    ```
+3. Load the plugin for the given deviceName then report its version.
 
-    3. If we are loading the CPU plugin, load the available CPU extensions library.
+```cpp
+   slog::info << "Loading plugin " << deviceName << slog::endl;
+   InferencePlugin plugin = PluginDispatcher({"../../../lib/intel64", ""}).getPluginByDevice(deviceName);
+   std::cout << plugin.GetVersion() << std::endl << std::endl;
+```
 
-    ```cpp
-       /** Load extensions for the CPU plugin **/
-       if ((deviceName.find("CPU") != std::string::npos)) {
-           plugin.AddExtension(std::make_shared<Extensions::Cpu::CpuExtensions>());
-       }
-    ```
 
-    4. Finish by saving the plugin into the map pluginsForDevices to be used later when loading the model.
+4. If loading the CPU plugin, load the available CPU extensions library.
 
-    ```cpp
-         pluginsForDevices[deviceName] = plugin;
-      }
-    ```
-      
+```cpp
+   /** Load extensions for the CPU plugin **/
+   if ((deviceName.find("CPU") != std::string::npos)) {
+       plugin.AddExtension(std::make_shared<Extensions::Cpu::CpuExtensions>());
+   }
+```
 
-8. Once we have verified that we have the proper plugin, it is time to load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
+
+5. Save the plugin into the map pluginsForDevices to be used later when loading the model.
+
+```cpp
+   pluginsForDevices[deviceName] = plugin;
+}
+```
+
+
+6. Load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
 
 ```cpp
 Load(FaceDetection).into(pluginsForDevices[FLAGS_d]);
 ```
 
-9. We create some variables that we will use to calculate and report the performance of our application as it processes each image and displays the results.
 
-```cpp
-typedef std::chrono::duration<double, std::ratio<1, 1000>> ms;
-auto wallclock = std::chrono::high_resolution_clock::now();
-double ocv_decode_time = 0, ocv_render_time = 0;
-```
+## Main Loop
 
+The main loop in main() is where all the work is done.  Here we walk through the changes made to what it does.  Not all of the code from Tutorial Step 1 is shown.  Please keep in mind that each time through the loop, the application is grabbing an image and storing it in an object named "frame".
 
-10. With that done, it is time to enter the application’s "while(true)" main loop to look at what needs to be done to process each image.  We have not included all of the code from Tutorial Step 1, so keep in mind that each time through the loop, the application is grabbing an image and storing it in an object named “frame”.  The code below tracks how long it takes to prepare and queue the current image for the face detection model.
+1. The code below enqueues the current image and tracks how long it takes.
 
 ```cpp
 auto t0 = std::chrono::high_resolution_clock::now();
@@ -781,7 +804,7 @@ ocv_decode_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 ```
 
 
-11. Next, we call the face detection model to infer the image using submitRequest() then we we wait for the results using wait().  The submit-then-wait are enveloped with timing functions to measure how long inference takes.
+2. The face detection model is run to infer the image using submitRequest() then the results are waited on using wait().  The submit-then-wait are enveloped with timing functions to measure how long the inference takes.
 
 ```cpp
 t0 = std::chrono::high_resolution_clock::now();
@@ -792,14 +815,14 @@ ms detection = std::chrono::duration_cast<ms>(t1 - t0);
 ```
 
 
-12. Now that results are ready, we can fetch the results.  We do not need to supply where the results are going to be stored because they are automatically stored in the Result struct that is part of the FaceDetectionClass.
+3. Parse and store the results in FaceDetection.results.
 
 ```cpp
 FaceDetection.fetchResults();
 ```
 
 
-13. The following section of code computes the statistics of how long each step of the analysis process took and prints that information over the image.
+4. Compute the statistics of how long each processing step took and print that information onto the image.
 
 ```cpp
 std::ostringstream out;
@@ -814,7 +837,7 @@ cv::putText(frame, out.str(), cv::Point2f(0, 45), cv::FONT_HERSHEY_TRIPLEX, 0.5,
 ```
 
 
-14. The next set of code displays the more interesting results.  Using OpenCV library calls, we get to see a rectangle drawn around the area that the face detection model determined to be a face.  
+5. Using OpenCV library calls draw a rectangle around the area that the face detection model determined to be a face along with a label.
 
 ```cpp
 int i = 0;
@@ -833,14 +856,14 @@ for (auto & result : FaceDetection.results) {
                       0.8,
                       cv::Scalar(0, 0, 255));
    auto genderColor =
-      cv::Scalar(100, 100, 100);
-   cv::rectangle(frame, result.location, genderColor, 1);
+      cv::Scalar(0, 255, 0);
+   cv::rectangle(frame, result.location, genderColor, 2);
    i++;
 }
 ```
 
 
-15. At this point, we are at the bottom of the "while(true)" loop and all the image inference has been completed.  All that is left to do is output the final results for the frame while measuring the time it took to show the image.
+6. Finally, display the final results for the frame while measuring the time it took to show the image.
 
 ```cpp
 t0 = std::chrono::high_resolution_clock::now();
@@ -850,7 +873,9 @@ ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 ```
 
 
-16. After all the images have been processed (or you have chosen to stop analyzing input from the camera), if the "-pc" command line argument was used, we print out the final performance statistics to the command window and exit the application.
+Post-Main Loop
+
+After all the images have been processed (or you have chosen to stop analyzing input from the camera), if the "-pc" command line argument was used, print out the performance statistics to the command window and exit the application.
 
 ```cpp
 if (FLAGS_pc) {
@@ -863,6 +888,8 @@ if (FLAGS_pc) {
 
 Now that we have walked through the code and learned what it will do, it is time to build the application and see it in action.
 
+## Build
+
 1. Open up an Xterm window or use an existing window to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
@@ -872,7 +899,7 @@ cd tutorials/face_detection_tutorial/step_2
 ```
 
 
-3. The first step is to configure the build environment for the Intel OpenVINO toolkit by sourcing the "setupvars.sh" script.
+3. The first step is to configure the build environment for the OpenVINO toolkit by sourcing the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -895,11 +922,13 @@ make
 ```
 
 
-6. You now have an executable file to run.  In order to have it run the face detection model, we will need to add a couple of parameters to the command line:
+## Run
 
-    1. "-i <input-image-or-video-file>" to specify an input image or video file instead of using the USB camera by default
+1. You now have an executable file to run.  In order to have it run the face detection model, we will need to add a couple of parameters to the command line:
 
-    2. "-m <model-xml-file>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml”
+    1. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
+
+    2. "-m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml”
 
     3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
     ```bash
@@ -940,27 +969,27 @@ make
     
     5. And now we can start referencing the variables for each model as: $mFDA16, $mFDA32, $mFDR16, $mFDR32, $mAG16, $mAG32, $mHP16, $mHP32
 
-7. Again, we will be using images and video files that are included with this tutorial or part of the Intel OpenVINO installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
+2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO toolkit installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
 
-8. Let us first run it on a single image, to see how it works.
+3. Let us first run it on a single image, to see how it works.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -i ../../data/face.jpg
 ```
 
 
-9. You will now see an output window open up with the image displayed.  Over the image, you will see some text with the statistics of how long it took to perform the OpenCV input and output and model processing time.  You should also see a rectangle drawn around the face in the image that has been labeled with an instance number and confidence value.
+4. You will now see an output window open up with the image displayed.  Over the image, you will see text with the statistics of how long it took to perform the OpenCV input and output and model processing time.  You should also see a rectangle drawn around the face in the image that has been labeled with an instance number and confidence value.
 
-10. Let us see how our application handles a video file.  And let us also see how easy it is to have our application run a different face detection model by loading the face-detection-retail-0004 IR files by just changing the -m parameter from $mFDA32 to $mFDR32.
+5. Let us see how the application handles a video file.  And let us also see how easy it is to have the application run a different face detection model by loading the face-detection-retail-0004 IR files by just changing the -m parameter from $mFDA32 to $mFDR32.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDR32 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-11. Now, you should see a window open, playing the video.  Over each frame of the video, you will see a rectangle drawn around the face.  As the face moves around the image, the rectangle will follow it.
+6. Now, you should see a window open, playing the video.  Over each frame of the video, you will see a rectangle drawn around the face.  As the face moves around the image, the rectangle will follow it.
 
-12. Finally, let us see how the application works with the default camera input.
+7. Finally, let us see how the application works with the default camera input.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -i cam
@@ -974,18 +1003,18 @@ Or
 ```
 
 
-13. Now you will see a window displaying the input from the USB camera.  The performance statistics appear over the image, as our application processes each frame.  If there is a face in the image, you will see a rectangle surrounding the face with label and confidence value.  The rectangle will follow the face around the image as it moves and will change sizes to fit the face.
+8. Now you will see a window displaying the input from the USB camera.  The performance statistics appear over the image, as the application processes each frame.  If there is a face in the image, you will see a rectangle surrounding the face with label and confidence value.  The rectangle will follow the face around the image as it moves and will change sizes to fit the face.
 
-14. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
+9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
 
-15. You may remember the final step of the code walk-through, where we showed a step that printed out Performance Counts for the application.  This only happens if you specify the "-pc" command line option.  Let us run the application one more time, to see what kind of output we get from printing those counts.
+10. You may remember the final step of the code walk-through, where we showed a step that printed out Performance Counts for the application.  This only happens if you specify the "-pc" command line option.  Let us run the application one more time to see what kind of output we get from printing those counts.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -i cam -pc
 ```
 
 
-16. When you exit the application this time, you will notice that the Xterm window is updated with the final statistics from the face detection model.  The extra output shows a detailed list of the various analysis steps the model performed and how long the model spent on each step.  At the bottom of the list, it displays the total time spent performing the face inference.
+11. When you exit the application this time, you will notice that the Xterm window is updated with the final statistics from the face detection model.  The extra output shows a detailed list of the various analysis steps the model performed during the last request (Note only one, not all of them for video) and how long the model spent on each step.  At the bottom of the list, it displays the total time spent performing the face inference.
 
 ```bash
 InferenceEngine: 
@@ -1019,11 +1048,11 @@ Total time: 91233    microseconds
 ```
 
 
-17. Above, is part of the output you will see in your console window.  It shows information on what the Inference Engine loaded, followed by the performance statistics gathered from running each layer within the model.  This includes the calculation run, the model layer type, the real time spent performing the calculation, the CPU time spent performing the calculation, and the type of calculation that was performed.  In this instance, since we loaded the model onto the CPU, the "realTime" and “cpu” time values are the same.  The last bit of information we see is the total time spent spent performing the face analysis.  In this example running on an UP Squared Apollo Lake Intel Pentium N4200, it was 91233 microseconds, or 0.091233 seconds.
+12. Above, is part of the output you will see in your console window.  It shows information on what the Inference Engine loaded, followed by the performance statistics gathered from running each layer within the model.  This includes the calculation run, the model layer type, the real time spent performing the calculation, the CPU time spent performing the calculation, and the type of calculation that was performed.  In this instance, since we loaded the model onto the CPU, the "realTime" and “cpu” time values are the same.  The last bit of information we see is the total time spent spent performing the face analysis.  In this example running on an UP Squared Apollo Lake Intel Pentium N4200, it was 91233 microseconds, or 0.091233 seconds.
 
 # Conclusion
 
-Congratulations on using a CNN model to detect faces!  You have now seen that the process can be done quite quickly.  The classes and helper functions that we added here are aimed at making it easy to add more models to our application by following the same pattern.  We will see it again in action in Step 3, when we add an age and gender inferring model, and then again in Step 4, when we add head pose estimation.
+Congratulations on using a CNN model to detect faces!  You have now seen that the process can be done quite quickly.  The classes and helper functions that we added here are aimed at making it easy to add more models to the application by following the same pattern.  We will see it again in action in Step 3, when we add an age and gender inferring model, and then again in Step 4, when we add head pose estimation.
 
 # Navigation
 [Face Detection Tutorial](../Readme.md)
