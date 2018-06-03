@@ -4,17 +4,17 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-3-add-a-second-model-vehicle-attributes-detection">Tutorial Step 3: Add a second model, Vehicle Attributes Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#vehicle-attributes-detection-model">Vehicle Attributes Detection Model</a></li><li><a href="#adding-the-vehicle-attributes-detection-model">Adding the Vehicle Attributes Detection Model</a><ul><li><a href="#vehicleattribsdetection">VehicleAttribsDetection</a><ul><li><a href="#vehicleattribsdetection">VehicleAttribsDetection</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li><li><a href="#read">read()</a></li></ul></li></ul></li><li><a href="#using-vehicleattribsdetectionx">Using VehicleAttribsDetectionx</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-infer-a-batch-of-frames">Pipeline Stage 0: Prepare and Infer a Batch of Frames</a></li><li><a href="#pipeline-stage-1-infer-vehicle-attributes">Pipeline Stage 1: Infer Vehicle Attributes</a></li><li><a href="#pipeline-stage-2-render-results">Pipeline Stage 2: Render Results</a></li></ul></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#checking-performance">Checking Performance</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-3-add-a-second-model-vehicle-attributes-detection">Tutorial Step 3: Add a second model, Vehicle Attributes Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#vehicle-attributes-detection-model">Vehicle Attributes Detection Model</a></li><li><a href="#adding-the-vehicle-attributes-detection-model">Adding the Vehicle Attributes Detection Model</a><ul><li><a href="#vehicleattribsdetection">VehicleAttribsDetection</a><ul><li><a href="#vehicleattribsdetection">VehicleAttribsDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li><li><a href="#read">read()</a></li></ul></li></ul></li><li><a href="#using-vehicleattribsdetectionx">Using VehicleAttribsDetectionx</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-infer-a-batch-of-frames">Pipeline Stage 0: Prepare and Infer a Batch of Frames</a></li><li><a href="#pipeline-stage-1-infer-vehicle-attributes">Pipeline Stage 1: Infer Vehicle Attributes</a></li><li><a href="#pipeline-stage-2-render-results">Pipeline Stage 2: Render Results</a></li></ul></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#checking-performance">Checking Performance</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
-Welcome to Car Detection Tutorial Step 3.  Now that our application can detect vehicles in images, we want it to tell us what type of vehicles were found and what color the vehicle are.  The precompiled "vehicle-attributes-recognition-barrier-0010" model included with the OpenVINO toolkit is what we will be using to accomplish this.  The sample output below shows the results where the ROI box now appears with the vehicle type (e.g. “car”) and its color (e.g. “black”).  The metrics reported now also include the time to run the vehicle attribute detection model.
+Welcome to Car Detection Tutorial Step 3.  Now that the application can detect vehicles in images, we want it to tell us what type of vehicles were found and what color the vehicle are.  The precompiled "vehicle-attributes-recognition-barrier-0010" model included with the OpenVINO toolkit is what we will be using to accomplish this.  The sample output below shows the results where the ROI box now appears with the vehicle type (e.g. “car”) and its color (e.g. “black”).  The metrics reported now also include the time to run the vehicle attribute detection model.
 
 ![image alt text](../doc_support/step3_image_1.png)
 
 # Vehicle Attributes Detection Model
 
-The Intel CV SDK provides a pre-compiled model for inferring vehicle type and color from an image of a car.  You can find it at:
+The OpenVINO toolkit provides a pre-compiled model for inferring vehicle type and color from an image of a car.  You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-attributes-recognition-barrier-0010
 
@@ -81,9 +81,9 @@ struct VehicleAttribsDetection : BaseDetection {
 ```
 
 
-### VehicleAttribsDetection
+### VehicleAttribsDetection()
 
-On construction of a VehicleAttribsDetection object, call the base class constructor passing in the model to load specified in the command line argument FLAGS_m_va, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_va.  This initializes the BaseDetection subclass specifically for VehicleAttribsDetectionclass.
+On construction of a VehicleAttribsDetection object, call the base class constructor passing in the model to load specified in the command line argument FLAGS_m_va, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_va.  This initializes the BaseDetection subclass specifically for VehicleAttribsDetection class.
 
 ```cpp
     VehicleAttribsDetection() : BaseDetection(FLAGS_m_va, "Vehicle Attribs", FLAGS_n_va) {}
@@ -92,7 +92,7 @@ On construction of a VehicleAttribsDetection object, call the base class constru
 
 ### submitRequest()
 
-Override the submitRequest() function to make sure that there are vehicles queued up to be analyzed.  If so, call the base class submitRequest() function to start inferring vehicle attributes from the enqueued vehicles.  Reset enquedVehicles to 0 indicating that all the queued data has been submitted.
+Override the submitRequest() function and first make sure that there are vehicles queued up to be processed.  If so, call the base class submitRequest() function to start inferring vehicle attributes from the enqueued vehicles.  Reset enquedVehicles to 0 indicating that all the queued data has been submitted.
 
 ```cpp
     void submitRequest() override {
@@ -287,7 +287,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 # Using VehicleAttribsDetectionx
 
-That takes care of specializing the BaseDetector class into the  VehicleAttribsDetection class for the vehicle attribute detection model.  We move down into the main function and see what additions have been made to use the vehicle attribute detection model to process detected vehicles.
+That takes care of specializing the BaseDetector class into the  VehicleAttribsDetection class for the vehicle attribute detection model.  We now move down into the main() function to see what additions have been made to use the vehicle attribute detection model to process detected vehicles.
 
 ## main()
 
@@ -542,52 +542,39 @@ source ../../scripts/setupenv.sh
 ```
 
 
-2. You now have the executable file to run ./intel64/Release/car_detection_tutorial.  In order to load the vehicle attribute detection model, the "-m_ag" flag needs to be added  followed by the full path to the model.
-
-3. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+2. You now have the executable file to run ./intel64/Release/car_detection_tutorial.  In order to load the vehicle attribute detection model, the "-m_va" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
 
 ```bash
-source ../../scripts/setupenv.sh 
+./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car_1.bmp
 ```
 
 
-4. First let us see how it works on a single image file:
+3. The output window will show the image overlaid with colored rectangles over each of the detected vehicles and license plates.  There will also be text within the vehicle box indicating type and color.  The timing statistics for inferring the vehicle attribute results are also shown.  Next, let us try it on a video file.
 
 ```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_ag $mVA32 -i ../../data/car_1.bmp
+./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car-detection.mp4
 ```
 
 
-5. The output window will show the image overlaid with colored rectangles over each of the detected vehicles and license plates.  There will also be text within the vehicle box indicating type and color.  The timing statistics for inferring the vehicle attribute results are also shown.
-
-6. Next, let us try it on a video file.
+4. You should see rectangles that follow the cars and license plates as they move around the image.  The accompanying vehicle attributes text (type and color) will also appear in the rectangles.  Finally, let us see how it works for camera input.
 
 ```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_ag $mVA32 -i ../../data/car-detection.mp4
-```
-
-
-7. You should see rectangles that follow the cars and license plates as they move around the image.  The accompanying vehicle attributes text (type and color) will also appear in the rectangles.
-
-8. Finally, let us see how it works for camera input.
-
-```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_ag $mVA32 -i cam
+./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32 -i cam
 ```
 
 
 Or
 
 ```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_ag $mVA32
+./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32
 ```
 
 
-9. Again, you will see output similar to the output from the video, but appropriate to the cars in your office, or maybe outside a nearby window.
+5. Again, you will see output similar to the output from the video, but appropriate to the cars in your office, or maybe outside a nearby window.
 
 # Checking Performance
 
-Now that we’ve seen how we have our application running two models to process images and make inferences, let us explore optimizing the performance of the application.  In general, performance increases by spreading the inference work across several devices, assign the more complex tasks to the fastest devices, and use FP16 precision instead of FP32 whenever possible.  Let us see how the models we are using perform when we start moving them to different devices using the combinations:
+Now that we’ve seen how we have the application running two models to process images and make inferences, let us explore optimizing the performance of the application.  In general, performance increases by spreading the inference work across several devices, assign the more complex tasks to the fastest devices, and use FP16 precision instead of FP32 whenever possible.  Let us see how the models we are using perform when we start moving them to different devices using the combinations:
 
 ```Bash
 ./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4 -no_wait
@@ -709,7 +696,7 @@ From measuring total time of the application, we see the fastest results are for
 
 # Conclusion
 
-Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  We also showed some techniques to pipeline the program flow.  This makes it easier to group input data with its results and pass it through the application pipeline.  We also explored increasing performance by optimizing how our application loads models onto different devices.
+Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  We also showed some techniques to pipeline the program flow.  This makes it easier to group input data with its results and pass it through the application pipeline.  We also explored increasing performance by optimizing how the application loads models onto different devices.
 
 Continuing to Tutorial Step 4, we will see another method of increasing performance, when we introduce running the models asynchronously.  This will allow the application to have multiple models analyzing images along with the CPU using OpenCV and managing data all running in parallel.
 
