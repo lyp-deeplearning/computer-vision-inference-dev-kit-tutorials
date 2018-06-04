@@ -723,10 +723,12 @@ int main(int argc, char *argv[]) {
         // ----------------------------Do inference-------------------------------------------------------------
         slog::info << "Start inference " << slog::endl;
         typedef std::chrono::duration<double, std::ratio<1, 1000>> ms;
-        auto wallclock = std::chrono::high_resolution_clock::now();
+        std::chrono::high_resolution_clock::time_point wallclockStart, wallclockEnd;
 
+        int totalFrames = 1;  // cap.read() above
         double ocv_decode_time = 0, ocv_render_time = 0;
         bool firstFrame = true;
+		wallclockStart = std::chrono::high_resolution_clock::now();
         /** Start inference & calc performance **/
         while (true) {
             /** requesting new frame if any*/
@@ -844,6 +846,9 @@ int main(int argc, char *argv[]) {
             int keyPressed;
             if (-1 != (keyPressed = cv::waitKey(1)))
             {
+            	// done processing, save time
+            	wallclockEnd = std::chrono::high_resolution_clock::now();
+
             	if ('s' == keyPressed) {
             		// save screen to output file
             		slog::info << "Saving snapshot of image" << slog::endl;
@@ -863,7 +868,10 @@ int main(int argc, char *argv[]) {
             // end of file, for single frame file, like image we just keep it displayed to let user check what was shown
             cv::Mat newFrame;
             if (!cap.retrieve(newFrame)) {
-                if (!FLAGS_no_wait) {
+            	// done processing, save time
+            	wallclockEnd = std::chrono::high_resolution_clock::now();
+
+				if (!FLAGS_no_wait && !FLAGS_no_show) {
                     slog::info << "Press 's' key to save a snapshot, press any other key to exit" << slog::endl;
                     while (cv::waitKey(0) == 's') {
                 		// save screen to output file
@@ -874,6 +882,7 @@ int main(int argc, char *argv[]) {
                 break;
             }
             frame = newFrame;  // shallow copy
+			totalFrames++;
 
             if (firstFrame) {
                 slog::info << "Press 's' key to save a snapshot, press any other key to stop" << slog::endl;
@@ -881,6 +890,19 @@ int main(int argc, char *argv[]) {
 
             firstFrame = false;
         }
+
+        // calculate total run time
+        ms total_wallclock_time = std::chrono::duration_cast<ms>(wallclockEnd - wallclockStart);
+
+        // report loop time
+		slog::info << "     Total main-loop time:" << std::fixed << std::setprecision(2)
+				<< total_wallclock_time.count() << " ms " <<  slog::endl;
+		slog::info << "           Total # frames:" << totalFrames <<  slog::endl;
+		float avgTimePerFrameMs = total_wallclock_time.count() / (float)totalFrames;
+		slog::info << "   Average time per frame:" << std::fixed << std::setprecision(2)
+					<< avgTimePerFrameMs << " ms "
+					<< "(" << 1000.0f / avgTimePerFrameMs << " fps)" << slog::endl;
+
         // ---------------------------Some perf data--------------------------------------------------
         if (FLAGS_pc) {
             FaceDetection.printPerformanceCounts();

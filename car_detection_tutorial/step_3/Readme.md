@@ -577,20 +577,34 @@ Or
 Now that we’ve seen how we have the application running two models to process images and make inferences, let us explore optimizing the performance of the application.  In general, performance increases by spreading the inference work across several devices, assign the more complex tasks to the fastest devices, and use FP16 precision instead of FP32 whenever possible.  Let us see how the models we are using perform when we start moving them to different devices using the combinations:
 
 ```Bash
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA32 -d_va GPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA16 -d_va GPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA32 -d_va GPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA16 -d_va GPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA32 -d_va GPU  -i ../../data/car-detection.mp4 -no_wait
-./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA16 -d_va GPU  -i ../../data/car-detection.mp4 -no_wait
+# command line #1
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4
+# command line #2
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4
+# command line #3
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4
+# command line #4
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4
+# command line #5
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA32 -d_va GPU  -i ../../data/car-detection.mp4
+# command line #6
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d CPU -m_va $mVA16 -d_va GPU  -i ../../data/car-detection.mp4
+# command line #7
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA32 -d_va GPU  -i ../../data/car-detection.mp4
+# command line #8
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d MYRIAD -m_va $mVA16 -d_va GPU  -i ../../data/car-detection.mp4
+# command line #9
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4
+# command line #10
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA32 -d_va CPU  -i ../../data/car-detection.mp4
+# command line #11
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4
+# command line #12
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD  -i ../../data/car-detection.mp4
+# command line #13
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA32 -d_va GPU  -i ../../data/car-detection.mp4
+# command line #14
+./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA16 -d_va GPU  -i ../../data/car-detection.mp4
 ```
 
 
@@ -600,93 +614,108 @@ The results seen from the commands should be similar in order to the summary in 
 
 <table>
   <tr>
-    <td>combination</td>
+    <td>Command Line #</td>
     <td>Vehicle</td>
     <td>Vehicle Attributes</td>
-    <td>Average Loop Time (FPS)</td>
+    <td>Average Main Loop Time (FPS)</td>
+    <td>Average Main Loop Time (FPS)</td>
   </tr>
   <tr>
     <td>1</td>
-    <td>CPU,32</td>
-    <td>CPU,32</td>
-    <td>3.9</td>
+    <td>CPU,FP32</td>
+    <td>CPU,FP32</td>
+    <td>256.13</td>
+    <td>3.90</td>
   </tr>
   <tr>
     <td>2</td>
-    <td>CPU,32</td>
-    <td>MYRIAD,16</td>
+    <td>CPU,FP32</td>
+    <td>MYRIAD,FP16</td>
+    <td>158.52</td>
     <td>6.31</td>
   </tr>
   <tr>
     <td>3</td>
-    <td>MYRIAD,16</td>
-    <td>CPU,32</td>
+    <td>MYRIAD,FP16</td>
+    <td>CPU,FP32</td>
+    <td>154.97</td>
     <td>6.45</td>
   </tr>
   <tr>
     <td>4</td>
-    <td>MYRIAD,16</td>
-    <td>MYRIAD,16</td>
+    <td>MYRIAD,FP16</td>
+    <td>MYRIAD,FP16</td>
+    <td>148.23</td>
     <td>6.75</td>
   </tr>
   <tr>
     <td>5</td>
-    <td>CPU,32</td>
-    <td>GPU,32</td>
+    <td>CPU,FP32</td>
+    <td>GPU,FP32</td>
+    <td>139.20</td>
     <td>7.18</td>
   </tr>
   <tr>
     <td>6</td>
-    <td>CPU,32</td>
-    <td>GPU,16</td>
+    <td>CPU,FP32</td>
+    <td>GPU,FP16</td>
+    <td>129.14</td>
     <td>7.74</td>
   </tr>
   <tr>
     <td>7</td>
-    <td>MYRIAD,16</td>
-    <td>GPU,32</td>
+    <td>MYRIAD,FP16</td>
+    <td>GPU,FP32</td>
+    <td>125.41</td>
     <td>7.97</td>
   </tr>
   <tr>
     <td>8</td>
-    <td>MYRIAD,16</td>
-    <td>GPU,16</td>
+    <td>MYRIAD,FP16</td>
+    <td>GPU,FP16</td>
+    <td>122.62</td>
     <td>8.16</td>
   </tr>
   <tr>
     <td>9</td>
-    <td>GPU,32</td>
-    <td>CPU,32</td>
+    <td>GPU,FP32</td>
+    <td>CPU,FP32</td>
+    <td>102.86</td>
     <td>9.72</td>
   </tr>
   <tr>
     <td>10</td>
-    <td>GPU,16</td>
-    <td>CPU,32</td>
-    <td>10.7</td>
+    <td>GPU,FP16</td>
+    <td>CPU,FP32</td>
+    <td>93.45</td>
+    <td>10.70</td>
   </tr>
   <tr>
     <td>11</td>
-    <td>GPU,32</td>
-    <td>MYRIAD,16</td>
+    <td>GPU,FP32</td>
+    <td>MYRIAD,FP16</td>
+    <td>88.00</td>
     <td>11.36</td>
   </tr>
   <tr>
     <td>12</td>
-    <td>GPU,16</td>
-    <td>MYRIAD,16</td>
+    <td>GPU,FP16</td>
+    <td>MYRIAD,FP16</td>
+    <td>80.93</td>
     <td>12.36</td>
   </tr>
   <tr>
     <td>13</td>
-    <td>GPU,32</td>
-    <td>GPU,32</td>
+    <td>GPU,FP32</td>
+    <td>GPU,FP32</td>
+    <td>62.15</td>
     <td>16.09</td>
   </tr>
   <tr>
     <td>14</td>
-    <td>GPU,32</td>
-    <td>GPU,16</td>
+    <td>GPU,FP32</td>
+    <td>GPU,FP16</td>
+    <td>59.48</td>
     <td>16.81</td>
   </tr>
 </table>
