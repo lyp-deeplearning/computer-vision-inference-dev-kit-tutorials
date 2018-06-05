@@ -141,7 +141,6 @@ if (!cap.read(frame)) {
    throw std::logic_error("Failed to get frame from cv::VideoCapture");
 }
 ```
-9. Here, you can see that we are getting the width and height of the image file, or the camera resolution, and storing that for use later.  We also use cv::Mat to create an array that we can use to store the image data.  Then we read in the image data by calling "cap.read(frame)".
 
 ### Main Loop
 
