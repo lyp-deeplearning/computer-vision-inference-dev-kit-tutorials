@@ -227,7 +227,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-1. Check to see if the input image matches the dimensions of images that the IR is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  Make sure that an input with either height or width <1 is not stored, returning 0 to indicate nothing was done.
+2. Check to see if the input image matches the dimensions of images that the IR is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  Make sure that an input with either height or width <1 is not stored, returning 0 to indicate nothing was done.
 
 ```cpp
     cv::Mat resized_image(orig_image);
@@ -241,7 +241,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-2. Now that the image data is the proper size, copy the data from the input image into the blob’s buffer.  A blob will hold the entire batch for a run through the inference model, so for each batch item first calculate "batchOffset" as an offset into the blob’s buffer before copying the data.
+3. Now that the image data is the proper size, copy the data from the input image into the blob’s buffer.  A blob will hold the entire batch for a run through the inference model, so for each batch item first calculate "batchOffset" as an offset into the blob’s buffer before copying the data.
 
 ```cpp
     int batchOffset = batchIndex * width * height * channels;
