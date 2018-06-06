@@ -98,7 +98,7 @@ To create the argument: -d \<device\>, where <device> is set to "CPU", "GPU", or
 
 As a result of the macros used in the code above, the variables "FLAGS_m" and “FLAGS_d” have been created to hold the argument values.  Focusing primarily on how the “FLAGS_d” is used to tell the Inference Engine which device to use, we follow the code in “main()” of “main.cpp”:
 
-1. First declare a map to hold the plugins as they are loaded.  The mapping will allow the associated plugin InferencePlugin object to be found by name (e.g. "CPU")    
+1. First a map is declared to hold the plugins as they are loaded.  The mapping will allow the associated plugin InferencePlugin object to be found by name (e.g. "CPU")    
 
 ```cpp
      // ---------------------Load plugins for inference engine------------------------------------------------
@@ -115,7 +115,7 @@ As a result of the macros used in the code above, the variables "FLAGS_m" and �
 ```
 
 
-3. Iterate through device and model the argument pairs:
+3. A loop iterates through device and model the argument pairs:
 
 ```cpp
 for (auto && option : cmdOptions) {
@@ -124,7 +124,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-4. Make sure the plugin has not already been created and put into the pluginsForDevices map:            
+4. A check is done to make sure the plugin has not already been created and put into the pluginsForDevices map:            
 
 ```cpp
  if (pluginsForDevices.find(deviceName) != pluginsForDevices.end()) {
@@ -133,24 +133,24 @@ for (auto && option : cmdOptions) {
 ```
 
 
-5. Create the plugin using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “FLAGS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
+5. The plugin is created using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “FLAGS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
 
 ```cpp
          slog::info << "Loading plugin " << deviceName << slog::endl;
             InferencePlugin plugin = PluginDispatcher({"../../../lib/intel64", ""}).getPluginByDevice(deviceName);
 ```
-6. Report plugin details:
+6. The plugin details are printed out:
 
 ```cpp 
            /** Printing plugin version **/
             printPluginVersion(plugin, std::cout);
 ```
-7. Store the created plugin to be found by device name later:
+7. The created plugin is stored to be found by device name later:
 
 ```cpp
             pluginsForDevices[deviceName] = plugin;
 ```
-8. Finally load the model passing the plugin created for the specified device, again using the name given same as it appears on the command line ("Load" class will be described later):
+8. Finally the model is loaded passing in the plugin created for the specified device, again using the name given same as it appears on the command line ("Load" class will be described later):
 
 ```cpp
        // --------------------Load networks (Generated xml/bin files)-------------------------------------------
@@ -204,7 +204,7 @@ There will need to be a function that takes the input image and turns it into a 
 
 ### matU8ToBlob
 
-1. Define variables that store the dimensions for the images that the IR is optimized to work with.  Then assign "blob_data" to the blob’s data buffer.
+1. Variables are defined to store the dimensions for the images that the model is optimized to work with.  "blob_data" is assigned to the blob’s data buffer.
 
 ```cpp
 // Returns 1 on success, 0 on failure
@@ -218,7 +218,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-2. Check to see if the input image matches the dimensions of images that the IR is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  Make sure that an input with either height or width <1 is not stored, returning 0 to indicate nothing was done.
+2. A check is made to see if the input image matches the dimensions of images that the model is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  A check is made to make sure that an input with either height or width <1 is not stored, returning 0 to indicate nothing was done.
 
 ```cpp
     cv::Mat resized_image(orig_image);
@@ -232,7 +232,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-1. Now that the image data is the proper size, copy the data from the input image into the blob’s buffer.  A blob will hold the entire batch for a run through the inference model, so for each batch item first calculate "batchOffset" as an offset into the blob’s buffer before copying the data.
+3. Now that the image data is the proper size, the data is copied from the input image into the blob’s buffer.  A blob will hold the entire batch for a run through the inference model, so for each batch item first calculate "batchOffset" as an offset into the blob’s buffer before copying the data.
 
 ```cpp
     int batchOffset = batchIndex * width * height * channels;
@@ -250,7 +250,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 ```
 
 
-For more details on the InferenceEngine::Blob class, see "Inference Engine Memory primitives" in the documentation: [https://software.intel.com/en-us/articles/OpenVINO-InferEngine](https://software.intel.com/en-us/articles/OpenVINO-InferEngine)
+For more details on the InferenceEngine::Blob class, see "Understanding Inference Engine Memory primitives" in the documentation: [https://software.intel.com/en-us/articles/OpenVINO-InferEngine](https://software.intel.com/en-us/articles/OpenVINO-InferEngine)
 
 ### Load
 
@@ -292,7 +292,7 @@ The line is read as "Load FaceDetection into the plugin pluginsForDevices[FLAGS_
 
 Now we are going to walkthrough the BaseDetection class that is used to abstract common features and functionality when using a model which the code also refers to as "detector".  
 
-1. Declare the class and define its member variables, the constructor and destructor.  The ExecutableNetwork holds the model that will be used to process the data and make inferences.  The InferencePlugin is the Inference Engine plugin that will be executing the Intermediate Reference on a specific device.  InferRequest is the object that will be used to hold input and output data, start inference, and wait for results.  The name of the model is stored in topoName and the command line argument for the model is stored in commandLineFlag.  Finally, maxBatch is used to set the number of inputs to infer during each run. 
+1. The class is declared and its member variables, the constructor and destructor are defined.  The ExecutableNetwork holds the model that will be used to process the data and make inferences.  The InferencePlugin is the Inference Engine plugin that will be executing the Intermediate Reference on a specific device.  InferRequest is the object that will be used to hold input and output data, start inference, and wait for results.  The name of the model is stored in topoName and the command line argument for the model is stored in commandLineFlag.  Finally, maxBatch is used to set the number of inputs to infer during each run. 
 
 ```cpp
 struct BaseDetection {
@@ -310,7 +310,7 @@ struct BaseDetection {
 ```
 
 
-2. Override operator -> for a convenient way to get access to the network.
+2. The operator -> is overridden for a convenient way to get access to the network.
 
 ```cpp
     ExecutableNetwork* operator ->() {
@@ -321,7 +321,7 @@ struct BaseDetection {
 
 #### read()
 
-Since the networks used by the detectors will have different requirements for loading, declare the read() function to be pure virtual.  This ensures that each detector class will have a read function appropriate to the model and IR it will be using.
+Since the networks used by the detectors will have different requirements for loading, declare the read() function to be pure virtual.  This ensures that each detector class will have a read function appropriate to the model it will be using.
 
 ```cpp
     virtual InferenceEngine::CNNNetwork read()  = 0;
@@ -342,7 +342,7 @@ The submitRequest() function checks to see if the model is enabled and that ther
 
 #### wait()
 
-wait() will wait until results from the model are ready.  First check to see if the model is enabled and there is a valid request before actually waiting on the request.
+wait() will wait until results from the model are ready.  First it checks to see if the model is enabled and there is a valid request before actually waiting on the request.
 
 ```cpp
     virtual void wait() {
@@ -354,7 +354,7 @@ wait() will wait until results from the model are ready.  First check to see if 
 
 #### enabled()
 
-Define variables and the "enabled()" function to track and check if the model is enabled or not.  The model is disabled if “commandLineFlag”, the command line argument specifying the model IR .xml file (e.g. “-m”) , has not been set.
+Variables and the enabled() function are defined to track and check if the model is enabled or not.  The model is disabled if "commandLineFlag", the command line argument specifying the model IR .xml file (e.g. “-m”) , has not been set.
 
 ```cpp
     mutable bool enablingChecked = false;
@@ -375,7 +375,7 @@ Define variables and the "enabled()" function to track and check if the model is
 
 #### printPerformancCount()
 
-The printPerformancCount() function checks to see if the detector is enabled, and if it is, then we print out the overall performance statistics for the model.
+The printPerformancCount() function checks to see if the detector is enabled, and if it is, then prints out the overall performance statistics for the model.
 
 ```cpp
     void printPerformanceCounts() {
@@ -392,7 +392,7 @@ The printPerformancCount() function checks to see if the detector is enabled, an
 
 Now that we have seen what the base class provides, we will now walkthrough the code for the derived FaceDetectionClass class to see how a model is implemented.
 
-Start by deriving FaceDetectionClass from the BaseDetection class and adding some new member variables that will be needed.
+FaceDetectionClass is derived from the BaseDetection class and adding some new member variables that will be needed.
 
 ```cpp
 struct FaceDetectionClass : BaseDetection {
@@ -421,7 +421,7 @@ Notice the "Result" struct and the vector “results” that will be used since 
 
 ### submitRequest()
 
-Override the submitRequest() function to make sure there is input data ready and clear out any previous results before calling BaseDetection::submitRequest() to start inference.
+The submitRequest() function is overridden to make sure there is input data ready and clear out any previous results before calling BaseDetection::submitRequest() to start inference.
 
 ```cpp
     void submitRequest() override {
@@ -436,7 +436,7 @@ Override the submitRequest() function to make sure there is input data ready and
 
 ### enqueue()
 
-Check to see that the face detection model is enabled. 
+A check is made to see that the face detection model is enabled. 
 
 ```cpp
     void enqueue(const cv::Mat &frame) {
@@ -444,7 +444,7 @@ Check to see that the face detection model is enabled.
 ```
 
 
-Create an inference request object if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+An inference request object is created if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
 ```cpp
         if (!request) {
@@ -453,7 +453,7 @@ Create an inference request object if one has not been already created.  The req
 ```
 
 
-Get the input blob from the request and then use matU8ToBlob() to copy the image image data into the blob.
+The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
 ```cpp
         width = frame.cols;
@@ -469,7 +469,7 @@ Get the input blob from the request and then use matU8ToBlob() to copy the image
 
 ### FaceDetectionClass()
 
-On construction of a FaceDetectionClassobject, call the base class constructor passing in the model to load specified in the command line argument FLAGS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for FaceDetectionClass class.
+On construction of a FaceDetectionClassobject, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for FaceDetectionClass class.
 
 ```cpp
     FaceDetectionClass() : BaseDetection(FLAGS_m, "Face Detection", 1) {}
@@ -478,9 +478,9 @@ On construction of a FaceDetectionClassobject, call the base class constructor p
 
 ### read()
 
-The next function we will walkthrough is the FaceDetectorClass::read() function which must be specialized specifically to the model that it will load and run. 
+The next function we will walkthrough is the FaceDetectorClass::read() function which must be specialized specifically to the model that FaceDetectorClass will load and run. 
 
-1. Use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that we specified on the command line, using the "-m" parameter.  
+1. Use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m" parameter.  
 
 ```cpp
     InferenceEngine::CNNNetwork read() override {
@@ -491,7 +491,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-2. Set the maximum batch size to the value given in the constructor which is fixed at 1.
+2. The maximum batch size is set to the value given in the constructor which is fixed at 1.
 
 ```cpp
         /** Set batch size to 1 **/
@@ -500,7 +500,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-3. Generate file names for the model IR .bin and optional .label files based on the model name from the "-m" parameter.
+3. Names for the model IR .bin file and optional .label file are generated based on the model name from the "-m" parameter.
 
 ```cpp
         /** Extract model name and load it's weights **/
@@ -516,7 +516,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-4. Prepare the input data format configuring it for the proper precision (U8 = 8-bit per BGR channel) and memory layout (NCHW) for the model.
+4. The input data format configured for the proper precision (U8 = 8-bit per BGR channel) and memory layout (NCHW) for the expected model being used.
 
 ```cpp
         slog::info << "Checking Face Detection inputs" << slog::endl;
@@ -530,7 +530,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-5. Make sure that there is only one output result defined for the model.
+5. A check to make sure that there is only one output result defined for the expected model being used. 
 
 ```cpp
         slog::info << "Checking Face Detection outputs" << slog::endl;
@@ -541,7 +541,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-6. Check to make sure that the output layers are what is expected.
+6. A check to make sure that the output layers of the model are what are expected.
 
 ```cpp
         auto& _output = outputInfo.begin()->second;
@@ -560,7 +560,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-7. Make sure that the the number of labels read from the label file match the number of classes in the model.  If not, then clear the labels and do not use them.  
+7. Check to make sure that the the number of labels read from the label file match the number of classes in the model.  If not, then clear the labels and do not use them.  
 
 ```cpp
         const int num_classes = outputLayer->GetParamAsInt("num_classes");
@@ -573,7 +573,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-8. Check that the output the model will return matches as expected.
+8. A check to make sure that the output the model will return matches as expected.
 
 ```cpp
         const InferenceEngine::SizeVector outputDims = _output->dims;
@@ -588,7 +588,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-9. Configure the output format to use the output precision and memory layout that we expect for results.
+9. The output format is configured to use the output precision and memory layout that is expect for results from the model being used.
 
 ```cpp
         _output->setPrecision(Precision::FP32);
@@ -596,7 +596,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 ```
 
 
-10. Save the name of the input blob (inputInfo.begin()->first) for later use when getting a blob for input data.  Finally, return the InferenceEngine::CNNNetwork object that references this model’s IR.
+10. Tthe name of the input blob (inputInfo.begin()->first) is saved for later use when getting a blob for input data.  Finally, the InferenceEngine::CNNNetwork object that references this model is returned.
 
 ```cpp
         slog::info << "Loading Face Detection model to the "<< FLAGS_d << " plugin" << slog::endl;
@@ -608,9 +608,9 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 
 ### fetchResults()
 
-fetchResults() will parse the inference results saving in the "Results" variable.
+fetchResults() will parse the inference results saving them in the "Results" variable.
 
-1. Make sure that the model is enabled.  If so, clear out any previous results. 
+1. Check to make sure that the model is enabled.  If so, clear out any previous results. 
 
 ```cpp
     void fetchResults() {
@@ -619,7 +619,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-2. Track whether results have been fetched and only fetch once.  submitRequest() resets resultsFetched=false  to indicate results have not been fetched yet for each request.
+2. Whether results have been fetched are tracked to only fetch once.  submitRequest() resets resultsFetched=false to indicate results have not been fetched yet for each request.
 
 ```cpp
         if (resultsFetched) return;
@@ -627,21 +627,21 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-3. Get a pointer to the inference model output results held in the output blob. 
+3. "detections" is set topoint to the inference model output results held in the output blob. 
 
 ```cpp
         const float *detections = request->GetBlob(output)->buffer().as<float *>();
 ```
 
 
-4. Start looping through the results from the face detection model.  "maxProposalCount" has been set to the maximum number of results that the model can return.  
+4. A loop is started to go through the results from the face detection model.  "maxProposalCount" has been set to the maximum number of results that the model can return.  
 
 ```cpp
         for (int i = 0; i < maxProposalCount; i++) {
 ```
 
 
-5. Loop to retrieve all the results from the output blob buffer.  The output format is determined by the model.  For the face detection model used, the following fields are expected:
+5. The loop to retrieve all the results from the output blob buffer.  The output format is determined by the model.  For the face detection model used, the following fields are expected:
 
     1. Image_id
 
@@ -680,7 +680,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-7. Check to see if the application was requested to display the raw information (-r) and print it to the console if necessary.
+7. A check to see if the application was requested to display the raw information (-r) and print it to the console if necessary.
 
 ```cpp
             if (FLAGS_r) {
@@ -692,7 +692,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-8. Add the populated Result object to the vector of results to be used later by the application.
+8. The populated Result object is added to the vector of results to be used later by the application.
 
 ```cpp
             results.push_back(r);
