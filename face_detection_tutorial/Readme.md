@@ -1,3 +1,5 @@
+# Face Detection Tutorial
+
 # Table of Contents
 
 <p></p><div class="table-of-contents"><ul><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#using-git-clone-to-clone-the-entire-repository">Using Git Clone to Clone the Entire Repository</a></li><li><a href="#using-svn-export-to-download-only-this-tutorial">Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#intel-opencv">Intel OpenCV</a></li><li><a href="#floating-point-precision">Floating Point Precision</a><ul><li><a href="#why-would-we-choose-one-precision-over-the-other">Why Would We Choose One Precision Over the Other?</a></li><li><a href="#what-if-we-specify-the-wrong-precision-for-a-device">What If We Specify the Wrong Precision for a Device?</a></li></ul></li><li><a href="#batch-size">Batch Size</a></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first Model, Face Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-age-and-gender">Tutorial Step 3: Add the Second Model, Age and Gender</a></li><li><a href="#tutorial-step-4-add-the-third-model-head-pose">Tutorial Step 4: Add the Third Model, Head Pose</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
@@ -144,7 +146,7 @@ The basic flow is:
 
 1. Use a tool, such as Caffe, to create and train a CNN inference model
 
-2. Run the created model through Model Optimizer to generate a set of Intermediate Representation (IR) files (.bin and .xml) that is optimized for use with the Inference Engine
+2. Run the created model through Model Optimizer to produce an optimized Intermediate Representation (IR) stored in files (.bin and .xml) for use with the Inference Engine
 
 3. The User Application then loads and runs models onto devices using the Inference Engine and the IR files  
 
@@ -160,47 +162,63 @@ The Inference Engine includes a plugin library for each supported device that ha
 
 #### Inference Engine API Integration Flow
 
-Using the Inference Engine API follows the basic steps:
+Using the Inference Engine API follows the basic steps briefly described below.  The API objects and functions will be seen later in the code walkthroughs.
 
-1. Load plugin
+1. Load the plugin
 
-    a. Load the plugin for a specified device
+    a. Create an instance of the plugin (InferenceEngine::InferencePlugin) for the specified device using the InferenceEngine::PluginDispatcher class
 
-2. Read model IR
+2. Read the model IR
 
-    a. Read in IR files
+    a. Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
 
-3. Configure input and output
+3. Configure the inputs and outputs formats
 
-    a. Probe model for input and output information
+    a. Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
 
-    b. Optionally configure the precision and memory layout of inputs and outputs
+    b. Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
 
-4. Load model
+4. Load the model into the plugin
 
-    a. Load the model into the plugin
+    a. Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
 
-5. Create inference request
+5. Create an inference request
 
-    a. Have plugin create a request object that holds input and output blobs
+    a. Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
 
-6. Prepare input
+6. Prepare the input
 
-    a. Get the input blob to hold input data
+    a. Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
 
-    b. Transfer data from the data source into input blob
+    b. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
 
-7. Infer
+7. Run Inference
 
-    a. Request plugin to perform inference and wait for results
+    a. Request plugin to perform inference and wait for results using one of two modes:
 
-8. Process output
+        i. Synchronous: 
 
-    a. Get output blobs and process results
+            1. InferenceEngine::InferRequest::Infer() 
+
+            2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
+
+        ii. Asynchronous: 
+
+            1. InferenceEngine::InferRequest::StartAsync() 
+
+            2. Then later InferenceEngine::InferRequest::Wait()
+
+8. Process the output
+
+    a. Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
+
+    b. Parse and process the output blob(s) according to the output format specified by the model
 
 In tutorial Steps 2, 3, and 4 we will walkthrough the code that specifically integrates each of the models used in the application.  
 
-More details can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
+More details on the Inference Engine can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
+
+and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
 
 #### Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries
 
@@ -223,19 +241,25 @@ Before going into the samples in the tutorial steps, first we will go over some 
 
 ## Intel OpenCV
 
-For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO toolkit will be used.  You may be wondering: Why is OpenCV included in the OpenVINO toolkit along with the Inference Engine?  The first big reason is: They are the fastest for Intel devices.  The Intel libraries have been optimized to run on each Intel CPU, GPU, and Myriad device.  It also helps that by including in the libraries in the OpenVINO toolkit, you get the complete set of libraries and always get the necessary version.  
+For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO toolkit will be used.  You may be wondering: Why is OpenCV included in the OpenVINO toolkit along with the Inference Engine?  The first big reason is: They are the fastest implementation of OpenCV functions for Intel devices.  The Intel libraries have been optimized to run on each Intel CPU, GPU, and Myriad device.  It also helps that by including in the libraries in the OpenVINO toolkit, you get the complete set of libraries and always get the necessary version.  
 
 The second big reason: All the extensions and additional libraries that come with Intel’s OpenCV.  One such library is the Photography Vision Library (PVL).  PVL includes advanced implementations by Intel already optimized for power and performance on Intel devices to do face, blink, and smile detection along with recognizing faces.
 
-More detail on the PVL library provided with Intel OpenCV may be found at:
+Additional information may be found at:
 
-[https://software.intel.com/en-us/cvsdk-devguide-advanced-face-capabilities-in-intels-opencv](https://software.intel.com/en-us/cvsdk-devguide-advanced-face-capabilities-in-intels-opencv)
+Source for the OpenCV libraries: [https://github.com/opencv/opencv/releases/tag/3.4.1-cvsdk](https://github.com/opencv/opencv/releases/tag/3.4.1-cvsdk)
+
+Samples for OpenCV on Linux: /opt/intel/computer_vision_sdk/opencv/share/OpenCV/sample/Readme.md
+
+Intel OpenCV PVL library sample on Linux:
+
+/opt/intel/computer_vision_sdk/opencv/share/OpenCV/sample/pvl
 
 ## Floating Point Precision
 
-Very briefly, floating point is a way to represent a wide range of real numbers with fraction within a fixed number of bits.  The upside to floating point is that a much larger range of numbers can be represented by fewer bits, while the downside is that some amount of precision may be lost.  Here we we are talking about floating point being represented in either 32-bit, also referred to as "single-precision" and here we use “FP32”, or 16-bits, also referred to “half-precision” and here we use “FP16”.  Without going down to the bit-level details, just from the number of bits we can presume that 32-bits can represent more numbers than 16-bits.  
+Very briefly, floating point is a way to represent a wide range of real numbers with fraction within a fixed number of bits.  The upside to floating point is that a much larger range of numbers (+/-3.402823×1038 vs. integer +/-2,147,483,647) can be represented within 32 bits, while the downside is that some amount of precision may be lost.  Here we are talking about floating point being represented in either 32-bit, also referred to as "single-precision" and here we use “FP32”, or 16-bits, also referred to “half-precision” and here we use “FP16”.  Without going down to the bit-level details, just from the number of bits we can presume that 32-bits can represent more numbers than 16-bits.  
 
-The question now becomes: why does 32 vs 16 bits matter?  First, because when a model’s IR is created using Intel’s Model Optimizer, it is told to target either FP16 or FP32.    For our purposes we will assume the model will work well as intended within the number of bits available (there may be differences in output of course, which are assumed to be small enough to ignore).  So now it comes down to what precision(s) are supported by the device that the model will be run on. The precisions that the CPU, GPU, and Myriad devices support is summarized in the table below:
+The question now becomes: why does 32 vs 16 bits matter?  When a model’s IR is created using Intel’s Model Optimizer, it is told to target either FP16 or FP32.    For our purposes we will assume the model will work well as intended within the number of bits available (there may be differences in output of course, which are assumed to be small enough to ignore).  So now it comes down to what precision(s) are supported by the device that the model will be run on. The precisions that the CPU, GPU, and Myriad devices support is summarized in the table below:
 
 <table>
   <tr>
@@ -263,7 +287,7 @@ The question now becomes: why does 32 vs 16 bits matter?  First, because when a 
 
 ### Why Would We Choose One Precision Over the Other?  
 
-Primarily for speed.  FP16 is generally smaller and faster in hardware than FP32 while the smaller data size can also reduce by up to 2x the amount of memory required for storage and the bandwidth required for transferring data to and from memory.  However if the difference between FP32 and FP16 does affect the application’s results enough to cause undesired results, then FP32 would be chosen to prioritize accuracy over speed.  Lastly, we would always choose FP16 vs. FP32 depending upon which precision the targeted device requires.
+Primarily for speed.  FP16 is generally smaller and faster in hardware than FP32.  The smaller data size of FP16 can also reduce by up to 2x the amount of memory required for storage and the bandwidth required for transferring data to and from memory compared to FP32.  However if the difference between FP32 and FP16 does affect the accuracy of the application’s results enough to cause undesired results, then FP32 would be chosen to prioritize accuracy over speed.  Lastly, we would always choose FP16 vs. FP32 depending upon which precision the targeted device requires.
 
 ### What If We Specify the Wrong Precision for a Device?  
 
@@ -296,17 +320,21 @@ Batch size refers to the number of input data to be inferred during a single inf
 
 * How batch size is set:
 
-    * The default setting is located in the model’s IR which is set either by:
+    * The default setting is located in the model’s IR files which is set either by:
 
         * The Model Optimizer command line option when creating the IR 
 
-        * Or from the original source (e.g. Caffe) in which can be read using the Inference Engine API 
+        * Or from the original source (e.g. Caffe) 
 
-    * May be set explicitly using the Inference Engine API setBatchSize() function (see InferenceEngine::ICNNNetwork class)
+        * Note: the default can be read using the Inference Engine API getBatchSize()
+
+    * May be set explicitly using the Inference Engine API setBatchSize() function
+
+    * Note: For the getBatchSize() and setBatchSize() functions, see the InferenceEngine::ICNNNetwork class in the documentation at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/classInferenceEngine_1_1CNNNetwork.html
 
 * Batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.
 
-In this tutorial, face detection is done frame-by-frame expecting few results so batch size >1 will generally not give any improvements.  This makes batch size primarily about device support, such as the Myriad which requires batch size set to 1.  In a later tutorial (be sure to look forward to the Car Detection Tutorial), batch size will be explored further to show how it affects latency and performance. 
+In this tutorial, face detection is done frame-by-frame expecting few results so batch size >1 will generally not give any improvements.  This makes batch size primarily about device support, such as the Myriad which requires batch size set to 1.  In a later tutorial (be sure to look forward to the [Car Detection Tutorial](../car_detection_tutorial/Readme.md)), batch size will be explored further to show how it affects latency and performance. 
 
 ## Tutorial Step 1: Create the Base OpenCV Application
 

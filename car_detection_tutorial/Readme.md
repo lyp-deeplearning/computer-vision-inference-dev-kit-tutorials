@@ -1,3 +1,5 @@
+# Car Detection Tutorial
+
 # Table of Contents
 
 <p></p><div class="table-of-contents"><ul><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#using-git-clone-to-clone-the-entire-repository">Using Git Clone to Clone the Entire Repository</a></li><li><a href="#using-svn-export-to-download-only-this-tutorial">Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#batch-size">Batch Size</a><ul><li><a href="#how-does-batch-size-affect-performance-and-latency">How Does Batch Size Affect Performance and Latency?</a></li></ul></li><li><a href="#image-processing-pipeline">Image Processing Pipeline</a></li><li><a href="#synchronous-vs-asynchronous-api">Synchronous vs. Asynchronous API</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first Model, Vehicle Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-vehicle-attributes-detection">Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection</a></li><li><a href="#tutorial-step-4-using-the-asynchronous-api">Tutorial Step 4: Using the Asynchronous API</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
@@ -146,7 +148,7 @@ The basic flow is:
 
 1. Use a tool, such as Caffe, to create and train a CNN inference model
 
-2. Run the created model through Model Optimizer to generate a set of Intermediate Representation (IR) files (.bin and .xml) that is optimized for use with the Inference Engine
+2. Run the created model through Model Optimizer to produce an optimized Intermediate Representation (IR) stored in files (.bin and .xml) for use with the Inference Engine
 
 3. The User Application then loads and runs models onto devices using the Inference Engine and the IR files  
 
@@ -162,47 +164,63 @@ The Inference Engine includes a plugin library for each supported device that ha
 
 #### Inference Engine API Integration Flow
 
-Using the Inference Engine API follows the basic steps:
+Using the Inference Engine API follows the basic steps briefly described below.  The API objects and functions will be seen later in the code walkthroughs.
 
-1. Load plugin
+1. Load the plugin
 
-    a. Load the plugin for a specified device
+    a. Create an instance of the plugin (InferenceEngine::InferencePlugin) for the specified device using the InferenceEngine::PluginDispatcher class
 
-2. Read model IR
+2. Read the model IR
 
-    a. Read in IR files
+    a. Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
 
-3. Configure input and output
+3. Configure the inputs and outputs formats
 
-    a. Probe model for input and output information
+    a. Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
 
-    b. Optionally configure the precision and memory layout of inputs and outputs
+    b. Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
 
-4. Load model
+4. Load the model into the plugin
 
-    a. Load the model into the plugin
+    a. Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
 
-5. Create inference request
+5. Create an inference request
 
-    a. Have plugin create a request object that holds input and output blobs
+    a. Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
 
-6. Prepare input
+6. Prepare the input
 
-    a. Get the input blob to hold input data
+    a. Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
 
-    b. Transfer data from the data source into input blob
+    b. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
 
-7. Infer
+7. Run Inference
 
-    a. Request plugin to perform inference and wait for results
+    a. Request plugin to perform inference and wait for results using one of two modes:
 
-8. Process output
+        i. Synchronous: 
 
-    a. Get output blobs and process results
+            1. InferenceEngine::InferRequest::Infer() 
 
-In tutorial Steps 2, and 3 we will walkthrough the code that specifically integrates each of the models used in the application.  
+            2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
 
-More details can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
+        ii. Asynchronous: 
+
+            1. InferenceEngine::InferRequest::StartAsync() 
+
+            2. Then later InferenceEngine::InferRequest::Wait()
+
+8. Process the output
+
+    a. Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
+
+    b. Parse and process the output blob(s) according to the output format specified by the model
+
+In tutorial Steps 2 and 3 we will walkthrough the code that specifically integrates each of the models used in the application.  
+
+More details on the Inference Engine can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
+
+and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
 
 #### Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries
 
@@ -221,9 +239,9 @@ An inference model may come from any of the supported sources and workflows such
 
 # Key Concepts
 
-Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.  For more related concepts, please see the Face Detection Tutorials that covers and answers the questions:
+Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.  For more related concepts, please see the  [Face Detection Tutorials](../face_detection_tutorial/Readme.md) that covers and answers the questions:
 
-* Intel OpenCV - Why is it included in the OpenVION toolkit?
+* Intel OpenCV - Why is it included in the OpenVINO toolkit?
 
 * Floating Point Precision - What is it and why does it matter?
 
