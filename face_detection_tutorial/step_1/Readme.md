@@ -16,21 +16,21 @@ Every application needs some way of getting data in and data out.  Let us now ta
 
 ## Parsing Command Line Arguments
 
-To make it easier to set everything from the input video file to which model and device is to be used, we will use command line arguments to the application.  To parse the command line arguments we make use of the "gflags" helper library that comes with the OpenVINO toolkit samples.  Here we will briefly go over the primary functions that were used, for reference the full source code for the gflags library may be found in the OpenVINO tookit samples directory: 
+To make it easier to set everything from the input video file to which model and device is to be used, command line arguments to the application will be used.  To parse the command line arguments, the application will use the "gflags" helper library that comes with the OpenVINO toolkit samples.  Here we will briefly go over the primary functions that are used, for reference the full source code for the gflags library may be found in the OpenVINO toolkit samples directory: 
 
 ```bash
 /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/thirdparty/gflags
 ```
 
 
-To make use of the gflags library and use the supplied functions and classes, we must include the main header file:
+To make use of the gflags library and use the supplied functions and classes, the main header file must be included:
 
 ```cpp
 #include <gflags/gflags.h>
 ```
 
 
-This is done in the main header file "face_detection.hpp" where all the command line arguments are defined using the following steps:
+This is done in the main header file "face_detection.hpp" where all the command line arguments are defined using the following steps.
 
 ### Create the Argument
 
@@ -98,7 +98,7 @@ cd tutorials/face_detection_tutorial/cd step_1
 
 ### Header Files
 
-1. Include header files that define some helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
+1. These header files are included to define helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
 
 ```cpp
 #include <samples/common.hpp>
@@ -106,7 +106,7 @@ cd tutorials/face_detection_tutorial/cd step_1
 ```
 
 
-2. Include the opencv.hpp file for the Intel optimized OpenCV libraries included in the OpenVINO toolkit. 
+2. The opencv.hpp file is included for the Intel optimized OpenCV libraries included in the OpenVINO toolkit. 
 
 ```cpp
 #include <opencv2/opencv.hpp>
@@ -115,7 +115,7 @@ cd tutorials/face_detection_tutorial/cd step_1
 
 ### main()
 
-1. First create an OpenCV video capture object that will be used to source the image data.  Then open the image source.  FLAGS_i is the command line parameter that tells the application the source of where the image.  The source can be the path to an image file, the path to a video file, or "cam" for the USB camera.
+1. First the OpenCV video capture object "cap" is created that will be used to source the image data.  Then the image source is opened.  FLAGS_i is the command line parameter that tells the application the source of where the image.  The source can be the path to an image file, the path to a video file, or "cam" for the USB camera.
 
 ```cpp
 cv::VideoCapture cap;
@@ -125,7 +125,7 @@ if (!(FLAGS_i == "cam" ? cap.open(0) : cap.open(FLAGS_i))) {
 ```
 
 
-2. Get the width and height of the image source for use later.  
+2. The width and height of the image source are stored for use later.  
 
 ```cpp
 const size_t width  = (size_t) cap.get(CV_CAP_PROP_FRAME_WIDTH);
@@ -133,7 +133,7 @@ const size_t height = (size_t) cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 ```
 
 
-3. Create storage for the image frame and then read in the first frame. 
+3. Storage for the image frame is created and then the first frame is read in. 
 
 ```cpp
 cv::Mat frame;
@@ -146,14 +146,14 @@ if (!cap.read(frame)) {
 
 The main loop will read in and then write out the image frames until there are not more to available. 
 
-1. Run forever until break elsewhere inside the loop when there is no more images:
+1. The main loop runs forever until a break elsewhere inside the loop when there are no more images:
 
 ```cpp
 while (true) {
 ```
 
 
-2. Grab an available image from the source:
+2. An available image from the source is grabbed:
 
 ```cpp
     /** requesting new frame if any*/
@@ -161,7 +161,7 @@ while (true) {
 ```
 
 
-3. Check for key press to either snapshot (pressing ‘s’) or stop (any other key)
+3. A check is done for a key press to either saving a snapshot (pressing ‘s’) or stopping (any other key) the application.
 
 ```cpp
     int keyPressed;
@@ -178,7 +178,7 @@ while (true) {
 ```
 
 
-4. Show the output, wrapping it with time functions to measure the time it took to do:
+4. The output is shown, wrapped with time functions to measure the time it took to do:
 
 ```cpp
     auto t0 = std::chrono::high_resolution_clock::now();
@@ -190,7 +190,7 @@ while (true) {
 ```
 
 
-5. Check for another image by retrieving it, if there is nothing to retrieve then wait for a key press if the command line parameter "-no_wait" was not used.
+5. A check is made to see if there is another image to process.  If there is nothing to retrieve then a key press is waited for if the command line parameter "-no_wait" was not used.
 
 ```cpp
     // end of file, for single frame file, like image we just keep it displayed to let user check what was shown
@@ -210,7 +210,7 @@ while (true) {
 ```
 
 
-6. Let user know they can stop a multi-image source like video or camera
+6. A message is output to let the user know they can stop a multi-image source like video or camera.
 
 ```cpp
     if (firstFrame) {
@@ -221,7 +221,7 @@ while (true) {
 ```
 
 
-7. End of loop, go back to while(true) to run again
+7. The loop ends and goes back to the while(true) at the top to run again
 
 ```cpp
 }

@@ -23,7 +23,7 @@ To make it easier to set everything from the input video file to which model and
 ```
 
 
-To make use of the gflags library and use the supplied functions and classes, include the main header file:
+To make use of the gflags library and use the supplied functions and classes, the main header file must be included:
 
 ```cpp
 #include <gflags/gflags.h>
@@ -99,7 +99,7 @@ cd step_1
 
 ### Header Files
 
-1. Include header files that define some helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
+1. These header files are included to define helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
 
 ```cpp
 #include <samples/common.hpp>
@@ -107,7 +107,7 @@ cd step_1
 ```
 
 
-2. Include the opencv.hpp file for the Intel optimized OpenCV libraries included in the OpenVINO toolkit.
+2. The opencv.hpp file is included for the Intel optimized OpenCV libraries included in the OpenVINO toolkit.
 
 ```cpp
 #include <opencv2/opencv.hpp>
@@ -116,7 +116,7 @@ cd step_1
 
 ### main()
 
-1. First create an OpenCV video capture object that will be used to source the image data.  Then open the image source.  FLAGS_i is the command line parameter that tells the application the source of where the image.  The source can be the path to an image file, the path to a video file, or "cam" for the USB camera.
+1. First the OpenCV video capture object "cap" is created that will be used to source the image data.  Then the image source is opened.  FLAGS_i is the command line parameter that tells the application the source of where the image.  The source can be the path to an image file, the path to a video file, or “cam” for the USB camera.
 
 ```cpp
 cv::VideoCapture cap;
@@ -126,7 +126,7 @@ if (!(FLAGS_i == "cam" ? cap.open(0) : cap.open(FLAGS_i))) {
 ```
 
 
-2. Get the width and height of the image source for use later.  
+2. The width and height of the image source are stored for use later.  
 
 ```cpp
 const size_t width  = (size_t) cap.get(CV_CAP_PROP_FRAME_WIDTH);
@@ -134,7 +134,7 @@ const size_t height = (size_t) cap.get(CV_CAP_PROP_FRAME_HEIGHT);
 ```
 
 
-3. Create storage for the image frame and then read in the first frame. 
+3. Storage for the image frame is created and then the first frame is read in. 
 
 ```cpp
 cv::Mat frame;
@@ -148,14 +148,14 @@ if (!cap.read(frame)) {
 
 The main loop will read in and then write out the image frames until there are not more to available. 
 
-1. Run until the conditions specified at the bottom of the loop are met:
+1. The main loop runs until the conditions specified at the bottom of the loop are met:
 
 ```cpp
 do {
 ```
 
 
-2. Let the user know they can stop a multi-image source like video or camera
+2. A message is output to let the user know they can stop a multi-image source like video or camera:
 
 ```cpp
     if (firstFrame) {
@@ -166,7 +166,7 @@ do {
 ```
 
 
-3. Initialize the variables used to store the timing results.
+3. The output is shown, wrapped with time functions to measure the time it took to do:
 
 ```cpp
       t0 = std::chrono::high_resolution_clock::now();
@@ -178,7 +178,7 @@ do {
 ```
 
 
-4. Check to see if there is another image available from the source:
+4. A check is made to see if there is another image available from the source:
 
 ```cpp
       // get next frame            
@@ -186,7 +186,7 @@ do {
 ```
 
 
-5. Check for key press to either snapshot (pressing ‘s’) or stop (any other key)
+5. A check is made for key press to either snapshot (pressing ‘s’) or stop (any other key)
 
 ```cpp
     int keyPressed;
@@ -203,7 +203,7 @@ do {
 ```
 
 
-6. Check to see if there was another image to process.  If there is not, then wait for a key press in the command window.  If "-no_wait" was used, then exit immediately.
+6. A check is made to see if there is another image to process (doMoreFrames).  If there is not, then wait for a key press in the command window.  If no more images to process and the "-no_wait" or “-no_show” option was used, then exit immediately.
 
 ```cpp
       // end of file we just keep last image/frame displayed to let user check what was shown
@@ -220,7 +220,7 @@ do {
 ```
 
 
-7. If there are more frames to do, loop.  If not, exit the main loop.
+7. If there are more frames to do, loop back to top.  If not, exit the main loop.
 
 ```cpp
    } while(doMoreFrames);
@@ -230,7 +230,7 @@ do {
 
 # Building and Running
 
-Now that we have looked at the code and understand how the program works, let us compile it and run to see it in action.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.
 
 ## Build
 
