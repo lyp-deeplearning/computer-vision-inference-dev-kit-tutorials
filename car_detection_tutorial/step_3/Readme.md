@@ -68,7 +68,7 @@ cd tutorials/car_detection_tutorial/step_3
 
 ## VehicleAttribsDetection
 
-Start by deriving from the BaseDetection class and adding some new member variables that will be needed along with using the operator= from the base class.
+VehicleAttribsDetection is derived from the BaseDetection class and adding some new member variables that will be needed along with using the operator= from the base class.
 
 ```cpp
 struct VehicleAttribsDetection : BaseDetection {
@@ -83,7 +83,7 @@ struct VehicleAttribsDetection : BaseDetection {
 
 ### VehicleAttribsDetection()
 
-On construction of a VehicleAttribsDetection object, call the base class constructor passing in the model to load specified in the command line argument FLAGS_m_va, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_va.  This initializes the BaseDetection subclass specifically for VehicleAttribsDetection class.
+On construction of a VehicleAttribsDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_va, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_va.  This initializes the BaseDetection subclass specifically for VehicleAttribsDetection class.
 
 ```cpp
     VehicleAttribsDetection() : BaseDetection(FLAGS_m_va, "Vehicle Attribs", FLAGS_n_va) {}
@@ -92,7 +92,7 @@ On construction of a VehicleAttribsDetection object, call the base class constru
 
 ### submitRequest()
 
-Override the submitRequest() function and first make sure that there are vehicles queued up to be processed.  If so, call the base class submitRequest() function to start inferring vehicle attributes from the enqueued vehicles.  Reset enquedVehicles to 0 indicating that all the queued data has been submitted.
+The submitRequest() function is overridden to make sure that there are vehicles queued up to be processed before calling BaseDetection::submitRequest() to start inference.
 
 ```cpp
     void submitRequest() override {
@@ -105,7 +105,7 @@ Override the submitRequest() function and first make sure that there are vehicle
 
 ### enqueue()
 
-Check to see that the vehicle attributes detection model is enabled.  Also check to make sure that the number of inputs does not exceed the batch size.  
+A check is made to see that the vehicle attributes detection model is enabled.  Also check to make sure that the number of inputs does not exceed the batch size.  
 
 ```cpp
     void enqueue(const cv::Mat &Vehicle) {
@@ -119,7 +119,7 @@ Check to see that the vehicle attributes detection model is enabled.  Also check
 ```
 
 
-Create an inference request object if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+An inference request object is created if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
 ```cpp
         if (!request) {
@@ -128,7 +128,7 @@ Create an inference request object if one has not been already created.  The req
 ```
 
 
-Get the input blob from the request and then use matU8ToBlob() to copy the image image data into the blob.
+The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
 ```cpp
         auto  inputBlob = request->GetBlob(input);
@@ -142,9 +142,9 @@ Get the input blob from the request and then use matU8ToBlob() to copy the image
 
 ### fetchResults()
 
-fetchResults() will parse the inference results saving in the "Results" variable.
+fetchResults() will parse the inference results saving them in the "Results" variable.
 
-1. Declare a structure and vector in the main class to store the information that fetchResults() will retrieve.
+1. A structure and vector are declared in the main class to store the information that fetchResults() will retrieve.
 
 ```cpp
    struct Attributes { std::string type; std::string color;};
@@ -152,7 +152,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-2.  Declare lookup of string names for the results coming from the model.  Clear out any previous results. 
+2. Lookup arrays of string names are declared for the results coming from the model.  Clear out any previous results. 
 
 ```cpp
    void fetchResults() {
@@ -167,7 +167,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-3. Loop to iterate through all the results that were returned from the model.  From each result pull out the vehicle type and color values.
+3. A loop is used to iterate through all the results that were returned from the model.  From each result the vehicle type and color values are retrieved.
 
 ```cpp
       for (int bi = 0; bi < maxBatch; bi++) {
@@ -178,7 +178,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-4. Convert type and color values into indexes into the lookup arrays.  Create an Attrib object holding the inferred type and color.
+4. The type and color values are converted into indexes into the lookup arrays.  An Attrib object is created to hold the inferred type and color.
 
 ```cpp
          const auto color_id = std::max_element(colorsValues, colorsValues + 7) - colorsValues;
@@ -188,7 +188,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-5. Check to see if the application was requested to display the raw information (-r) and print it to the console if necessary.  command window.  The we add the attribute object onto the stack of results.
+5. A check is made to see if the application was requested to display the raw information (-r) and print it to the console if necessary.  
 
 ```cpp
          if (FLAGS_r) {
@@ -198,7 +198,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 ```
 
 
-6. Add the populated Attrib object to the vector of results to be used later by the application.
+6. The populated Attrib object is added to the vector of results to be used later by the application.
 
 ```cpp
          results.push_back(attrib);
@@ -211,7 +211,7 @@ fetchResults() will parse the inference results saving in the "Results" variable
 
 The next function we will walkthrough is the VehicleDetection::read() function which must be specialized specifically to the model that it will load and run. 
 
-1. Use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_va" parameter.  
+1. The Inference Engine API InferenceEngine::CNNNetReader object is used to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_va" parameter.  
 
 ```cpp
     CNNNetwork read() override {
@@ -222,7 +222,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 ```
 
 
-2. Set the maximum batch size to maxBatch (set using FLAGS_n_va which defaults to 1).
+2. The maximum batch size is set to maxBatch (set using FLAGS_n_va which defaults to 1).
 
 ```cpp
         netReader.getNetwork().setBatchSize(maxBatch);
@@ -230,7 +230,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 ```
 
 
-3. Read in the IR .bin file of the model.
+3. The IR .bin file of the model is read.
 
 ```cpp
         /** Extract model name and load it's weights **/
@@ -239,7 +239,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 ```
 
 
-4. Check for the proper number of inputs, and make sure that it has only one input as expected.
+4. The proper number of inputs is checked to make sure that the loaded model has only one input as expected.
 
 ```cpp
         slog::info << "Checking VehicleAttribs inputs" << slog::endl;
@@ -250,7 +250,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 ```
 
 
-5. Prepare the input data format configuring it for the proper precision (U8 = 8-bit per BGR channel) and memory layout (NCHW) for the model.  
+5. The input data format is prepared by configuring it for the proper precision (U8 = 8-bit per BGR channel) and memory layout (NCHW) for the model.  
 
 ```cpp
         auto& inputInfoFirst = inputInfo.begin()->second;
@@ -260,7 +260,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 ```
 
 
-6. Verify that the model has the two output layers as expected for the vehicle color and type results.  Create and initialize variables to hold the output names to receive the results from the model.
+6. The model is verified to have the two output layers as expected for the vehicle color and type results.  Variables are created and initialized to hold the output names to retrieve the results from the model.
 
 ```cpp
         slog::info << "Checking VehicleAttribs outputs" << slog::endl;
@@ -274,7 +274,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 ```
 
 
-7. Log where the model will be loaded, mark the model as being enabled, and return the InferenceEngine::CNNNetwork object containing the model.
+7. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
         slog::info << "Loading Vehicle Attribs model to the "<< FLAGS_d_va << " plugin" << slog::endl;
@@ -285,13 +285,13 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 ```
 
 
-# Using VehicleAttribsDetectionx
+# Using VehicleAttribsDetection
 
 That takes care of specializing the BaseDetector class into the  VehicleAttribsDetection class for the vehicle attribute detection model.  We now move down into the main() function to see what additions have been made to use the vehicle attribute detection model to process detected vehicles.
 
 ## main()
 
-1. In the main() function, add to the cmdOptions the command line arguments FLAGS_d_va and FLAGS_m_va.  Remember that the flags are defined in the car_detection.hpp file.
+1. In the main() function, the command line arguments FLAGS_d_va and FLAGS_m_va are added to cmdOptions.  Remember that the flags are defined in the car_detection.hpp file.
 
 ```cpp
         std::vector<std::pair<std::string, std::string>> cmdOptions = {
@@ -300,21 +300,21 @@ That takes care of specializing the BaseDetector class into the  VehicleAttribsD
 ```
 
 
-2. Instantiate the vehicle attributes detection object.
+2. The vehicle attributes detection object is instantiated.
 
 ```cpp
         VehicleAttribsDetection VehicleAttribs;
 ```
 
 
-3. Load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
+3. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
         Load(VehicleAttribs).into(pluginsForDevices[FLAGS_d_va]);
 ```
 
 
-4. Update the structure that holds a frame and associated data used to pass data from one pipeline stage to another.  Add storage for the vehicle attributes information.
+4. The structure that holds a frame and associated data used to pass data from one pipeline stage to another is updated to include vehicle attributes results.
 
 ```cpp
       typedef struct {
@@ -327,7 +327,7 @@ That takes care of specializing the BaseDetector class into the  VehicleAttribsD
 ```
 
 
-5. Add another FIFO to pass data to the new pipeline stage.
+5. Another FIFO is added to pass data to the new pipeline stage.
 
 ```cpp
       FramePipelineFifo pipeS1toS2Fifo;
@@ -358,7 +358,7 @@ if (VehicleAttribs.enabled()) {
 ```
 
 
-2. From the results for the frame, pull out the number of vehicles that were found.  Then start a loop to prepare a batch of vehicles for inference.
+2. From the results for the frame, the number of vehicles that were found is stored in totalVehicles.  A loop is started to prepare a batch of vehicles for inference.
 
 ```cpp
       const int totalVehicles = ps0s1i.vehicleLocations.size();
@@ -369,7 +369,7 @@ if (VehicleAttribs.enabled()) {
 ```
 
 
-3. Loop until batch is full or done with all vehicles enqueuing vehicles ROIs from the frame.
+3. The loop runs until the input batch is full or done with all vehicles.  The loop enqueues all vehicles ROIs from the frame.
 
 ```cpp
          for(; rib < totalVehicles; rib++) {
@@ -400,7 +400,7 @@ if (VehicleAttribs.enabled()) {
 ```
 
 
-5. Fetch the inference results and store them in the frame being processed.  Track the total number of vehicles that have been inferred.
+5. The inference results are fetched and stored them in the frame being processed.  The total number of vehicles that have been inferred is tracked using numVehiclesInferred.
 
 ```cpp
             VehicleAttribs.fetchResults();
@@ -418,7 +418,7 @@ if (VehicleAttribs.enabled()) {
 ```
 
 
-6. Pass the frame to the next stage.  This needs to be done whether or not there are attribute inference results to pass along.
+6. The frame is passed to the next stage.  This needs to be done whether or not there are attribute inference results to pass along.
 
 ```cpp
       pipeS1toS2Fifo.push(ps0s1i);
@@ -426,7 +426,7 @@ if (VehicleAttribs.enabled()) {
 ```
 
 
-7. If vehicle attribute detection was not enabled, we only need to pass the input frames to the next stage of the pipeline.
+7. If vehicle attribute detection was not enabled, then just pass the input frames to the next stage of the pipeline.
 
 ```cpp
    } else {
@@ -444,7 +444,7 @@ if (VehicleAttribs.enabled()) {
 
 Rendering results has been moved down the pipeline now becoming Stage 2.  The stage still    takes the inference results gathered in the previous stages and renders them for display, now with the addition of rendering vehicle attributes.
 
-1. New code that adds the vehicle attribute information to the image.  
+1. This is the new code that adds the vehicle attribute information to the image.  
 
 ```cpp
    int numVehicles = ps1s2i.vehicleAttributes.size();
@@ -469,7 +469,7 @@ Rendering results has been moved down the pipeline now becoming Stage 2.  The st
 ```
 
 
-2. And new code to print out the execution statistics for the vehicle attribute inference.
+2. And the new code to print out the execution statistics for the vehicle attribute inference.
 
 ```cpp
    if (VehicleAttribs.enabled() && AttribsInferred > 0) {
@@ -485,7 +485,7 @@ Rendering results has been moved down the pipeline now becoming Stage 2.  The st
 
 ## Post-Main Loop
 
-Add vehicle attribute detection object to display the performance count information.
+Vehicle attribute detection object is added to display the performance count information.
 
 ```cpp
 if (FLAGS_pc) {

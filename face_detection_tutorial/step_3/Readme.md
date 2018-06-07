@@ -68,7 +68,7 @@ cd tutorials/face_detection_tutorial/step_3
 
 ## AgeGenderDetection
 
-1. Derive the AgeGenderDetection class from BaseDetection and declare the member variables it uses.
+1. The AgeGenderDetection class is derived from BaseDetection and the member variables it uses are declared.
 
 ```cpp
 struct AgeGenderDetection : BaseDetection {
@@ -79,14 +79,14 @@ struct AgeGenderDetection : BaseDetection {
 ```
 
 
-2. Create the Result class to store the information that the model will return, specifically, the age of the face and the probability that it is a male or female face.
+2. The Result class is used to store the information that the model returns, specifically, the age of the face and the probability that it is a male or female face.
 
 ```Cpp
     struct Result { float age; float maleProb;};
 ```
 
 
-3. Define the operator[] function to give a convenient way to retrieve the age and gender results from the data contained in the inference request’s output blob.  Calculate the index to the appropriate locations in the blob for the batch item.  Then return a result object containing the data read for the batch index.
+3. The operator[] function is defined to give a convenient way to retrieve the age and gender results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob are calculated for the batch item.  A result object is returned containing the data read for the batch index.
 
 ```cpp
     Result operator[] (int idx) const {
@@ -101,7 +101,7 @@ struct AgeGenderDetection : BaseDetection {
 
 ### AgeGenderDetection()
 
-On construction of a AgeGenderDetection object, call the base class constructor passing in the model to load specified in the command line argument FLAGS_m_ag, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_ag.  This initializes the BaseDetection subclass specifically for AgeGenderDetection.
+On construction of a AgeGenderDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_ag, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_ag.  This initializes the BaseDetection subclass specifically for AgeGenderDetection.
 
 ```cpp
     AgeGenderDetection() : BaseDetection(FLAGS_m_ag, "Age Gender", FLAGS_n_ag) {}
@@ -110,7 +110,7 @@ On construction of a AgeGenderDetection object, call the base class constructor 
 
 ### submitRequest()
 
-Override the submitRequest() function and first make sure that there are faces queued up to be processed.  If so, call the base class submitRequest() function to start inferring vehicle attributes from the enqueued faces.  Reset enquedFaces to 0 indicating that all the queued data has been submitted.
+The submitRequest() function is overridden to make sure that there are faces queued up to be processed before calling the base class submitRequest() function to start inferring vehicle attributes from the enqueued faces.  enquedFaces is reset to 0 to indicate that all the queued data has been submitted.
 
 ```cpp
     void submitRequest() override {
@@ -123,7 +123,7 @@ Override the submitRequest() function and first make sure that there are faces q
 
 ### enqueue()
 
-Check to see that the age and gender detection model is enabled.  Also check to make sure that the number of inputs does not exceed the batch size.  
+A check is made to see that the age and gender detection model is enabled.  A check is also made to make sure that the number of inputs does not exceed the batch size.  
 
 ```cpp
     void enqueue(const cv::Mat &face) {
@@ -137,7 +137,7 @@ Check to see that the age and gender detection model is enabled.  Also check to 
 ```
 
 
-Create an inference request object if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+An inference request object is created if one has not been already been created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
 ```cpp
         if (!request) {
@@ -146,7 +146,7 @@ Create an inference request object if one has not been already created.  The req
 ```
 
 
-Get the input blob from the request and then use matU8ToBlob() to copy the image image data into the blob.
+The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
 ```cpp
         auto  inputBlob = request->GetBlob(input);
@@ -162,7 +162,7 @@ Get the input blob from the request and then use matU8ToBlob() to copy the image
 
 The next function we will walkthrough is the AgeGenderDetection::read() function which must be specialized specifically to the model that it will load and run. 
 
-1. Use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_ag" parameter.  
+1. The Inference Engine API InferenceEngine::CNNNetReader object is used to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_ag" parameter.  
 
 ```cpp
     CNNNetwork read() override {
@@ -173,7 +173,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-2. Set the maximum batch size to maxBatch (set using FLAGS_n_ag which defaults to 16).
+2. The maximum batch size is set to maxBatch (set using FLAGS_n_ag which defaults to 16).
 
 ```cpp
         /** Set batch size to 16 **/
@@ -182,7 +182,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-3. Read in the IR .bin file of the model.
+3. The IR .bin file of the model is read.
 
 ```cpp
         /** Extract model name and load it's weights **/
@@ -191,7 +191,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-4. Check for the proper number of inputs, and make sure that it has only one input as expected.
+4. The proper number of inputs is checked to make sure that the loaded model has only one input as expected.
 
 ```cpp
         slog::info << "Checking Age Gender inputs" << slog::endl;
@@ -202,7 +202,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-5. Prepare the input data format configuring it for the proper precision (FP32 = 32-bit floating point) and memory layout (NCHW) for the model.
+5. The input data format is prepared by configuring it for the proper precision (FP32 = 32-bit floating point) and memory layout (NCHW) for the model.
 
 ```cpp
         auto& inputInfoFirst = inputInfo.begin()->second;
@@ -212,7 +212,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-6. Verify that the model has the two output layers as expected for the age and gender results.  Create and initialize variables to hold the output names to receive the results from the model.
+6. The model is verified to have the two output layers as expected for the age and gender results.  Variables are created and initialized to hold the output names to receive the results from the model.
 
 ```cpp
         slog::info << "Checking Age Gender outputs" << slog::endl;
@@ -226,7 +226,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-7. Check that the model has the output layer types expected and swap output  layers as necessary for receiving the age and the gender results.
+7. A check is made to make sure that the model has the output layer types expected and output layers are swapped as necessary for receiving the age and the gender results.
 
 ```cpp
         // if gender output is convolution, it can be swapped with age
@@ -246,7 +246,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-8. Log the names of the two output layers and save them into our variables.
+8. The names of the two output layers are logged and saved into variables used to retrieve results later.
 
 ```cpp
         slog::info << "Age layer: " << ageOutput->getCreatorLayer().lock()->name<< slog::endl;
@@ -257,7 +257,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 ```
 
 
-9. Log where the model will be loaded, mark the model as being enabled, and return the InferenceEngine::CNNNetwork object containing the model.
+9. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
         slog::info << "Loading Age Gender model to the "<< FLAGS_d_ag << " plugin" << slog::endl;
@@ -274,7 +274,7 @@ That takes care of specializing the BaseDetector class into the AgeGenderDetecti
 
 ## main()
 
-1. In the main() funciton, add to the cmdOptions the command line arguments FLAGS_d_ag and FLAGS_m_ag.  Remember that the flags are defined in the car_detection.hpp file.
+1. In the main() function, the command line arguments FLAGS_d_ag and FLAGS_m_ag are added to cmdOptions.  Remember that the flags are defined in the car_detection.hpp file.
 
 ```cpp
 std::vector<std::pair<std::string, std::string>> cmdOptions = {
@@ -283,14 +283,14 @@ std::vector<std::pair<std::string, std::string>> cmdOptions = {
 ```
 
 
-2. Instantiate the age and gender detection object.
+2. The age and gender detection object is instantiated.
 
 ```cpp
 AgeGenderDetection AgeGender;
 ```
 
 
-3. Load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
+3. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
 Load(AgeGender).into(pluginsForDevices[FLAGS_d_ag]);
@@ -301,7 +301,7 @@ Load(AgeGender).into(pluginsForDevices[FLAGS_d_ag]);
 
 In the main "while(true)" loop, the inference results from the face detection model are used as input to the age and gender detection model.  
 
-1. Fetch results then start the loop to iterate through them.
+1. The loop to iterate through the fetched results is started.
 
 ```cpp
 FaceDetection.fetchResults();
@@ -309,7 +309,7 @@ for (auto && face : FaceDetection.results) {
 ```
 
 
-2. Check to see if the age and gender model is enabled.  If so, then get the ROI for the face by clipping the face location from the input image frame.
+2. A check is made to see if the age and gender model is enabled.  If so, then get the ROI for the face by clipping the face location from the input image frame.
 
 ```cpp
    if (AgeGender.enabled()) {
@@ -318,7 +318,7 @@ for (auto && face : FaceDetection.results) {
 ```
 
 
-3. Enque the face data for processing.
+3. The face data is enqueued for processing.
 
 ```cpp
       if (AgeGender.enabled()) {
@@ -329,7 +329,7 @@ for (auto && face : FaceDetection.results) {
 ```
 
 
-4. The age and gender detection model is run to infer on the faces using submitRequest(), then the results are waited on using wait().  The submit-then-wait are enveloped with timing functions to measure how long the inference takes.
+4. The age and gender detection model is run to infer on the faces using submitRequest(), then the results are waited on using wait().  The submit-then-wait is enveloped with timing functions to measure how long the inference takes.
 
 ```cpp
 t0 = std::chrono::high_resolution_clock::now();
@@ -342,7 +342,7 @@ ms secondDetection = std::chrono::duration_cast<ms>(t1 - t0);
 ```
 
 
-5. Output the timing metrics for inference adding the results for the age and gender inference to the output window.
+5. The timing metrics for inference are output with the results for the age and gender inference added to the output window.
 
 ```cpp
 if (AgeGender.enabled()) {
@@ -358,7 +358,7 @@ if (AgeGender.enabled()) {
 ```
 
 
-6. Update the output image label with the age and gender results for each detected face.  
+6. The output image label is updated with the age and gender results for each detected face.  
 
 ```cpp
 int i = 0;
@@ -367,7 +367,7 @@ for (auto & result : FaceDetection.results) {
 ```
 
 
-7. Choose whether to use a simple label or age and gender results if model enabled.
+7. The decision is made to use a simple label or age and gender results if model enabled.
 
 ```cpp
    out.str("");
@@ -382,7 +382,7 @@ for (auto & result : FaceDetection.results) {
 ```
 
 
-8. Place label on output image for current result.
+8. A label is placed on the output image for current result.
 
 ```cpp
   cv::putText(frame,
@@ -394,7 +394,7 @@ for (auto & result : FaceDetection.results) {
 ```
 
 
-9. Choose color of box around face based on the age and gender model’s confidence that the face is male.
+9. The color of the box around face is chosen based on the age and gender model’s confidence that the face is male.
 
 ```cpp
    auto genderColor =
@@ -404,7 +404,7 @@ for (auto & result : FaceDetection.results) {
 ```
 
 
-10. Draw a rectangle around the face on the output image.
+10. A rectangle is dranw around the face on the output image.
 
 ```   cv::rectangle(frame, result.location, genderColor, 2);
    i++;
@@ -412,7 +412,7 @@ for (auto & result : FaceDetection.results) {
 ```
 
 
-11. Finally, display the final results for the frame while measuring the time it took to show the image.
+11. Finally, the final results are displayed for the frame while measuring the time it took to show the image.
 
 ```cpp
 t0 = std::chrono::high_resolution_clock::now();
@@ -424,7 +424,7 @@ ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 
 ## Post-Main Loop
 
-Add age and gender detection object to display the performance count information.
+The age and gender detection object is added to display the performance count information.
 
 ```cpp
 if (FLAGS_pc) {
