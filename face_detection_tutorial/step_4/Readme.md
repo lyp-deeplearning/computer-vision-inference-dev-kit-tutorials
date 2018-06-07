@@ -72,7 +72,7 @@ cd tutorials/face_detection_tutorial/step_4
 
 ## HeadPoseDetection 
 
-1. Derive the new HeadPoseDetection class from BaseDetection, and declare the member variables it uses.
+1. The HeadPoseDetection class is derived from BaseDetection, and the member variables it uses are declared.
 
 ```cpp
 struct HeadPoseDetection : BaseDetection {
@@ -85,7 +85,7 @@ struct HeadPoseDetection : BaseDetection {
 ```
 
 
-2. Create the Result class to store the information that the model will return, specifically, the roll, pitch, and yaw for each head pose.
+2. The Result class is created to store the information that the model will return, specifically, the roll, pitch, and yaw for each head pose.
 
 ```cpp
     struct Results {
@@ -96,7 +96,7 @@ struct HeadPoseDetection : BaseDetection {
 ```
 
 
-3. Define the operator[] function to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob.  Calculate the index to the appropriate locations in the blob for the batch item.  Then return a result object containing the data read for the batch index.
+3. The operator[] function is defiend to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob is calculated for the batch item.  Then a result object containing the data read for the batch index is returned.
 
 ```cpp
     Results operator[] (int idx) const {
@@ -112,7 +112,7 @@ struct HeadPoseDetection : BaseDetection {
 
 ### HeadPoseDetection()
 
-On construction of a HeadPoseDetection object, call the base class constructor passing in the model to load specified in the command line argument FLAGS_m_hp, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_hp.  This initializes the BaseDetection subclass specifically for HeadPoseDetection.
+On construction of a HeadPoseDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_hp, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_hp.  This initializes the BaseDetection subclass specifically for HeadPoseDetection.
 
 ```cpp
     HeadPoseDetection() : BaseDetection(FLAGS_m_hp, "Head Pose", FLAGS_n_hp) {}
@@ -121,7 +121,7 @@ On construction of a HeadPoseDetection object, call the base class constructor p
 
 ### submitRequest()
 
-Override the submitRequest() function and first make sure that there are faces queued up to be processed.  If so, call the base class submitRequest() function to start inferring head pose from the enqueued faces.  Reset enquedFaces to 0 indicating that all the queued data has been submitted.
+The submitRequest() function is overridden to make sure that there are faces queued up to be processed.  If so, call the base class submitRequest() function to start inferring head pose from the enqueued faces.  enquedFaces is reset to 0 indicating that all the queued data has been submitted.
 
 ```cpp
     void submitRequest() override {
@@ -134,7 +134,7 @@ Override the submitRequest() function and first make sure that there are faces q
 
 ### enqueue()
 
-Check to see that the head pose detection model is enabled.  Also check to make sure that the number of inputs does not exceed the batch size.  
+A check is made to see that the head pose detection model is enabled.  A check is also made to make sure that the number of inputs does not exceed the batch size.  
 
 ```cpp
    void enqueue(const cv::Mat &face) {
@@ -148,7 +148,7 @@ Check to see that the head pose detection model is enabled.  Also check to make 
 ```
 
 
-Create an inference request object if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+An inference request object is created if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
 ```cpp
         if (!request) {
@@ -157,7 +157,7 @@ Create an inference request object if one has not been already created.  The req
 ```
 
 
-Get the input blob from the request and then use matU8ToBlob() to copy the image image data into the blob.
+The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
 ```cpp
         auto  inputBlob = request->GetBlob(input);
@@ -178,7 +178,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-1. Use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_hp" parameter.  
+1. The Inference Engine API InferenceEngine::CNNNetReader object is used to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_hp" parameter.  
 
 ```cpp
         slog::info << "Loading network files for Head Pose detection " << slog::endl;
@@ -188,7 +188,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-2. Set the maximum batch size to maxBatch (set using FLAGS_n_hp which defaults to 16).
+2. The maximum batch size is set to maxBatch (set using FLAGS_n_hp which defaults to 16).
 
 ```cpp
         /** Set batch size to maximum currently set to one provided from command line **/
@@ -197,7 +197,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-3. Read in the IR .bin file of the model.
+3. The IR .bin file of the model is read.
 
 ```cpp
         std::string binFileName = fileNameNoExt(FLAGS_m_hp) + ".bin";
@@ -205,7 +205,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-4. Check for the proper number of inputs, and make sure that it has only one input as expected.
+4. The proper number of inputs is checked to make sure that the loaded model has only one input as expected.
 
 ```cpp
         slog::info << "Checking Head Pose Network inputs" << slog::endl;
@@ -216,7 +216,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-5. Prepare the input data format configuring it for the proper precision (FP32 = 32-bit floating point) and memory layout (NCHW) for the model.
+5. The input data format is prepared by configuring it for the proper precision (FP32 = 32-bit floating point) and memory layout (NCHW) for the model.
 
 ```cpp
         auto& inputInfoFirst = inputInfo.begin()->second;
@@ -226,7 +226,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-6. Verify that the model has the three output layers as expected for the roll, pitch and yaw results.  Create and initialize a map to hold the output names to receive the results from the model.
+6. The model is verified to have the three output layers as expected for the roll, pitch and yaw results.  A map is created and initialized to hold the output names to receive the results from the model.
 
 ```cpp
         slog::info << "Checking Head Pose network outputs" << slog::endl;
@@ -242,7 +242,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-7. Check that the model has the three output layers named and their types are as expected.
+7. A check is made to make sure that the model has the three output layers named as expected and their types are as expected.
 
 ```cpp
         for (auto && output : outputInfo) {
@@ -265,7 +265,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 ```
 
 
-8. Log where the model will be loaded, mark the model as being enabled, and return the InferenceEngine::CNNNetwork object containing the model.
+8. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
         slog::info << "Loading Head Pose model to the "<< FLAGS_d_hp << " plugin" << slog::endl;
@@ -300,7 +300,7 @@ drawAxes() is a utility function that is used to create the Yaw, Pitch and Roll 
 
 That takes care of specializing the BaseDetector class into the Head PoseDetection class for the head pose detection model.  We now move down into the main() function to see what additions have been made to use the head pose detection model to process detected faces.
 
-1. In the main() funciton, add to the cmdOptions the command line arguments FLAGS_d_ag and FLAGS_m_ag.  Remember that the flags are defined in the car_detection.hpp file.
+1. In the main() function, the command line arguments FLAGS_d_hp and FLAGS_m_hp are added to cmdOptions.  Remember that the flags are defined in the car_detection.hpp file.
 
 ```cpp
 std::vector<std::pair<std::string, std::string>> cmdOptions = {
@@ -309,14 +309,14 @@ std::vector<std::pair<std::string, std::string>> cmdOptions = {
 ```
 
 
-2. Instantiate the head pose detection object.
+2. The head pose detection object is instantiated.
 
 ```cpp
 HeadPoseDetection HeadPose;
 ```
 
 
-3. Load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
+3. The model is loaded into the Inference Engine and associate it with the device using the Load helper class previously covered.
 
 ```cpp
 Load(HeadPose).into(pluginsForDevices[FLAGS_d_hp]);
@@ -327,14 +327,14 @@ Load(HeadPose).into(pluginsForDevices[FLAGS_d_hp]);
 
 In the main "while(true)" loop, the inference results from the face detection model are used as input to the head pose detection model.  
 
-1. Fetch results then start the loop to iterate through them.
+1. The results are fetched and the loop to iterate through them started.
 
 ```cpp
 for (auto && face : FaceDetection.results) {
 ```
 
 
-2. Check to see if the head pose model is enabled.  If so, then get the ROI for the face by clipping the face location from the input image frame.
+2. A check is made to see if the head pose model is enabled.  If so, then get the ROI for the face by clipping the face location from the input image frame.
 
 ```cpp
    if (AgeGender.enabled() || HeadPose.enabled()) {
@@ -343,7 +343,7 @@ for (auto && face : FaceDetection.results) {
 ```
 
 
-3. Enque the face data for processing.
+3. The face data is enqueed for processing.
 
 ```cpp
       if (HeadPose.enabled()) {
@@ -354,7 +354,7 @@ for (auto && face : FaceDetection.results) {
 ```
 
 
-4. The head pose detection model is run to infer on the faces using submitRequest(), then the results are waited on using wait().  The submit-then-wait are enveloped with timing functions to measure how long the inference takes.
+4. The head pose detection model is run to infer on the faces using submitRequest(), then the results are waited on using wait().  The submit-then-wait is enveloped with timing functions to measure how long the inference takes.
 
 ```cpp
 t0 = std::chrono::high_resolution_clock::now();
@@ -375,7 +375,7 @@ ms secondDetection = std::chrono::duration_cast<ms>(t1 - t0);
 ```
 
 
-5. Output the timing metrics for inference adding the results for the head pose inference to the output window.
+5. The timing metrics for inference are output with the results for the head pose inference added to the output window.
 
 ```cpp
 if (HeadPose.enabled() || AgeGender.enabled()) {
@@ -395,7 +395,7 @@ if (HeadPose.enabled() || AgeGender.enabled()) {
 ```
 
 
-6. Update the output image label with the head pose results for each detected face by drawing the yaw, pitch, and roll axes over the face.
+6. The output image is updated with the head pose results for each detected face by drawing the yaw, pitch, and roll axes over the face.
 
 ```cpp
 if (HeadPose.enabled() && i < HeadPose.maxBatch) {
@@ -407,7 +407,7 @@ if (HeadPose.enabled() && i < HeadPose.maxBatch) {
 
 ## Post-Main Loop
 
-Add head pose detection object to display the performance count information. 
+The head pose detection object is added to display the performance count information. 
 
 ```cpp
 if (FLAGS_pc) {

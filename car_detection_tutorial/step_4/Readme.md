@@ -72,7 +72,7 @@ Later in main.cpp in a check is added to ParseAndCheckCommandLine() to ensure n_
 
 ## BaseDetection Class
 
-The BaseDetection class must be modified to allow for more than one request to exist.  First the single request storage is replaced with the following:
+The BaseDetection class has been modified to allow for more than one request to exist.  First the single request storage is replaced with the following:
 
 ```cpp
     std::queue<InferRequest::Ptr> submittedRequests;
@@ -120,21 +120,21 @@ virtual void submitRequest() {
 ```
 
 
-2. Start the request asynchronously:
+2. The request is started asynchronously:
 
 ```cpp
        requests[inputEequestIdx]->StartAsync();
 ```
 
 
-3. Record the request as outstanding:
+3. The request is recorded as outstanding:
 
 ```cpp
         submittedRequests.push(requests[inputEequestIdx]);
 ```
 
 
-4. Cycle to the next input request to be used:
+4. The input index is cycled to the next input request to be used:
 
 ```cpp
         inputEequestIdx++;
@@ -149,7 +149,7 @@ virtual void submitRequest() {
 
 When waiting for results of first (oldest) outstanding request:
 
-1. Make sure detector is enabled:
+1. A check is made to make sure detector is enabled:
 
 ```cpp
 virtual void wait() {
@@ -157,7 +157,7 @@ virtual void wait() {
 ```
 
 
-2. Get the first outstanding request to wait on:
+2. The first outstanding request to wait on is retrieved:
 
 ```cpp
         // get next request to wait on
@@ -165,14 +165,14 @@ virtual void wait() {
 ```
 
 
-3. Make sure there is an outstanding request:
+3. A check is made to make sure there is an outstanding request:
 
 ```cpp
         	if (submittedRequests.size() < 1) return;
 ```
 
 
-4. Get request and remove from tracking FIFO :
+4. The request is retrieved and removed from tracking FIFO :
 
 ```cpp
         	outputRequest = submittedRequests.front();
@@ -181,7 +181,7 @@ virtual void wait() {
 ```
 
 
-5. Wait on the request until results are ready.  This is effectively a blocking synchronous call to Wait(), however other functions described below are used to check status without blocking.  
+5. The request results are waited on until ready.  This is effectively a blocking synchronous call to Wait(), however other functions described below are used to check status without blocking.  
 
 ```cpp
         outputRequest->Wait(IInferRequest::WaitMode::RESULT_READY);
@@ -206,7 +206,7 @@ To check status, at least one outstanding request must be present:
 ```
 
 
-Make non-blocking call to request’s Wait() to get status:
+A non-blocking call is made to the request’s Wait() to get status:
 
 ```Cpp
     	StatusCode state = submittedRequests.front()->Wait(IInferRequest::WaitMode::STATUS_ONLY);
@@ -224,7 +224,7 @@ requestsInProcess() has been added to tell when a request is being processed.
 ```
 
 
-Check the submitted requests FIFO, if it has a request in it then at least one requests is in process:
+The submitted requests FIFO size is checked, if it has a request in it then at least one requests is in process:
 
 ```cpp    
 	// request is in progress if number of outstanding requests is > 0
@@ -253,7 +253,7 @@ If the number of outstanding requests is less than maximum, then a request can b
 
 ## VehicleDetection Class
 
-The VehicleDetection class needs to be updated to work with multiple requests.
+The VehicleDetection class has been updated to work with multiple requests.
 
 ### submitRequest()
 
@@ -272,7 +272,7 @@ enqueue() has the changes:
 ```
 
 
-2. Replace single "request" to use current input request “requests[inputRequestIdx]”:
+2. The single "request" has been replaced to use current input request “requests[inputRequestIdx]”:
 
 ```cpp
         auto  inputBlob = requests[inputRequestIdx]->GetBlob(input);
@@ -283,7 +283,7 @@ enqueue() has the changes:
 
 fetchResults() has the changes:
 
-1. Replace "resultsFetched" with check that “outputRequest” is valid
+1. "resultsFetched" has been replaced with check that “outputRequest” is valid
 
 ```cpp
         if (nullptr == outputRequest) {
@@ -292,7 +292,7 @@ fetchResults() has the changes:
 ```
 
 
-2. Replace single "request" to use “outputRequest” now set to current output request:
+2. The single "request" has been replaced to use “outputRequest” now set to current output request:
 
 ```cpp
         const float *detections = outputRequest->GetBlob(output)->buffer().as<float *>();
@@ -304,7 +304,7 @@ fetchResults() has the changes:
 ```
 
 
-3. Mark output request as done by setting to nullptr:
+3. The output request is marked as done by setting to nullptr:
 
 ```Cpp
 		// done with request
@@ -329,7 +329,7 @@ enqueue() has the changes:
 ```
 
 
-2. Replace single "request" to use current input request “requests[inputRequestIdx]”:
+2. The single "request" has been replaced to use current input request “requests[inputRequestIdx]”:
 
 ```cpp
         auto  inputBlob = requests[inputRequestIdx]->GetBlob(input);
@@ -340,7 +340,7 @@ enqueue() has the changes:
 
 fetchResults() has the changes:
 
-1. Replace "resultsFetched" with check that “outputRequest” is valid
+1. "resultsFetched" has been replaced with the check that “outputRequest” is valid
 
 ```cpp
         if (nullptr == outputRequest) {
@@ -349,7 +349,7 @@ fetchResults() has the changes:
 ```
 
 
-2. Replace single "request" to use “outputRequest” now set to current output request:
+2. The single "request" has been replaced to use “outputRequest” now set to current output request:
 
 ```Cpp
 			// 7 possible colors for each vehicle and we should select the one with the maximum probability
@@ -363,7 +363,8 @@ fetchResults() has the changes:
 \\ ...same processing of results...
 ```
 
-3. Mark output request as done by setting to nullptr:
+
+3. The output request is marked as done by setting to nullptr:
 
 ```Cpp
 		// done with request
@@ -373,11 +374,11 @@ fetchResults() has the changes:
 
 ## main()
 
-Before the main loop in main() there are changes to output asynchronous mode, storage, and data fields.
+Before the main loop in main() there are changes to output asynchronous mode being used, storage, and data fields.
 
 ### Report Async Mode
 
-Report value used for n_async and whether running asynchronously or synchronously.
+The value used for n_async is reported and whether running asynchronously or synchronously.
 
 ```Cpp 
         const bool runningAsync = (FLAGS_n_async > 1);
@@ -389,7 +390,7 @@ Report value used for n_async and whether running asynchronously or synchronousl
 
 ### Increase Storage
 
-More input frames must be stored with outstanding requests being made.  Increase total number to cover the maximum outstanding requests of batch size used:
+More input frames must be stored with outstanding requests being made.  The total number is increased to cover the maximum outstanding requests of batch size used:
 
 ```Cpp
         // read input (video) frames, need to keep multiple frames stored
@@ -400,7 +401,7 @@ More input frames must be stored with outstanding requests being made.  Increase
 
 ### Add Pipeline Data Fields and Storage
 
-1. Add "vehicleDetectionDone" and “vehicleAttributesDetectionDone” fields to indicate when inference is completed for both models.  Add “numVehiclesInferred” to track the number of inferred vehicles since Stage #2 and #3 are not complete until all vehicles have been run through vehicle attributes inference.
+1. "vehicleDetectionDone" and “vehicleAttributesDetectionDone” fields have been added to indicate when inference is completed for both models.  “numVehiclesInferred” has been added to track the number of inferred vehicles since Stage #2 and #3 are not complete until all vehicles have been run through vehicle attributes inference.
 
 ```cpp
 		// structure to hold frame and associated data which are passed along
@@ -418,7 +419,7 @@ More input frames must be stored with outstanding requests being made.  Increase
 ```
 
 
-2. The previous stages that ran inference synchronously have been broken up into two new stages: "start inference" and “process results”.  Add more FIFOs to account for more stages:
+2. The previous stages that ran inference synchronously have been broken up into two new stages: "start inference" and “process results”.  More FIFOs have been added to account for more stages:
 
 ```Cpp
 		FramePipelineFifo pipeS2toS3Fifo;
@@ -426,7 +427,7 @@ More input frames must be stored with outstanding requests being made.  Increase
 ```
 
 
-3. Stage #3 will need to store vehicle attribute results in order to accumulate all the results coming from inference:
+3. Stage #3 now needs to store vehicle attribute results in order to accumulate all the results coming from inference:
 
 ```cpp
 		FramePipelineFifoItem accumVehAttribs;
@@ -472,7 +473,7 @@ Stage #0 from Tutorial Step 3 does both submit and wait for a inference request.
 
 Stage #1 is responsible for checking for and then processing vehicle inference results started by Stage #0.  
 
-1. First is to check whether there is work to be done.  When running synchronously (!runningAsync) if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, check to see if a result is ready, then enter the stage and wait for the result (which will be a short wait).
+1. First a check is done to see whether there is work to be done.  When running synchronously (!runningAsync) if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, check to see if a result is ready, then enter the stage and wait for the result (which will be a short wait).
 
 ```Cpp
 			/* *** Pipeline Stage 1: Process Vehicles Inference Results *** */
@@ -482,7 +483,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-2. Wait for results:
+2. Results are waited on:
 
 ```cpp
         		// wait for results, async will be ready
@@ -492,7 +493,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-3. Get the results from the request storing in VehicleDetection.results:
+3. The results are fetched from the request and stored in VehicleDetection.results:
 
 ```cpp
 				// parse inference results internally (e.g. apply a threshold, etc)
@@ -500,7 +501,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-4. For every request there is an input frame coming from Stage #0, get it form the FIFO:
+4. For every request there is an input frame coming from Stage #0, it is retrieved from the FIFO:
 
 ```cpp
 				// get associated data from last pipeline stage to use with results
@@ -509,7 +510,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-5. Each input frame in the batch that was input to the vehicle detection model will now become its own input frame going forward down the pipeline:
+5. Each input frame in the batch that was input to the vehicle detection model now becomes its own input frame going forward down the pipeline:
 
 ```				// prepare a FramePipelineFifoItem for each batched frame to get its detection results
 				std::vector<FramePipelineFifoItem> batchedFifoItems;
@@ -521,7 +522,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-6. Go through the results putting detected vehicles and license plates with the associated input frame:
+6. The results are iterated through putting detected vehicles and license plates with the associated input frame:
 
 ```Cpp
 				// store results for next pipeline stage
@@ -536,7 +537,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-7. Clear out the results for later re-use:
+7. The results are cleared for later re-use:
 
 ```Cpp
 				// done with results, clear them
@@ -544,7 +545,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-8. For each of the input frames, send it to Stage #2:
+8. Each of the input frames is sent to Stage #2:
 
 ```cpp
 				// queue up output for next pipeline stage to process
@@ -571,7 +572,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 ```
 
 
-2. Grab a reference to the FIFO first item which will remain in the FIFO until all inference requests for the vehicles found have been made.  This can take multiple passes through Stage #2 because of batch size and/or the number of requests that can be made simultaneously. 
+2. A reference to the FIFO first item is retrieved and the item will remain in the FIFO until all inference requests for the vehicles found have been made.  This can take multiple passes through Stage #2 because of batch size and/or the number of requests that can be made simultaneously. 
 
 ```cpp
 					// grab reference to first item in FIFO, but do not pop until done inferring all vehicles in it
@@ -581,7 +582,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 ```
 
 
-3. Enqueue vehicles up to batch limit for inference starting where left off at "numVehiclesInferred":
+3. Vehicles are enqueued up to batch limit for inference starting where left off at "numVehiclesInferred":
 
 ```Cpp
 					// enqueue input batch
@@ -596,7 +597,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 ```
 
 
-4. If there are vehicles, then submit an inference request recording number of inferences now started:
+4. If there are vehicles, then an inference request is submitted and the number of inferences now started is recorded:
 
 ```Cpp
 					// ----------------------------Run vehicleResult attribute inference ----------------
@@ -613,7 +614,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 ```
 
 
-5. If this input frame has submitted inference requests for all its vehicles, then mark it complete by removing (pop’ing) it from the input FIFO.  Whether all inferences are complete or not, always send an input frame to Stage #3 so it can look for inference results.
+5. If this input frame has submitted inference requests for all its vehicles, then it is marked complete by removing (pop’ing) it from the input FIFO.  Whether all inferences are complete or not, always send an input frame to Stage #3 so it can look for inference results.
 
 ```cpp
 					// make a copy before sending out
@@ -628,7 +629,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 ```
 
 
-6. VehicleAttribs.enabled() is false, just pass through the input frames:
+6. If VehicleAttribs.enabled() is false, then the input frames are just passed through :
 
 ```Cpp
 			} else {
@@ -642,7 +643,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 
 Stage #3 is responsible for checking for and then processing vehicle attributes inference results started by Stage #2.  When VehicleAttribs.enabled() is false, Stage #3 has nothing to do so simply passes input frame to Stage #4. When VehicleAttribs.enabled() is true, Stage #3 looks similar to how results were processed, but now has to handle results asynchronously and may require multiple passes to complete an input frame.
 
-1. Vehicle attributes model is enabled, then if there is an input frame coming from Stage #2, then process an input frame:
+1. If the vehicle attributes model is enabled, then if there is an input frame coming from Stage #2, then an input frame is processed:
 
 ```Cpp
 			/* *** Pipeline Stage 3: Process Vehicle Attribute Inference Results *** */
@@ -651,7 +652,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-2. Grab the first input frame in the FIFO but do not remove it until it has actually been processed which may not happen if inference results are not ready.
+2. The first input frame in the FIFO is retrieved but is not removed until it has actually been processed.  Processing may not happen if inference results are not ready.
 
 ```Cpp
 					FramePipelineFifoItem ps2s3i = pipeS2toS3Fifo.front();
@@ -659,7 +660,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-3. If the input frame has no vehicles, then remove it from FIFO and send to Stage #4.
+3. If the input frame has no vehicles, then it is removed from the FIFO and sent to Stage #4.
 
 ```cpp
 					if ( 0 == numVehicles) {
@@ -672,7 +673,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-4. Input frame has vehicle(s) to infer.  If this is the first input frame (accumVehAttribsIsEmpty==true) then reset the attribute accumulator to the new input frame, otherwise results will be added to the current input frame "accumVehAttribs".
+4. Input frame has vehicle(s) to infer.  If this is the first input frame (accumVehAttribsIsEmpty==true) then the attribute accumulator is reset to the new input frame, otherwise results will be added to the current input frame "accumVehAttribs".
 
 ```Cpp
 						// expecting inference results, check for them while accumulating results
@@ -684,7 +685,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-5. First is to check whether there is work to be done.  When running synchronously (!runningAsync) if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, check to see if a result is ready, then enter the stage and wait for the result (which will be a short wait).
+5. First a check is made to see if there is work to be done.  When running synchronously (!runningAsync) and if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, a check is made to see if a result is ready, then the stage is entered to wait for the result (which will be a short wait).
 
 ```Cpp
 						if ((!runningAsync && VehicleAttribs.requestsInProcess()) || VehicleAttribs.resultIsReady()) {
@@ -703,7 +704,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-7. Store results in current input frame in "accumVehAttribs"
+7. Results are stored in current input frame in "accumVehAttribs"
 
 ```Cpp
 							int numVAResuls = VehicleAttribs.results.size();
@@ -717,7 +718,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-8. Track number of inferred results.  If inference of all vehicles has been completed, then send off input frame to Stage #4 and mark accumVehAttribs as empty:
+8. The number of inferred results is tracked.  If inference of all vehicles has been completed, then the input frame is sent off to Stage #4 and accumVehAttribs is marked as empty:
 
 ```cpp
 							accumVehAttribs.numVehiclesInferred = ps2s3i.numVehiclesInferred;
@@ -732,7 +733,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-9. The inference results were processed for the input frame in the FIFO, remove it form the FIFO:
+9. The inference results were processed for the input frame in the FIFO, it is removed from the FIFO:
 
 ```Cpp
 							// done with this FIFO item
@@ -743,7 +744,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-10. VehicleAttribs.enabled() is false, just pass through the input frames:
+10. VehicleAttribs.enabled() is false, the input frames are just passed through :
 
 ```Cpp
 			} else {
@@ -755,7 +756,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 
 #### Pipeline Stage #4: Render Results
 
-The last pipeline stage renders all the results and looks just like the last stage in Tutorial Step 3 with only small changes being:
+The last pipeline stage renders all the results and looks just like the last stage in Tutorial Step 3 with the only small changes being:
 
 1. The stage now reads from Stage #3 via pipeS3toS4Fifo:
 
