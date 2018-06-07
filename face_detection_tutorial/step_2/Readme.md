@@ -720,14 +720,14 @@ cd tutorials/face_detection_tutorial/step_2
 
 ## Header Files
 
-1. The first set of header files to include are necessary to enable the Inference Engine so that models can be loaded and then run.
+1. The first header file to include is necessary to access the Inference Engine API.
 
 ```cpp
 #include <inference_engine.hpp>
 ```
 
 
-2. There are three more headers that for using the vehicle detection model and the data it gives.
+2. There are three more headers needed for using the vehicle detection model and the data it gives.
 
 ```cpp
 #include "face_detection.hpp"
@@ -739,7 +739,7 @@ using namespace InferenceEngine;
 
 ## main()
 
-1. In the main() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map will store plugins created to be index by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the FaceDetection object of type FaceDetectionClass.
+1. In the main() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map stores created plugins to be indexed by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the FaceDetection object of type FaceDetectionClass.
 
 ```cpp
 std::map<std::string, InferencePlugin> pluginsForDevices;
@@ -751,7 +751,7 @@ FaceDetectionClass FaceDetection;
 ```
 
 
-2. Loop through the device/model pairs and check if a plugin for the device already exists.  if not, create the appropriate plugin.  
+2. A loop is used to iterate through the device/model pairs and a check is made to see if a plugin for the device already exists.  if not, create the appropriate plugin.  
 
 ```cpp
 for (auto && option : cmdOptions) {
@@ -766,7 +766,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-3. Load the plugin for the given deviceName then report its version.
+3. The plugin for the given deviceName is loaded and then its version is reported.
 
 ```cpp
    slog::info << "Loading plugin " << deviceName << slog::endl;
@@ -775,7 +775,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-4. If loading the CPU plugin, load the available CPU extensions library.
+4. If loading the CPU plugin, then load the available CPU extensions library.
 
 ```cpp
    /** Load extensions for the CPU plugin **/
@@ -785,7 +785,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-5. Save the plugin into the map pluginsForDevices to be used later when loading the model.
+5. The created plugin is stored into the map pluginsForDevices to be used later when loading the model.
 
 ```cpp
    pluginsForDevices[deviceName] = plugin;
@@ -793,7 +793,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-6. Load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
+6. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
 Load(FaceDetection).into(pluginsForDevices[FLAGS_d]);
@@ -825,14 +825,14 @@ ms detection = std::chrono::duration_cast<ms>(t1 - t0);
 ```
 
 
-3. Parse and store the results in FaceDetection.results.
+3. The inference results are parsed and stored in FaceDetection.results.
 
 ```cpp
 FaceDetection.fetchResults();
 ```
 
 
-4. Compute the statistics of how long each processing step took and print that information onto the image.
+4. The statistics are computed for how long each processing step took and that information is printed onto the image.
 
 ```cpp
 std::ostringstream out;
@@ -873,7 +873,7 @@ for (auto & result : FaceDetection.results) {
 ```
 
 
-6. Finally, display the final results for the frame while measuring the time it took to show the image.
+6. Finally, the final results for the frame are displayed while measuring the time it took to show the image.
 
 ```cpp
 t0 = std::chrono::high_resolution_clock::now();
@@ -885,7 +885,7 @@ ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 
 ## Post-Main Loop
 
-After all the images have been processed (or you have chosen to stop analyzing input from the camera), if the "-pc" command line argument was used, print out the performance statistics to the command window and exit the application.
+After all the images have been processed (or you have chosen to stop analyzing input from the camera), if the "-pc" command line argument was used, the performance statistics are printed out to the command window and the application is exited.
 
 ```cpp
 if (FLAGS_pc) {

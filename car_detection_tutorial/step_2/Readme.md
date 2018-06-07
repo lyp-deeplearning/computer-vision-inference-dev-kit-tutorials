@@ -587,7 +587,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 fetchResults() will parse the inference results saving them in the "Results" variable.
 
-1. Check to make sure that the model is enabled.  If so, clear out any previous results. 
+1. A check to make sure that the model is enabled.  If so, clear out any previous results. 
 
 ```cpp
     void fetchResults() {
@@ -604,14 +604,14 @@ fetchResults() will parse the inference results saving them in the "Results" var
 ```
 
 
-3. "detections" is set topoint to the inference model output results held in the output blob. 
+3. "detections" is set to point to the inference model output results held in the output blob. 
 
 ```cpp
         const float *detections = request->GetBlob(output)->buffer().as<float *>();
 ```
 
 
-4. A loop is started to go through the results from the vehicle detection model.  "maxProposalCount" has been set to the maximum number of results that the model can return.  
+4. A loop is started to iterate through the results from the vehicle detection model.  "maxProposalCount" has been set to the maximum number of results that the model can return.  
 
 ```cpp
         for (int i = 0; i < maxProposalCount; i++) {
@@ -703,14 +703,14 @@ cd tutorials/car_detection_tutorial/step_2
 
 ## Header Files
 
-1. The first set of header files to include are necessary to enable the Inference Engine so that models can be loaded and then run.
+1. The first header file to include is necessary to access the Inference Engine API.
 
 ```cpp
 #include <inference_engine.hpp>
 ```
 
 
-2. There are three more headers that for using the vehicle detection model and the data it gives.
+2. There are three more headers that needed for using the vehicle detection model and the data it gives.
 
 ```cpp
 #include "car_detection.hpp"
@@ -722,7 +722,7 @@ using namespace InferenceEngine;
 
 ## main()
 
-1. In the main() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map will store plugins created to be index by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the VehicleDetection object of type VehicleDetection.
+1. In the main() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map stores created plugins to be indexed by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the VehicleDetection object of type VehicleDetection.
 
 ```cpp
 std::map<std::string, InferencePlugin> pluginsForDevices;
@@ -734,7 +734,7 @@ VehicleDetection VehicleDetection;
 ```
 
 
-2. Loop through the device/model pairs and check if a plugin for the device already exists.  if not, create the appropriate plugin.  
+2. A loop is used to iterate through the device/model pairs and a check is made to see if a plugin for the device already exists.  if not, create the appropriate plugin.  
 
 ```cpp
 for (auto && option : cmdOptions) {
@@ -749,7 +749,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-3. Load the plugin for the given deviceName then report its version.
+3. The plugin for the given deviceName is loaded and then its version is reported.
 
 ```cpp
    slog::info << "Loading plugin " << deviceName << slog::endl;
@@ -759,7 +759,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-4. If loading the CPU plugin, load the available CPU extensions library.  Also check if the -l or -c arguments have specified an additional library to load.
+4. If loading the CPU plugin, then load the available CPU extensions library.  Also check is made to see if the -l or -c arguments have specified an additional library to load.
 
 ```cpp
    /** Load extensions for the CPU plugin **/
@@ -778,7 +778,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-5. Save the plugin into the map pluginsForDevices to be used later when loading the model.
+5. The created plugin is stored into the map pluginsForDevices to be used later when loading the model.
 
 ```cpp
    pluginsForDevices[deviceName] = plugin;
@@ -786,14 +786,14 @@ for (auto && option : cmdOptions) {
 ```
 
 
-6. Load the model into the Inference Engine and associate it with the device using the Load helper class previously covered.
+6. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
 Load(VehicleDetection).into(pluginsForDevices[FLAGS_d]);
 ```
 
 
-7. Create enough storage for input image frames that can hold all of the frames in a batch.
+7. Enough storage is created for input image frames that can hold all of the frames in a batch.
 
 ```cpp
 const int maxNumInputFrames = VehicleDetection.maxBatch + 1;  // +1 to avoid overwrite
@@ -805,7 +805,7 @@ for(int fi = 0; fi < maxNumInputFrames; fi++) {
 ```
 
 
-8. Create variables that will be used to calculate and report the performance of the application as it processes each image and displays the results.  Also create variables to track the number of frames being processed.
+8. Variables are created that will be used to calculate and report the performance of the application as it processes each image and displays the results.  Variables are also created to track the number of frames being processed.
 
 ```cpp
 typedef std::chrono::duration<double, std::ratio<1, 1000>> ms;
@@ -821,7 +821,7 @@ cv::Mat* lastOutputFrame;
 ```
 
 
-9. Define a structure to hold a frame and associated data that will be used to pass data from one pipeline stage to another.  Create FIFO between stages.
+9. A structure is declared to hold a frame and associated data that will be used to pass data from one pipeline stage to another.  The FIFO between stages is also created.
 
 ```cpp
 typedef struct {
@@ -853,14 +853,14 @@ Begin main loop:
 
 Stage 0 reads in frames, prepares and runs inference, then processes the results to pass to the next stage.
 
-1. Check to see if there are more frames to read, if so enter Stage 0.  Else there is nothing to do, so skip Stage 0.
+1. A check is made to see if there are more frames to read, if so enter Stage 0.  Else there is nothing to do, so skip Stage 0.
 
 ```cpp
       if (haveMoreFrames) {
 ```
 
 
-2. Start the loop for gathering input images.
+2. A loop is started for gathering input images.
 
 ```cpp
          FramePipelineFifoItem psos1i;
@@ -868,7 +868,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 ```
 
 
-3. Get a input frame buffer and try reading a new image into it (curFrame).   If there are no more frames to read, then exit the loop.
+3. An input frame buffer is retrieved and a new image is read into it (curFrame).   If there are no more frames to read, then exit the loop.
 
 ```cpp
             cv::Mat* curFrame = inputFramePtrs.front();
@@ -880,7 +880,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 ```
 
 
-4. Track the total number of frames and enqueue the new frame for inference.
+4. The total number of frames is tracked and enqueue the new frame for inference.
 
 ```cpp
             totalFrames++;
@@ -893,7 +893,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 ```
 
 
-5. Store the frame for reference by the next pipeline stage.  If this is the first frame, print an informational note to the command window and set firstFrame to print message only once.
+5. The frame is stored for reference by the next pipeline stage.  If this is the first frame, print an informational note to the command window and set firstFrame to print message only once.
 
 ```cpp
             ps0s1i.batchOfInputFrames.push_back(curFrame);
@@ -915,7 +915,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 ```
 
 
-7. Submit the inference request to the vehicle detection model and then wait for the results.  When the results are ready, fetch the results for processing.
+7. The inference request is submitted to the vehicle detection model and then wait for the results.  When the results are ready, fetch the results for processing.
 
 ```cpp
                t0 = std::chrono::high_resolution_clock::now();
@@ -943,7 +943,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 ```
 
 
-9. Loops through the results and store the vehicle and license plate results with the associated frame.  The results indicate which input frame from the batch it belongs to using batchIndex.
+9. The loops iterates through the results and stores the vehicle and license plate results with the associated frame.  The results indicate which input frame from the batch it belongs to using batchIndex.
 
 ```cpp
                for (auto && result : VehicleDetection.results) {
@@ -958,14 +958,14 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 ```
 
 
-10. Current results have been processed, clear "results". 
+10. The current results have been processed, clear "results". 
 
 ```cpp
             VehicleDetection.results.clear();
 ```
 
 
-11. Separately pass each input frame from the batch, along with its results, to the next stage of the pipeline.
+11. For each input frame from the batch, pass the frame along with its results to the next stage of the pipeline.
 
 ```cpp
             for (auto && item : batchedFifoItems) {
@@ -980,7 +980,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 Stage 1 takes the inference results gathered in the previous stage and renders them for display.  
 
-1. While there are items in the input FIFO, get and remove the first item from the input FIFO.
+1. While there are items in the input FIFO, the first item is retrieved and removed from the input FIFO.
 
 ```cpp
          while (!pipeS0toS1Fifo.empty()) {
@@ -989,7 +989,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 ```
 
 
-2. Set outputFrame to the frame being processed and draw onto that frame rectangles for all the vehicles and license plates that were detected during inference.
+2. outputFrame is set to the frame being processed and frame rectangles are drawn for all the vehicles and license plates that were detected during inference.
 
 ```cpp
             cv::Mat& outputFrame = *(ps0s1i.outputFrame);
@@ -1022,7 +1022,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 ```
 
 
-4. Add vehicle detection time metrics to the image.
+4. Vehicle detection time metrics are added to the image.
 
 ```cpp
             out.str("");
@@ -1038,7 +1038,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 ```
 
 
-5. Show the final rendered image with annotations and metrics.
+5. The final rendered image is shown with annotations and metrics.
 
 ```cpp
             t0 = std::chrono::high_resolution_clock::now();
@@ -1051,7 +1051,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 ```
 
 
-6. Return the frame buffer so it can be reused for another input frame.
+6. The frame buffer is returned so it can be reused for another input frame.
 
 ```cpp
             inputFramePtrs.push(ps0s1i.outputFrame);
