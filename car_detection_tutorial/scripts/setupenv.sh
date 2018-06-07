@@ -16,13 +16,4 @@ modName=vehicle-attributes-recognition-barrier-0010
 export mVA16=$modelDir/$modName/FP16/$modName.xml
 export mVA32=$modelDir/$modName/FP32/$modName.xml
 
-# Batch size models (Vehicle Detection, all FP32)
-scriptDir=$(dirname "$(readlink -f ${BASH_SOURCE[0]})")
-batchModelsDir=$scriptDir/../models/batch_sizes
-modName=SSD_GoogleNetV2
-export mVB1=$batchModelsDir/batch_1/$modName.xml
-export mVB2=$batchModelsDir/batch_2/$modName.xml
-export mVB4=$batchModelsDir/batch_4/$modName.xml
-export mVB8=$batchModelsDir/batch_8/$modName.xml
-export mVB16=$batchModelsDir/batch_16/$modName.xml
 

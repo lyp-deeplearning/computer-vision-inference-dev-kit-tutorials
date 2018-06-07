@@ -124,8 +124,6 @@ In the "car_detection_tutorial" directory you will see:
 
 * doc_support\ - Supporting documentation files including images, etc.
 
-* Models\batch_sizes - Precompiled models used for batch size exercise
-
 * scripts\ - Common helper scripts
 
 * step_1\ - Tutorial Step 1: All files including Readme.md documentation
@@ -259,13 +257,13 @@ Batch size refers to the number of input data to be inferred during a single inf
 
     * The default setting is located in the model’s IR which is set either by:
 
-        * The Model Optimizer command line option when creating the IR 
+        * The Model Optimizer command line option when creating the IR files
 
         * Or from the original source (e.g. Caffe) in which can be read using the Inference Engine API 
 
     * May be set explicitly using the Inference Engine API setBatchSize() function (see InferenceEngine::ICNNNetwork class)
 
-    * Note: Depending upon the model and device used, which method can be used to set batch size may vary.  For example, some models (e.g. the vehicle detection model used in this tutorial) running on GPU will only use the setting form the IR model and cannot have batch size set dynamically using setBatchSize().
+    * Note: Depending upon the model and device used, which method can be used to set batch size may vary.  For example, at the time of writing this tutorial, some models (e.g. the vehicle detection model used in this tutorial) running on GPU will only use the setting form the IR model and cannot have batch size set dynamically using setBatchSize().
 
 * Batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.
 
@@ -274,8 +272,6 @@ Batch size refers to the number of input data to be inferred during a single inf
 Batch size affects both latency and performance of an application.  Latency is measured as the time from acquiring the input data until inferred results are available.  Performance tells us the rate that input-to-results can occur, such as frames-per-second.  For a real-time control application, we can think of latency as the reaction time for a control to be changed while performance is how often that control can be updated.  
 
 Choosing the appropriate batch size for an application’s requirements depends upon the input source, resources (e.g. memory to store more inputs), device(s), and model(s) being used.  The time it takes to build up a batch from the input source before processing it means more latency.  The device selected may also impose a limit on the batch size such as the Myriad which has a limit of 1.  The complexity of the model affects how fast results can be returned for the device used.  Running batch sizes >1 may be faster than running a batch size of 1 because of the efficiency of the device’s pipelined architecture (e.g. pipeline full vs. partly idle), available resources (e.g. multiple cores working in parallel), and/or a reduction of data transfers (e.g. transfer weights only once).  
-
-In Tutorial Step 2 batch size is explored to show how it affects latency and performance. 
 
 For more information on an example of batch size effects on performance for clDNN running on GPU, see the whitepaper: [https://software.intel.com/en-us/articles/accelerating-deep-learning-inference-with-intel-processor-graphics](https://software.intel.com/en-us/articles/accelerating-deep-learning-inference-with-intel-processor-graphics)
 

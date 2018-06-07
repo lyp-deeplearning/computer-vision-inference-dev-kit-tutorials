@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first model, Vehicle Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#vehicle-detection-models">Vehicle Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-vehicle-detection-model">Adding the Vehicle Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#vehicledetection">VehicleDetection</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#vehicledetection">VehicleDetection()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-the-vehicledetection-class">Using the VehicleDetection Class</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-infer-a-batch-of-frames">Pipeline Stage 0: Prepare and Infer a Batch of Frames</a></li><li><a href="#pipeline-stage-1-render-results">Pipeline Stage 1: Render Results</a></li></ul></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a><ul><li><a href="#batch-size">Batch Size</a><ul><li><a href="#single-image">Single Image</a></li><li><a href="#video">Video</a></li></ul></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+[[toc]]
 
 # Introduction
 
@@ -1213,58 +1213,6 @@ Or
 8. Now you will see a window displaying the input from the USB camera.  If the vehicle detection model sees anything it detects as any type of vehicle (car, van, etc.), it will draw a green rectangle around it.  Red rectangles will be drawn around anything that is detected as a license plate.  Unless you have a car in your office, or a parking lot outside a nearby window, the display may not be very exciting.
 
 9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
-
-### Batch Size
-
-In the previous commands the batch size was 1 as set in the model’s IR files.  This means inference was performed on each image or frame of the video, one at a time.  To work with different sized batches, we will now use a different model referenced by the $mVB[1,2,4,8,16] variables running on a single image and the video to see what happens.
-
-#### Single Image
-
-First let us run the single image through each of the batch sizes using the commands:
-
-Note: The $mVB* model will only detect vehicles that will have red boxes drawn around them.
-
-```Bash
-./intel64/Release/vehicle_detection_tutorial -m $mVB1 -i ../../data/car_1.bmp
-./intel64/Release/vehicle_detection_tutorial -m $mVB2 -i ../../data/car_1.bmp
-./intel64/Release/vehicle_detection_tutorial -m $mVB4 -i ../../data/car_1.bmp
-./intel64/Release/vehicle_detection_tutorial -m $mVB8 -i ../../data/car_1.bmp
-./intel64/Release/vehicle_detection_tutorial -m $mVB16 -i ../../data/car_1.bmp
-```
-
-As you run each command, you should notice it takes longer each time the batch size increases and is also reflected in the performance metrics reporting slower performance.  This is because inference is run on the entire batch, even if only one input frame is present all inputs are inferred.  The increasingly longer time is also shows you is increasing latency from the time the image is input to the time the output is displayed.
-
-#### Video
-
-Now let us run using video to see what happens.
-
-1. First run the video with a batch size of 1 using the command:  
-
-    1. Note: The $mVB* model will only detect vehicles that will have red boxes drawn around them.
-
-```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVB1 -i ../../data/car-detection.mp4
-```
-
-
-2. Now jump to the largest batch size of 16 running the command:
-
-```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVB16 -i ../../data/car-detection.mp4
-```
-
-
-3. You should notice that the application appears to pause, fast forward frames, then pause, then fast forward, and repeat until done.  This is due to running batches rather than one frame at a time.  The pause is when inference is running the batch, then the fast forward is when the batch of results are displayed.  Feel free to try this with all the batch sizes. 
-
-4. When looking at the performance of batch size of 1 and 16, you may notice much of a difference.  This is primarily because the inference model is being run on the CPU.  Now we will repeat the exercise on the GPU using the two commands:
-
-```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVB1 -d GPU -i ../../data/car-detection.mp4
-./intel64/Release/vehicle_detection_tutorial -m $mVB16 -d GPU -i ../../data/car-detection.mp4
-```
-
-
-5. Now you should see some improvement (~10-20%) using the larger batch size.  This comes primarily from saving some overhead of inferring images one at a time and instead issuing one request from the CPU to run multiple inferences on the GPU.  
 
 # Conclusion
 
