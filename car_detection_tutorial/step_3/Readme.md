@@ -717,7 +717,7 @@ The results seen from the commands should be similar in order to the summary in 
 </table>
 
 
-From measuring total time of the application, we see the fastest results are for the combinations when offloading from the CPU and running the vehicle model on the GPU and the vehicle attributes model on the GPU or MYRIAD.
+Above is a matrix that shows some of the test cases that were run on a UP Squared Apollo Lake Intel Pentium N4200 to get performance data.  From measuring total time of the application, we see the fastest results are for the combinations when offloading from the CPU and running the vehicle model on the GPU and the vehicle attributes model on the GPU or MYRIAD.
 
 # Conclusion
 
