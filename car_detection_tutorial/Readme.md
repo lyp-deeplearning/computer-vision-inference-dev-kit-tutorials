@@ -193,20 +193,19 @@ Using the Inference Engine API follows the basic steps briefly described below. 
     b. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
 
 7. Run Inference
-
-    a. Request plugin to perform inference and wait for results using one of two modes:
-
-        i. Synchronous: 
-
-            1. InferenceEngine::InferRequest::Infer() 
-
-            2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
-
-        ii. Asynchronous: 
-
-            1. InferenceEngine::InferRequest::StartAsync() 
-
-            2. Then later InferenceEngine::InferRequest::Wait()
+  a. Request plugin to perform inference and wait for results using one of two modes:
+    
+   i. Synchronous: 
+        
+    1. InferenceEngine::InferRequest::Infer() 
+            
+    2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
+            
+   ii. Asynchronous: 
+        
+    1. InferenceEngine::InferRequest::StartAsync() 
+            
+    2. Then later InferenceEngine::InferRequest::Wait()
 
 8. Process the output
 
