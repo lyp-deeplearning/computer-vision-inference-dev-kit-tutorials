@@ -18,15 +18,11 @@ The OpenVINO toolkit provides a pre-compiled model for estimating age and gender
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013
 
-    * Available model locations are:
+    * Available model locations:
 
-        * FP16
+        * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013/FP16/age-gender-recognition-retail-0013.xml
 
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013/FP16/age-gender-recognition-retail-0013.xml
-
-        * FP32
-
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013/FP32/age-gender-recognition-retail-0013.xml
+        * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013/FP32/age-gender-recognition-retail-0013.xml
 
     * More details can be found at:
 

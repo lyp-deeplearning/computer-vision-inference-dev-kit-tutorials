@@ -20,15 +20,11 @@ The OpenVINO toolkit provides a pre-compiled model that has been trained to dete
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007
 
-    * Available model locations are:
+    * Available model locations:
 
-        * FP16:
+        * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP16/vehicle-license-plate-detection-barrier-0007.xml
 
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP16/vehicle-license-plate-detection-barrier-0007.xml
-
-        * FP32:
-
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml
+        * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml
 
     * More details on the model can be found at:
 

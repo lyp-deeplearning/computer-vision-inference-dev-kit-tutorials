@@ -18,15 +18,11 @@ The OpenVINO toolkit provides a pre-compiled model for inferring vehicle type an
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-attributes-recognition-barrier-0010
 
-    * Available model locations are:
+    * Available model locations:
 
-        * FP16
+        * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-attributes-recognition-barrier-0010/FP16/vehicle-attributes-recognition-barrier-0010.xml
 
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-attributes-recognition-barrier-0010/FP16/vehicle-attributes-recognition-barrier-0010.xml
-
-        * FP32
-
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-attributes-recognition-barrier-0010/FP32/vehicle-attributes-recognition-barrier-0010.xml
+        * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-attributes-recognition-barrier-0010/FP32/vehicle-attributes-recognition-barrier-0010.xml
 
     * More details can be found at:
 

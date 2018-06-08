@@ -20,15 +20,11 @@ The OpenVINO toolkit includes a pre-compiled model for estimating head pose from
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001
 
-    * Available model locations are:
+    * Available model locations:
 
-        * FP16
+        * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001/FP16/head-pose-estimation-adas-0001.xml
 
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001/FP16/head-pose-estimation-adas-0001.xml
-
-        * FP32
-
-        * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001/FP32/head-pose-estimation-adas-0001.xml
+        * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001/FP32/head-pose-estimation-adas-0001.xml
 
     * More details can be found at:
 
