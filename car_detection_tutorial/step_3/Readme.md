@@ -613,7 +613,7 @@ The results seen from the commands should be similar in order to the summary in 
     <td>Command Line #</td>
     <td>Vehicle</td>
     <td>Vehicle Attributes</td>
-    <td>Average Main Loop Time (FPS)</td>
+    <td>Average Main Loop Time (ms)</td>
     <td>Average Main Loop Time (FPS)</td>
   </tr>
   <tr>
