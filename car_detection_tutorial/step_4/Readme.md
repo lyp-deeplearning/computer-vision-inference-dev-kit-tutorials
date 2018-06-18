@@ -868,18 +868,19 @@ source ../../scripts/setupenv.sh
 7. Unexpectedly, asynchronous mode should have made the video take longer to run by >10%.  Why would that be?  With the main loop now running asynchronously and not blocking, it is now an additional thread running on the CPU along with the inference models.  Now let us shift running the models to other devices, first in synchronous mode then asynchronous with increasing -n_async value using the commands:
 
 ```Bash
-./intel64/Release/car_detection_tutorial -m $mVLP16 -m_va $mVA16 -d MYRIAD -d GPU -i ../../data/car-detection.mp4 -n_async 1
-./intel64/Release/car_detection_tutorial -m $mVLP16 -m_va $mVA16 -d MYRIAD -d GPU -i ../../data/car-detection.mp4 -n_async 2
-./intel64/Release/car_detection_tutorial -m $mVLP16 -m_va $mVA16 -d MYRIAD -d GPU -i ../../data/car-detection.mp4 -n_async 4
-./intel64/Release/car_detection_tutorial -m $mVLP16 -m_va $mVA16 -d MYRIAD -d GPU -i ../../data/car-detection.mp4 -n_async 8
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 1
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 2
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 4
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 8
+./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 16
 ```
 
 
-8. Asynchronous mode should be faster by some amount for "-n_async 2" then a little more for “-n_async 4”, then not really noticeable fo “-n_async 8”.  The improvements come from the CPU running in parallel more and more with the GPU and Myriad.  The absence of improvement shows when the CPU is doing less in parallel and is waiting on the other devices.  This is referred to as “diminishing returns” and will vary across devices and inference models.
+8. Asynchronous mode should be faster by some amount for "-n_async 2" then a little more for “-n_async 4” and “-n_async 8”, then not really noticeable for “-n_async 8”.  The improvements come from the CPU running in parallel more and more with the GPU and Myriad.  The absence of improvement shows when the CPU is doing less in parallel and is waiting on the other devices.  This is referred to as “diminishing returns” and will vary across devices and inference models.
 
 9. User exercise: Modify the last commands used to try different combinations of GPU and Myriad to find the fastest asynchronous combination for your hardware.
 
-    1. Hint: You may need to increase well beyond  "-n_async 8" to hit the point of diminishing returns.
+    1. Hint: You may need to increase well beyond  "-n_async 16" to hit the point of diminishing returns.
 
 # Conclusion
 
