@@ -12,25 +12,25 @@ In Car Detection Tutorial Step 4, we will see how the code from Tutorial Step 3 
 
 1. Add data structures to support multiple requests:
 
-    1. Multiple request objects
+   1. Multiple request objects
 
-    2. Multiple input data storage objects for each request
+   2. Multiple input data storage objects for each request
 
-    3. Tracking objects for outstanding requests, data, etc.
+   3. Tracking objects for outstanding requests, data, etc.
 
 2. Breakup previous stages #0 and #1 that ran inference synchronously into two new stages: "start inference" and “process results”
 
 3. Change pipeline stages from running sequentially to making each stage data driven and run independently in the main loop:
 
-    4. Stage #0 now first checks to see if new vehicle inference requests can be made, if so it prepares input image(s) and starts inference.
+   1. Stage #0 now first checks to see if new vehicle inference requests can be made, if so it prepares input image(s) and starts inference.
 
-    5. Stage #1 now first checks to see if vehicle inference results are available and processes them, if not the main loop continues to the next stage.
+   2. Stage #1 now first checks to see if vehicle inference results are available and processes them, if not the main loop continues to the next stage.
 
-    6. Stage #2 now first checks to see if there are vehicles available to infer as well as if vehicle attributes inference requests can be made, if so it prepares input vehicle(s) and starts inference.
+   3. Stage #2 now first checks to see if there are vehicles available to infer as well as if vehicle attributes inference requests can be made, if so it prepares input vehicle(s) and starts inference.
 
-    7. Stage #3 now first checks to see if vehicle attribute inference results are available and processes them, if not the main loop continues to the next stage.
+   4. Stage #3 now first checks to see if vehicle attribute inference results are available and processes them, if not the main loop continues to the next stage.
 
-    8. Stage #4 now first checks to see if all results are available and renders them, if not it continues the loop starting back with Stage #1.
+   5. Stage #4 now first checks to see if all results are available and renders them, if not it continues the loop starting back with Stage #1.
 
 # Using the Asynchronous API
 
