@@ -399,7 +399,7 @@ Now let us build and run the complete application and see how it runs all three 
 cd tutorials/face_detection_tutorial/step_4
 ```
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
+3. The first step is to configure the build environment for the OpenVINO™ toolkit by running the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -482,7 +482,7 @@ The easy answer is "yes." The more complex answer is that it can be more complex
 
 ## Are Some Devices Better for Certain Types of Models Than Other Devices?
 
-Again, the easy answer is "yes." The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs. This is one of the most powerful features of the Inference Engine and the OpenVINO toolkit. It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling. Our face detection application can do exactly that. So let us see what we can learn about how these models work on different devices by running through the options.
+Again, the easy answer is "yes." The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs. This is one of the most powerful features of the Inference Engine and the OpenVINO™ toolkit. It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling. Our face detection application can do exactly that. So let us see what we can learn about how these models work on different devices by running through the options.
 
 ### Command Line and All the Arguments
 
@@ -516,7 +516,7 @@ Before we can get started, let us go over the command line parameters again. We 
 </table>
 
 
-As we mentioned in the Key Concepts section, the batch size is the number of input data that the models will work on. For the face detection model, the batch size is fixed to 1. Even when processing input from a video or a camera, it will only processes a single image/frame at a time.  Depending on the content of the image data, it can return any number of faces.  The application lets us set the batch size on the other models dynamically and we have set a default batch size of 16 for the age and gender and head pose models. This is fine when they are run on the CPU and GPU, however the Myriad which requires batch size of 1. So, when we want to run those two models on the Myriad, we must specify a batch size of 1. Since we are not expecting many results in the test video provided, to simplify things and keep batch size from affecting performance results (something covered better in the Car Detection Tutorial), we will set batch size to 1 for all models.
+As we mentioned in the Key Concepts section, the batch size is the number of input data that the models will work on. For the face detection model, the batch size is fixed to 1. Even when processing input from a video or a camera, it will only processes a single image/frame at a time. Depending on the content of the image data, it can return any number of faces. The application lets us set the batch size on the other models dynamically and we have set a default batch size of 16 for the age and gender and head pose models. This is fine when they are run on the CPU and GPU, however the Myriad which requires batch size of 1. So, when we want to run those two models on the Myriad, we must specify a batch size of 1. Since we are not expecting many results in the test video provided, to simplify things and keep batch size from affecting performance results (something covered better in the Car Detection Tutorial), we will set batch size to 1 for all models.
 
 Let us look at a sample command line that uses all the parameters so that we can see what it looks like. For this example, we are running the application from the "step_4/build" directory.
 
@@ -730,7 +730,7 @@ Something to note too is that the Myriad is only capable of running two analysis
 
 # Conclusion
 
-By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application. This again shows the power the OpenVINO toolkit brings to applications by quickly being able to add another inference model. We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
+By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application. This again shows the power the OpenVINO™ toolkit brings to applications by quickly being able to add another inference model. We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
 
 # Navigation
 
