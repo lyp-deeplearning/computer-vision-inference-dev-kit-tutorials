@@ -50,7 +50,7 @@ Gender accuracy: 96.66%</td>
 
 Thanks to the setup work done in Tutorial Step 2, adding the age and gender detection model in this step will just be a matter of deriving a new class from the BaseDetection class, adding an additional command line argument to specify the new model, and updating the application to run and track the statistics for the new model.  This means there will not be as much code to walk through this time.  That will let us focus on how to pass the important image inference results from the face detection model to the age and gender detection model.
 
-1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
@@ -405,7 +405,7 @@ Now that we have walked through the added code and learned what it does, it is t
 
 ## Build
 
-1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
