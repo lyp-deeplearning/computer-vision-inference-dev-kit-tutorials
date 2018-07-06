@@ -8,15 +8,15 @@
 
 # Introduction
 
-In Face Detection Tutorial Step 4, the final inference model will be added.  The model estimates the head pose based on the face image it is given.  The same detected face results from the face detection model used in Tutorial Step 3 for the age and gender model are used for head pose estimation.  After the head pose model has processed the face, the application will draw a set of axes over the face, indicating the Yaw, Pitch, and Roll orientation of the head.  A sample output showing the results where the three axes appears below.  The metrics reported now also include the time to run the head pose model.
+In Face Detection Tutorial Step 4, the final inference model will be added. The model estimates the head pose based on the face image it is given. The same detected face results from the face detection model used in Tutorial Step 3 for the age and gender model are used for head pose estimation.  After the head pose model has processed the face, the application will draw a set of axes over the face, indicating the Yaw, Pitch, and Roll orientation of the head. A sample output showing the results where the three axes appears below.  The metrics reported now also include the time to run the head pose model.
 
 ![image alt text](../doc_support/step4_image_1.png)
 
-In the image above, the three axes intersect in the center of the head.  The blue line represents Roll, and it extends from the center of the head to the front and the back of the head.  The red line represents Pitch, and is drawn from the center of the head to the left ear.  The green line represents Yaw, and is drawn from the center of the head to the top of the head.
+In the image above, the three axes intersect in the center of the head. The blue line represents Roll, and it extends from the center of the head to the front and the back of the head.  The red line represents Pitch, and is drawn from the center of the head to the left ear. The green line represents Yaw, and is drawn from the center of the head to the top of the head.
 
 # Head Pose Estimation Model
 
-The OpenVINO toolkit includes a pre-compiled model for estimating head pose from an image of a face.  You can find it at:
+The OpenVINO™ toolkit includes a pre-compiled model for estimating head pose from an image of a face. You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001
 
@@ -53,16 +53,15 @@ Roll: 4.6 ± 5.6</td>
 
 # Adding the Head Pose Estimation Model
 
-As we saw in Tutorial Step 3, adding a new model is a relatively straight forward process.  To add another model is just a matter of deriving a new class for head pose estimation, add a new command line parameter, updating the application to run and track statistics for the new model, and then finally take those results and overlay them on the face.  Let us walkthrough the source code used to accomplish that.
+As we saw in Tutorial Step 3, adding a new model is a relatively straight forward process. To add another model is just a matter of deriving a new class for head pose estimation, add a new command line parameter, updating the application to run and track statistics for the new model, and then finally take those results and overlay them on the face.  Let us walkthrough the source code used to accomplish that.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
 ```bash
 cd tutorials/face_detection_tutorial/step_4
 ```
-
 
 3. Open the files "main.cpp" and “face_detection.hpp” in the editor of your choice such as ‘gedit’, ‘gvim’, or ‘vim’.
 
@@ -80,7 +79,6 @@ struct HeadPoseDetection : BaseDetection {
     cv::Mat cameraMatrix;
 ```
 
-
 2. The Result class is created to store the information that the model will return, specifically, the roll, pitch, and yaw for each head pose.
 
 ```cpp
@@ -91,8 +89,7 @@ struct HeadPoseDetection : BaseDetection {
     };
 ```
 
-
-3. The operator[] function is defiend to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob is calculated for the batch item.  Then a result object containing the data read for the batch index is returned.
+3. The operator[] function is defiend to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob. The index to the appropriate locations in the blob is calculated for the batch item. Then, a result object containing the data read for the batch index is returned.
 
 ```cpp
     Results operator[] (int idx) const {
@@ -108,16 +105,15 @@ struct HeadPoseDetection : BaseDetection {
 
 ### HeadPoseDetection()
 
-On construction of a HeadPoseDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_hp, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_hp.  This initializes the BaseDetection subclass specifically for HeadPoseDetection.
+On construction of a HeadPoseDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_hp, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_hp. This initializes the BaseDetection subclass specifically for HeadPoseDetection.
 
 ```cpp
     HeadPoseDetection() : BaseDetection(FLAGS_m_hp, "Head Pose", FLAGS_n_hp) {}
 ```
 
-
 ### submitRequest()
 
-The submitRequest() function is overridden to make sure that there are faces queued up to be processed.  If so, call the base class submitRequest() function to start inferring head pose from the enqueued faces.  enquedFaces is reset to 0 indicating that all the queued data has been submitted.
+The submitRequest() function is overridden to make sure that there are faces queued up to be processed. If so, call the base class submitRequest() function to start inferring head pose from the enqueued faces. enquedFaces is reset to 0 indicating that all the queued data has been submitted.
 
 ```cpp
     void submitRequest() override {
@@ -127,10 +123,9 @@ The submitRequest() function is overridden to make sure that there are faces que
     }
 ```
 
-
 ### enqueue()
 
-A check is made to see that the head pose detection model is enabled.  A check is also made to make sure that the number of inputs does not exceed the batch size.  
+A check is made to see that the head pose detection model is enabled. A check is also made to make sure that the number of inputs does not exceed the batch size.  
 
 ```cpp
    void enqueue(const cv::Mat &face) {
@@ -143,15 +138,13 @@ A check is made to see that the head pose detection model is enabled.  A check i
         }
 ```
 
-
-An inference request object is created if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+An inference request object is created if one has not been already created. The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
 ```cpp
         if (!request) {
             request = net.CreateInferRequestPtr();
         }
 ```
-
 
 The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
@@ -164,7 +157,6 @@ The input blob from the request is retrieved and then matU8ToBlob() is used to c
     }
 ```
 
-
 ### read()
 
 The next function we will walkthrough is the HeadPoseDetection::read() function which must be specialized specifically to the model that it will load and run. 
@@ -173,8 +165,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
     CNNNetwork read() override {
 ```
 
-
-1. The Inference Engine API InferenceEngine::CNNNetReader object is used to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_hp" parameter.  
+1. The Inference Engine API InferenceEngine::CNNNetReader object is used to load the model IR files. This comes from the XML file that is specified on the command line using the "-m_hp" parameter.  
 
 ```cpp
         slog::info << "Loading network files for Head Pose detection " << slog::endl;
@@ -182,7 +173,6 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
         /** Read network model **/
         netReader.ReadNetwork(FLAGS_m_hp);
 ```
-
 
 2. The maximum batch size is set to maxBatch (set using FLAGS_n_hp which defaults to 16).
 
@@ -192,14 +182,12 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
         slog::info << "Batch size is set to  " << netReader.getNetwork().getBatchSize() << " for Head Pose Network" << slog::endl;
 ```
 
-
 3. The IR .bin file of the model is read.
 
 ```cpp
         std::string binFileName = fileNameNoExt(FLAGS_m_hp) + ".bin";
         netReader.ReadWeights(binFileName);
 ```
-
 
 4. The proper number of inputs is checked to make sure that the loaded model has only one input as expected.
 
@@ -211,7 +199,6 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
         }
 ```
 
-
 5. The input data format is prepared by configuring it for the proper precision (FP32 = 32-bit floating point) and memory layout (NCHW) for the model.
 
 ```cpp
@@ -221,8 +208,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
         input = inputInfo.begin()->first;
 ```
 
-
-6. The model is verified to have the three output layers as expected for the roll, pitch and yaw results.  A map is created and initialized to hold the output names to receive the results from the model.
+6. The model is verified to have the three output layers as expected for the roll, pitch and yaw results. A map is created and initialized to hold the output names to receive the results from the model.
 
 ```cpp
         slog::info << "Checking Head Pose network outputs" << slog::endl;
@@ -236,7 +222,6 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
             {outputAngleY, false}
         };
 ```
-
 
 7. A check is made to make sure that the model has the three output layers named as expected and their types are as expected.
 
@@ -260,7 +245,6 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
         }
 ```
 
-
 8. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
@@ -271,15 +255,13 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
     }
 ```
 
-
 ### buildCameraMatrix()
 
 ```cpp
 buildCameraMatrix(int cx, int cy, float focalLength)
 ```
 
-
-buildCameraMatrix() is a utility function that is used to create a "camera" that is looking at the image.  It provides the perspective to use during position calculations.
+buildCameraMatrix() is a utility function that is used to create a "camera" that is looking at the image. It provides the perspective to use during position calculations.
 
 ### drawAxes()
 
@@ -288,15 +270,15 @@ drawAxes(cv::Mat& frame, cv::Point3f cpoint, Results headPose, float scale)
 ```
 
 
-drawAxes() is a utility function that is used to create the Yaw, Pitch and Roll axes object that will be drawn for each face on the output image.  It uses standard math and trigonometry to determine how the three axes appear when viewed from the camera, and then draws the axes over the face.
+drawAxes() is a utility function that is used to create the Yaw, Pitch and Roll axes object that will be drawn for each face on the output image. It uses standard math and trigonometry to determine how the three axes appear when viewed from the camera, and then draws the axes over the face.
 
 # Using HeadPoseDetection
 
 ## main()
 
-That takes care of specializing the BaseDetector class into the Head PoseDetection class for the head pose detection model.  We now move down into the main() function to see what additions have been made to use the head pose detection model to process detected faces.
+That takes care of specializing the BaseDetector class into the Head PoseDetection class for the head pose detection model. We now move down into the main() function to see what additions have been made to use the head pose detection model to process detected faces.
 
-1. In the main() function, the command line arguments FLAGS_d_hp and FLAGS_m_hp are added to cmdOptions.  Remember that the flags are defined in the car_detection.hpp file.
+1. In the main() function, the command line arguments FLAGS_d_hp and FLAGS_m_hp are added to cmdOptions. Remember that the flags are defined in the car_detection.hpp file.
 
 ```cpp
 std::vector<std::pair<std::string, std::string>> cmdOptions = {
@@ -304,13 +286,11 @@ std::vector<std::pair<std::string, std::string>> cmdOptions = {
 };
 ```
 
-
 2. The head pose detection object is instantiated.
 
 ```cpp
 HeadPoseDetection HeadPose;
 ```
-
 
 3. The model is loaded into the Inference Engine and associate it with the device using the Load helper class previously covered.
 
@@ -318,26 +298,22 @@ HeadPoseDetection HeadPose;
 Load(HeadPose).into(pluginsForDevices[FLAGS_d_hp]);
 ```
 
-
 ## Main Loop
 
 In the main "while(true)" loop, the inference results from the face detection model are used as input to the head pose detection model.  
-
 1. The results are fetched and the loop to iterate through them started.
 
 ```cpp
 for (auto && face : FaceDetection.results) {
 ```
 
-
-2. A check is made to see if the head pose model is enabled.  If so, then get the ROI for the face by clipping the face location from the input image frame.
+2. A check is made to see if the head pose model is enabled. If so, then get the ROI for the face by clipping the face location from the input image frame.
 
 ```cpp
    if (AgeGender.enabled() || HeadPose.enabled()) {
       auto clippedRect = face.location & cv::Rect(0, 0, width, height);
       auto face = frame(clippedRect);
 ```
-
 
 3. The face data is enqueed for processing.
 
@@ -349,8 +325,7 @@ for (auto && face : FaceDetection.results) {
 }
 ```
 
-
-4. The head pose detection model is run to infer on the faces using submitRequest(), then the results are waited on using wait().  The submit-then-wait is enveloped with timing functions to measure how long the inference takes.
+4. The head pose detection model is run to infer on the faces using submitRequest(), then the results are waited on using wait(). The submit-then-wait is enveloped with timing functions to measure how long the inference takes.
 
 ```cpp
 t0 = std::chrono::high_resolution_clock::now();
@@ -369,7 +344,6 @@ if (HeadPose.enabled()) {
 t1 = std::chrono::high_resolution_clock::now();
 ms secondDetection = std::chrono::duration_cast<ms>(t1 - t0);
 ```
-
 
 5. The timing metrics for inference are output with the results for the head pose inference added to the output window.
 
@@ -390,7 +364,6 @@ if (HeadPose.enabled() || AgeGender.enabled()) {
 }
 ```
 
-
 6. The output image is updated with the head pose results for each detected face by drawing the yaw, pitch, and roll axes over the face.
 
 ```cpp
@@ -399,7 +372,6 @@ if (HeadPose.enabled() && i < HeadPose.maxBatch) {
    HeadPose.drawAxes(frame, center, HeadPose[i], 50);
 }
 ```
-
 
 ## Post-Main Loop
 
@@ -413,14 +385,13 @@ if (FLAGS_pc) {
 }
 ```
 
-
 # Building and Running
 
 Now let us build and run the complete application and see how it runs all three analysis models.
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -428,13 +399,11 @@ Now let us build and run the complete application and see how it runs all three 
 cd tutorials/face_detection_tutorial/step_4
 ```
 
-
 3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
-
 
 4. Now we need to create a directory to build the tutorial in and change to it.
 
@@ -443,14 +412,12 @@ mkdir build
 cd build
 ```
 
-
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+5. The last thing we need to do before compiling is to configure the build settings and build the executable. We do this by running CMake to set the build target and file locations. Then, we run Make to build the executable.
 
 ```bash
 cmake -DCMAKE_BUILD_TYPE=Release ../
 make
 ```
-
 
 ## Run
 
@@ -460,22 +427,19 @@ make
 source ../../scripts/setupenv.sh 
 ```
 
-
-2. You now have the executable file to run ./intel64/Release/face_detection_tutorial.  In order to load the head pose detection model, the "-m_hp" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
+2. You now have the executable file to run ./intel64/Release/face_detection_tutorial. In order to load the head pose detection model, the "-m_hp" flag needs to be added  followed by the full path to the model. First, let us see how it works on a single image file:
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32 -i ../../data/face.jpg
 ```
 
-
-3. The output window will show the image overlaid with colored rectangles over the faces, age and gender results for each face, and the timing statistics for computing the results.  Additionally, you will see red, green, and blue axes over each face, representing the head pose, or orientation, for the face.  Next, let us try it on a video file.
+3. The output window will show the image overlaid with colored rectangles over the faces, age and gender results for each face, and the timing statistics for computing the results. Additionally, you will see red, green, and blue axes over each face, representing the head pose, or orientation, for the face. Next, let us try it on a video file.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
-
-4. You will see rectangles and the head pose axes that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.
+4. You will see rectangles and the head pose axes that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video. Finally, let us see how it works for camera input.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32 -i cam
@@ -488,18 +452,17 @@ Or
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32
 ```
 
-
 5. Again, you will see colored rectangles drawn around any faces that appear in the images along with the results for age, gender, the axes representing the head poses, and the various render statistics.
 
 # Picking the Right Models for the Right Devices
 
-Throughout this tutorial, we just had the application load the models onto the default CPU device.  Here we will explore using the other devices included in the UP Squared AI Vision Development Kit, the GPU and Myriad.  That brings up several questions that we should discuss to get a more complete idea of how to make the best use of our models and how to optimize the applications using the devices available.
+Throughout this tutorial, we just had the application load the models onto the default CPU device. Here we will explore using the other devices included in the UP Squared* AI Vision Development Kit, the GPU and Myriad.  That brings up several questions that we should discuss to get a more complete idea of how to make the best use of our models and how to optimize the applications using the devices available.
 
 ## What Determines the Device a Model Uses?
 
-One of the main factors is going to be the floating point precision that the model requires.  We discuss that below, to answer the question "Are there models that cannot be loaded onto certain devices?"
+One of the main factors is going to be the floating point precision that the model requires. We discuss that below, to answer the question "Are there models that cannot be loaded onto certain devices?"
 
-Another major factor is speed.  Depending on how the model is structured, compiled and optimized, it may lend itself to running faster on a certain device.  Sometimes, you may know that.  Other times, you may have to test the model on different devices to determine where it runs best.
+Another major factor is speed. Depending on how the model is structured, compiled and optimized, it may lend itself to running faster on a certain device. Sometimes, you may know that. Other times, you may have to test the model on different devices to determine where it runs best.
 
 The other major factor in determining where to load a model is parallel processing or load balancing required to meet an application’s performance requirements.  
 
@@ -507,23 +470,23 @@ Once you have made those decisions, you can use the command line arguments to ha
 
 ## How Do I Choose the Specific Device to Run a Model?
 
-In the application, we use command line parameters to specify which device to use for the models we load.  These are "-d", “-d_ag” and “-d_hp”, and they are used for the face detection model, age and gender estimation model, and head pose estimation model, respectively.  The available devices are “CPU”, “GPU” and “MYRIAD” that come with the UP Squared AI Vision Development Kit.
+In the application, we use command line parameters to specify which device to use for the models we load. These are "-d", “-d_ag” and “-d_hp”, and they are used for the face detection model, age and gender estimation model, and head pose estimation model, respectively.  The available devices are “CPU”, “GPU” and “MYRIAD” that come with the UP Squared* AI Vision Development Kit.
 
 ## Are There Models That Cannot be Loaded onto Specific Devices?
 
-Yes.  The main restriction is the precision of the model must be supported by the device.  As we discussed in the Key Concepts section, certain devices can only run models that have the matching floating point precision.  For example, the CPU can only run models that use FP32 precision.  This is because the hardware execution units of the CPU are designed and optimized for FP32 operations.  Similarly, the Myriad can only load models that use FP16 precision.  While the GPU is designed to be more flexible to run both FP16 and FP32 models, though it runs FP16 models faster than FP32 models.
+Yes. The main restriction is the precision of the model must be supported by the device. As we discussed in the Key Concepts section, certain devices can only run models that have the matching floating point precision. For example, the CPU can only run models that use FP32 precision. This is because the hardware execution units of the CPU are designed and optimized for FP32 operations. Similarly, the Myriad can only load models that use FP16 precision. While the GPU is designed to be more flexible to run both FP16 and FP32 models, though it runs FP16 models faster than FP32 models.
 
 ## Are Some Devices Faster Than Others?
 
-The easy answer is "yes."  The more complex answer is that it can be more complex than just “which device is fastest / has the fastest clock speed / and the most cores?”  Some devices are better at certain functions than other devices because of hardware optimizations or internal structures that fit the work being done within a particular model.  As noted previously, devices that can work with models running FP16 can run faster just because they are moving around as little as half the data of when running FP32.
+The easy answer is "yes." The more complex answer is that it can be more complex than just “which device is fastest / has the fastest clock speed / and the most cores?” Some devices are better at certain functions than other devices because of hardware optimizations or internal structures that fit the work being done within a particular model. As noted previously, devices that can work with models running FP16 can run faster just because they are moving around as little as half the data of when running FP32.
 
 ## Are Some Devices Better for Certain Types of Models Than Other Devices?
 
-Again, the easy answer is "yes."  The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs.  This is one of the most powerful features of the Inference Engine and the OpenVINO toolkit.  It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling.  Our face detection application can do exactly that.  So let us see what we can learn about how these models work on different devices by running through the options.
+Again, the easy answer is "yes." The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs. This is one of the most powerful features of the Inference Engine and the OpenVINO toolkit. It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling. Our face detection application can do exactly that. So let us see what we can learn about how these models work on different devices by running through the options.
 
 ### Command Line and All the Arguments
 
-Before we can get started, let us go over the command line parameters again.  We specify the model we want to load by using the "-m*" arguments, which device to load using the “-d*” arguments, and batch size using the “-n*” arguments.  The table below summarizes the arguments for all three models.
+Before we can get started, let us go over the command line parameters again. We specify the model we want to load by using the "-m*" arguments, which device to load using the “-d*” arguments, and batch size using the “-n*” arguments. The table below summarizes the arguments for all three models.
 
 <table>
   <tr>
@@ -553,26 +516,25 @@ Before we can get started, let us go over the command line parameters again.  We
 </table>
 
 
-As we mentioned in the Key Concepts section, the batch size is the number of input data that the models will work on.  For the face detection model, the batch size is fixed to 1.  Even when processing input from a video or a camera, it will only processes a single image/frame at a time.  Depending on the content of the image data, it can return any number of faces.  The application lets us set the batch size on the other models dynamically and we have set a default batch size of 16 for the age and gender and head pose models.  This is fine when they are run on the CPU and GPU, however the Myriad which requires batch size of 1.  So, when we want to run those two models on the Myriad, we must specify a batch size of 1.  Since we are not expecting many results in the test video provided, to simplify things and keep batch size from affecting performance results (something covered better in the Car Detection Tutorial), we will set batch size to 1 for all models.
+As we mentioned in the Key Concepts section, the batch size is the number of input data that the models will work on. For the face detection model, the batch size is fixed to 1. Even when processing input from a video or a camera, it will only processes a single image/frame at a time.  Depending on the content of the image data, it can return any number of faces.  The application lets us set the batch size on the other models dynamically and we have set a default batch size of 16 for the age and gender and head pose models. This is fine when they are run on the CPU and GPU, however the Myriad which requires batch size of 1. So, when we want to run those two models on the Myriad, we must specify a batch size of 1. Since we are not expecting many results in the test video provided, to simplify things and keep batch size from affecting performance results (something covered better in the Car Detection Tutorial), we will set batch size to 1 for all models.
 
-Let us look at a sample command line that uses all the parameters so that we can see what it looks like.  For this example, we are running the application from the "step_4/build" directory.
+Let us look at a sample command line that uses all the parameters so that we can see what it looks like. For this example, we are running the application from the "step_4/build" directory.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG16 -d_ag MYRIAD -n_ag 1 -m_hp $mHP16 -d_hp GPU -n_hp 1 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
+From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16. We also specify "-i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4" so that we have a “known” data set to do our performance tests with. This MP4 video file used from the OpenVINO toolkit samples is a hand-drawn face with a moving camera.  
 
-From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16.  We also specify "-i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4" so that we have a “known” data set to do our performance tests with.  This MP4 video file used from the OpenVINO toolkit samples is a hand-drawn face with a moving camera.  
-
-You can see that it is easy to change the model precision to match the device you want to run it on by changing the model to use the FP16 or FP32 using "16" and “32” built into the names of the variables..  It is easy to make up several test cases to see how the application and each of the inference model, perform.  Just remember that all models run on the CPU must be FP32, and all models run on the Myriad must be FP16.  Models run on the Myriad must also have their batch size set to 1.  Models run on the GPU can be either FP16 or FP32.
+You can see that it is easy to change the model precision to match the device you want to run it on by changing the model to use the FP16 or FP32 using "16" and “32” built into the names of the variables.. It is easy to make up several test cases to see how the application and each of the inference model, perform. Just remember that all models run on the CPU must be FP32, and all models run on the Myriad must be FP16. Models run on the Myriad must also have their batch size set to 1. Models run on the GPU can be either FP16 or FP32.
 
 ### What Kind of Performance Should I See?
 
-That depends on many things, from the specific combination of models and devices that you specified, to the other applications running on the development kit while you collect data.  There are are also different versions of the UP Squared board, with different CPU and GPU hardware.  So the exact data will vary from what appears in the chart below, however the general trends should be the same.  That said, let us take a look at some of the performance counts we observed.  
+That depends on many things, from the specific combination of models and devices that you specified, to the other applications running on the development kit while you collect data. There are are also different versions of the UP Squared* board, with different CPU and GPU hardware. So the exact data will vary from what appears in the chart below, however the general trends should be the same.  That said, let us take a look at some of the performance counts we observed.  
 
 The performance reported in milliseconds and using the "wallclock*" and “totalFramse” variables in the code that time the main loop.  When the application exits, it reports the wallclock time and average time and FPS of main loop for the input image source used.
 
-Below are ten command lines we used to generate some performance count data.  They do not cover all the possible combinations, but they do give a good indication of the top performance trends for each of the models on the different devices.  
+Below are ten command lines we used to generate some performance count data. These do not cover all the possible combinations, but these do give a good indication of the top performance trends for each of the models on the different devices.  
 
 ```bash
 # command line #1
@@ -750,7 +712,7 @@ Below are ten command lines we used to generate some performance count data.  Th
 </table>
 
 
-Above is a matrix that shows some of the test cases that were run on a UP Squared Apollo Lake Intel Pentium N4200 to get performance data.  The analysis models are listed on the left, with the average main loop times on the right.  Each row lists the device the model was run on and the floating point precision.  
+Above is a matrix that shows some of the test cases that were run on a UP Squared* Apollo Lake Intel Pentium® 4200 to get performance data. The analysis models are listed on the left, with the average main loop times on the right. Each row lists the device the model was run on and the floating point precision.  
 
 From this, we can see several trends:  
 
@@ -758,17 +720,17 @@ From this, we can see several trends:
 
 * FP16 performance is almost always faster than FP32 performance on any device.
 
-* The Myriad is shows up in the fastest and slowest performance numbers.  This is likely due to the architecture of the device and that is connected by USB for data transfers, instead of being more directly connected to memory like the CPU and GPU.  This means that more compute time needs to be spent moving data back and forth, across a slower connection.  So we can infer that models that require significant amounts of data to process would be better run on the CPU or GPU, while model that work on modest amounts of data transfer can be handled quite well by the Myriad.
+* The Myriad is shows up in the fastest and slowest performance numbers. This is likely due to the architecture of the device and that is connected by USB for data transfers, instead of being more directly connected to memory like the CPU and GPU.  This means that more compute time needs to be spent moving data back and forth, across a slower connection.  So we can infer that models that require significant amounts of data to process would be better run on the CPU or GPU, while model that work on modest amounts of data transfer can be handled quite well by the Myriad.
 
-In general, the best way to maximize performance is to put the most complex model on the fastest device.  Try to divide the work across the devices as much as possible to avoid overloading any one device.  If you do not need FP32 precision, you can speed up your applications by using FP16 models.
+In general, the best way to maximize performance is to put the most complex model on the fastest device. Try to divide the work across the devices as much as possible to avoid overloading any one device. If you do not need FP32 precision, you can speed up your applications by using FP16 models.
 
-For this application, we see that the best performance is when all models are run on the GPU.  The next best is when the face detection model is run on the GPU entirely, and the age and gender and head pose models are run on the Myriad.  
+For this application, we see that the best performance is when all models are run on the GPU. The next best is when the face detection model is run on the GPU entirely, and the age and gender and head pose models are run on the Myriad.  
 
-Something to note too is that the Myriad is only capable of running two analysis models at a time.  If you try to load a third model, the application will exit, and report a "Device not found" error.
+Something to note too is that the Myriad is only capable of running two analysis models at a time. If you try to load a third model, the application will exit, and report a "Device not found" error.
 
 # Conclusion
 
-By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application.  This again shows the power the OpenVINO toolkit brings to applications by quickly being able to add another inference model.  We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
+By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application. This again shows the power the OpenVINO toolkit brings to applications by quickly being able to add another inference model. We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
 
 # Navigation
 
