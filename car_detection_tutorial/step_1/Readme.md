@@ -107,7 +107,7 @@ cd step_1
 ```
 
 
-2. The opencv.hpp file is included for the Intel optimized OpenCV libraries included in the OpenVINO toolkit.
+2. The opencv.hpp file is included for the Intel optimized OpenCV libraries included in the OpenVINO™ toolkit.
 
 ```
 #include <opencv2/opencv.hpp>
@@ -146,7 +146,7 @@ if (!cap.read(frame)) {
 
 ### Main Loop
 
-The main loop will read in and then write out the image frames until there are not more to available. 
+The main loop will read in and then write out the image frames until there are no more available. 
 
 1. The main loop runs until the conditions specified at the bottom of the loop are met:
 
@@ -261,7 +261,7 @@ make
 
 ## Run
 
-1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO™ toolkit and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
+1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO™ toolkit and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared* board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
 
 2. First, let us use the application to view a single image file.  We do this by using a "-i" parameter followed by the name of an image file. In a termial, run:
 
