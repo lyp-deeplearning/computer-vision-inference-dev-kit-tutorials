@@ -168,7 +168,7 @@ do {
 
 3. The output is shown, wrapped with time functions to measure the time it took to do:
 
-```
+```cpp
       t0 = std::chrono::high_resolution_clock::now();
       if (!FLAGS_no_show) {
          cv::imshow("Detection results", frame);
