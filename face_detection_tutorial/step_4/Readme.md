@@ -55,7 +55,7 @@ Roll: 4.6 ± 5.6</td>
 
 As we saw in Tutorial Step 3, adding a new model is a relatively straight forward process. To add another model is just a matter of deriving a new class for head pose estimation, add a new command line parameter, updating the application to run and track statistics for the new model, and then finally take those results and overlay them on the face.  Let us walkthrough the source code used to accomplish that.
 
-1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -391,7 +391,7 @@ Now let us build and run the complete application and see how it runs all three 
 
 ## Build
 
-1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
