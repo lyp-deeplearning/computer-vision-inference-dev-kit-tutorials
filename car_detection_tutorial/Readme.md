@@ -62,7 +62,7 @@ The first thing we need to do is create a place for the Car Detection tutorial a
 
 ### Using Git Clone to Clone the Entire Repository
 
-1. Bring up a command shell prompt by opening a terminal (such as Xterm) or selecting a terminal that is already open.
+1. Bring up a command shell prompt by opening a terminal (such as xterm) or selecting a terminal that is already open.
 
 2. Create a "tutorials" directory where we can download the Car Detection tutorial and then change to it:
 
@@ -85,7 +85,7 @@ cd cv-sdk-tutorials/car_detection_tutorial
 
 ### Using SVN Export to Download Only This Tutorial
 
-1. Bring up a command shell prompt by opening an Xterm window or selecting an Xterm window that is already open.
+1. Bring up a command shell prompt by opening an xterm window or selecting an xterm window that is already open.
 
 2. Create a "tutorials" directory where we can download the Car Detection tutorial and then change to it:
 
