@@ -8,15 +8,15 @@
 
 # Introduction
 
-Welcome to the Car Detection Tutorial Step 2.  This is the step of the tutorial where the application starts making use of the OpenVINO toolkit to make inferences on image data and detect vehicles.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad.  You may recall from the OpenVINO toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO toolkit to load and run models on several devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do vehicle detection on the input image and then output the results.  
+Welcome to the Car Detection Tutorial Step 2. This is the step of the tutorial where the application starts making use of the OpenVINO™ toolkit to make inferences on image data and detect vehicles.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Intel® Movidius™ Myriad™.  You may recall from the OpenVINO™ toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine. This is where we start to see the power of the OpenVINO™ toolkit to load and run models on several devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do vehicle detection on the input image and then output the results.
 
-Below, you can see a sample output showing the results, where a Region of Interest (ROI) box appears around the detected vehicle and license plate.  The metrics reported include the time for OpenCV capture and display along with the time to run the vehicle detection model.
+Below, you can see a sample output showing the results, where a Region of Interest (ROI) box appears around the detected vehicle and license plate. The metrics reported include the time for OpenCV capture and display along with the time to run the vehicle detection model.
 
 ![image alt text](../doc_support/step2_image_1.png)
 
 # Vehicle Detection Models
 
-The OpenVINO toolkit provides a pre-compiled model that has been trained to detect vehicles and Chinese license plates.  You can find it at:
+The OpenVINO™ toolkit provides a pre-compiled model that has been trained to detect vehicles and Chinese license plates. You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007
 
@@ -51,15 +51,13 @@ Note that the model comes pre-compiled for FP16 and FP32.  So you will need to m
 
 ## How Do I Specify Which Device the Model Will Run On?
 
-To make it easier to try different assignments, the application will use command line arguments 
-
-to specify which device a model is to be run on.  The default device will be the CPU when not set.  Now we will do a brief walkthrough how this is done in the code, starting from the command line arguments to the Inference Engine API calls.  Here we are highlighting the specific code, so some code will be skipped over for now to be covered later in other walkthroughs.
+To make it easier to try different assignments, the application will use command line arguments to specify which device a model is to be run on.  The default device will be the CPU when not set.  Now we will do a brief walkthrough how this is done in the code, starting from the command line arguments to the Inference Engine API calls.  Here we are highlighting the specific code, so some code will be skipped over for now to be covered later in other walkthroughs.
 
 To create the command line arguments, the previously mentioned gflags helper library is used to define the arguments for specifying both the vehicle detection model and the device to run it on.  
 
 The code appears in "car_detection.hpp":
 
-```cpp
+```
 /// @brief message for model argument
 static const char vehicle_detection_model_message[] = "Required. Path to the Vehicle/License-Plate Detection model (.xml) file.";
 
@@ -71,7 +69,7 @@ DEFINE_string(m, "", vehicle_detection_model_message);
 
 To create the command line argument: -m \<model-IR-xml-file\>, where \<model-IR-xml-file\> is the vehicle detection model’s .xml file
 
-```cpp
+```
 /// @brief message for assigning vehicle detection inference to device
 static const char target_device_message[] = "Specify the target device for Vehicle Detection (CPU, GPU, FPGA, MYRYAD, or HETERO). ";
 
@@ -86,7 +84,7 @@ As a result of the macros used in the code above, the variables "FLAGS_m" and �
 
 1. First a map is declared to hold the plugins as they are loaded.  The mapping will allow the associated plugin InferencePlugin object to be found by name (e.g. "CPU")    
 
-```cpp
+```
      // ---------------------Load plugins for inference engine------------------------------------------------
         std::map<std::string, InferencePlugin> pluginsForDevices;
 ```
@@ -94,7 +92,7 @@ As a result of the macros used in the code above, the variables "FLAGS_m" and �
 
 2. A vector is used to pair the device and model command line arguments to iterate through them:     
 
-```cpp
+```
    std::vector<std::pair<std::string, std::string>> cmdOptions = {
             {FLAGS_d, FLAGS_m}
         };
@@ -103,7 +101,7 @@ As a result of the macros used in the code above, the variables "FLAGS_m" and �
 
 3. A loop iterates through device and model argument pairs:
 
-```cpp
+```
 for (auto && option : cmdOptions) {
             auto deviceName = option.first;
             auto networkName = option.second;
@@ -112,7 +110,7 @@ for (auto && option : cmdOptions) {
 
 4. A check is done to make sure the plugin has not already been created and put it into the pluginsForDevices map:            
 
-```cpp
+```
  if (pluginsForDevices.find(deviceName) != pluginsForDevices.end()) {
                 continue;
             }
@@ -121,7 +119,7 @@ for (auto && option : cmdOptions) {
 
 5. The plugin is created using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “FLAGS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
 
-```cpp
+```
          slog::info << "Loading plugin " << deviceName << slog::endl;
             InferencePlugin plugin = PluginDispatcher({"../../../lib/intel64", ""}).getPluginByDevice(deviceName);
 ```
@@ -129,7 +127,7 @@ for (auto && option : cmdOptions) {
 
 6. The plugin details are printed out:
 
-```cpp 
+```
            /** Printing plugin version **/
             printPluginVersion(plugin, std::cout);
 ```
@@ -137,14 +135,14 @@ for (auto && option : cmdOptions) {
 
 7. The created plugin is stored to be found by device name later:
 
-```cpp
+```
             pluginsForDevices[deviceName] = plugin;
 ```
 
 
 8. Finally the model is loaded passing in the plugin created for the specified device, again using the name given same as it appears on the command line (the "Load" class will be described later):
 
-```cpp
+```
        // --------------------Load networks (Generated xml/bin files)-------------------------------------------
         Load(VehicleDetection).into(pluginsForDevices[FLAGS_d]);
 ```
@@ -158,7 +156,7 @@ Here is a sample of the output in the console window:
 
 Inference Engine reporting its version:
 
-```bash
+```
 InferenceEngine:
     	API version ............ 1.0
     	Build .................. 10478
@@ -169,14 +167,14 @@ InferenceEngine:
 
 The application reporting that it is loading the CPU plugin:
 
-```bash
+```
 [ INFO ] Loading plugin CPU
 ```
 
 
 Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and its version:
 
-```bash
+```
 	API version ............ 1.0
 	Build .................. lnx_20180314
 	Description ....... MKLDNNPlugin
@@ -189,7 +187,7 @@ Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and it
 
 The application reporting that it is loading the CPU plugin for the vehicle detection model:
 
-```bash
+```
 [ INFO ] Loading Vehicle Detection model to the CPU plugin
 [ INFO ] Start inference
 [ INFO ] Press 's' key to save a snapshot, press any other key to stop
@@ -209,9 +207,9 @@ There will need to be a function that takes the input image and turns it into a 
 
 ### matU8ToBlob
 
-1. Variables are defined to store the dimensions for the images that the model is optimized to work with.  "blob_data" is assigned to the blob’s data buffer.
+1. Variables are defined to store the dimensions for the images that the model is optimized to work with. "blob_data" is assigned to the blob’s data buffer.
 
-```cpp
+```
 // Returns 1 on success, 0 on failure
 int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 1.0, int batchIndex = 0)
 {
@@ -225,7 +223,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 
 2. A check is made to see if the input image matches the dimensions of images that the model is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  A check is made to make sure that an input with either height or width <1 is not stored, returning 0 to indicate nothing was done.
 
-```cpp
+```
     cv::Mat resized_image(orig_image);
     if (width != orig_image.size().width || height!= orig_image.size().height) {
     	   // ignore rectangles with either dimension < 1
@@ -239,7 +237,7 @@ int matU8ToBlob(const cv::Mat& orig_image, Blob::Ptr& blob, float scaleFactor = 
 
 3. Now that the image data is the proper size, the data is copied from the input image into the blob’s buffer.  A blob will hold the entire batch for a run through the inference model, so for each batch item first calculate "batchOffset" as an offset into the blob’s buffer before copying the data.
 
-```cpp
+```
     int batchOffset = batchIndex * width * height * channels;
 
     for (size_t c = 0; c < channels; c++) {
@@ -261,7 +259,7 @@ For more details on the InferenceEngine::Blob class, see "Understanding Inferenc
 
 The helper class "Load" loads the model onto the device to be executed on.  
 
-```cpp
+```
 struct Load {
     BaseDetection& detector;
     explicit Load(BaseDetection& detector) : detector(detector) { }
@@ -278,7 +276,7 @@ struct Load {
 
 To help explain how this works, an example using "Load" will be used which looks like:
 
-```cpp
+```
 Load(VehicleDetection).into(pluginsForDevices[FLAGS_d]);
 ```
 
@@ -297,9 +295,9 @@ The line is read as "Load VehicleDetection into the plugin pluginsForDevices[FLA
 
 Now we are going to walkthrough the BaseDetection class that is used to abstract common features and functionality when using a model which the code also refers to as "detector".  
 
-1. The class is declared and its member variables, the constructor and destructor are defined.  The ExecutableNetwork holds the model that will be used to process the data and make inferences.  The InferencePlugin is the Inference Engine plugin that will be executing the Intermediate Reference on a specific device.  InferRequest is the object that will be used to hold input and output data, start inference, and wait for results.  The name of the model is stored in topoName and the command line argument for the model is stored in commandLineFlag.  Finally, maxBatch is used to set the number of inputs to infer during each run.
+1. The class is declared and its member variables, the constructor and destructor are defined.  The ExecutableNetwork holds the model that will be used to process the data and make inferences. The InferencePlugin is the Inference Engine plugin that will be executing the Intermediate Reference on a specific device.  InferRequest is the object that will be used to hold input and output data, start inference, and wait for results.  The name of the model is stored in topoName and the command line argument for the model is stored in commandLineFlag.  Finally, maxBatch is used to set the number of inputs to infer during each run.
 
-```cpp
+```
 struct BaseDetection {
     ExecutableNetwork net;
     InferenceEngine::InferencePlugin * plugin;
@@ -317,7 +315,7 @@ struct BaseDetection {
 
 2. The operator -> is overridden for a convenient way to get access to the network.
 
-```cpp
+```
     ExecutableNetwork* operator ->() {
         return &net;
     }
@@ -328,7 +326,7 @@ struct BaseDetection {
 
 Since the networks used by the detectors will have different requirements for loading, declare the read() function to be pure virtual.  This ensures that each detector class will have a read function appropriate to the model it will be using.
 
-```cpp
+```
     virtual InferenceEngine::CNNNetwork read()  = 0;
 ```
 
@@ -337,7 +335,7 @@ Since the networks used by the detectors will have different requirements for lo
 
 The submitRequest() function checks to see if the model is enabled and that there is a valid request to start.  If there is, it requests the model to start running the model asynchronously with startAsync() which returns immediately (we will show how to wait on the results next).
 
-```cpp
+```
     virtual void submitRequest() {
         if (!enabled() || request == nullptr) return;
         request->StartAsync();
@@ -349,7 +347,7 @@ The submitRequest() function checks to see if the model is enabled and that ther
 
 wait() will wait until results from the model are ready.  First it checks to see if the model is enabled and there is a valid request before actually waiting on the request.
 
-```cpp
+```
     virtual void wait() {
         if (!enabled()|| !request) return;
         request->Wait(IInferRequest::WaitMode::RESULT_READY);
@@ -361,7 +359,7 @@ wait() will wait until results from the model are ready.  First it checks to see
 
 Variables and the enabled() function are defined to track and check if the model is enabled or not.  The model is disabled if "commandLineFlag", the command line argument specifying the model IR .xml file (e.g. “-m”) , has not been set.
 
-```cpp
+```
     mutable bool enablingChecked = false;
     mutable bool _enabled = false;
 
@@ -382,7 +380,7 @@ Variables and the enabled() function are defined to track and check if the model
 
 The printPerformancCount() function checks to see if the detector is enabled, and if it is, then prints out the overall performance statistics for the model.
 
-```cpp
+```
     void printPerformanceCounts() {
         if (!enabled()) {
             return;
@@ -399,7 +397,7 @@ Now that we have seen what the base class provides, we will now walkthrough the 
 
 VehicleDetection is derived from the BaseDetection class and adding some new member variables that will be needed.
 
-```cpp
+```
 struct VehicleDetection : BaseDetection {
     std::string input;
     std::string output;
@@ -429,7 +427,7 @@ Notice the "Result" struct and the vector “results” that will be used since 
 
 The submitRequest() function is overridden to make sure there is input data ready and clear out any previous results before calling BaseDetection::submitRequest() to start inference.
 
-```cpp
+```
     void submitRequest() override {
         if (!enquedFrames) return;
         enquedFrames = 0;
@@ -444,7 +442,7 @@ The submitRequest() function is overridden to make sure there is input data read
 
 A check is made to see that the vehicle detection model is enabled.  Also a check is done to make sure that the number of inputs does not exceed the batch size. 
 
-```cpp
+```
     void enqueue(const cv::Mat &frame) {
         if (!enabled()) return;
         if (enquedFrames >= maxBatch) {
@@ -456,7 +454,7 @@ A check is made to see that the vehicle detection model is enabled.  Also a chec
 
 An inference request object is created if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
-```cpp
+```
         if (!request) {
             request = net.CreateInferRequestPtr();
         }
@@ -465,7 +463,7 @@ An inference request object is created if one has not been already created.  The
 
 The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
-```cpp
+```
         width = frame.cols;
         height = frame.rows;
 
@@ -481,7 +479,7 @@ The input blob from the request is retrieved and then matU8ToBlob() is used to c
 
 On construction of a VehicleDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for VehicleDetection class.
 
-```cpp
+```
     VehicleDetection() : BaseDetection(FLAGS_m, "Vehicle Detection", 1) {}
 ```
 
@@ -492,7 +490,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 1. Use the Inference Engine API InferenceEngine::CNNNetReader object to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m" parameter.  
 
-```cpp
+```
     InferenceEngine::CNNNetwork read() override {
         slog::info << "Loading network files for VehicleDetection" << slog::endl;
         InferenceEngine::CNNNetReader netReader;
@@ -503,7 +501,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 2. The maximum batch size is set to the value read directly from the model IR file.
 
-```cpp
+```
         /** Use batch size from model **/
         maxBatch = netReader.getNetwork().getBatchSize();
         slog::info << "Batch size in IR is set to " << netReader.getNetwork().getBatchSize() << slog::endl;
@@ -512,7 +510,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 3. Names for the model IR .bin file and optional .label file are generated based on the model name from the "-m" parameter.  
 
-```cpp
+```
         /** Extract model name and load it's weights **/
         std::string binFileName = fileNameNoExt(FLAGS_m) + ".bin";
         netReader.ReadWeights(binFileName);
@@ -521,7 +519,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 4. The input data format is configured for the proper precision (U8 = 8-bit per BGR channel) and memory layout (NCHW) for the expected model being used.  
 
-```cpp
+```
         slog::info << "Checking Vehicle Detection inputs" << slog::endl;
         InferenceEngine::InputsDataMap inputInfo(netReader.getNetwork().getInputsInfo());
         if (inputInfo.size() != 1) {
@@ -535,7 +533,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 5. A check to make sure that there is only one output result defined for the expected model being used. 
 
-```cpp
+```
         slog::info << "Checking Vehicle Detection outputs" << slog::endl;
         InferenceEngine::OutputsDataMap outputInfo(netReader.getNetwork().getOutputsInfo());
         if (outputInfo.size() != 1) {
@@ -546,7 +544,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 6. A check to make sure that the output the model will return matches as expected.
 
-```cpp
+```
         auto& _output = outputInfo.begin()->second;
         const InferenceEngine::SizeVector outputDims = _output->dims;
         output = outputInfo.begin()->first;
@@ -563,7 +561,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 7. The output format is configured to use the output precision and memory layout that is expect for results from the model being used.
 
-```cpp
+```
         _output->setPrecision(Precision::FP32);
         _output->setLayout(Layout::NCHW);
 ```
@@ -571,7 +569,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 8. The name of the input blob (inputInfo.begin()->first) is saved for later use when getting a blob for input data.  Finally, the InferenceEngine::CNNNetwork object that references this model is returned.
 
-```cpp
+```
         slog::info << "Loading Vehicle Detection model to the "<< FLAGS_d << " plugin" << slog::endl;
         input = inputInfo.begin()->first;
         return netReader.getNetwork();
@@ -585,7 +583,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 1. A check to make sure that the model is enabled.  If so, clear out any previous results. 
 
-```cpp
+```
     void fetchResults() {
         if (!enabled()) return;
         results.clear();
@@ -594,7 +592,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 2. Whether results have been fetched are tracked to only fetch once.  submitRequest() resets resultsFetched=false to indicate results have not been fetched yet for each request.
 
-```cpp
+```
         if (resultsFetched) return;
         resultsFetched = true;
 ```
@@ -602,14 +600,14 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 3. "detections" is set to point to the inference model output results held in the output blob. 
 
-```cpp
+```
         const float *detections = request->GetBlob(output)->buffer().as<float *>();
 ```
 
 
 4. A loop is started to iterate through the results from the vehicle detection model.  "maxProposalCount" has been set to the maximum number of results that the model can return.  
 
-```cpp
+```
         for (int i = 0; i < maxProposalCount; i++) {
 ```
 
@@ -630,7 +628,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
     7. Height of ROI
 
-```cpp
+```
       for (int i = 0; i < maxProposalCount; i++) {
          int proposalOffset = i * objectSize;
          float image_id = detections[proposalOffset + 0];
@@ -651,7 +649,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 6. If the returned image_id is not valid, no more valid outputs are expected so exit the loop.
 
-```cpp
+```
          if ((image_id < 0) || (image_id >= maxBatch)) {  // indicates end of detections
             break;
          }
@@ -661,7 +659,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 7. A check to see if the application was requested to display the raw information (-r) and print it to the console if necessary.
 
-```cpp
+```
          if (FLAGS_r) {
             std::cout << "[" << i << "," << r.label << "] element, prob = " << r.confidence <<
                       "    (" << r.location.x << "," << r.location.y << ")-(" << r.location.width << ","
@@ -673,7 +671,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 8. The populated Result object is added to the vector of results to be used later by the application.
 
-```cpp
+```
             results.push_back(r);
         }
     }
@@ -851,14 +849,14 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 1. A check is made to see if there are more frames to read, if so enter Stage 0.  Else there is nothing to do, so skip Stage 0.
 
-```cpp
+```
       if (haveMoreFrames) {
 ```
 
 
 2. A loop is started for gathering input images.
 
-```cpp
+```
          FramePipelineFifoItem psos1i;
          for(numFrames = 0; numFrames < VehicleDetection.maxBatch; numFrames++) {
 ```
@@ -866,7 +864,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 3. An input frame buffer is retrieved and a new image is read into it (curFrame).   If there are no more frames to read, then exit the loop.
 
-```cpp
+```
             cv::Mat* curFrame = inputFramePtrs.front();
             inputFramePtrs.pop();
             haveMoreFrames = cap.read(*curFrame);
@@ -878,7 +876,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 4. The total number of frames is tracked and enqueue the new frame for inference.
 
-```cpp
+```
             totalFrames++;
 
             // should have first frame from above cap.read()
@@ -891,7 +889,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 5. The frame is stored for reference by the next pipeline stage.  If this is the first frame, print an informational note to the command window and set firstFrame to print message only once.
 
-```cpp
+```
             ps0s1i.batchOfInputFrames.push_back(curFrame);
 
             if (firstFrame && !FLAGS_no_show) {
@@ -905,7 +903,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 6. If there are images in the batch, continue to infer and wait for results.  
 
-```cpp
+```
          std::vector<FramePipelineFifoItem> batchedFifoItems;
             if (numFrames > 0) {
 ```
@@ -913,7 +911,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 7. The inference request is submitted to the vehicle detection model and then wait for the results.  When the results are ready, fetch the results for processing.
 
-```cpp
+```
                t0 = std::chrono::high_resolution_clock::now();
                // start inference
                VehicleDetection.submitRequest();
@@ -930,7 +928,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 8. Each input frame in the batch will continue on as individual frames to the next stages of the pipeline.  Here create a new FramePipelineFifoItem for each input frame.
 
-```cpp
+```
                for (auto && bFrame : ps0s1i.batchOfInputFrames) {
                   FramePipelineFifoItem ps1s2i;
                   ps1s2i.outputFrame = bFrame;
@@ -941,7 +939,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 9. The loops iterates through the results and stores the vehicle and license plate results with the associated frame.  The results indicate which input frame from the batch it belongs to using batchIndex.
 
-```cpp
+```
                for (auto && result : VehicleDetection.results) {
                   FramePipelineFifoItem& ps1s2i = batchedFifoItems[result.batchIndex];
                   if (result.label == 1) {  // vehicle
@@ -956,14 +954,14 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 
 10. The current results have been processed, clear "results". 
 
-```cpp
+```
             VehicleDetection.results.clear();
 ```
 
 
 11. For each input frame from the batch, pass the frame along with its results to the next stage of the pipeline.
 
-```cpp
+```
             for (auto && item : batchedFifoItems) {
                item.batchOfInputFrames.clear(); // done with batch storage
                pipeS0toS1Fifo.push(item);
@@ -978,7 +976,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 1. While there are items in the input FIFO, the first item is retrieved and removed from the input FIFO.
 
-```cpp
+```
          while (!pipeS0toS1Fifo.empty()) {
             FramePipelineFifoItem ps0s1i = pipeS0toS1Fifo.front();
             pipeS0toS1Fifo.pop();
@@ -987,7 +985,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 2. outputFrame is set to the frame being processed and frame rectangles are drawn for all the vehicles and license plates that were detected during inference.
 
-```cpp
+```
             cv::Mat& outputFrame = *(ps0s1i.outputFrame);
 
             // draw box around vehicles and license plates
@@ -1003,7 +1001,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 3. If there is only one image in the output batch, then report the results for that image.  If there are multiple images, then report the average time for the images in the batch.
 
-```cpp
+```
             std::ostringstream out;
             if (VehicleDetection.maxBatch > 1) {
                out << "OpenCV cap/render (avg) time: " << std::fixed << std::setprecision(2)
@@ -1020,7 +1018,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 4. Vehicle detection time metrics are added to the image.
 
-```cpp
+```
             out.str("");
             out << "Vehicle detection time ";
             if (VehicleDetection.maxBatch > 1) {
@@ -1036,7 +1034,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 5. The final rendered image is shown with annotations and metrics.
 
-```cpp
+```
             t0 = std::chrono::high_resolution_clock::now();
             if (!FLAGS_no_show) {
                cv::imshow("Detection results", outputFrame);
@@ -1049,7 +1047,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 6. The frame buffer is returned so it can be reused for another input frame.
 
-```cpp
+```
             inputFramePtrs.push(ps0s1i.outputFrame);
 ```
 
@@ -1060,7 +1058,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 1. After the main loop, calculate the performance statistics for the application and log them.  The time reported is for the main loop and average time across the total number of frames processed.
 
-```cpp
+```
       auto wallclockEnd = std::chrono::high_resolution_clock::now();
       ms total_wallclock_time = std::chrono::duration_cast<ms>(wallclockEnd - wallclockStart);
 
@@ -1077,7 +1075,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 2. If the the command line parameter "-pc" was specified, then print out the performance counts.
 
-```cpp
+```
       if (FLAGS_pc) {
          VehicleDetection.printPerformanceCounts();
       }
@@ -1094,21 +1092,21 @@ Now that we have walked through the code and learned what it does, it is time to
 
 2. Change to the directory containing Tutorial Step 2:
 
-```bash
+```
 cd tutorials/car_detection_tutorial/step_2
 ```
 
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by sourcing the "setupvars.sh" script.
+3. The first step is to configure the build environment for the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.
 
-```bash
+```
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
 4. Now we need to create a directory to build the tutorial in and change to it.
 
-```bash
+```
 mkdir build
 cd build
 ```
@@ -1116,15 +1114,16 @@ cd build
 
 5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
 
-```bash
+```
 cmake -DCMAKE_BUILD_TYPE=Release ../
 make
 ```
 
 
-## Run
+## Run the executable
 
-1. You now have the executable file to run ./intel64/Release/car_detection_tutorial.  In order to have it run the vehicle detection model, we need to add arguments to the command line:
+1. You now have the executable file to run.
+```./intel64/Release/car_detection_tutorial```  In order to have it run the vehicle detection model, we need to add arguments to the command line:
 
     1. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
 
@@ -1132,7 +1131,7 @@ make
 
     3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
 
-    ```bash
+    ```
     # Create variables for all models used by the tutorials to make
     #  it easier to reference them with short names
     
@@ -1165,7 +1164,7 @@ make
 
     4. To use the script we source it using the command: 
 
-    ```bash
+    ```
     source ../../scripts/setupenv.sh 
     ```
     
@@ -1176,7 +1175,7 @@ make
 
 3. Let us first run it on a single image, to see how it works.
 
-```bash
+```
 ./intel64/Release/car_detection_tutorial -m $mVA32 -i ../../data/car_1.bmp
 ```
 
@@ -1185,7 +1184,7 @@ make
 
 5. Let us see how the application handles a video file.
 
-```bash
+```
 ./intel64/Release/vehicle_detection_tutorial -m $mVA32 -i ../../car-detection.mp4
 ```
 
@@ -1194,21 +1193,20 @@ make
 
 7. Finally, let us see how the application works with the default camera input.
 
-```bash
+```
 ./intel64/Release/vehicle_detection_tutorial -m $mVA32 -i cam
 ```
 
 
 Or
 
-```bash
+```
 ./intel64/Release/vehicle_detection_tutorial -m $mVA32
 ```
 
+8. Now you will see a window displaying the input from the USB camera.  If the vehicle detection model sees anything it detects as any type of vehicle (car, van, etc.), it will draw a green rectangle around it. Red rectangles will be drawn around anything that is detected as a license plate. Unless you have a car in your office, or a parking lot outside a nearby window, the display may not be very exciting.
 
-8. Now you will see a window displaying the input from the USB camera.  If the vehicle detection model sees anything it detects as any type of vehicle (car, van, etc.), it will draw a green rectangle around it.  Red rectangles will be drawn around anything that is detected as a license plate.  Unless you have a car in your office, or a parking lot outside a nearby window, the display may not be very exciting.
-
-9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
+9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the terminal window.
 
 # Conclusion
 
