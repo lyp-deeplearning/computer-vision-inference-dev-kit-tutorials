@@ -676,7 +676,7 @@ See the Inference Engine Development Guide [https://software.intel.com/inference
 
 We have now seen what happens behind the scenes in the FaceDetectionClass, we will move into the application code and see how it is used.
 
-1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
@@ -853,7 +853,7 @@ Now that we have walked through the code and learned what it will do, it is time
 
 ## Build
 
-1. Open up a terminal (such as Xterm) window or use an existing terminal to get to a command shell prompt.
+1. Open up a terminal (such as xterm) window or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
