@@ -153,7 +153,7 @@ Below is a more detailed view of the User Application and Inference Engine:
 
 ![image alt text](./doc_support/step0_image_1.png)
 
-The Inference Engine includes a plugin library for each supported device that has been optimized for the Intel hardware device CPU, GPU, and Myriad. From here, we will use the terms "device" and “plugin” with the assumption that one infers the other (e.g. CPU device infers the CPU plugin and vice versa). As part of loading the model, the User Application tells the Inference Engine which device to target which in turn loads the associated plugin library to later run on the associated device. The Inference Engine uses “blobs” for all data exchanges, basically arrays in memory arranged according the input and output data of the model.
+The Inference Engine includes a plugin library for each supported device that has been optimized for the Intel® hardware device CPU, GPU, and Myriad. From here, we will use the terms "device" and “plugin” with the assumption that one infers the other (e.g. CPU device infers the CPU plugin and vice versa). As part of loading the model, the User Application tells the Inference Engine which device to target which in turn loads the associated plugin library to later run on the associated device. The Inference Engine uses “blobs” for all data exchanges, basically arrays in memory arranged according the input and output data of the model.
 
 #### Inference Engine API Integration Flow
 
@@ -235,9 +235,9 @@ Before going into the samples in the tutorial steps, first we will go over some 
 
 ## Intel® OpenCV
 
-For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO™ toolkit will be used. You may be wondering: Why is OpenCV included in the OpenVINO toolkit along with the Inference Engine? The first big reason is: They are the fastest implementation of OpenCV functions for Intel devices. The Intel® libraries have been optimized to run on each Intel® CPU, GPU, and Myriad device. It also helps that by including in the libraries in the OpenVINO™ toolkit, you get the complete set of libraries and always get the necessary version.  
+For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO™ toolkit will be used. You may be wondering: Why is OpenCV included in the OpenVINO™ toolkit along with the Inference Engine? The first big reason is: They are the fastest implementation of OpenCV functions for Intel® devices. The Intel® libraries have been optimized to run on each Intel® CPU, GPU, and Myriad device. It also helps that by including in the libraries in the OpenVINO™ toolkit, you get the complete set of libraries and always get the necessary version.  
 
-The second big reason: All the extensions and additional libraries that come with Intel’s OpenCV. One such library is the Photography Vision Library (PVL). PVL includes advanced implementations by Intel already optimized for power and performance on Intel devices to do face, blink, and smile detection along with recognizing faces.
+The second big reason: All the extensions and additional libraries that come with Intel®’s OpenCV. One such library is the Photography Vision Library (PVL). PVL includes advanced implementations by Intel® already optimized for power and performance on Intel® devices to do face, blink, and smile detection along with recognizing faces.
 
 Additional information may be found at:
 
@@ -333,7 +333,7 @@ In this tutorial, face detection is done frame-by-frame expecting few results so
 
 ![image alt text](./doc_support/step0_image_2.png)
 
-The first tutorial will show how the Intel OpenCV libraries are used by an application. We will see how the OpenCV functions are included in an application as they are used to get input from image files or a video camera connected to the UP Squared* board and display the image data in a window. 
+The first tutorial will show how the Intel® OpenCV libraries are used by an application. We will see how the OpenCV functions are included in an application as they are used to get input from image files or a video camera connected to the UP Squared* board and display the image data in a window. 
 
 [Face Detection Tutorial Step 1](./step_1/Readme.md)
 
