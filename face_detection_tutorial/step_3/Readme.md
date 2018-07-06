@@ -8,13 +8,13 @@
 
 # Introduction
 
-Welcome to Face Detection Tutorial Step 3.  Now that the application can detect faces in images, we now want the application to estimate the age and gender for each face.  The precompiled "age-gender-recognition-retail-0013" model included with the OpenVINO toolkit that we will be running was trained on approximately 20,000 faces.  When it sees a face within 45 degrees (left, right, above, or below) of straight-on, it is 96.6% accurate on determining gender.  It can also determine ages to within 6 years, on average.  A sample output showing the results where the ROI box is now labeled “[M|F],<age>” appears below.  The metrics reported now also include the time to run the age and gender model.
+Welcome to Face Detection Tutorial Step 3.  Now that the application can detect faces in images, we now want the application to estimate the age and gender for each face. The precompiled "age-gender-recognition-retail-0013" model included with the OpenVINO™ toolkit that we will be running was trained on approximately 20,000 faces. When it sees a face within 45 degrees (left, right, above, or below) of straight-on, it is 96.6% accurate on determining gender. It can also determine ages to within 6 years, on average. A sample output showing the results where the ROI box is now labeled “[M|F],<age>” appears below.  The metrics reported now also include the time to run the age and gender model.
 
 ![image alt text](../doc_support/step3_image_1.png)
 
 # Age and Gender Detection Model
 
-The OpenVINO toolkit provides a pre-compiled model for estimating age and gender from an image of a face.  You can find it at:
+The OpenVINO™ toolkit provides a pre-compiled model for estimating age and gender from an image of a face. You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013
 
@@ -46,12 +46,11 @@ Gender accuracy: 96.66%</td>
   </tr>
 </table>
 
-
 # Adding the Age and Gender Detection Model
 
 Thanks to the setup work done in Tutorial Step 2, adding the age and gender detection model in this step will just be a matter of deriving a new class from the BaseDetection class, adding an additional command line argument to specify the new model, and updating the application to run and track the statistics for the new model.  This means there will not be as much code to walk through this time.  That will let us focus on how to pass the important image inference results from the face detection model to the age and gender detection model.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
@@ -82,7 +81,7 @@ struct AgeGenderDetection : BaseDetection {
 ```
 
 
-3. The operator[] function is defined to give a convenient way to retrieve the age and gender results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob are calculated for the batch item.  A result object is returned containing the data read for the batch index.
+3. The operator[] function is defined to give a convenient way to retrieve the age and gender results from the data contained in the inference request’s output blob. The index to the appropriate locations in the blob are calculated for the batch item. A result object is returned containing the data read for the batch index.
 
 ```cpp
     Result operator[] (int idx) const {
@@ -94,19 +93,17 @@ struct AgeGenderDetection : BaseDetection {
     }
 ```
 
-
 ### AgeGenderDetection()
 
-On construction of a AgeGenderDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_ag, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_ag.  This initializes the BaseDetection subclass specifically for AgeGenderDetection.
+On construction of a AgeGenderDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_ag, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_ag. This initializes the BaseDetection subclass specifically for AgeGenderDetection.
 
 ```cpp
     AgeGenderDetection() : BaseDetection(FLAGS_m_ag, "Age Gender", FLAGS_n_ag) {}
 ```
 
-
 ### submitRequest()
 
-The submitRequest() function is overridden to make sure that there are faces queued up to be processed before calling the base class submitRequest() function to start inferring vehicle attributes from the enqueued faces.  enquedFaces is reset to 0 to indicate that all the queued data has been submitted.
+The submitRequest() function is overridden to make sure that there are faces queued up to be processed before calling the base class submitRequest() function to start inferring vehicle attributes from the enqueued faces. enquedFaces is reset to 0 to indicate that all the queued data has been submitted.
 
 ```cpp
     void submitRequest() override {
@@ -115,7 +112,6 @@ The submitRequest() function is overridden to make sure that there are faces que
         enquedFaces = 0;
     }
 ```
-
 
 ### enqueue()
 
@@ -132,15 +128,13 @@ A check is made to see that the age and gender detection model is enabled.  A ch
         }
 ```
 
-
-An inference request object is created if one has not been already been created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+An inference request object is created if one has not been already been created. The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
 ```cpp
         if (!request) {
             request = net.CreateInferRequestPtr();
         }
 ```
-
 
 The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
@@ -152,7 +146,6 @@ The input blob from the request is retrieved and then matU8ToBlob() is used to c
         }
     }
 ```
-
 
 ### read()
 
@@ -168,7 +161,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         netReader.ReadNetwork(FLAGS_m_ag);
 ```
 
-
 2. The maximum batch size is set to maxBatch (set using FLAGS_n_ag which defaults to 16).
 
 ```cpp
@@ -177,7 +169,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         slog::info << "Batch size is set to " << netReader.getNetwork().getBatchSize() << " for Age Gender" << slog::endl;
 ```
 
-
 3. The IR .bin file of the model is read.
 
 ```cpp
@@ -185,7 +176,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         std::string binFileName = fileNameNoExt(FLAGS_m_ag) + ".bin";
         netReader.ReadWeights(binFileName);
 ```
-
 
 4. The proper number of inputs is checked to make sure that the loaded model has only one input as expected.
 
@@ -197,7 +187,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         }
 ```
 
-
 5. The input data format is prepared by configuring it for the proper precision (FP32 = 32-bit floating point) and memory layout (NCHW) for the model.
 
 ```cpp
@@ -207,8 +196,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         input = inputInfo.begin()->first;
 ```
 
-
-6. The model is verified to have the two output layers as expected for the age and gender results.  Variables are created and initialized to hold the output names to receive the results from the model.
+6. The model is verified to have the two output layers as expected for the age and gender results. Variables are created and initialized to hold the output names to receive the results from the model.
 
 ```cpp
         slog::info << "Checking Age Gender outputs" << slog::endl;
@@ -220,7 +208,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         auto ageOutput = (it++)->second;
         auto genderOutput = (it++)->second;
 ```
-
 
 7. A check is made to make sure that the model has the output layer types expected and output layers are swapped as necessary for receiving the age and the gender results.
 
@@ -241,7 +228,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         }
 ```
 
-
 8. The names of the two output layers are logged and saved into variables used to retrieve results later.
 
 ```cpp
@@ -252,7 +238,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         outputGender = genderOutput->name;
 ```
 
-
 9. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
@@ -262,7 +247,6 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
     }
 };
 ```
-
 
 # Using AgeGenderDetection
 
@@ -278,20 +262,17 @@ std::vector<std::pair<std::string, std::string>> cmdOptions = {
 };
 ```
 
-
 2. The age and gender detection object is instantiated.
 
 ```cpp
 AgeGenderDetection AgeGender;
 ```
 
-
 3. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
 Load(AgeGender).into(pluginsForDevices[FLAGS_d_ag]);
 ```
-
 
 ## Main Loop
 
@@ -304,7 +285,6 @@ FaceDetection.fetchResults();
 for (auto && face : FaceDetection.results) {
 ```
 
-
 2. A check is made to see if the age and gender model is enabled.  If so, then get the ROI for the face by clipping the face location from the input image frame.
 
 ```cpp
@@ -312,7 +292,6 @@ for (auto && face : FaceDetection.results) {
       auto clippedRect = face.location & cv::Rect(0, 0, width, height);
       auto face = frame(clippedRect);
 ```
-
 
 3. The face data is enqueued for processing.
 
@@ -323,7 +302,6 @@ for (auto && face : FaceDetection.results) {
    }
 }
 ```
-
 
 4. The age and gender detection model is run to infer on the faces using submitRequest(), then the results are waited on using wait().  The submit-then-wait is enveloped with timing functions to measure how long the inference takes.
 
@@ -336,7 +314,6 @@ if (AgeGender.enabled()) {
 t1 = std::chrono::high_resolution_clock::now();
 ms secondDetection = std::chrono::duration_cast<ms>(t1 - t0);
 ```
-
 
 5. The timing metrics for inference are output with the results for the age and gender inference added to the output window.
 
@@ -353,7 +330,6 @@ if (AgeGender.enabled()) {
 }
 ```
 
-
 6. The output image label is updated with the age and gender results for each detected face.  
 
 ```cpp
@@ -361,7 +337,6 @@ int i = 0;
 for (auto & result : FaceDetection.results) {
    cv::Rect rect = result.location;
 ```
-
 
 7. The decision is made to use a simple label or age and gender results if model enabled.
 
@@ -377,7 +352,6 @@ for (auto & result : FaceDetection.results) {
    }
 ```
 
-
 8. A label is placed on the output image for current result.
 
 ```cpp
@@ -389,7 +363,6 @@ for (auto & result : FaceDetection.results) {
                cv::Scalar(0, 0, 255));
 ```
 
-
 9. The color of the box around face is chosen based on the age and gender model’s confidence that the face is male.
 
 ```cpp
@@ -399,14 +372,12 @@ for (auto & result : FaceDetection.results) {
             cv::Scalar(0, 255, 0);
 ```
 
-
 10. A rectangle is dranw around the face on the output image.
 
 ```   cv::rectangle(frame, result.location, genderColor, 2);
    i++;
 }
 ```
-
 
 11. Finally, the final results are displayed for the frame while measuring the time it took to show the image.
 
@@ -416,7 +387,6 @@ cv::imshow("Detection results", frame);
 t1 = std::chrono::high_resolution_clock::now();
 ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 ```
-
 
 ## Post-Main Loop
 
@@ -429,14 +399,13 @@ if (FLAGS_pc) {
 }
 ```
 
-
 # Building and Running
 
 Now that we have walked through the added code and learned what it does, it is time to build the application and see it in action using two models to infer image information.
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
@@ -444,13 +413,11 @@ Now that we have walked through the added code and learned what it does, it is t
 cd tutorials/face_detection_tutorial/step_3
 ```
 
-
 3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
-
 
 4. Now we need to create a directory to build the tutorial in and change to it.
 
@@ -459,14 +426,12 @@ mkdir build
 cd build
 ```
 
-
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+5. The last thing we need to do before compiling is to configure the build settings and build the executable. We do this by running CMake to set the build target and file locations. Then we run Make to build the executable.
 
 ```bash
 cmake -DCMAKE_BUILD_TYPE=Release ../
 make
 ```
-
 
 ## Run
 
@@ -476,13 +441,11 @@ make
 source ../../scripts/setupenv.sh 
 ```
 
-
 2. You now have the executable file to run ./intel64/Release/face_detection_tutorial.  In order to load the age and gender detection model, the "-m_ag" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i ../../data/face.jpg
 ```
-
 
 3. The output window will show the image overlaid with colored rectangles over each of the detected faces with labels showing the age and gender results.  The timing statistics for computing the results of each model along with OpenCV input and output times are also shown.  Next, let us try it on a video file.
 
@@ -490,13 +453,11 @@ source ../../scripts/setupenv.sh
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
-
 4. You will see rectangles that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i cam
 ```
-
 
 Or
 
@@ -504,12 +465,11 @@ Or
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32
 ```
 
-
 5. Again, you will see colored rectangles drawn around any faces that appear in the images, along with the results for age, gender, and the various render statistics.
 
 # Conclusion
 
-Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model.  And that is the power the OpenVINO toolkit brings to applications.  Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
+Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model.  nd that is the power the OpenVINO™ toolkit brings to applications. Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
 
 # Navigation
 
