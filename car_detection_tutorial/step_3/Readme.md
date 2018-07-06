@@ -8,13 +8,13 @@
 
 # Introduction
 
-Welcome to Car Detection Tutorial Step 3.  Now that the application can detect vehicles in images, we want it to tell us what type of vehicles were found and what color the vehicle are.  The precompiled "vehicle-attributes-recognition-barrier-0010" model included with the OpenVINO toolkit is what we will be using to accomplish this.  The sample output below shows the results where the ROI box now appears with the vehicle type (e.g. “car”) and its color (e.g. “black”).  The metrics reported now also include the time to run the vehicle attribute detection model.
+Welcome to Car Detection Tutorial Step 3. Now that the application can detect vehicles in images, we want it to tell us what type of vehicles were found and what color the vehicle are. The precompiled "vehicle-attributes-recognition-barrier-0010" model included with the OpenVINO™ toolkit is what we will be using to accomplish this. The sample output below shows the results where the ROI box now appears with the vehicle type (e.g. “car”) and its color (e.g. “black”). The metrics reported now also include the time to run the vehicle attribute detection model.
 
 ![image alt text](../doc_support/step3_image_1.png)
 
 # Vehicle Attributes Detection Model
 
-The OpenVINO toolkit provides a pre-compiled model for inferring vehicle type and color from an image of a car.  You can find it at:
+The OpenVINO™ toolkit provides a pre-compiled model for inferring vehicle type and color from an image of a car. You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-attributes-recognition-barrier-0010
 
@@ -51,14 +51,13 @@ Type accuracy: 87.85%</td>
 
 Thanks to the setup work done in Tutorial Step 2, adding the vehicle attributes detection model in this step will just be a matter of deriving a new class from the BaseDetection class, adding an additional command line argument to specify the new model, and updating the application to run and track the statistics for the new model.  This means there will not be as much code to walk through this time.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
 cd tutorials/car_detection_tutorial/step_3
 ```
-
 
 3. Open the files "main.cpp" and “car_detection.hpp” in the editor of your choice such as ‘gedit’, ‘gvim’, or ‘vim’.
 
@@ -76,15 +75,13 @@ struct VehicleAttribsDetection : BaseDetection {
     using BaseDetection::operator=;
 ```
 
-
 ### VehicleAttribsDetection()
 
-On construction of a VehicleAttribsDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_va, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_va.  This initializes the BaseDetection subclass specifically for VehicleAttribsDetection class.
+On construction of a VehicleAttribsDetection object, the base class constructor is called, passing in the model to load specified in the command line argument FLAGS_m_va, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_va. This initializes the BaseDetection subclass specifically for VehicleAttribsDetection class.
 
 ```cpp
     VehicleAttribsDetection() : BaseDetection(FLAGS_m_va, "Vehicle Attribs", FLAGS_n_va) {}
 ```
-
 
 ### submitRequest()
 
@@ -98,10 +95,9 @@ The submitRequest() function is overridden to make sure that there are vehicles 
     }
 ```
 
-
 ### enqueue()
 
-A check is made to see that the vehicle attributes detection model is enabled.  Also check to make sure that the number of inputs does not exceed the batch size.  
+A check is made to see that the vehicle attributes detection model is enabled. Also check to make sure that the number of inputs does not exceed the batch size.  
 
 ```cpp
     void enqueue(const cv::Mat &Vehicle) {
@@ -114,15 +110,13 @@ A check is made to see that the vehicle attributes detection model is enabled.  
         }
 ```
 
-
-An inference request object is created if one has not been already created.  The request object is used for holding input and output data, starting inference, and waiting for completion and results.
+An inference request object is created if one has not been already created. The request object is used for holding input and output data, starting inference, and waiting for completion and results.
 
 ```cpp
         if (!request) {
             request = net.CreateInferRequestPtr();
         }
 ```
-
 
 The input blob from the request is retrieved and then matU8ToBlob() is used to copy the image image data into the blob.
 
@@ -135,7 +129,6 @@ The input blob from the request is retrieved and then matU8ToBlob() is used to c
     }
 ```
 
-
 ### fetchResults()
 
 fetchResults() will parse the inference results saving them in the "Results" variable.
@@ -147,8 +140,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
    std::vector<Attributes> results;
 ```
 
-
-2. Lookup arrays of string names are declared for the results coming from the model.  Clear out any previous results. 
+2. Lookup arrays of string names are declared for the results coming from the model. Clear out any previous results. 
 
 ```cpp
    void fetchResults() {
@@ -162,8 +154,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
       results.clear();
 ```
 
-
-3. A loop is used to iterate through all the results that were returned from the model.  From each result the vehicle type and color values are retrieved.
+3. A loop is used to iterate through all the results that were returned from the model. From each result, the vehicle type and color values are retrieved.
 
 ```cpp
       for (int bi = 0; bi < maxBatch; bi++) {
@@ -173,8 +164,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
          const auto typesValues  = request->GetBlob(outputNameForType)->buffer().as<float*>() + (bi * 4);
 ```
 
-
-4. The type and color values are converted into indexes into the lookup arrays.  An Attrib object is created to hold the inferred type and color.
+4. The type and color values are converted into indexes into the lookup arrays. An Attrib object is created to hold the inferred type and color.
 
 ```cpp
          const auto color_id = std::max_element(colorsValues, colorsValues + 7) - colorsValues;
@@ -183,8 +173,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
          Attributes attrib( { types[type_id], colors[color_id] } );
 ```
 
-
-5. A check is made to see if the application was requested to display the raw information (-r) and print it to the console if necessary.  
+5. A check is made to see if the application was requested to display the raw information (-r) and print it to the console if necessary. 
 
 ```cpp
          if (FLAGS_r) {
@@ -192,7 +181,6 @@ fetchResults() will parse the inference results saving them in the "Results" var
                       << "color=" << attrib.color << "]" << std::endl;
          }
 ```
-
 
 6. The populated Attrib object is added to the vector of results to be used later by the application.
 
@@ -202,12 +190,11 @@ fetchResults() will parse the inference results saving them in the "Results" var
    }
 ```
 
-
 ### read()
 
 The next function we will walkthrough is the VehicleDetection::read() function which must be specialized specifically to the model that it will load and run. 
 
-1. The Inference Engine API InferenceEngine::CNNNetReader object is used to load the model IR files.  This comes from the XML file that is specified on the command line using the "-m_va" parameter.  
+1. The Inference Engine API InferenceEngine::CNNNetReader object is used to load the model IR files. This comes from the XML file that is specified on the command line using the "-m_va" parameter.  
 
 ```cpp
     CNNNetwork read() override {
@@ -217,14 +204,12 @@ The next function we will walkthrough is the VehicleDetection::read() function w
         netReader.ReadNetwork(FLAGS_m_va);
 ```
 
-
 2. The maximum batch size is set to maxBatch (set using FLAGS_n_va which defaults to 1).
 
 ```cpp
         netReader.getNetwork().setBatchSize(maxBatch);
         slog::info << "Batch size is set to " << netReader.getNetwork().getBatchSize() << " for Vehicle Attribs" << slog::endl;
 ```
-
 
 3. The IR .bin file of the model is read.
 
@@ -233,7 +218,6 @@ The next function we will walkthrough is the VehicleDetection::read() function w
         std::string binFileName = fileNameNoExt(FLAGS_m_va) + ".bin";
         netReader.ReadWeights(binFileName);
 ```
-
 
 4. The proper number of inputs is checked to make sure that the loaded model has only one input as expected.
 
@@ -245,7 +229,6 @@ The next function we will walkthrough is the VehicleDetection::read() function w
         }
 ```
 
-
 5. The input data format is prepared by configuring it for the proper precision (U8 = 8-bit per BGR channel) and memory layout (NCHW) for the model.  
 
 ```cpp
@@ -255,8 +238,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
         inputName = inputInfo.begin()->first;
 ```
 
-
-6. The model is verified to have the two output layers as expected for the vehicle color and type results.  Variables are created and initialized to hold the output names to retrieve the results from the model.
+6. The model is verified to have the two output layers as expected for the vehicle color and type results. Variables are created and initialized to hold the output names to retrieve the results from the model.
 
 ```cpp
         slog::info << "Checking VehicleAttribs outputs" << slog::endl;
@@ -269,8 +251,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
         outputNameForType = (it++)->second->name;  // type is the second output
 ```
 
-
-7. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
+7. Where the model will be loaded is logged. The model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
         slog::info << "Loading Vehicle Attribs model to the "<< FLAGS_d_va << " plugin" << slog::endl;
@@ -280,14 +261,13 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 };
 ```
 
-
 # Using VehicleAttribsDetection
 
 That takes care of specializing the BaseDetector class into the  VehicleAttribsDetection class for the vehicle attribute detection model.  We now move down into the main() function to see what additions have been made to use the vehicle attribute detection model to process detected vehicles.
 
 ## main()
 
-1. In the main() function, the command line arguments FLAGS_d_va and FLAGS_m_va are added to cmdOptions.  Remember that the flags are defined in the car_detection.hpp file.
+1. In the main() function, the command line arguments FLAGS_d_va and FLAGS_m_va are added to cmdOptions. Remember that the flags are defined in the car_detection.hpp file.
 
 ```cpp
         std::vector<std::pair<std::string, std::string>> cmdOptions = {
@@ -295,20 +275,17 @@ That takes care of specializing the BaseDetector class into the  VehicleAttribsD
         };
 ```
 
-
 2. The vehicle attributes detection object is instantiated.
 
 ```cpp
         VehicleAttribsDetection VehicleAttribs;
 ```
 
-
 3. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
         Load(VehicleAttribs).into(pluginsForDevices[FLAGS_d_va]);
 ```
-
 
 4. The structure that holds a frame and associated data used to pass data from one pipeline stage to another is updated to include vehicle attributes results.
 
@@ -322,13 +299,11 @@ That takes care of specializing the BaseDetector class into the  VehicleAttribsD
       } FramePipelineFifoItem;
 ```
 
-
 5. Another FIFO is added to pass data to the new pipeline stage.
 
 ```cpp
       FramePipelineFifo pipeS1toS2Fifo;
 ```
-
 
 ## Main Loop
 
@@ -353,7 +328,6 @@ if (VehicleAttribs.enabled()) {
       pipeS0toS1Fifo.pop();
 ```
 
-
 2. From the results for the frame, the number of vehicles that were found is stored in totalVehicles.  A loop is started to prepare a batch of vehicles for inference.
 
 ```cpp
@@ -363,7 +337,6 @@ if (VehicleAttribs.enabled()) {
       int rib = 0;
       while( numVehiclesInferred < totalVehicles) {
 ```
-
 
 3. The loop runs until the input batch is full or done with all vehicles.  The loop enqueues all vehicles ROIs from the frame.
 
@@ -377,7 +350,6 @@ if (VehicleAttribs.enabled()) {
             VehicleAttribs.enqueue(Vehicle);
          }
 ```
-
 
 4. If there are vehicles enqueued, then submit a request to infer the vehicle attributes and wait for the results.
 
@@ -413,14 +385,12 @@ if (VehicleAttribs.enabled()) {
       }
 ```
 
-
 6. The frame is passed to the next stage.  This needs to be done whether or not there are attribute inference results to pass along.
 
 ```cpp
       pipeS1toS2Fifo.push(ps0s1i);
    }
 ```
-
 
 7. If vehicle attribute detection was not enabled, then just pass the input frames to the next stage of the pipeline.
 
@@ -434,7 +404,6 @@ if (VehicleAttribs.enabled()) {
       }
    }
 ```
-
 
 ### Pipeline Stage 2: Render Results
 
@@ -464,7 +433,6 @@ Rendering results has been moved down the pipeline now becoming Stage 2.  The st
       }
 ```
 
-
 2. And the new code to print out the execution statistics for the vehicle attribute inference.
 
 ```cpp
@@ -478,7 +446,6 @@ Rendering results has been moved down the pipeline now becoming Stage 2.  The st
    }
 ```
 
-
 ## Post-Main Loop
 
 Vehicle attribute detection object is added to display the performance count information.
@@ -490,14 +457,13 @@ if (FLAGS_pc) {
 }
 ```
 
-
 # Building and Running
 
 Now that we have walked through the added code and learned what it does, it is time to build the application and see it in action using two models to infer image information.
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
@@ -513,7 +479,7 @@ source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
-4. Now we need to create a directory to build the tutorial in and change to it.
+4. Now, create a directory to build the tutorial in and change to it.
 
 ```bash
 mkdir build
