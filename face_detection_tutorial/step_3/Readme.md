@@ -413,7 +413,7 @@ Now that we have walked through the added code and learned what it does, it is t
 cd tutorials/face_detection_tutorial/step_3
 ```
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
+3. The first step is to configure the build environment for the OpenVINO™ toolkit by running the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
