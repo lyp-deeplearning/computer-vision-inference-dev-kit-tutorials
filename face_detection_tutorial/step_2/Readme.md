@@ -929,7 +929,7 @@ make
     
     5. And now we can start referencing the variables for each model as: $mFDA16, $mFDA32, $mFDR16, $mFDR32, $mAG16, $mAG32, $mHP16, $mHP32
 
-2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO toolkit installation in our sample instructions. Once you have seen the application working, feel free to try it on your own images and videos.
+2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO™ toolkit installation in our sample instructions. Once you have seen the application working, feel free to try it on your own images and videos.
 
 3. Let us first run it on a single image, to see how it works.
 
