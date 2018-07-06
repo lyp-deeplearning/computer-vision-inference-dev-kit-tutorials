@@ -164,40 +164,40 @@ Using the Inference Engine API follows the basic steps briefly described below. 
     a. Create an instance of the plugin (InferenceEngine::InferencePlugin) for the specified device using the InferenceEngine::PluginDispatcher class
 
 2. Read the model IR
-
-    a. Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
+                 
+       Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
 
 3. Configure the inputs and outputs formats
 
-    a. Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
+       Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
 
-    b. Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
+       Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
 
 4. Load the model into the plugin
 
-    a. Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
+       Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
 
 5. Create an inference request
 
-    a. Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
+       Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
 
 6. Prepare the input
 
-    a. Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
+       Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
 
-    b. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
+       Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
 
 7. Run Inference
 
-    a. Request plugin to perform inference and wait for results using one of two modes:
+      Request plugin to perform inference and wait for results using one of two modes:
 
-        i. Synchronous: 
+         Synchronous: 
 
             1. InferenceEngine::InferRequest::Infer() 
 
             2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
 
-        ii. Asynchronous: 
+          Asynchronous: 
 
             1. InferenceEngine::InferRequest::StartAsync() 
 
@@ -205,9 +205,9 @@ Using the Inference Engine API follows the basic steps briefly described below. 
 
 8. Process the output
 
-    a. Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
+       Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
 
-    b. Parse and process the output blob(s) according to the output format specified by the model
+       Parse and process the output blob(s) according to the output format specified by the model
 
 In tutorial Steps 2, 3, and 4 we will walkthrough the code that specifically integrates each of the models used in the application.  
 
@@ -215,16 +215,15 @@ More details on the Inference Engine can be found in the "Integrating Inference 
 
 and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
 
-#### Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries
+#### Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries
 
-Whenever running the OpenVINO toolkit tools, compiling, or running the user application, always remember to source the script:
+Whenever running the OpenVINO™ toolkit tools, compiling, or running the user application, always remember to source the script:
 
 ```Bash
 source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
-
-This script sets up the executable and library paths along with environment variables used by the OpenVINO toolkit tools as well as this tutorial.
+This script sets up the executable and library paths along with environment variables used by the OpenVINO™ toolkit tools as well as this tutorial.
 
 ### Where Do the Inference Models Come from?
 
@@ -236,7 +235,7 @@ Before going into the samples in the tutorial steps, first we will go over some 
 
 ## Intel OpenCV
 
-For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO toolkit will be used.  You may be wondering: Why is OpenCV included in the OpenVINO toolkit along with the Inference Engine?  The first big reason is: They are the fastest implementation of OpenCV functions for Intel devices.  The Intel libraries have been optimized to run on each Intel CPU, GPU, and Myriad device.  It also helps that by including in the libraries in the OpenVINO toolkit, you get the complete set of libraries and always get the necessary version.  
+For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO™ toolkit will be used.  You may be wondering: Why is OpenCV included in the OpenVINO toolkit along with the Inference Engine? The first big reason is: They are the fastest implementation of OpenCV functions for Intel devices.  The Intel libraries have been optimized to run on each Intel CPU, GPU, and Myriad device. It also helps that by including in the libraries in the OpenVINO™ toolkit, you get the complete set of libraries and always get the necessary version.  
 
 The second big reason: All the extensions and additional libraries that come with Intel’s OpenCV. One such library is the Photography Vision Library (PVL). PVL includes advanced implementations by Intel already optimized for power and performance on Intel devices to do face, blink, and smile detection along with recognizing faces.
 
