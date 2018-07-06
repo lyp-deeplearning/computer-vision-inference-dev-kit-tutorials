@@ -333,7 +333,7 @@ Since the networks used by the detectors will have different requirements for lo
 
 The submitRequest() function checks to see if the model is enabled and that there is a valid request to start. If there is, it requests the model to start running the model asynchronously with startAsync() which returns immediately (we will show how to wait on the results next).
 
-```
+```cpp
     virtual void submitRequest() {
         if (!enabled() || request == nullptr) return;
         request->StartAsync();
@@ -1086,7 +1086,7 @@ Now that we have walked through the code and learned what it does, it is time to
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up an xterm window or use an existing window to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
@@ -1110,7 +1110,7 @@ cd build
 ```
 
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations. Then we run Make to build the executable.
+5. The last thing we need to do before compiling is to configure the build settings and build the executable. We do this by running CMake to set the build target and file locations. Then we run Make to build the executable.
 
 ```bash
 cmake -DCMAKE_BUILD_TYPE=Release ../
