@@ -441,19 +441,19 @@ make
 source ../../scripts/setupenv.sh 
 ```
 
-2. You now have the executable file to run ./intel64/Release/face_detection_tutorial.  In order to load the age and gender detection model, the "-m_ag" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
+2. You now have the executable file to run ./intel64/Release/face_detection_tutorial. In order to load the age and gender detection model, the "-m_ag" flag needs to be added  followed by the full path to the model. First let us see how it works on a single image file:
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i ../../data/face.jpg
 ```
 
-3. The output window will show the image overlaid with colored rectangles over each of the detected faces with labels showing the age and gender results.  The timing statistics for computing the results of each model along with OpenCV input and output times are also shown.  Next, let us try it on a video file.
+3. The output window will show the image overlaid with colored rectangles over each of the detected faces with labels showing the age and gender results. The timing statistics for computing the results of each model along with OpenCV input and output times are also shown.  Next, let us try it on a video file.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
-4. You will see rectangles that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.
+4. You will see rectangles that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video. Finally, let us see how it works for camera input.
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i cam
@@ -469,7 +469,7 @@ Or
 
 # Conclusion
 
-Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model.  nd that is the power the OpenVINO™ toolkit brings to applications. Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
+Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first. This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model. This is the power the OpenVINO™ toolkit brings to applications. Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
 
 # Navigation
 
