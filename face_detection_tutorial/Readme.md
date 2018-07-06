@@ -303,7 +303,7 @@ For more detail on 16-bit "half-precision" floating point down to the bit-level,
 
 [https://en.wikipedia.org/wiki/Half-precision_floating-point_format](https://en.wikipedia.org/wiki/Half-precision_floating-point_format)
 
-For more detail on the Model Optimizer, see the OpenVINO documentation at:
+For more detail on the Model Optimizer, see the OpenVINO™ documentation at:
 
 [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
 
