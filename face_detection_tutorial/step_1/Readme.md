@@ -82,7 +82,7 @@ This is how the "-i" argument is done, all other arguments are handled similarly
 
 ## OpenCV Input to Output
 
-1. Open up a terminal (such as Xterm) or use an existing terminal to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 1:
 
