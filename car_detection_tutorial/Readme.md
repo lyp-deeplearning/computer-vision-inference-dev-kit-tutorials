@@ -6,7 +6,7 @@
 
 # Introduction
 
-The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared hardware included in the UP Squared AI Vision Development Kit. The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Car Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared* hardware.
+The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared* hardware included in the UP Squared* AI Vision Development Kit. The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files. To do that, we will download the latest Car Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared* hardware.
 
 This tutorial will start from a base application that can read in image data and output the image to a window. From there, each step adds deep learning models that will process the image data and make inferences. In the third step, the application will be able to detect a vehicle and report the vehicle type (e.g. car, van, etc) and color. In the final step, the application is improved using the Inference Engine asynchronous API to perform inference in parallel with the main processing loop. Before that, some key concepts related to using the OpenVINO™ toolkit will be introduced and later seen along the way within the steps.  
 
@@ -14,7 +14,7 @@ This tutorial will start from a base application that can read in image data and
 
 ## Prerequisites
 
-The UP Squared AI Vision Development Kit comes ready to go with all the hardware needed for this tutorial and is fully preconfigured with all software tools, libraries, drivers, etc. needed.   A summary of what is used:
+The UP Squared AI Vision Development Kit comes ready to go with all the hardware needed for this tutorial and is fully preconfigured with all software tools, libraries, drivers, etc. needed. A summary of what is used:
 
 * Hardware
 
@@ -22,7 +22,7 @@ The UP Squared AI Vision Development Kit comes ready to go with all the hardware
 
         * UP Squared* Board
 
-        * AI Core mPCIe board (installed), this is what is being referred to as the "Myriad"
+        * AI Core mPCIe board (installed) with Intel® Movidius™ Myriad™. This is what is being referred to as the "Myriad"
 
         * USB Camera
 
@@ -215,7 +215,7 @@ More details on the Inference Engine can be found in the "Integrating Inference 
 
 and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
 
-#### Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries
+#### Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries
 
 Whenever running the OpenVINO toolkit tools, compiling, or running the user application, always remember to source the script:
 
@@ -224,17 +224,17 @@ source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
-This script sets up the executable and library paths along with environment variables used by the OpenVINO toolkit tools as well as this tutorial.
+This script sets up the executable and library paths along with environment variables used by the OpenVINO™ toolkit tools as well as this tutorial.
 
 ### Where Do the Inference Models Come from?
 
-An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
+An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
 
 # Key Concepts
 
 Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.  For more related concepts, please see the  [Face Detection Tutorials](../face_detection_tutorial/Readme.md) that covers and answers the questions:
 
-* Intel OpenCV - Why is it included in the OpenVINO toolkit?
+* Intel OpenCV - Why is it included in the OpenVINO™ toolkit?
 
 * Floating Point Precision - What is it and why does it matter?
 
