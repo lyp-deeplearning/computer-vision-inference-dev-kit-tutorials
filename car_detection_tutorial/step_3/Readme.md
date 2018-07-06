@@ -497,19 +497,23 @@ make
 
 ## Run
 
-1. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+1. Before running, be sure to source the helper script. That will make it easier to use environment variables instead of long names to the models:
 
 ```bash
 source ../../scripts/setupenv.sh 
 ```
 
+2. You now have the executable file to run.
 
-2. You now have the executable file to run ./intel64/Release/car_detection_tutorial.  In order to load the vehicle attribute detection model, the "-m_va" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
+```
+./intel64/Release/car_detection_tutorial
+```  
+
+In order to load the vehicle attribute detection model, the "-m_va" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
 
 ```bash
 ./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car_1.bmp
 ```
-
 
 3. The output window will show the image overlaid with colored rectangles over each of the detected vehicles and license plates.  There will also be text within the vehicle box indicating type and color.  The timing statistics for inferring the vehicle attribute results are also shown.  Next, let us try it on a video file.
 
@@ -517,13 +521,11 @@ source ../../scripts/setupenv.sh
 ./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car-detection.mp4
 ```
 
-
 4. You should see rectangles that follow the cars and license plates as they move around the image.  The accompanying vehicle attributes text (type and color) will also appear in the rectangles.  Finally, let us see how it works for camera input.
 
 ```bash
 ./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32 -i cam
 ```
-
 
 Or
 
@@ -531,12 +533,11 @@ Or
 ./intel64/Release/vehicle_detection_tutorial -m $mVLP32 -m_va $mVA32
 ```
 
-
 5. Again, you will see output similar to the output from the video, but appropriate to the cars in your office, or maybe outside a nearby window.
 
 # Checking Performance
 
-Now that we’ve seen how we have the application running two models to process images and make inferences, let us explore optimizing the performance of the application.  In general, performance increases by spreading the inference work across several devices, assign the more complex tasks to the fastest devices, and use FP16 precision instead of FP32 whenever possible.  Let us see how the models we are using perform when we start moving them to different devices using the combinations:
+Now that we’ve seen how we have the application running two models to process images and make inferences, let us explore optimizing the performance of the application. In general, performance increases by spreading the inference work across several devices, assign the more complex tasks to the fastest devices, and use FP16 precision instead of FP32 whenever possible. Let us see how the models we are using perform when we start moving them to different devices using the combinations:
 
 ```Bash
 # command line #1
@@ -569,8 +570,7 @@ Now that we’ve seen how we have the application running two models to process 
 ./intel64/Release/car_detection_tutorial -m $mVLP32 -d GPU -m_va $mVA16 -d_va GPU  -i ../../data/car-detection.mp4
 ```
 
-
-Note: It can take a lot of time to run all the commands so the exercise of running and verifying is left to the user.  
+**Note**: Running and verifying is left to the user because it can take a lot of time to run all the commands.
 
 The results seen from the commands should be similar in order to the summary in the table below:
 
@@ -683,11 +683,11 @@ The results seen from the commands should be similar in order to the summary in 
 </table>
 
 
-Above is a matrix that shows some of the test cases that were run on a UP Squared Apollo Lake Intel Pentium N4200 to get performance data.  From measuring total time of the application, we see the fastest results are for the combinations when offloading from the CPU and running the vehicle model on the GPU and the vehicle attributes model on the GPU or MYRIAD.
+Above is a matrix that shows some of the test cases that were run on a UP Squared* Apollo Lake Intel Pentium® N4200 to get performance data. From measuring total time of the application, we see the fastest results are for the combinations when offloading from the CPU and running the vehicle model on the GPU and the vehicle attributes model on the GPU or MYRIAD.
 
 # Conclusion
 
-Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  We also showed some techniques to pipeline the program flow.  This makes it easier to group input data with its results and pass it through the application pipeline.  We also explored increasing performance by optimizing how the application loads models onto different devices.
+Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first. We also showed some techniques to pipeline the program flow.  This makes it easier to group input data with its results and pass it through the application pipeline. We also explored increasing performance by optimizing how the application loads models onto different devices.
 
 Continuing to Tutorial Step 4, we will see another method of increasing performance, when we introduce running the models asynchronously.  This will allow the application to have multiple models analyzing images along with the CPU using OpenCV and managing data all running in parallel.
 
