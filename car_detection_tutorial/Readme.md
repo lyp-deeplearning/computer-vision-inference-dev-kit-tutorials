@@ -2,11 +2,11 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#using-git-clone-to-clone-the-entire-repository">Using Git Clone to Clone the Entire Repository</a></li><li><a href="#using-svn-export-to-download-only-this-tutorial">Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO™ Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#batch-size">Batch Size</a><ul><li><a href="#how-does-batch-size-affect-performance-and-latency">How Does Batch Size Affect Performance and Latency?</a></li></ul></li><li><a href="#image-processing-pipeline">Image Processing Pipeline</a></li><li><a href="#synchronous-vs-asynchronous-api">Synchronous vs. Asynchronous API</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first Model, Vehicle Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-vehicle-attributes-detection">Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection</a></li><li><a href="#tutorial-step-4-using-the-asynchronous-api">Tutorial Step 4: Using the Asynchronous API</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#using-git-clone-to-clone-the-entire-repository">Using Git Clone to Clone the Entire Repository</a></li><li><a href="#using-svn-export-to-download-only-this-tutorial">Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO™ Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#batch-size">Batch Size</a><ul><li><a href="#how-does-batch-size-affect-performance-and-latency">How Does Batch Size Affect Performance and Latency?</a></li></ul></li><li><a href="#image-processing-pipeline">Image Processing Pipeline</a></li><li><a href="#synchronous-vs-asynchronous-api">Synchronous vs. Asynchronous API</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first Model, Vehicle Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-vehicle-attributes-detection">Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection</a></li><li><a href="#tutorial-step-4-using-the-asynchronous-api">Tutorial Step 4: Using the Asynchronous API</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
 
 # Introduction
 
-The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared* hardware included in the UP Squared* AI Vision Development Kit. The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files. To do that, we will download the latest Car Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared* hardware.
+The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared* hardware included in the UP Squared* AI Vision Development Kit. The application is able to run inference models on the CPU, GPU and VPU devices to process images. The models can be used to process video from the USB camera, an existing video file, or still image files. To do that, we will download the latest Car Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared* hardware.
 
 This tutorial will start from a base application that can read in image data and output the image to a window. From there, each step adds deep learning models that will process the image data and make inferences. In the third step, the application will be able to detect a vehicle and report the vehicle type (e.g. car, van, etc) and color. In the final step, the application is improved using the Inference Engine asynchronous API to perform inference in parallel with the main processing loop. Before that, some key concepts related to using the OpenVINO™ toolkit will be introduced and later seen along the way within the steps.  
 
@@ -14,7 +14,7 @@ This tutorial will start from a base application that can read in image data and
 
 ## Prerequisites
 
-The UP Squared AI Vision Development Kit comes ready to go with all the hardware needed for this tutorial and is fully preconfigured with all software tools, libraries, drivers, etc. needed. A summary of what is used:
+The UP Squared* AI Vision Development Kit comes ready to go with all the hardware needed for this tutorial and is fully preconfigured with all software tools, libraries, drivers, etc. needed. A summary of what is used:
 
 * Hardware
 
@@ -48,38 +48,38 @@ The UP Squared AI Vision Development Kit comes ready to go with all the hardware
 
 By now you should have completed the setup and getting starting guide for the kit, however before continuing, please ensure that:
 
-* You have followed all the steps in the getting starting guide for your UP Squared* AI Vision Development Kit.  This tutorial assumes that you have already setup and run the supplied test samples to test that your kit is fully functional including:
+* You have followed all the steps in the getting starting guide for your UP Squared* AI Vision Development Kit. This tutorial assumes that you have already setup and run the supplied test samples to test that your kit is fully functional including:
 
     * The UP Squared* board is booted and running 
 
     * The USB camera is connected and operating correctly
 
-* Your UP Squared board is connected to a network and has Internet access.  To download all the files for this tutorial, the UP Squared* board will need to access GitHub on the Internet. 
+* Your UP Squared* board is connected to a network and has Internet access. To download all the files for this tutorial, the UP Squared* board will need to access GitHub on the Internet. 
 
 ## Downloading the Tutorial from the Git Repository
 
-The first thing we need to do is create a place for the Car Detection tutorial and then download it.  To do this, we will create a directory called "tutorials" and use it to store the files that are downloaded from the “cvs-sdk-tutorial” GitHub repository.  There are two options to download this tutorial: 1) Download as part of the entire repository using “git clone”, or 2) Use “svn export” to download just this tutorial (smaller)
+The first thing we need to do is create a place for the Car Detection tutorial and then download it. To do this, we will create a directory called "tutorials" and use it to store the files that are downloaded from the “cvs-sdk-tutorial” GitHub repository. There are two options to download this tutorial: 1) Download as part of the entire repository using “git clone”, or 2) Use “svn export” to download just this tutorial (smaller)
 
 ### Using Git Clone to Clone the Entire Repository
 
-1. Bring up a command shell prompt by opening an Xterm window or selecting an Xterm window that is already open.
+1. Bring up a command shell prompt by opening a terminal (such as Xterm) or selecting a terminal that is already open.
 
 2. Create a "tutorials" directory where we can download the Car Detection tutorial and then change to it:
 
-```
+```bash
 mkdir tutorials
 cd tutorials
 ```
 
 3. Clone the repository:
 
-```
+```bash
 git clone https://github.com/intel-iot-devkit/cv-sdk-tutorials.git
 ```
 
 4. Change to the car detection tutorial folder:
 
-```
+```bash
 cd cv-sdk-tutorials/car_detection_tutorial
 ```
 
@@ -89,20 +89,20 @@ cd cv-sdk-tutorials/car_detection_tutorial
 
 2. Create a "tutorials" directory where we can download the Car Detection tutorial and then change to it:
 
-```
+```bash
 mkdir tutorials
 cd tutorials
 ```
 
 3. Download the subdirectory for just this tutorial from the repository:
 
-```
+```bash
 svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/trunk/car_detection_tutorial
 ```
 
 4. Change to the car detection tutorial folder:
 
-```
+```bash
 cd car_detection_tutorial
 ```
 
@@ -154,11 +154,11 @@ Below is a more detailed view of the User Application and Inference Engine:
 
 ![image alt text](./doc_support/step0_image_1.png)
 
-The Inference Engine includes a plugin library for each supported device that has been optimized for the Intel hardware device CPU, GPU, and Myriad.  From here, we will use the terms "device" and “plugin” with the assumption that one infers the other (e.g. CPU device infers the CPU plugin and vice versa).  As part of loading the model, the User Application tells the Inference Engine which device to target which in turn loads the associated plugin library to later run on the associated device. The Inference Engine uses “blobs” for all data exchanges, basically arrays in memory arranged according the input and output data of the model.
+The Inference Engine includes a plugin library for each supported device that has been optimized for the Intel hardware device CPU, GPU, and Myriad. From here, we will use the terms "device" and “plugin” with the assumption that one infers the other (e.g. CPU device infers the CPU plugin and vice versa). As part of loading the model, the User Application tells the Inference Engine which device to target which in turn loads the associated plugin library to later run on the associated device. The Inference Engine uses “blobs” for all data exchanges, basically arrays in memory arranged according the input and output data of the model.
 
 #### Inference Engine API Integration Flow
 
-Using the Inference Engine API follows the basic steps briefly described below.  The API objects and functions will be seen later in the code walkthroughs.
+Using the Inference Engine API follows the basic steps briefly described below. The API objects and functions will be seen later in the code walkthroughs.
 
 1. Load the plugin
 
@@ -217,22 +217,21 @@ and the Inference Engine API documentation located at: /opt/intel/computer_visio
 
 #### Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries
 
-Whenever running the OpenVINO toolkit tools, compiling, or running the user application, always remember to source the script:
+Whenever running the OpenVINO™ toolkit tools, compiling, or running the user application, always remember to source the script:
 
 ```
 source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
-
 This script sets up the executable and library paths along with environment variables used by the OpenVINO™ toolkit tools as well as this tutorial.
 
 ### Where Do the Inference Models Come from?
 
-An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
+An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet. For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
 
 # Key Concepts
 
-Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.  For more related concepts, please see the  [Face Detection Tutorials](../face_detection_tutorial/Readme.md) that covers and answers the questions:
+Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial. For more related concepts, please see the  [Face Detection Tutorials](../face_detection_tutorial/Readme.md) that covers and answers the questions:
 
 * Intel OpenCV - Why is it included in the OpenVINO™ toolkit?
 
@@ -240,13 +239,13 @@ Before going into the samples in the tutorial steps, first we will go over some 
 
 ## Batch Size
 
-Batch size refers to the number of input data to be inferred during a single inference run through the Inference Engine.  Things to be aware of the batch size for an inference model:
+Batch size refers to the number of input data to be inferred during a single inference run through the Inference Engine. Things to be aware of the batch size for an inference model:
 
 * Batch size and its effects on input and output data is model dependent:
 
     * The output batch size may scale with input batch size.  For example, the vehicle attributes model used in this tutorial will have one one output for each input.
 
-    * The output may contain results across all batched inputs.  For example, the vehicle detection model used in this tutorial gives one set of outputs regardless of input batch size with each output indicating the input the results is for using the "image_id" field.
+    * The output may contain results across all batched inputs. For example, the vehicle detection model used in this tutorial gives one set of outputs regardless of input batch size with each output indicating the input the results is for using the "image_id" field.
 
 * How batch size is set:
 
@@ -258,15 +257,15 @@ Batch size refers to the number of input data to be inferred during a single inf
 
     * May be set explicitly using the Inference Engine API setBatchSize() function (see InferenceEngine::ICNNNetwork class)
 
-    * Note: Depending upon the model and device used, which method can be used to set batch size may vary.  For example, at the time of writing this tutorial, some models (e.g. the vehicle detection model used in this tutorial) running on GPU will only use the setting form the IR model and cannot have batch size set dynamically using setBatchSize().
+    **Note**: Depending upon the model and device used, which method can be used to set batch size may vary. For example, at the time of writing this tutorial, some models (e.g. the vehicle detection model used in this tutorial) running on GPU will only use the setting form the IR model and cannot have batch size set dynamically using setBatchSize().
 
-* Batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.
+* Batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data. Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.
 
 ### How Does Batch Size Affect Performance and Latency?
 
-Batch size affects both latency and performance of an application.  Latency is measured as the time from acquiring the input data until inferred results are available.  Performance tells us the rate that input-to-results can occur, such as frames-per-second.  For a real-time control application, we can think of latency as the reaction time for a control to be changed while performance is how often that control can be updated.  
+Batch size affects both latency and performance of an application.  Latency is measured as the time from acquiring the input data until inferred results are available.  Performance tells us the rate that input-to-results can occur, such as frames-per-second. For a real-time control application, we can think of latency as the reaction time for a control to be changed while performance is how often that control can be updated.  
 
-Choosing the appropriate batch size for an application’s requirements depends upon the input source, resources (e.g. memory to store more inputs), device(s), and model(s) being used.  The time it takes to build up a batch from the input source before processing it means more latency.  The device selected may also impose a limit on the batch size such as the Myriad which has a limit of 1.  The complexity of the model affects how fast results can be returned for the device used.  Running batch sizes >1 may be faster than running a batch size of 1 because of the efficiency of the device’s pipelined architecture (e.g. pipeline full vs. partly idle), available resources (e.g. multiple cores working in parallel), and/or a reduction of data transfers (e.g. transfer weights only once).  
+Choosing the appropriate batch size for an application’s requirements depends upon the input source, resources (e.g. memory to store more inputs), device(s), and model(s) being used. The time it takes to build up a batch from the input source before processing it means more latency.  The device selected may also impose a limit on the batch size such as the Myriad which has a limit of 1. The complexity of the model affects how fast results can be returned for the device used. Running batch sizes >1 may be faster than running a batch size of 1 because of the efficiency of the device’s pipelined architecture (e.g. pipeline full vs. partly idle), available resources (e.g. multiple cores working in parallel), and/or a reduction of data transfers (e.g. transfer weights only once).  
 
 For more information on an example of batch size effects on performance for clDNN running on GPU, see the whitepaper: [https://software.intel.com/en-us/articles/accelerating-deep-learning-inference-with-intel-processor-graphics](https://software.intel.com/en-us/articles/accelerating-deep-learning-inference-with-intel-processor-graphics)
 
@@ -278,9 +277,7 @@ Briefly, a pipeline is a chain of 0-to-N stages where each stage: receives an in
 
 For more details see: [https://en.wikipedia.org/wiki/Pipeline_(software)](https://en.wikipedia.org/wiki/Pipeline_(software))
 
- 
-
-An image processing pipeline follows the pipeline pattern to implement an algorithm that will take an input image through multiple stages to produce the desired results.  Each stage of the pipeline performs the different steps of the algorithm to do the different image processing operations.  Following the pipeline pattern:
+An image processing pipeline follows the pipeline pattern to implement an algorithm that will take an input image through multiple stages to produce the desired results. Each stage of the pipeline performs the different steps of the algorithm to do the different image processing operations. Following the pipeline pattern:
 
 * Helps to organize the algorithm into steps
 
@@ -292,11 +289,11 @@ The completed pipeline in Tutorial Step 3 looks like:
 
 ![image alt text](./doc_support/step0_image_3.png)
 
-In Tutorial Step 3 the pipeline is completed with Stage #0 and Stage #1 waiting synchronously for inference to complete.  The pipeline is then improved in Tutorial Step 4 by using the async API to gain true parallelism when the inference models are run on another device than the CPU.
+In Tutorial Step 3 the pipeline is completed with Stage #0 and Stage #1 waiting synchronously for inference to complete. The pipeline is then improved in Tutorial Step 4 by using the async API to gain true parallelism when the inference models are run on another device than the CPU.
 
 ## Synchronous vs. Asynchronous API
 
-A synchronous API is a single function that is called and does not return until all operations are complete.  This means that the calling application thread is blocked and cannot continue until the API function returns.  An asynchronous API typically has the two functions: start() and wait().  First the start() is called to begin operations and then returns immediately so that the application thread may continue doing other things before calling wait() to either check status or wait for operations to complete.  In a multi-device environment, the asynchronous API has the advantage of allowing the application thread to continue to perform other work in parallel with API operations.
+A synchronous API is a single function that is called and does not return until all operations are complete. This means that the calling application thread is blocked and cannot continue until the API function returns. An asynchronous API typically has the two functions: start() and wait(). First the start() is called to begin operations and then returns immediately so that the application thread may continue doing other things before calling wait() to either check status or wait for operations to complete. In a multi-device environment, the asynchronous API has the advantage of allowing the application thread to continue to perform other work in parallel with API operations.
 
 When running an inference model using an InferenceEngine::InferRequest object, the Inference Engine provides the asynchronous and synchronous API functions:
 
@@ -316,7 +313,7 @@ When running an inference model using an InferenceEngine::InferRequest object, t
 
         * Else wait millis_timeout milliseconds and return if inference has not completed
 
-* Note: Using Infer() is effectively the same as calling StartAsync() immediately followed by Wait(WaitMode::RESULT_READY).
+**Note**: Using Infer() is effectively the same as calling StartAsync() immediately followed by Wait(WaitMode::RESULT_READY).
 
 The basic flow of the synchronous and asynchronous API is shown below.
 
@@ -326,7 +323,7 @@ The basic flow of the synchronous and asynchronous API is shown below.
 
 ![image alt text](./doc_support/step0_image_5.png)
 
-The first tutorial will show how the Intel OpenCV libraries are used by an application.  We will see how the OpenCV functions are included in an application as they are used to get input from image files or a video camera connected to the UP Squared board and display the image data in a window. 
+The first tutorial will show how the Intel OpenCV libraries are used by an application. We will see how the OpenCV functions are included in an application as they are used to get input from image files or a video camera connected to the UP Squared* board and display the image data in a window. 
 
 [Car Detection Tutorial Step 1](./step_1/Readme.md)
 
@@ -334,7 +331,7 @@ The first tutorial will show how the Intel OpenCV libraries are used by an appli
 
 ![image alt text](./doc_support/step0_image_6.png)
 
-The second tutorial takes the framework in Tutorial Step 1 and adds vehicle and license plate detection to processing images.  This step shows how an inference model has been added to use the Inference Engine to run the model on hardware.  We will also learn how to specify which device the model is run on: CPU, GPU,  the Myriad.  
+The second tutorial takes the framework in Tutorial Step 1 and adds vehicle and license plate detection to processing images. This step shows how an inference model has been added to use the Inference Engine to run the model on hardware. We will also learn how to specify which device the model is run on: CPU, GPU, the Myriad.  
 
 [Car Detection Tutorial Step 2](./step_2/Readme.md)
 
@@ -356,7 +353,7 @@ To complete the application, the fourth tutorial step makes full use of the asyn
 
 # Conclusion
 
-Congratulations! you have completed the Car Detection Tutorial.  After going through this entire tutorial and all of its steps, you have now seen:
+Congratulations! You have completed the Car Detection Tutorial. After going through this entire tutorial and all of its steps, you have now seen:
 
 * An overview of the Inference Engine
 
