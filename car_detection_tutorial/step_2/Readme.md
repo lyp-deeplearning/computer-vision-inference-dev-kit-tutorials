@@ -682,7 +682,7 @@ See the Inference Engine Development Guide [https://software.intel.com/inference
 
 We have now seen what happens behind the scenes in the VehicleDetection class, we will move into the application code and see how it is used.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminnal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
