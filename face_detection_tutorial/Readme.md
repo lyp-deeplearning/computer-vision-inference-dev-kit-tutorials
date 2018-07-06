@@ -131,9 +131,9 @@ In the "face_detection_tutorial" directory you will see:
 
 * Readme.md - The top level of this tutorial (this page)
 
-## OpenVINO Toolkit Overview and Terminology 
+## OpenVINO™ Toolkit Overview and Terminology 
 
-Let us begin with a brief overview of the OpenVINO™ toolkit and what this tutorial will be covering. The OpenVINO™ toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel hardware while maximizing performance. This is done using the Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit) included within the OpenVINO™ toolkit with its main components shown below.
+Let us begin with a brief overview of the OpenVINO™ toolkit and what this tutorial will be covering. The OpenVINO™ toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel® hardware while maximizing performance. This is done using the Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit) included within the OpenVINO™ toolkit with its main components shown below.
 
 ![image alt text](./doc_support/step0_image_0.png)
 
@@ -227,15 +227,15 @@ This script sets up the executable and library paths along with environment vari
 
 ### Where Do the Inference Models Come from?
 
-An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
+An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet. For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
 
 # Key Concepts
 
 Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.
 
-## Intel OpenCV
+## Intel® OpenCV
 
-For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO™ toolkit will be used.  You may be wondering: Why is OpenCV included in the OpenVINO toolkit along with the Inference Engine? The first big reason is: They are the fastest implementation of OpenCV functions for Intel devices.  The Intel libraries have been optimized to run on each Intel CPU, GPU, and Myriad device. It also helps that by including in the libraries in the OpenVINO™ toolkit, you get the complete set of libraries and always get the necessary version.  
+For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO™ toolkit will be used. You may be wondering: Why is OpenCV included in the OpenVINO toolkit along with the Inference Engine? The first big reason is: They are the fastest implementation of OpenCV functions for Intel devices. The Intel® libraries have been optimized to run on each Intel® CPU, GPU, and Myriad device. It also helps that by including in the libraries in the OpenVINO™ toolkit, you get the complete set of libraries and always get the necessary version.  
 
 The second big reason: All the extensions and additional libraries that come with Intel’s OpenCV. One such library is the Photography Vision Library (PVL). PVL includes advanced implementations by Intel already optimized for power and performance on Intel devices to do face, blink, and smile detection along with recognizing faces.
 
