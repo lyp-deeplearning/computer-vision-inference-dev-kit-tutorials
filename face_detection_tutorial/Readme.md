@@ -18,41 +18,41 @@ The UP Squared AI Vision Development Kit comes ready to go with all the hardware
 
 * Hardware
 
-    * From the kit:
+   * From the kit:
 
-        * UP Squared Board
+      * UP Squared Board
 
-        * AI Core mPCIe board (installed), this is what is being referred to as the "Myriad"
+      * AI Core mPCIe board (installed), this is what is being referred to as the "Myriad"
 
-        * USB Camera
+      * USB Camera
 
-        * Power supply
+      * Power supply
 
-    * User supplied:
+   * User supplied:
 
-        * USB keyboard and mouse
+      * USB keyboard and mouse
 
-        * HDMI or DisplayPort cable and monitor
+      * HDMI or DisplayPort cable and monitor
 
-        * Ethernet cable
+      * Ethernet cable
 
 * Software (pre-installed in the kit)
 
-    * OpenVINO toolkit
+   * OpenVINO toolkit
 
-        * Inference Engine with plugins support for CPU, GPU, and Myriad
+      * Inference Engine with plugins support for CPU, GPU, and Myriad
 
-        * Optimized OpenCV and OpenVX libraries
+      * Optimized OpenCV and OpenVX libraries
 
-        * Samples and common helper libraries
+      * Samples and common helper libraries
 
 By now you should have completed the setup and getting starting guide for the kit, however before continuing, please ensure that:
 
 * You have followed all the steps in the getting starting guide for your UP Squared AI Vision Development Kit.  This tutorial assumes that you have already setup and run the supplied test samples to test that your kit is fully functional including:
 
-    * The UP Squared board is booted and running 
+   * The UP Squared board is booted and running 
 
-    * The USB camera is connected and operating correctly
+   * The USB camera is connected and operating correctly
 
 * Your UP Squared board is connected to a network and has Internet access.  To download all the files for this tutorial, the UP Squared board will need to access GitHub on the Internet. 
 
@@ -166,53 +166,53 @@ Using the Inference Engine API follows the basic steps briefly described below. 
 
 1. Load the plugin
 
-    a. Create an instance of the plugin (InferenceEngine::InferencePlugin) for the specified device using the InferenceEngine::PluginDispatcher class
+   1. Create an instance of the plugin (InferenceEngine::InferencePlugin) for the specified device using the InferenceEngine::PluginDispatcher class
 
 2. Read the model IR
 
-    a. Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
+   1. Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
 
 3. Configure the inputs and outputs formats
 
-    a. Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
+   1. Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
 
-    b. Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
+   2. Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
 
 4. Load the model into the plugin
 
-    a. Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
+   1. Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
 
 5. Create an inference request
 
-    a. Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
+   1. Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
 
 6. Prepare the input
 
-    a. Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
+   1. Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
 
-    b. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
+   2. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
 
 7. Run Inference
 
-    a. Request plugin to perform inference and wait for results using one of two modes:
+   1. Request plugin to perform inference and wait for results using one of two modes:
 
-        i. Synchronous: 
+      1. Synchronous: 
 
-            1. InferenceEngine::InferRequest::Infer() 
+         1. InferenceEngine::InferRequest::Infer() 
 
-            2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
+         2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
 
-        ii. Asynchronous: 
+      2. Asynchronous: 
 
-            1. InferenceEngine::InferRequest::StartAsync() 
+         1. InferenceEngine::InferRequest::StartAsync() 
 
-            2. Then later InferenceEngine::InferRequest::Wait()
+         2. Then later InferenceEngine::InferRequest::Wait()
 
 8. Process the output
 
-    a. Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
+   1. Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
 
-    b. Parse and process the output blob(s) according to the output format specified by the model
+   2. Parse and process the output blob(s) according to the output format specified by the model
 
 In tutorial Steps 2, 3, and 4 we will walkthrough the code that specifically integrates each of the models used in the application.  
 
@@ -320,17 +320,17 @@ Batch size refers to the number of input data to be inferred during a single inf
 
 * How batch size is set:
 
-    * The default setting is located in the model’s IR files which is set either by:
+   * The default setting is located in the model’s IR files which is set either by:
 
-        * The Model Optimizer command line option when creating the IR 
+      * The Model Optimizer command line option when creating the IR 
 
-        * Or from the original source (e.g. Caffe) 
+      * Or from the original source (e.g. Caffe) 
 
-        * Note: the default can be read using the Inference Engine API getBatchSize()
+      * Note: the default can be read using the Inference Engine API getBatchSize()
 
-    * May be set explicitly using the Inference Engine API setBatchSize() function
+   * May be set explicitly using the Inference Engine API setBatchSize() function
 
-    * Note: For the getBatchSize() and setBatchSize() functions, see the InferenceEngine::ICNNNetwork class in the documentation at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/classInferenceEngine_1_1CNNNetwork.html
+   * Note: For the getBatchSize() and setBatchSize() functions, see the InferenceEngine::ICNNNetwork class in the documentation at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/classInferenceEngine_1_1CNNNetwork.html
 
 * Batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.
 
@@ -376,13 +376,13 @@ Congratulations! you have completed the Face Detection Tutorial.  After going th
 
 * The final application assembled in steps:
 
-    * How to create a base application that uses OpenCV to perform image and video input and output.  
+   * How to create a base application that uses OpenCV to perform image and video input and output.  
 
-    * How to extend the application to use the Inference Engine and CNN models to process the images and detect faces.  
+   * How to extend the application to use the Inference Engine and CNN models to process the images and detect faces.  
 
-    * How to take the results of the first model’s analysis and use it as input to different models that would process the faces and infer the face’s age and gender as well as the head’s orientation.  
+   * How to take the results of the first model’s analysis and use it as input to different models that would process the faces and infer the face’s age and gender as well as the head’s orientation.  
 
-    * How to load the analysis models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
+   * How to load the analysis models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
 
 # References and More Information
 

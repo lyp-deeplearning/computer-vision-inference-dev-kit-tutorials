@@ -52,15 +52,15 @@ In the above code:
 
 * DEFINE_string(i, "cam", video_message):
 
-    * Specifies:
+   * Specifies:
 
-        * The string argument name as "i"
+      * The string argument name as "i"
 
-        * video_message as the help message
+      * video_message as the help message
 
-        * "cam" as the default value when not set
+      * "cam" as the default value when not set
 
-    * Creates the variable FLAGS_i to hold the string value for the "i" argument
+   * Creates the variable FLAGS_i to hold the string value for the "i" argument
 
 ### Parse Arguments
 
@@ -142,6 +142,7 @@ if (!cap.read(frame)) {
    throw std::logic_error("Failed to get frame from cv::VideoCapture");
 }
 ```
+
 
 ### Main Loop
 
@@ -273,7 +274,7 @@ make
 
 3. You should now see a new window with an image.  You should also see a "Press 's' key to save a snapshot, press any other key to exit" prompt in the console window.  The application will now wait for you to press a key with the image window active.
 
-    1. Note: Pressing a key in the console window will not do anything because the image window is detecting key presses.  Use Ctrl+C to exit.
+   1. Note: Pressing a key in the console window will not do anything because the image window is detecting key presses.  Use Ctrl+C to exit.
 
 4. Next, let us see how the application handles a video file:
 

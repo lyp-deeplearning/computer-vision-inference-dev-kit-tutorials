@@ -20,23 +20,23 @@ The OpenVINO toolkit includes two pre-compiled face detection models located at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001
 
-    * Available model locations:
+   * Available model locations:
 
-        * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP16/face-detection-adas-0001.xml
+      * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP16/face-detection-adas-0001.xml
 
-        * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml
+      * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml
 
-    * More detail may be found the OpenVINO toolkit at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
+   * More detail may be found the OpenVINO toolkit at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004
 
-    * Available model locations:
+   * Available model locations:
 
-        * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/FP16/face-detection-retail-0004.xml
+      * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/FP16/face-detection-retail-0004.xml
 
-        * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/FP32/face-detection-retail-0004.xml
+      * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/FP32/face-detection-retail-0004.xml
 
-    * More detail may be found in the OpenVINO toolkit at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
+   * More detail may be found in the OpenVINO toolkit at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
 
 Each model may be used to perform face detection, the difference is how complex each underlying model is for the results it is capable of producing as shown in the summary below (for more details, see the descriptions HTML pages for each model): 
 
@@ -284,9 +284,9 @@ The line is read as "Load FaceDetection into the plugin pluginsForDevices[FLAGS_
 
 2. "into()" is called on the returned object passing in the mapped plugin from “pluginsForDevices”.  The map returns the plugin mapped to “FLAGS_d”, which is the command line argument “CPU”, “GPU”, or “MYRIAD”.  The function into() then first checks if the model object is enabled and if it is:
 
-    1. Calls "plg.LoadNetwork(detector.read(),{})"  to load the model returned by “detector.read()” (which we will see later is reading in the model’s IR file) into the plugin.  The resulting object is stored in the model object (detetor.net) 
+   1. Calls "plg.LoadNetwork(detector.read(),{})"  to load the model returned by “detector.read()” (which we will see later is reading in the model’s IR file) into the plugin.  The resulting object is stored in the model object (detetor.net) 
 
-    2. Sets the model object’s plugin (detector.plugin) to the one used
+   2. Sets the model object’s plugin (detector.plugin) to the one used
 
 ### BaseDetection Class
 
@@ -297,7 +297,7 @@ Now we are going to walkthrough the BaseDetection class that is used to abstract
 ```cpp
 struct BaseDetection {
     ExecutableNetwork net;
-    InferenceEngine::InferencePlugin * plugin;
+    InferenceEngine::InferencePlugin * plugin = NULL;
     InferRequest::Ptr request;
     std::string & commandLineFlag;
     std::string topoName;
@@ -398,8 +398,8 @@ FaceDetectionClass is derived from the BaseDetection class and adding some new m
 struct FaceDetectionClass : BaseDetection {
     std::string input;
     std::string output;
-    int maxProposalCount;
-    int objectSize;
+    int maxProposalCount = 0;
+    int objectSize = 0;
     int enquedFrames = 0;
     float width = 0;
     float height = 0;
@@ -643,17 +643,17 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 5. The loop to retrieve all the results from the output blob buffer.  The output format is determined by the model.  For the face detection model used, the following fields are expected:
 
-    1. Image_id
+   1. Image_id
 
-    2. Label
+   2. Label
 
-    3. Confidence 
+   3. Confidence 
 
-    4. X coordinate of ROI
+   4. X coordinate of ROI
 
-    5. Y coordinate of ROI
+   5. Y coordinate of ROI
 
-    6. Width of ROI
+   6. Width of ROI
 
 ```cpp
             float image_id = detections[i * objectSize + 0];
@@ -936,48 +936,48 @@ make
 
 1. You now have an executable file to run.  In order to have it run the face detection model, we will need to add a couple of parameters to the command line:
 
-    1. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
+   1. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
 
-    2. "-m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml”
+   2. "-m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml”
 
-    3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
-    ```bash
-    # Create variables for all models used by the tutorials to make
-    #  it easier to reference them with short names
-    
-    # check for variable set by setupvars.sh in the SDK, need it to find models
-    : ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
-    
-    modelDir=$InferenceEngine_DIR/../../intel_models
-    
-    # Face Detection Model - ADAS
-    modName=face-detection-adas-0001
-    export mFDA16=$modelDir/$modName/FP16/$modName.xml
-    export mFDA32=$modelDir/$modName/FP32/$modName.xml
-    
-    # Face Detection Model - Retail
-    modName=face-detection-retail-0004
-    export mFDR16=$modelDir/$modName/FP16/$modName.xml
-    export mFDR32=$modelDir/$modName/FP32/$modName.xml
-    
-    # Age and Gender Model
-    modName=age-gender-recognition-retail-0013
-    export mAG16=$modelDir/$modName/FP16/$modName.xml
-    export mAG32=$modelDir/$modName/FP32/$modName.xml
-    
-    # Head Pose Estimation Model
-    modName=head-pose-estimation-adas-0001
-    export mHP16=$modelDir/$modName/FP16/$modName.xml
-    export mHP32=$modelDir/$modName/FP32/$modName.xml
-    ```
-    
-    4. To use the script we source it: 
+   3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
+   ```bash
+   # Create variables for all models used by the tutorials to make
+   #  it easier to reference them with short names
+   
+   # check for variable set by setupvars.sh in the SDK, need it to find models
+   : ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
+   
+   modelDir=$InferenceEngine_DIR/../../intel_models
+   
+   # Face Detection Model - ADAS
+   modName=face-detection-adas-0001
+   export mFDA16=$modelDir/$modName/FP16/$modName.xml
+   export mFDA32=$modelDir/$modName/FP32/$modName.xml
+   
+   # Face Detection Model - Retail
+   modName=face-detection-retail-0004
+   export mFDR16=$modelDir/$modName/FP16/$modName.xml
+   export mFDR32=$modelDir/$modName/FP32/$modName.xml
+   
+   # Age and Gender Model
+   modName=age-gender-recognition-retail-0013
+   export mAG16=$modelDir/$modName/FP16/$modName.xml
+   export mAG32=$modelDir/$modName/FP32/$modName.xml
+   
+   # Head Pose Estimation Model
+   modName=head-pose-estimation-adas-0001
+   export mHP16=$modelDir/$modName/FP16/$modName.xml
+   export mHP32=$modelDir/$modName/FP32/$modName.xml
+   ```
+   
+   4. To use the script we source it: 
 
-    ```bash
-    source ../../scripts/setupenv.sh 
-    ```
+   ```bash
+   source ../../scripts/setupenv.sh 
+   ```
     
-    5. And now we can start referencing the variables for each model as: $mFDA16, $mFDA32, $mFDR16, $mFDR32, $mAG16, $mAG32, $mHP16, $mHP32
+   5. And now we can start referencing the variables for each model as: $mFDA16, $mFDA32, $mFDR16, $mFDR32, $mAG16, $mAG32, $mHP16, $mHP32
 
 2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO toolkit installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
 
