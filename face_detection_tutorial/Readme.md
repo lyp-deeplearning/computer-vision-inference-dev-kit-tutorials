@@ -85,7 +85,7 @@ git clone https://github.com/intel-iot-devkit/cv-sdk-tutorials.git
 
 ```Bash
 cd cv-sdk-tutorials
-git checkout openvino_toolkit_r1_2
+git checkout openvino_toolkit_r1_2_arduino
 ```
 
 
@@ -111,7 +111,7 @@ cd tutorials
 3. Download the subdirectory for just this tutorial for the specific version in the repository:
 
 ```Bash
-svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/branches/openvino_toolkit_r1_2/face_detection_tutorial
+svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/branches/openvino_toolkit_r1_2_arduino/face_detection_tutorial
 ```
 
 
