@@ -1,5 +1,7 @@
 # Car Detection Tutorial
 
+NOTE: This tutorial has been written using OpenVINO™ toolkit version 1.2 and is for use with this version only.   Using this tutorial with any other version may not be correct.
+
 # Table of Contents
 
 <p></p><div class="table-of-contents"><ul><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#using-git-clone-to-clone-the-entire-repository">Using Git Clone to Clone the Entire Repository</a></li><li><a href="#using-svn-export-to-download-only-this-tutorial">Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#batch-size">Batch Size</a><ul><li><a href="#how-does-batch-size-affect-performance-and-latency">How Does Batch Size Affect Performance and Latency?</a></li></ul></li><li><a href="#image-processing-pipeline">Image Processing Pipeline</a></li><li><a href="#synchronous-vs-asynchronous-api">Synchronous vs. Asynchronous API</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first Model, Vehicle Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-vehicle-attributes-detection">Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection</a></li><li><a href="#tutorial-step-4-using-the-asynchronous-api">Tutorial Step 4: Using the Asynchronous API</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
@@ -18,41 +20,41 @@ The UP Squared AI Vision Development Kit comes ready to go with all the hardware
 
 * Hardware
 
-    * From the kit:
+   * From the kit:
 
-        * UP Squared Board
+      * UP Squared Board
 
-        * AI Core mPCIe board (installed), this is what is being referred to as the "Myriad"
+      * AI Core mPCIe board (installed), this is what is being referred to as the "Myriad"
 
-        * USB Camera
+      * USB Camera
 
-        * Power supply
+      * Power supply
 
-    * User supplied:
+   * User supplied:
 
-        * USB keyboard and mouse
+      * USB keyboard and mouse
 
-        * HDMI or DisplayPort cable and monitor
+      * HDMI or DisplayPort cable and monitor
 
-        * Ethernet cable
+      * Ethernet cable
 
 * Software (pre-installed in the kit)
 
-    * OpenVINO toolkit
+   * OpenVINO toolkit
 
-        * Inference Engine with plugins support for CPU, GPU, and Myriad
+      * Inference Engine with plugins support for CPU, GPU, and Myriad
 
-        * Optimized OpenCV and OpenVX libraries
+      * Optimized OpenCV and OpenVX libraries
 
-        * Samples and common helper libraries
+      * Samples and common helper libraries
 
 By now you should have completed the setup and getting starting guide for the kit, however before continuing, please ensure that:
 
 * You have followed all the steps in the getting starting guide for your UP Squared AI Vision Development Kit.  This tutorial assumes that you have already setup and run the supplied test samples to test that your kit is fully functional including:
 
-    * The UP Squared board is booted and running 
+   * The UP Squared board is booted and running 
 
-    * The USB camera is connected and operating correctly
+   * The USB camera is connected and operating correctly
 
 * Your UP Squared board is connected to a network and has Internet access.  To download all the files for this tutorial, the UP Squared board will need to access GitHub on the Internet. 
 
@@ -79,10 +81,18 @@ git clone https://github.com/intel-iot-devkit/cv-sdk-tutorials.git
 ```
 
 
-4. Change to the car detection tutorial folder:
+4. Change to the top git repository and check out correct version:
 
 ```Bash
-cd cv-sdk-tutorials/car_detection_tutorial
+cd cv-sdk-tutorials
+git checkout openvino_toolkit_r1_2
+```
+
+
+5. Change to the car detection tutorial folder:
+
+```Bash
+cd car_detection_tutorial
 ```
 
 
@@ -101,7 +111,7 @@ cd tutorials
 3. Download the subdirectory for just this tutorial from the repository:
 
 ```Bash
-svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/trunk/car_detection_tutorial
+svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/branches/openvino_toolkit_r1_2/car_detection_tutorial
 ```
 
 
@@ -166,52 +176,53 @@ Using the Inference Engine API follows the basic steps briefly described below. 
 
 1. Load the plugin
 
-    a. Create an instance of the plugin (InferenceEngine::InferencePlugin) for the specified device using the InferenceEngine::PluginDispatcher class
+   1. Create an instance of the plugin (InferenceEngine::InferencePlugin) for the specified device using the InferenceEngine::PluginDispatcher class
 
 2. Read the model IR
 
-    a. Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
+   1. Read in IR files using InferenceEngine::CNNNetReader::ReadNetwork("Model.xml") and InferenceEngine::CNNNetReader::ReadWeights("Model.bin")
 
 3. Configure the inputs and outputs formats
 
-    a. Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
+   1. Probe model for input and output information using InferenceEngine::CNNNetwork::getInputsInfo() and InferenceEngine::CNNNetwork::getOutputsInfo().
 
-    b. Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
+   2. Optionally configure the precision and memory layout of inputs and outputs to match the model inputs and outputs using InferenceEngine::InputInfo::setPrecision() and InferenceEngine::InputInfo::setLayout()
 
 4. Load the model into the plugin
 
-    a. Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
+   1. Load the model into the plugin using InferenceEngine::InferencePlugin::LoadNetwork() which will return a InferenceEngine::ExecutableNetwork object for the loaded network
 
 5. Create an inference request
 
-    a. Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
+   1. Use the loaded plugin to create a request object (InferenceEngine::InferRequest::Ptr) that is used for control and holds input and output blobs using InferenceEngine::ExecutableNetwork::CreateInferRequestPtr()
 
 6. Prepare the input
 
-    a. Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
+   1. Get the input blob(s) to hold input data using InferenceEngine::InferRequest::getBlob()
 
-    b. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
+   2. Reformat user input data into the format required by the model (e.g convert RGB user image to BGR for model) storing in the model’s format in the input blob.  
 
 7. Run Inference
-  a. Request plugin to perform inference and wait for results using one of two modes:
-    
-   i. Synchronous: 
-        
-    1. InferenceEngine::InferRequest::Infer() 
-            
-    2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
-            
-   ii. Asynchronous: 
-        
-    1. InferenceEngine::InferRequest::StartAsync() 
-            
-    2. Then later InferenceEngine::InferRequest::Wait()
+
+   1. Request plugin to perform inference and wait for results using one of two modes:
+
+      1. Synchronous: 
+
+         1. InferenceEngine::InferRequest::Infer() 
+
+         2. Or InferenceEngine::InferRequest::StartAsync() immediately followed by InferenceEngine::InferRequest::Wait().
+
+      2. Asynchronous: 
+
+         1. InferenceEngine::InferRequest::StartAsync() 
+
+         2. Then later InferenceEngine::InferRequest::Wait()
 
 8. Process the output
 
-    a. Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
+   1. Get the output blob(s) holding output blob using InferenceEngine::InferRequest::getBlob()
 
-    b. Parse and process the output blob(s) according to the output format specified by the model
+   2. Parse and process the output blob(s) according to the output format specified by the model
 
 In tutorial Steps 2 and 3 we will walkthrough the code that specifically integrates each of the models used in the application.  
 
@@ -248,21 +259,21 @@ Batch size refers to the number of input data to be inferred during a single inf
 
 * Batch size and its effects on input and output data is model dependent:
 
-    * The output batch size may scale with input batch size.  For example, the vehicle attributes model used in this tutorial will have one one output for each input.
+   * The output batch size may scale with input batch size.  For example, the vehicle attributes model used in this tutorial will have one one output for each input.
 
-    * The output may contain results across all batched inputs.  For example, the vehicle detection model used in this tutorial gives one set of outputs regardless of input batch size with each output indicating the input the results is for using the "image_id" field.
+   * The output may contain results across all batched inputs.  For example, the vehicle detection model used in this tutorial gives one set of outputs regardless of input batch size with each output indicating the input the results is for using the "image_id" field.
 
 * How batch size is set:
 
-    * The default setting is located in the model’s IR which is set either by:
+   * The default setting is located in the model’s IR which is set either by:
 
-        * The Model Optimizer command line option when creating the IR files
+      * The Model Optimizer command line option when creating the IR files
 
-        * Or from the original source (e.g. Caffe) in which can be read using the Inference Engine API 
+      * Or from the original source (e.g. Caffe) in which can be read using the Inference Engine API 
 
-    * May be set explicitly using the Inference Engine API setBatchSize() function (see InferenceEngine::ICNNNetwork class)
+   * May be set explicitly using the Inference Engine API setBatchSize() function (see InferenceEngine::ICNNNetwork class)
 
-    * Note: Depending upon the model and device used, which method can be used to set batch size may vary.  For example, at the time of writing this tutorial, some models (e.g. the vehicle detection model used in this tutorial) running on GPU will only use the setting form the IR model and cannot have batch size set dynamically using setBatchSize().
+   * Note: Depending upon the model and device used, which method can be used to set batch size may vary.  For example, at the time of writing this tutorial, some models (e.g. the vehicle detection model used in this tutorial) running on GPU will only use the setting form the IR model and cannot have batch size set dynamically using setBatchSize().
 
 * Batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.
 
@@ -306,19 +317,19 @@ When running an inference model using an InferenceEngine::InferRequest object, t
 
 * Synchronous API:
 
-    * void Infer() - Run inference and return when complete
+   * void Infer() - Run inference and return when complete
 
 * Asynchronous API
 
-    * void StartAsync() - Start inference and return immediately
+   * void StartAsync() - Start inference and return immediately
 
-    * StatusCode Wait(int64_t millis_timeout)
+   * StatusCode Wait(int64_t millis_timeout)
 
-        * If millis_timeout==RESULT_READY, wait until inference is complete
+      * If millis_timeout==RESULT_READY, wait until inference is complete
 
-        * Else if millis_timeout==RESULT_STATUS, return immediately with status
+      * Else if millis_timeout==RESULT_STATUS, return immediately with status
 
-        * Else wait millis_timeout milliseconds and return if inference has not completed
+      * Else wait millis_timeout milliseconds and return if inference has not completed
 
 * Note: Using Infer() is effectively the same as calling StartAsync() immediately followed by Wait(WaitMode::RESULT_READY).
 
@@ -366,15 +377,15 @@ Congratulations! you have completed the Car Detection Tutorial.  After going thr
 
 * The final application assembled in steps:
 
-    * How to create a base application that uses OpenCV to perform image and video input and output.  
+   * How to create a base application that uses OpenCV to perform image and video input and output.  
 
-    * How to extend the application to use the Inference Engine and CNN models to process the images and detect cars.  
+   * How to extend the application to use the Inference Engine and CNN models to process the images and detect cars.  
 
-    * How to create a pipeline that takes the results of the first model’s analysis and use it as input to the next model that processes the vehicles to infer the type and color.  
+   * How to create a pipeline that takes the results of the first model’s analysis and use it as input to the next model that processes the vehicles to infer the type and color.  
 
-    * How to load the analysis models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
+   * How to load the analysis models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
 
-    * How to convert to asynchronous Inference Engine API calls to run inference in parallel.
+   * How to convert to asynchronous Inference Engine API calls to run inference in parallel.
 
 # References and More Information
 
