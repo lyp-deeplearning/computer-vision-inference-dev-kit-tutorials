@@ -19,8 +19,9 @@
 
 #include <string>
 #include <vector>
-#include <gflags/gflags.h>
 #include <iostream>
+
+#include "Parameters.hpp"
 
 #ifdef _WIN32
 #include <os/windows/w_dirent.h>
@@ -28,17 +29,19 @@
 #include <dirent.h>
 #endif
 
+
 /// @brief message for help argument
-static const char help_message[] = "Print a usage message.";
+static const char help_message[] = "Print a usage message";
 
 /// @brief message for images argument
-static const char video_message[] = "Optional. Path to an video file. Default value is \"cam\" to work with camera.";
+static const char video_message[] = "Path to a video file or \"cam\" to work with camera";
+
 
 /// @brief message no wait for keypress after input stream completed
-static const char no_wait_for_keypress_message[] = "No wait for key press in the end.";
+static const char no_wait_for_keypress_message[] = "No wait for key press in the end";
 
 /// @brief message no show processed video
-static const char no_show_processed_video[] = "No show processed video.";
+static const char no_show_processed_video[] = "No show processed video";
 
 /// \brief Define flag for showing help message <br>
 DEFINE_bool(h, false, help_message);
@@ -46,6 +49,7 @@ DEFINE_bool(h, false, help_message);
 /// \brief Define parameter for set image file <br>
 /// It is a required parameter
 DEFINE_string(i, "cam", video_message);
+
 
 /// \brief Flag to disable keypress exit<br>
 /// It is an optional parameter
@@ -55,16 +59,25 @@ DEFINE_bool(no_wait, false, no_wait_for_keypress_message);
 /// It is an optional parameter
 DEFINE_bool(no_show, false, no_show_processed_video);
 
+static void printParameter(const char* param_name) {
+    parameters::ParameterVal* paramT = parameters::findParameterByName(param_name);
+	if (paramT != NULL) {
+		std::cout << "- " << paramT->desc;
+		std::cout << " (type=" << paramT->type << "):";
+		std::cout << std::endl;
+		std::cout << "   " << paramT->name << "=";
+		paramT->printVal(std::cout);
+		std::cout << std::endl;
+	}
+}
+
 /**
-* \brief This function show a help message
+* \brief This function displays current parameter settings
 */
-static void showUsage() {
+static void showParameters() {
     std::cout << std::endl;
-    std::cout << "car_detection_tutorial [OPTION]" << std::endl;
-    std::cout << "Options:" << std::endl;
-    std::cout << std::endl;
-    std::cout << "    -h                         " << help_message << std::endl;
-    std::cout << "    -i \"<path>\"                " << video_message << std::endl;
-    std::cout << "    -no_wait                   " << no_wait_for_keypress_message << std::endl;
-    std::cout << "    -no_show                   " << no_show_processed_video << std::endl;
+    std::cout << "car_detection_tutorial current parameter settings:" << std::endl;
+    printParameter("i");
+    printParameter("no_wait");
+    printParameter("no_show");
 }

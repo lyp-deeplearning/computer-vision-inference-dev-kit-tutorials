@@ -19,8 +19,9 @@
 
 #include <string>
 #include <vector>
-#include <gflags/gflags.h>
 #include <iostream>
+
+#include "Parameters.hpp"
 
 #ifdef _WIN32
 #include <os/windows/w_dirent.h>
@@ -28,50 +29,71 @@
 #include <dirent.h>
 #endif
 
+// models
+// Set to top directory where models are installed
+#define MODEL_DIR "/opt/intel/computer_vision_sdk/deployment_tools/intel_models/"
+#define MOD2PATH(modName, fPrec) MODEL_DIR "/" modName "/" #fPrec "/" modName ".xml"
+
+static const char mVLP16[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP16);
+static const char mVLP32[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP32);
+
+static const char mVA16[] = MOD2PATH("vehicle-attributes-recognition-barrier-0010", FP16);
+static const char mVA32[] = MOD2PATH("vehicle-attributes-recognition-barrier-0010", FP32);
+
+// make each path a parameter that can be referenced as "$*" when setting other parameters.
+//    Example: m=$mVLP16 will result in PARAMETERS_m=value-of(mVLP16)
+//    As parameters they can also be overwritten if desired.
+static const char model_path_message[] = "Path to model";
+DEFINE_string(mVLP32, mVLP32, model_path_message);
+DEFINE_string(mVLP16, mVLP16, model_path_message);
+DEFINE_string(mVA32, mVA32, model_path_message);
+DEFINE_string(mVA16, mVA16, model_path_message);
+
+
 /// @brief message for help argument
-static const char help_message[] = "Print a usage message.";
+static const char help_message[] = "Print a usage message";
 
 /// @brief message for images argument
-static const char video_message[] = "Optional. Path to an video file. Default value is \"cam\" to work with camera.";
+static const char video_message[] = "Path to a video file or \"cam\" to work with camera";
 
 /// @brief message for model argument
-static const char vehicle_detection_model_message[] = "Required. Path to the Vehicle/License-Plate Detection model (.xml) file.";
-static const char vehicle_attribs_model_message[] = "Optional. Path to the Vehicle Attributes model (.xml) file.";
+static const char vehicle_detection_model_message[] = "Path to the Vehicle/License-Plate Detection model (.xml) file";
+static const char vehicle_attribs_model_message[] = "Path to the Vehicle Attributes model (.xml) file";
 
 /// @brief message for assigning vehicle detection inference to device
-static const char target_device_message[] = "Specify the target device for Vehicle Detection (CPU, GPU, FPGA, MYRYAD, or HETERO). ";
+static const char target_device_message[] = "Specify the target device for Vehicle Detection (CPU, GPU, FPGA, or MYRIAD)";
 
 /// @brief message for number of simultaneously vehicle detections using dynamic batch
-static const char num_batch_message[] = "Specify number of maximum simultaneously processed frames for Vehicle Detection ( default is 1).";
+static const char num_batch_message[] = "Specify number of maximum simultaneously processed frames for Vehicle Detection";
 
 /// @brief message for assigning vehicle attributes to device
-static const char target_device_message_vehicle_attribs[] = "Specify the target device for Vehicle Attributes (CPU, GPU, FPGA, MYRYAD, or HETERO). ";
+static const char target_device_message_vehicle_attribs[] = "Specify the target device for Vehicle Attributes (CPU, GPU, FPGA, or MYRIAD)";
 
 /// @brief message for number of simultaneously vehicle attributes detections using dynamic batch
-static const char num_batch_va_message[] = "Specify number of maximum simultaneously processed vehicles for Vehicle Attributes Detection ( default is 1).";
+static const char num_batch_va_message[] = "Specify number of maximum simultaneously processed vehicles for Vehicle Attributes Detection ( default is 1)";
 
 /// @brief message for performance counters
-static const char performance_counter_message[] = "Enables per-layer performance statistics.";
+static const char performance_counter_message[] = "Enable per-layer performance report.";
 
 /// @brief message for clDNN custom kernels desc
-static const char custom_cldnn_message[] = "For clDNN (GPU)-targeted custom kernels, if any. "\
-"Absolute path to the xml file with the kernels desc.";
+static const char custom_cldnn_message[] = "Required for clDNN (GPU)-targeted custom kernels."\
+"Absolute path to the xml file with the kernels desc";
 
 /// @brief message for user library argument
-static const char custom_cpu_library_message[] = "For MKLDNN (CPU)-targeted custom layers, if any. " \
-"Absolute path to a shared library with the kernels impl.";
+static const char custom_cpu_library_message[] = "Required for MKLDNN (CPU)-targeted custom layers." \
+"Absolute path to a shared library with the kernels impl";
 
 /// @brief message for probability threshold argument
-static const char thresh_output_message[] = "Probability threshold for vehicle/licence-plate detections.";
+static const char thresh_output_message[] = "Probability threshold for vehicle/licence-plate detections";
 
 /// @brief message raw output flag
-static const char raw_output_message[] = "Output Inference results as raw values.";
+static const char raw_output_message[] = "Print inference results as raw values";
 
 /// @brief message no wait for keypress after input stream completed
-static const char no_wait_for_keypress_message[] = "No wait for key press in the end.";
+static const char no_wait_for_keypress_message[] = "No wait for key press in the end";
 
 /// @brief message no show processed video
-static const char no_show_processed_video[] = "No show processed video.";
+static const char no_show_processed_video[] = "No show processed video";
 
 /// \brief Define flag for showing help message <br>
 DEFINE_bool(h, false, help_message);
@@ -82,17 +104,17 @@ DEFINE_string(i, "cam", video_message);
 
 /// \brief Define parameter for vehicle detection  model file <br>
 /// It is a required parameter
-DEFINE_string(m, "", vehicle_detection_model_message);
+DEFINE_string(m, mVLP32, vehicle_detection_model_message);
 
 /// \brief Define parameter for vehicle attributes model file <br>
 /// It is a required parameter
-DEFINE_string(m_va, "", vehicle_attribs_model_message);
+DEFINE_string(m_va, mVA32, vehicle_attribs_model_message);
 
 /// \brief device the target device for vehicle detection infer on <br>
-DEFINE_string(d, "CPU", target_device_message);
+DEFINE_string(d, "GPU", target_device_message);
 
 /// \brief device the target device for vehicle attributes detection on <br>
-DEFINE_string(d_va, "CPU", target_device_message_vehicle_attribs);
+DEFINE_string(d_va, "GPU", target_device_message_vehicle_attribs);
 
 /// \brief device the target device for vehicle attributes detection on <br>
 DEFINE_uint32(n_va, 1, num_batch_va_message);
@@ -125,27 +147,35 @@ DEFINE_bool(no_wait, false, no_wait_for_keypress_message);
 /// It is an optional parameter
 DEFINE_bool(no_show, false, no_show_processed_video);
 
+static void printParameter(const char* param_name) {
+    parameters::ParameterVal* paramT = parameters::findParameterByName(param_name);
+	if (paramT != NULL) {
+		std::cout << "- " << paramT->desc;
+		std::cout << " (type=" << paramT->type << "):";
+		std::cout << std::endl;
+		std::cout << "   " << paramT->name << "=";
+		paramT->printVal(std::cout);
+		std::cout << std::endl;
+	}
+}
+
 /**
-* \brief This function show a help message
+* \brief This function displays current parameter settings
 */
-static void showUsage() {
+static void showParameters() {
     std::cout << std::endl;
-    std::cout << "car_detection_tutorial [OPTION]" << std::endl;
-    std::cout << "Options:" << std::endl;
-    std::cout << std::endl;
-    std::cout << "    -h                         " << help_message << std::endl;
-    std::cout << "    -i \"<path>\"                " << video_message << std::endl;
-    std::cout << "    -m \"<path>\"                " << vehicle_detection_model_message<< std::endl;
-    std::cout << "    -m_va \"<path>\"             " << vehicle_attribs_model_message << std::endl;
-    std::cout << "      -l \"<absolute_path>\"     " << custom_cpu_library_message << std::endl;
-    std::cout << "          Or" << std::endl;
-    std::cout << "      -c \"<absolute_path>\"     " << custom_cldnn_message << std::endl;
-    std::cout << "    -d \"<device>\"              " << target_device_message << std::endl;
-    std::cout << "    -d_va \"<device>\"           " << target_device_message_vehicle_attribs << std::endl;
-    std::cout << "    -n_va \"<num>\"              " << num_batch_va_message << std::endl;
-    std::cout << "    -no_wait                   " << no_wait_for_keypress_message << std::endl;
-    std::cout << "    -no_show                   " << no_show_processed_video << std::endl;
-    std::cout << "    -pc                        " << performance_counter_message << std::endl;
-    std::cout << "    -r                         " << raw_output_message << std::endl;
-    std::cout << "    -t                         " << thresh_output_message << std::endl;
+    std::cout << "car_detection_tutorial current parameter settings:" << std::endl;
+    printParameter("i");
+    printParameter("m");
+    printParameter("d");
+    printParameter("m_va");
+    printParameter("d_va");
+    printParameter("n_va");
+    printParameter("t");
+    printParameter("r");
+    printParameter("no_wait");
+    printParameter("no_show");
+    printParameter("pc");
+//    printParameter("l");
+//    printParameter("c");
 }

@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-using-asynchronous-api">Tutorial Step 4: Using Asynchronous API</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#using-the-asynchronous-api">Using the Asynchronous API</a><ul><li><a href="#command-line-arguments">Command Line Arguments</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#basedetection">BaseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#resultisready">resultIsReady()</a></li><li><a href="#requestsinprocess">requestsInProcess()</a></li><li><a href="#cansubmitrequest">canSubmitRequest()</a></li></ul></li><li><a href="#vehicledetection-class">VehicleDetection Class</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#vehicleattribsdetection-class">VehicleAttribsDetection Class</a><ul><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#main">main()</a><ul><li><a href="#report-async-mode">Report Async Mode</a></li><li><a href="#increase-storage">Increase Storage</a></li><li><a href="#add-pipeline-data-fields-and-storage">Add Pipeline Data Fields and Storage</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-start-inferring-a-batch-of-frames">Pipeline Stage #0: Prepare and Start Inferring a Batch of Frames</a></li><li><a href="#pipeline-stage-1-process-vehicles-inference-results">Pipeline Stage #1: Process Vehicles Inference Results</a></li><li><a href="#pipeline-stage-2-start-inferring-vehicle-attributes">Pipeline Stage #2: Start Inferring Vehicle Attributes</a></li><li><a href="#pipeline-stage-3-process-vehicle-attribute">Pipeline Stage #3: Process Vehicle Attribute</a></li><li><a href="#pipeline-stage-4-render-results">Pipeline Stage #4: Render Results</a></li><li><a href="#end-of-loop">End of Loop</a></li></ul></li></ul></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-using-asynchronous-api">Tutorial Step 4: Using Asynchronous API</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#using-the-asynchronous-api">Using the Asynchronous API</a><ul><li><a href="#command-line-arguments">Command Line Arguments</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#basedetection">BaseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#resultisready">resultIsReady()</a></li><li><a href="#requestsinprocess">requestsInProcess()</a></li><li><a href="#cansubmitrequest">canSubmitRequest()</a></li></ul></li><li><a href="#vehicledetection-class">VehicleDetection Class</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#vehicleattribsdetection-class">VehicleAttribsDetection Class</a><ul><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#main-function">main_function()</a><ul><li><a href="#report-async-mode">Report Async Mode</a></li><li><a href="#increase-storage">Increase Storage</a></li><li><a href="#add-pipeline-data-fields-and-storage">Add Pipeline Data Fields and Storage</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-start-inferring-a-batch-of-frames">Pipeline Stage #0: Prepare and Start Inferring a Batch of Frames</a></li><li><a href="#pipeline-stage-1-process-vehicles-inference-results">Pipeline Stage #1: Process Vehicles Inference Results</a></li><li><a href="#pipeline-stage-2-start-inferring-vehicle-attributes">Pipeline Stage #2: Start Inferring Vehicle Attributes</a></li><li><a href="#pipeline-stage-3-process-vehicle-attribute">Pipeline Stage #3: Process Vehicle Attribute</a></li><li><a href="#pipeline-stage-4-render-results">Pipeline Stage #4: Render Results</a></li><li><a href="#end-of-loop">End of Loop</a></li></ul></li></ul></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-arduino-create-web-editor">Start Arduino Create Web Editor</a></li><li><a href="#import-arduino-create-sketch">Import Arduino Create Sketch</a></li><li><a href="#build-and-upload-sketch-executable">Build and Upload Sketch Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#how-to-set-runtime-parameters">How to Set Runtime Parameters</a></li><li><a href="#running">Running</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
@@ -36,7 +36,7 @@ In Car Detection Tutorial Step 4, we will see how the code from Tutorial Step 3 
 
 In the Key Concepts section we learned the difference between the synchronous and asynchronous API.  Here we will see the changes necessary for asynchronous applied.  Below are code walkthroughs of the changes made to code from Tutorial Step 3 focusing primarily on the changes made rather than the entire code when possible.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal window or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -49,7 +49,7 @@ cd tutorials/car_detection_tutorial/step_4
 
 ## Command Line Arguments
 
-The command line argument -n_async has been added to control how many outstanding API requests are to be allowed when running each model.  Setting -n_async to 1 is effectively the same as synchronous mode since later stages in the pipeline will not have anything to do until the results appear.  The following code in car_detection.hpp adds the -n_async argument to appear in the code as the variable FLAGS_n_async:
+The command line argument -n_async has been added to control how many outstanding API requests are to be allowed when running each model.  Setting -n_async to 1 is effectively the same as synchronous mode since later stages in the pipeline will not have anything to do until the results appear.  The following code in car_detection.hpp adds the -n_async argument to appear in the code as the variable PARAMETERS_n_async:
 
 ``` Cpp
 /// @brief message async function flag
@@ -64,8 +64,8 @@ DEFINE_uint32(n_async, 1, async_depth_message);
 Later in main.cpp in a check is added to ParseAndCheckCommandLine() to ensure n_async is 1 or greater.
 
 ```cpp
-    if (FLAGS_n_async < 1) {
-        throw std::logic_error("Parameter -n_async must be >= 1");
+    if (PARAMETERS_n_async < 1) {
+        throw std::logic_error("Parameter n_async must be >= 1");
     }
 ```
 
@@ -101,12 +101,12 @@ The constructor is changed to initialize the new storage variables:
 
 ```cpp
     BaseDetection(std::string &commandLineFlag, std::string topoName, int maxBatch)
-        : commandLineFlag(commandLineFlag), topoName(topoName), maxBatch(maxBatch), maxSubmittedRequests(FLAGS_n_async),
-		  plugin(nullptr), inputRequestIdx(0), outputRequest(nullptr), requests(FLAGS_n_async) {}
+        : commandLineFlag(commandLineFlag), topoName(topoName), maxBatch(maxBatch), maxSubmittedRequests(PARAMETERS_n_async),
+		  plugin(nullptr), inputRequestIdx(0), outputRequest(nullptr), requests(PARAMETERS_n_async) {}
 ```
 
 
-Note specifically ‘requests’ and maxSubmittedRequests being set to FLAGS_N_async, inputEequestIdx set to start from 0, and outputRequest set to nullptr (empty).
+Note specifically ‘requests’ and maxSubmittedRequests being set to PARAMETERS_n_async, inputEequestIdx set to start from 0, and outputRequest set to nullptr (empty).
 
 ### submitRequest()
 
@@ -283,7 +283,7 @@ enqueue() has the changes:
 
 fetchResults() has the changes:
 
-1. "resultsFetched" has been replaced with check that “outputRequest” is valid
+1. "resultsFetched" has been replaced with check that “outputRequest” is valid:
 
 ```cpp
         if (nullptr == outputRequest) {
@@ -372,17 +372,17 @@ fetchResults() has the changes:
 ```
 
 
-## main()
+## main_function()
 
-Before the main loop in main() there are changes to output asynchronous mode being used, storage, and data fields.
+Before the main loop in main_function() there are changes to output asynchronous mode being used, storage, and data fields.
 
 ### Report Async Mode
 
 The value used for n_async is reported and whether running asynchronously or synchronously.
 
 ```Cpp 
-        const bool runningAsync = (FLAGS_n_async > 1);
-        slog::info << "FLAGS_n_async=" << FLAGS_n_async << ", inference pipeline will operate "
+        const bool runningAsync = (PARAMETERS_n_async > 1);
+        slog::info << "PARAMETERS_n_async=" << PARAMETERS_n_async << ", inference pipeline will operate "
         		<< (runningAsync ? "asynchronously" : "synchronously")
         		<< slog::endl;
 ```
@@ -395,7 +395,7 @@ More input frames must be stored with outstanding requests being made.  The tota
 ```Cpp
         // read input (video) frames, need to keep multiple frames stored
         //  for batching and for when using asynchronous API.
-        const int maxNumInputFrames = FLAGS_n_async * VehicleDetection.maxBatch + 1;  // +1 to avoid overwrite
+        const int maxNumInputFrames = PARAMETERS_n_async * VehicleDetection.maxBatch + 1;  // +1 to avoid overwrite
 ```
 
 
@@ -441,7 +441,7 @@ The main loop sees changes to add new pipeline stages and to make each stage to 
 
 #### Pipeline Stage #0: Prepare and Start Inferring a Batch of Frames
 
-Stage #0 from Tutorial Step 3 does both submit and wait for a inference request.  For asynchronous operation, it is broken up into Stage #0 to do the submit and Stage #1 to do the wait.  The new Stage #0 looks very much like the first half up through submitting the inference request with a couple changes:
+Stage #0 from Tutorial Step 3 does both submit and wait for a inference request.  For asynchronous operation, it is broken up into Stage #0 to do the submit and Stage #1 to do the wait.  The new Stage #0 looks very much like the first half, up through submitting the inference request with a couple changes:
 
 1. In addition to if there are input frames still available ("haveMoreFrames"), Stage #0 now also checks to see if an input frame buffer is available via !inputFramePtrs.empty()  and that there is a request available to use via VehicleDetection.canSubmitRequest():
 
@@ -512,7 +512,8 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 
 5. Each input frame in the batch that was input to the vehicle detection model now becomes its own input frame going forward down the pipeline:
 
-```				// prepare a FramePipelineFifoItem for each batched frame to get its detection results
+```Cpp
+				// prepare a FramePipelineFifoItem for each batched frame to get its detection results
 				std::vector<FramePipelineFifoItem> batchedFifoItems;
 				for (auto && bFrame : ps0s1i.batchOfInputFrames) {
 					FramePipelineFifoItem fpfi;
@@ -685,7 +686,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-5. First a check is made to see if there is work to be done.  When running synchronously (!runningAsync) and if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, a check is made to see if a result is ready, then the stage is entered to wait for the result (which will be a short wait).
+5. First, a check is made to see if there is work to be done.  When running synchronously (!runningAsync) and if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, a check is made to see if a result is ready, then the stage is entered to wait for the result (which will be a short wait).
 
 ```Cpp
 						if ((!runningAsync && VehicleAttribs.requestsInProcess()) || VehicleAttribs.resultIsReady()) {
@@ -790,97 +791,172 @@ Finally, the end of the main loop now checks to see that all stages are done bef
 
 # Building and Running
 
-Now let us build and run the complete application and see how it runs all three analysis models.
+Now let us build and run the complete application and see how it runs all three analysis models. 
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+### Start Arduino Create Web Editor
 
-2. Change to the directory containing Tutorial Step 4:
+If you do not already have a web browser open, open one such as the Firefox browser from the desktop or from a command line ("firefox &").  Once open, browse to the Arduino website [https://create.arduino.cc/](https://create.arduino.cc/) to begin.
 
-```bash
-cd tutorials/car_detection_tutorial/step_4
-```
+### Import Arduino Create Sketch
 
+1. After going to the Arduino website which should appear similar to below, open the Arduino Web Editor by clicking it.
 
-3. The first step is to configure the build environment for the OpenCV toolkit by sourcing the "setupvars.sh" script.
+![image alt text](../doc_support/step4_image_1.png)
 
-```bash
-source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
-```
+2. When the editor is first opened, it will show your last opened sketch and appear similar to below.
 
+![image alt text](../doc_support/step4_image_2.png)
 
-4. Now we need to create a directory to build the tutorial in and change to it.
+3. To begin to import this tutorial’s sketch, click on the up-arrow icon (hovering tooltip will say "Import") to the right of the “NEW SKETCH” button as shown below.
 
-```bash
-mkdir build
-cd build
-```
+![image alt text](../doc_support/step4_image_3.png)
 
+4. A "File Upload" window will appear, use it to browse to where the tutorials have been downloaded and select the file “car_detection_tutorial/step_4/cd_step_4_sketch.zip”, and then click the Open button.  After uploading and importing successfully, you will see a window similar to below.  Click the OK button to continue.
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+![image alt text](../doc_support/step4_image_4.png)
 
-```bash
-cmake -DCMAKE_BUILD_TYPE=Release ../
-make
-```
+5. With the sketch now imported, it will be open in the editor similar to below and you are now ready to build.  
 
+![image alt text](../doc_support/step4_image_5.png)
+
+### Build and Upload Sketch Executable
+
+1. From the Arduino Create Web Editor you build the executable and then upload it to your Arduino device.  After uploading, the executable with the same name as the sketch may be found in the "sketches" directory under your user’s home directory and may be run directly from the command line later if desired.  Before continuing, be sure that your device is ready as indicated in the box which will show “\<device name\> via Cloud” when connected as shown below for the device named “myUP2”. 
+
+![image alt text](../doc_support/step4_image_6.png)
+
+2. If unconnected and not ready, the device will appear with a line with red ‘X’ before the name as shown below.  To reconnect, you may need to refresh or reload the browser page, restart the Arduino Create Agent, or potentially run setup for your kit again.
+
+![image alt text](../doc_support/step4_image_7.png)
+
+3. After making sure your device is connected, to begin the build and upload process click on the right-arrow icon at the top of the editor as shown below.
+
+![image alt text](../doc_support/step4_image_8.png)
+
+4. During the build and upload process, you will see that the button has been replaced with "BUSY" as shown below along with status text at the bottom of the window saying “Updating \<sketch name\>”.
+
+![image alt text](../doc_support/step4_image_9.png)
+
+5. Below shows after a successful build and upload.  Note that the bottom of the editor will be updated with the status and below it the output of the build.  
+
+![image alt text](../doc_support/step4_image_10.png)
+
+6. Uploading will also start the sketch which you can verify by checking the status of the sketch by clicking the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step4_image_11.png)
+
+7. The status window will show all the sketches that have been uploaded to the device and the state of each as a "switch" similar below showing either “RUNNING” or “STOPPED”.  Clicking the switch will change the state of the sketch.  
+
+![image alt text](../doc_support/step4_image_12.png)
+
+8. For now, we will stop the sketch before continuing.  First click the "RUNNING" to change it to “STOPPED”, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step4_image_13.png)
 
 ## Run
 
-1. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+### How to Run the Executable
 
-```bash
-source ../../scripts/setupenv.sh 
-```
-
-
-2. First, let us see how it works on a single image file using default synchronous mode.
-
-```bash
-./intel64/Release/car_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car_1.bmp
-```
-
-
-3. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Now run the command again in asynchronous mode using the option "-n_async 2":
-
-```bash
-./intel64/Release/car_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car_1.bmp -n_async 2
-```
-
-
-4. The performance should be the same because a single image was run which is effectively the same as running synchronously since each pipeline stage must wait for the one image to process.
-
-5. Next, let us try it on a video file. 
-
-```bash
-./intel64/Release/car_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car-detection.mp4 -n_async 1
-```
-
-
-6. Over each frame of the video, you will see green rectangles drawn around the cars as they move through the parking lot.  Now run the command again in asynchronous mode using the option "-n_async 2":
-
-```bash
-./intel64/Release/car_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car-detection.mp4 -n_async 2
-```
-
-
-7. Unexpectedly, asynchronous mode should have made the video take longer to run by >10%.  Why would that be?  With the main loop now running asynchronously and not blocking, it is now an additional thread running on the CPU along with the inference models.  Now let us shift running the models to other devices, first in synchronous mode then asynchronous with increasing -n_async value using the commands:
+1. Before starting a sketch, you will need to grant the root user access to the X server to open X windows by executing the following xhost command:
 
 ```Bash
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 1
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 2
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 4
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 8
-./intel64/Release/car_detection_tutorial -m $mVLP16 -d GPU -m_va $mVA16 -d_va MYRIAD -i ../../data/car-detection.mp4 -n_async 16
+xhost +si:localuser:root 
 ```
 
 
-8. Asynchronous mode should be faster by some amount for "-n_async 2" then a little more for “-n_async 4” and “-n_async 8”, then not really noticeable for “-n_async 8”.  The improvements come from the CPU running in parallel more and more with the GPU and Myriad.  The absence of improvement shows when the CPU is doing less in parallel and is waiting on the other devices.  This is referred to as “diminishing returns” and will vary across devices and inference models.
+2. From the command you should see the following response.  Note the xhost command will need to be run again after rebooting Linux.
 
-9. User exercise: Modify the last commands used to try different combinations of GPU and Myriad to find the fastest asynchronous combination for your hardware.
+```Bash
+localuser:root being added to access control list
+```
 
-    1. Hint: You may need to increase well beyond  "-n_async 16" to hit the point of diminishing returns.
+
+3. After uploading the sketch, it can be started and stopped without re-uploading.  To control and check the status of the sketch, click the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step4_image_14.png)
+
+4. The sketch status window will appear with a "switch" to the right of each sketch indicating RUNNING or STOPPED as shown below already STOPPED.  
+
+![image alt text](../doc_support/step4_image_15.png)
+
+5. Clicking the RUNNING or STOPPED will change the status between states.  When starting a tutorial exercise, be sure the sketch is stopped first and then start it running.  With the sketch STOPPED, we now click it to change it to RUNNING, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step4_image_16.png)
+
+### How to Set Runtime Parameters
+
+For flexibility and to minimize rebuilding and re-uploading the sketch when parameters change, the tutorial code allows setting parameters at runtime.  When the sketch first starts, it will first display all the current settings and then prompt for a parameters string before continuing.  Note that the sketch must first stop (or be stopped) and then restarted before accepting new parameter settings.  The steps below go through an example to set the image input parameter "i=\<video filename\>".
+
+1. Open the "Monitor" view by clicking “Monitor” at the left side of the Arduino Create Web Editor.  The monitor is effectively the console for the sketch.  The large box will display output (stdout) from the sketch while the box to the left of the SEND button is used to send input (stdin) to the sketch.  **Note**: Be sure to open the monitor before starting the sketch otherwise you may not see initial output during startup displayed.
+
+![image alt text](../doc_support/step4_image_17.png)
+
+2. Stop the sketch if running, then start it again.  The Monitor view should now show the prompt for new parameters similar to below.  Note that each parameter is shown with a description first ("Path to a video file…"), the type of input (“sid::string”), then the current setting as name=val (“i=cam”)..  
+
+![image alt text](../doc_support/step4_image_18.png)
+
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+
+![image alt text](../doc_support/step4_image_19.png)
+
+4. You may notice that default value for the parameter "m" is pretty long and may need to change especially when wanting to use an FP16 model for a device.  To make this easier, included in the tutorial “car_detection.hpp” code are additional parameters: “mVLP32” and “mVLP16”.  Instead of copying the full path, the parameter string’s ability to reference other parameters may be used such as “m=$mVLP16” which will change parameter “m” to now point to the FP16 version of the model as shown below.
+
+![image alt text](../doc_support/step4_image_20.png)
+
+5. When ready to run the sketch with the current parameter settings, leave the input box empty and press Enter or click the SEND button.  The sketch should continue with more output shown in the monitor output box similar to below.
+
+![image alt text](../doc_support/step4_image_21.png)
+
+### Running
+
+1. First, let us see how it works on a single image file using default synchronous mode.  Use the parameter settings string:
+
+```
+m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
+```
+
+
+2. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Run the command again in asynchronous mode using the parameter setting "n_async=2":
+
+```
+m=$mVLP32 m_va=$mVA32 i= tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp -n_async 2
+```
+
+
+3. The performance should be the same because a single image was run which is effectively the same as running synchronously since each pipeline stage must wait for the one image to process.
+
+4. Next, let us try it on a video file.  Use the parameter settings string:
+
+```
+m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
+```
+
+
+5. Over each frame of the video, you will see green rectangles drawn around the cars as they move through the parking lot.  Now run the command again in asynchronous mode using the parameter setting "n_async=2":
+
+```
+m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 -n_async 2
+```
+
+
+6. Unexpectedly, asynchronous mode should have made the video take longer to run by >10%.  Why would that be?  With the main loop now running asynchronously and not blocking, it is now an additional thread running on the CPU along with the inference models.  Now let us shift running the models to other devices, first in synchronous mode then asynchronous with increasing n_async value using the using the parameter settings strings:
+
+```
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=2
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=4
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=8
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=16
+```
+
+
+7. Asynchronous mode should be faster by some amount for "n_async=2" then a little more for “n_async=4” and “n_async=8”, then not really noticeable for “n_async=8”.  The improvements come from the CPU running in parallel more and more with the GPU and Myriad.  The absence of improvement shows when the CPU is doing less in parallel and is waiting on the other devices.  This is referred to as “diminishing returns” and will vary across devices and inference models.
+
+8. User exercise: Modify the last commands used to try different combinations of GPU and Myriad to find the fastest asynchronous combination for your hardware.
+
+**Hint**: You may need to increase well beyond  "n_async=16" to hit the point of diminishing returns.
 
 # Conclusion
 

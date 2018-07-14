@@ -4,11 +4,11 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first model, Vehicle Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#vehicle-detection-models">Vehicle Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-vehicle-detection-model">Adding the Vehicle Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#vehicledetection">VehicleDetection</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#vehicledetection">VehicleDetection()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-the-vehicledetection-class">Using the VehicleDetection Class</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-infer-a-batch-of-frames">Pipeline Stage 0: Prepare and Infer a Batch of Frames</a></li><li><a href="#pipeline-stage-1-render-results">Pipeline Stage 1: Render Results</a></li></ul></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first model, Vehicle Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#vehicle-detection-models">Vehicle Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-vehicle-detection-model">Adding the Vehicle Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#vehicledetection">VehicleDetection</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#vehicledetection">VehicleDetection()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-the-vehicledetection-class">Using the VehicleDetection Class</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main-function">main_function()</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-infer-a-batch-of-frames">Pipeline Stage 0: Prepare and Infer a Batch of Frames</a></li><li><a href="#pipeline-stage-1-render-results">Pipeline Stage 1: Render Results</a></li></ul></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-arduino-create-web-editor">Start Arduino Create Web Editor</a></li><li><a href="#import-arduino-create-sketch">Import Arduino Create Sketch</a></li><li><a href="#build-and-upload-sketch-executable">Build and Upload Sketch Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#how-to-set-runtime-parameters">How to Set Runtime Parameters</a></li><li><a href="#running">Running</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
-Welcome to the Car Detection Tutorial Step 2.  This is the step of the tutorial where the application starts making use of the OpenVINO toolkit to make inferences on image data and detect vehicles.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad.  You may recall from the OpenVINO toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO toolkit to load and run models on several devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do vehicle detection on the input image and then output the results.  
+Welcome to the Car Detection Tutorial Step 2.  This is the step of the tutorial where the application starts making use of the OpenVINO™ toolkit to make inferences on image data and detect vehicles.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Intel® Movidius™ Myriad™.  You may recall from the OpenVINO™ toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO™ toolkit to load and run models on several devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do vehicle detection on the input image and then output the results.  
 
 Below, you can see a sample output showing the results, where a Region of Interest (ROI) box appears around the detected vehicle and license plate.  The metrics reported include the time for OpenCV capture and display along with the time to run the vehicle detection model.
 
@@ -16,19 +16,19 @@ Below, you can see a sample output showing the results, where a Region of Intere
 
 # Vehicle Detection Models
 
-The OpenVINO toolkit provides a pre-compiled model that has been trained to detect vehicles and Chinese license plates.  You can find it at:
+The OpenVINO™ toolkit provides a pre-compiled model that has been trained to detect vehicles and Chinese license plates.  You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007
 
-    * Available model locations:
+   * Available model locations are:
 
-        * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP16/vehicle-license-plate-detection-barrier-0007.xml
+      * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP16/vehicle-license-plate-detection-barrier-0007.xml
 
-        * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml
+      * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml
 
-    * More details on the model can be found at:
+   * More details on the model can be found at:
 
-        * file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/description/vehicle-license-plate-detection-barrier-0007.html
+      * file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/description/vehicle-license-plate-detection-barrier-0007.html
 
 <table>
   <tr>
@@ -82,7 +82,7 @@ DEFINE_string(d, "CPU", target_device_message);
 
 To create the argument: -d \<device\>, where \<device\> is set to "CPU", "GPU", or "MYRIAD" which we will see conveniently matches what will be passed to the Inference Engine later.
 
-As a result of the macros used in the code above, the variables "FLAGS_m" and “FLAGS_d” have been created to hold the argument values.  Focusing primarily on how the “FLAGS_d” is used to tell the Inference Engine which device to use, we follow the code in “main()” of “main.cpp”:
+As a result of the macros used in the code above, the variables "PARAMETERS_m" and “PARAMETERS_d” have been created to hold the argument values.  Focusing primarily on how the “PARAMETERS_d” is used to tell the Inference Engine which device to use, we follow the code in “main()” of “main.cpp”:
 
 1. First a map is declared to hold the plugins as they are loaded.  The mapping will allow the associated plugin InferencePlugin object to be found by name (e.g. "CPU")    
 
@@ -96,7 +96,7 @@ As a result of the macros used in the code above, the variables "FLAGS_m" and �
 
 ```cpp
    std::vector<std::pair<std::string, std::string>> cmdOptions = {
-            {FLAGS_d, FLAGS_m}
+            {PARAMETERS_d, PARAMETERS_m}
         };
 ```
 
@@ -119,7 +119,7 @@ for (auto && option : cmdOptions) {
 ```
 
 
-5. The plugin is created using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “FLAGS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
+5. The plugin is created using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “PARAMETERS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
 
 ```cpp
          slog::info << "Loading plugin " << deviceName << slog::endl;
@@ -146,7 +146,7 @@ for (auto && option : cmdOptions) {
 
 ```cpp
        // --------------------Load networks (Generated xml/bin files)-------------------------------------------
-        Load(VehicleDetection).into(pluginsForDevices[FLAGS_d]);
+        Load(VehicleDetection).into(pluginsForDevices[PARAMETERS_d]);
 ```
 
 
@@ -205,7 +205,7 @@ From Tutorial Step 1, we have the base application that can read and display ima
 
 ## Helper Functions and Classes
 
-There will need to be a function that takes the input image and turns it into a "blob".  Which begs the question “What is a blob?”  In short, a blob, specifically the class InferenceEngine::Blob, is the data container type used by the Inference Engine for holding input and output data.  To get data into the model, the image data will need to be converted from the OpenCV cv::Mat to an InferenceEngine::Blob.  For doing that is the helper function “matU8ToBlob” in main.cpp: 
+There will need to be a function that takes the input image and turns it into a "blob".  Which begs the question “What is a blob?”.  In short, a blob, specifically the class InferenceEngine::Blob, is the data container type used by the Inference Engine for holding input and output data.  To get data into the model, the image data will need to be converted from the OpenCV cv::Mat to an InferenceEngine::Blob.  For doing that is the helper function “matU8ToBlob” in main.cpp: 
 
 ### matU8ToBlob
 
@@ -279,19 +279,19 @@ struct Load {
 To help explain how this works, an example using "Load" will be used which looks like:
 
 ```cpp
-Load(VehicleDetection).into(pluginsForDevices[FLAGS_d]);
+Load(VehicleDetection).into(pluginsForDevices[PARAMETERS_d]);
 ```
 
 
-The line is read as "Load VehicleDetection into the plugin pluginsForDevices[FLAGS_d]" which is done as follows:
+The line is read as "Load VehicleDetection into the plugin pluginsForDevices[PARAMETERS_d]" which is done as follows:
 
 1. Load(VehicleDetection) is a constructor to initialize model object "detector" and returns a “Load” object
 
-2. "into()" is called on the returned object passing in the mapped plugin from “pluginsForDevices”.  The map returns the plugin mapped to “FLAGS_d”, which is the command line argument “CPU”, “GPU”, or “MYRIAD”.  The function into() then first checks if the model object is enabled and if it is:
+2. "into()" is called on the returned object passing in the mapped plugin from “pluginsForDevices”.  The map returns the plugin mapped to “PARAMETERS_d”, which is the command line argument “CPU”, “GPU”, or “MYRIAD”.  The function into() then first checks if the model object is enabled and if it is:
 
-    1. Calls "plg.LoadNetwork(detector.read(),{})"  to load the model returned by “detector.read()” (which we will see later is reading in the model’s IR file) into the plugin.  The resulting object is stored in the model object (detetor.net) 
+   1. Calls "plg.LoadNetwork(detector.read(),{})" to load the model returned by “detector.read()” (which we will see later is reading in the model’s IR file) into the plugin.  The resulting object is stored in the model object (detector.net) 
 
-    2. Sets the model object’s plugin (detector.plugin) to the one used
+   2. Sets the model object’s plugin (detector.plugin) to the one used
 
 ### BaseDetection Class
 
@@ -479,10 +479,10 @@ The input blob from the request is retrieved and then matU8ToBlob() is used to c
 
 ### VehicleDetection()
 
-On construction of a VehicleDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for VehicleDetection class.
+On construction of a VehicleDetection object, the base class constructor is called passing in the model to load specified in the command line argument PARAMETERS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for VehicleDetection class.
 
 ```cpp
-    VehicleDetection() : BaseDetection(FLAGS_m, "Vehicle Detection", 1) {}
+    VehicleDetection() : BaseDetection(PARAMETERS_m, "Vehicle Detection", 1) {}
 ```
 
 
@@ -497,7 +497,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
         slog::info << "Loading network files for VehicleDetection" << slog::endl;
         InferenceEngine::CNNNetReader netReader;
         /** Read network model **/
-        netReader.ReadNetwork(FLAGS_m);
+        netReader.ReadNetwork(PARAMETERS_m);
 ```
 
 
@@ -514,7 +514,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 
 ```cpp
         /** Extract model name and load it's weights **/
-        std::string binFileName = fileNameNoExt(FLAGS_m) + ".bin";
+        std::string binFileName = fileNameNoExt(PARAMETERS_m) + ".bin";
         netReader.ReadWeights(binFileName);
 ```
 
@@ -572,7 +572,7 @@ The next function we will walkthrough is the VehicleDetection::read() function w
 8. The name of the input blob (inputInfo.begin()->first) is saved for later use when getting a blob for input data.  Finally, the InferenceEngine::CNNNetwork object that references this model is returned.
 
 ```cpp
-        slog::info << "Loading Vehicle Detection model to the "<< FLAGS_d << " plugin" << slog::endl;
+        slog::info << "Loading Vehicle Detection model to the "<< PARAMETERS_d << " plugin" << slog::endl;
         input = inputInfo.begin()->first;
         return netReader.getNetwork();
     }
@@ -616,19 +616,19 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
 5. The loop to retrieve all the results from the output blob buffer.  The output format is determined by the model.  For the vehicle detection model used, the following fields are expected:
 
-    1. Image_id (index into input batch)
+   1. Image_id (index into input batch)
 
-    2. Label
+   2. Label
 
-    3. Confidence 
+   3. Confidence 
 
-    4. X coordinate of ROI
+   4. X coordinate of ROI
 
-    5. Y coordinate of ROI
+   5. Y coordinate of ROI
 
-    6. Width of ROI
+   6. Width of ROI
 
-    7. Height of ROI
+   7. Height of ROI
 
 ```cpp
       for (int i = 0; i < maxProposalCount; i++) {
@@ -638,7 +638,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
          r.batchIndex = image_id;
          r.label = static_cast<int>(detections[proposalOffset + 1]);
          r.confidence = detections[proposalOffset + 2];
-         if (r.confidence <= FLAGS_t) {
+         if (r.confidence <= PARAMETERS_t) {
             continue;
          }
          r.location.x = detections[proposalOffset + 3] * width;
@@ -662,11 +662,11 @@ fetchResults() will parse the inference results saving them in the "Results" var
 7. A check to see if the application was requested to display the raw information (-r) and print it to the console if necessary.
 
 ```cpp
-         if (FLAGS_r) {
+         if (PARAMETERS_r) {
             std::cout << "[" << i << "," << r.label << "] element, prob = " << r.confidence <<
                       "    (" << r.location.x << "," << r.location.y << ")-(" << r.location.width << ","
                       << r.location.height << ")"
-                      << ((r.confidence > FLAGS_t) ? " WILL BE RENDERED!" : "") << std::endl;
+                      << ((r.confidence > PARAMETERS_t) ? " WILL BE RENDERED!" : "") << std::endl;
          }
 ```
 
@@ -686,7 +686,7 @@ See the Inference Engine Development Guide [https://software.intel.com/inference
 
 We have now seen what happens behind the scenes in the VehicleDetection class, we will move into the application code and see how it is used.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
@@ -716,14 +716,14 @@ using namespace InferenceEngine;
 ```
 
 
-## main()
+## main_function()
 
-1. In the main() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map stores created plugins to be indexed by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the VehicleDetection object of type VehicleDetection.
+1. In the main_function() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map stores created plugins to be indexed by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the VehicleDetection object of type VehicleDetection.
 
 ```cpp
 std::map<std::string, InferencePlugin> pluginsForDevices;
 std::vector<std::pair<std::string, std::string>> cmdOptions = {
-   {FLAGS_d, FLAGS_m}
+   {PARAMETERS_d, PARAMETERS_m}
 };
 
 VehicleDetection VehicleDetection;
@@ -762,14 +762,14 @@ for (auto && option : cmdOptions) {
    if ((deviceName.find("CPU") != std::string::npos)) {
       plugin.AddExtension(std::make_shared<Extensions::Cpu::CpuExtensions>());
 
-      if (!FLAGS_l.empty()) {
+      if (!PARAMETERS_l.empty()) {
          // CPU(MKLDNN) extensions are loaded as a shared library and passed as a pointer to base extension
-         auto extension_ptr = make_so_pointer<InferenceEngine::MKLDNNPlugin::IMKLDNNExtension>(FLAGS_l);
+         auto extension_ptr = make_so_pointer<InferenceEngine::MKLDNNPlugin::IMKLDNNExtension>(PARAMETERS_l);
           plugin.AddExtension(std::static_pointer_cast<IExtension>(extension_ptr));
       }
-   } else if (!FLAGS_c.empty()) {
+   } else if (!PARAMETERS_c.empty()) {
       // Load Extensions for other plugins not CPU
-      plugin.SetConfig({ { PluginConfigParams::KEY_CONFIG_FILE, FLAGS_c } });
+      plugin.SetConfig({ { PluginConfigParams::KEY_CONFIG_FILE, PARAMETERS_c } });
    }
 ```
 
@@ -785,7 +785,7 @@ for (auto && option : cmdOptions) {
 6. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
-Load(VehicleDetection).into(pluginsForDevices[FLAGS_d]);
+Load(VehicleDetection).into(pluginsForDevices[PARAMETERS_d]);
 ```
 
 
@@ -894,7 +894,7 @@ Stage 0 reads in frames, prepares and runs inference, then processes the results
 ```cpp
             ps0s1i.batchOfInputFrames.push_back(curFrame);
 
-            if (firstFrame && !FLAGS_no_show) {
+            if (firstFrame && !PARAMETERS_no_show) {
                slog::info << "Press 's' key to save a snapshot, press any other key to stop" << slog::endl;
             }
 
@@ -1038,7 +1038,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 ```cpp
             t0 = std::chrono::high_resolution_clock::now();
-            if (!FLAGS_no_show) {
+            if (!PARAMETERS_no_show) {
                cv::imshow("Detection results", outputFrame);
                lastOutputFrame = &outputFrame;
             }
@@ -1078,7 +1078,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 2. If the the command line parameter "-pc" was specified, then print out the performance counts.
 
 ```cpp
-      if (FLAGS_pc) {
+      if (PARAMETERS_pc) {
          VehicleDetection.printPerformanceCounts();
       }
 ```
@@ -1086,129 +1086,164 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 
 # Building and Running
 
-Now that we have walked through the code and learned what it does, it is time to build the application and see it in action.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.  
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+### Start Arduino Create Web Editor
 
-2. Change to the directory containing Tutorial Step 2:
+If you do not already have a web browser open, open one such as the Firefox browser from the desktop or from a command line ("firefox &").  Once open, browse to the Arduino website [https://create.arduino.cc/](https://create.arduino.cc/) to begin.
 
-```bash
-cd tutorials/car_detection_tutorial/step_2
-```
+### Import Arduino Create Sketch
 
+1. After going to the Arduino website which should appear similar to below, open the Arduino Web Editor by clicking it.
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by sourcing the "setupvars.sh" script.
+![image alt text](../doc_support/step2_image_2.png)
 
-```bash
-source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
-```
+2. When the editor is first opened, it will show your last opened sketch and appear similar to below.
 
+![image alt text](../doc_support/step2_image_3.png)
 
-4. Now we need to create a directory to build the tutorial in and change to it.
+3. To begin to import this tutorial’s sketch, click on the up-arrow icon (hovering tooltip will say "Import") to the right of the “NEW SKETCH” button as shown below.
 
-```bash
-mkdir build
-cd build
-```
+![image alt text](../doc_support/step2_image_4.png)
 
+4. A "File Upload" window will appear, use it to browse to where the tutorials have been downloaded and select the file “car_detection_tutorial/step_2/cd_step_2_sketch.zip”, and then click the Open button.  After uploading and importing successfully, you will see a window similar to below.  Click the OK button to continue.
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+![image alt text](../doc_support/step2_image_5.png)
 
-```bash
-cmake -DCMAKE_BUILD_TYPE=Release ../
-make
-```
+5. With the sketch now imported, it will be open in the editor similar to below and you are now ready to build.  
 
+![image alt text](../doc_support/step2_image_6.png)
+
+### Build and Upload Sketch Executable
+
+1. From the Arduino Create Web Editor you build the executable and then upload it to your Arduino device.  After uploading, the executable with the same name as the sketch may be found in the "sketches" directory under your user’s home directory and may be run directly from the command line later if desired.  Before continuing, be sure that your device is ready as indicated in the box which will show “\<device name\> via Cloud” when connected as shown below for the device named “myUP2”. 
+
+![image alt text](../doc_support/step2_image_7.png)
+
+2. If unconnected and not ready, the device will appear with a line with red ‘X’ before the name as shown below.  To reconnect, you may need to refresh or reload the browser page, restart the Arduino Create Agent, or potentially run setup for your kit again.
+
+![image alt text](../doc_support/step2_image_8.png)
+
+3. After making sure your device is connected, to begin the build and upload process click on the right-arrow icon at the top of the editor as shown below.
+
+![image alt text](../doc_support/step2_image_9.png)
+
+4. During the build and upload process, you will see that the button has been replaced with "BUSY" as shown below along with status text at the bottom of the window saying “Updating \<sketch name\>”.
+
+![image alt text](../doc_support/step2_image_10.png)
+
+5. Below shows after a successful build and upload.  Note that the bottom of the editor will be updated with the status and below it the output of the build.  
+
+![image alt text](../doc_support/step2_image_11.png)
+
+6. Uploading will also start the sketch which you can verify by checking the status of the sketch by clicking the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step2_image_12.png)
+
+7. The status window will show all the sketches that have been uploaded to the device and the state of each as a "switch" similar below showing either “RUNNING” or “STOPPED”.  Clicking the switch will change the state of the sketch.  
+
+![image alt text](../doc_support/step2_image_13.png)
+
+8. For now, we will stop the sketch before continuing.  First click the "RUNNING" to change it to “STOPPED”, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step2_image_14.png)
 
 ## Run
 
-1. You now have the executable file to run ./intel64/Release/car_detection_tutorial.  In order to have it run the vehicle detection model, we need to add arguments to the command line:
+### How to Run the Executable
 
-    1. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
+1. Before starting a sketch, you will need to grant the root user access to the X server to open X windows by executing the following xhost command:
 
-    2. "-m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml”
-
-    3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
-
-    ```bash
-    # Create variables for all models used by the tutorials to make
-    #  it easier to reference them with short names
-    
-    # check for variable set by setupvars.sh in the SDK, need it to find models
-    : ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
-    
-    modelDir=$InferenceEngine_DIR/../../intel_models
-    
-    # Vehicle and License Plates Detection Model
-    modName=vehicle-license-plate-detection-barrier-0007
-    export mVLP16=$modelDir/$modName/FP16/$modName.xml
-    export mVLP32=$modelDir/$modName/FP32/$modName.xml
-    
-    # Vehicle Attributes Detection Model
-    modName=vehicle-attributes-recognition-barrier-0010
-    export mVA16=$modelDir/$modName/FP16/$modName.xml
-    export mVA32=$modelDir/$modName/FP32/$modName.xml
-    
-    # Batch size models (Vehicle Detection, all FP32)
-    scriptDir=$(dirname "$(readlink -f ${BASH_SOURCE[0]})")
-    batchModelsDir=$scriptDir/../models/batch_sizes
-    modName=SSD_GoogleNetV2
-    export mVB1=$batchModelsDir/batch_1/$modName.xml
-    export mVB2=$batchModelsDir/batch_2/$modName.xml
-    export mVB4=$batchModelsDir/batch_4/$modName.xml
-    export mVB8=$batchModelsDir/batch_8/$modName.xml
-    export mVB16=$batchModelsDir/batch_16/$modName.xml
-    ```
+```Bash
+xhost +si:localuser:root 
+```
 
 
-    4. To use the script we source it using the command: 
+2. From the command you should see the following response.  Note the xhost command will need to be run again after rebooting Linux.
 
-    ```bash
-    source ../../scripts/setupenv.sh 
-    ```
-    
+```Bash
+localuser:root being added to access control list
+```
 
-    5. You will notice that the script file defines seven variables that can be used to reference vehicle detection models and two for vehicle attributes.  We will be using $mVB1* only for a later step to go over how batch size affects the performance.  
+
+3. After uploading the sketch, it can be started and stopped without re-uploading.  To control and check the status of the sketch, click the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step2_image_15.png)
+
+4. The sketch status window will appear with a "switch" to the right of each sketch indicating RUNNING or STOPPED as shown below already STOPPED.  
+
+![image alt text](../doc_support/step2_image_16.png)
+
+5. Clicking the RUNNING or STOPPED will change the status between states.  When starting a tutorial exercise, be sure the sketch is stopped first and then start it running.  With the sketch STOPPED, we now click it to change it to RUNNING, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step2_image_17.png)
+
+### How to Set Runtime Parameters
+
+For flexibility and to minimize rebuilding and re-uploading the sketch when parameters change, the tutorial code allows setting parameters at runtime.  When the sketch first starts, it will first display all the current settings and then prompt for a parameters string before continuing.  Note that the sketch must first stop (or be stopped) and then restarted before accepting new parameter settings.  The steps below go through an example to set the image input parameter "i=\<video filename\>".
+
+1. Open the "Monitor" view by clicking “Monitor” at the left side of the Arduino Create Web Editor.  The monitor is effectively the console for the sketch.  The large box will display output (stdout) from the sketch while the box to the left of the SEND button is used to send input (stdin) to the sketch.  **Note**: Be sure to open the monitor before starting the sketch otherwise you may not see initial output during startup displayed.
+
+![image alt text](../doc_support/step2_image_18.png)
+
+2. Stop the sketch if running, then start it again.  The Monitor view should now show the prompt for new parameters similar to below.  Note that each parameter is shown with a description first ("Path to a video file…"), the type of input (“sid::string”), then the current setting as name=val (“i=cam”)..  
+
+![image alt text](../doc_support/step2_image_19.png)
+
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+
+![image alt text](../doc_support/step2_image_20.png)
+
+4. You may notice that default value for the parameter "m" is pretty long and may need to change especially when wanting to use an FP16 model for a device.  To make this easier, included in the tutorial “car_detection.hpp” code are additional parameters: “mVLP32” and “mVLP16”.  Instead of copying the full path, the parameter string’s ability to reference other parameters may be used such as “m=$mVLP16” which will change parameter “m” to now point to the FP16 version of the model as shown below.
+
+![image alt text](../doc_support/step2_image_21.png)
+
+5. When ready to run the sketch with the current parameter settings, leave the input box empty and press Enter or click the SEND button.  The sketch should continue with more output shown in the monitor output box similar to below.
+
+![image alt text](../doc_support/step2_image_22.png)
+
+### Running
+
+1. You now have the executable file to run.  In order to have it run the vehicle detection model, we need to set the runtime parameters:
+
+   1. "i= \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
+
+   2. "m=\<model-xml-file\>"  to specify where to find the module.  For example: “m=  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/vehicle-license-plate-detection-barrier-0007/FP32/vehicle-license-plate-detection-barrier-0007.xml”
+
+   3. That is a lot to type and keep straight, so to help make the model names shorter to type and easier to read, let us use the helper parameters in "car_detection.hpp".  The previous setting now becomes “m=$mVLP32”.
 
 2. We will be using images and video files that are included with this tutorial.  Once you have seen the application working, feel free to try it on your own images and videos.
 
-3. Let us first run it on a single image, to see how it works.
+3. First let us first run it on a single image, to see how it works.  Use the parameter settings string:
 
-```bash
-./intel64/Release/car_detection_tutorial -m $mVA32 -i ../../data/car_1.bmp
+```
+m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
 4. You will now see an output window open up with the image displayed.  Over the image, you will see some text with the statistics of how long it took to perform the OpenCV input and output and model processing time.  You will also see a green rectangle drawn around the cars in the image, including the partial van on the right edge of the image.
 
-5. Let us see how the application handles a video file.
+5. Let us see how the application handles a video file.  Use the parameter settings string:
 
-```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVA32 -i ../../car-detection.mp4
+```
+m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 
 6. Now, you should see a window open, playing the video.  Over each frame of the video, you will see green rectangles drawn around the cars as they move through the parking lot.
 
-7. Finally, let us see how the application works with the default camera input.
+7. Finally, let us see how the application works with the default camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by using the parameter settings string:
 
-```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVA32 -i cam
 ```
-
-
-Or
-
-```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVA32
+m=$mVA32 i=cam
 ```
 
 
 8. Now you will see a window displaying the input from the USB camera.  If the vehicle detection model sees anything it detects as any type of vehicle (car, van, etc.), it will draw a green rectangle around it.  Red rectangles will be drawn around anything that is detected as a license plate.  Unless you have a car in your office, or a parking lot outside a nearby window, the display may not be very exciting.
 
-9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
+9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the terminal window.
 
 # Conclusion
 

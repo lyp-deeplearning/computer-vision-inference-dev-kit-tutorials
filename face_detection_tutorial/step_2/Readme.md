@@ -4,11 +4,11 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first model, Face Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#face-detection-models">Face Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-face-detection-model">Adding the Face Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#facedetectionclass">FaceDetectionClass</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#facedetectionclass">FaceDetectionClass()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-facedetectionclass">Using FaceDetectionClass</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first model, Face Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#face-detection-models">Face Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-face-detection-model">Adding the Face Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#facedetectionclass">FaceDetectionClass</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#facedetectionclass">FaceDetectionClass()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-facedetectionclass">Using FaceDetectionClass</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main-function">main_function()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-arduino-create-web-editor">Start Arduino Create Web Editor</a></li><li><a href="#import-arduino-create-sketch">Import Arduino Create Sketch</a></li><li><a href="#build-and-upload-sketch-executable">Build and Upload Sketch Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#how-to-set-runtime-parameters">How to Set Runtime Parameters</a></li><li><a href="#running">Running</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
-Welcome to the Face Detection Tutorial Step 2.  This is the step of the tutorial where it gets its name by processing image data and detecting faces.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad to perform face detection.  You may recall from the OpenVINO toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO toolkit to load and run models on devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do face detection on the input image and then output the results.  
+Welcome to the Face Detection Tutorial Step 2.  This is the step of the tutorial where it gets its name by processing image data and detecting faces.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad to perform face detection.  You may recall from the OpenVINO™ toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO™ toolkit to load and run models on devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do face detection on the input image and then output the results.  
 
 A sample output showing the results where a Region of Interest (ROI) box appears around the detected face below.  The metrics reported include the time for OpenCV capture and display along with the time to run the face detection model.  The detected face gets a box around it along with a label as shown below.
 
@@ -16,7 +16,7 @@ A sample output showing the results where a Region of Interest (ROI) box appears
 
 # Face Detection Models
 
-The OpenVINO toolkit includes two pre-compiled face detection models located at:
+The OpenVINO™ toolkit includes two pre-compiled face detection models located at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001
 
@@ -26,7 +26,7 @@ The OpenVINO toolkit includes two pre-compiled face detection models located at:
 
       * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml
 
-   * More detail may be found the OpenVINO toolkit at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
+   * More detail may be found the OpenVINO™ toolkit at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004
 
@@ -36,7 +36,7 @@ The OpenVINO toolkit includes two pre-compiled face detection models located at:
 
       * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/FP32/face-detection-retail-0004.xml
 
-   * More detail may be found in the OpenVINO toolkit at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
+   * More detail may be found in the OpenVINO™ toolkit at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
 
 Each model may be used to perform face detection, the difference is how complex each underlying model is for the results it is capable of producing as shown in the summary below (for more details, see the descriptions HTML pages for each model): 
 
@@ -96,7 +96,7 @@ DEFINE_string(d, "CPU", target_device_message);
 
 To create the argument: -d \<device\>, where <device> is set to "CPU", "GPU", or "MYRIAD" which we will see conveniently matches what will be passed to the Inference Engine later.
 
-As a result of the macros used in the code above, the variables "FLAGS_m" and “FLAGS_d” have been created to hold the argument values.  Focusing primarily on how the “FLAGS_d” is used to tell the Inference Engine which device to use, we follow the code in “main()” of “main.cpp”:
+As a result of the macros used in the code above, the variables "PARAMETERS_m" and “PARAMETERS_d” have been created to hold the argument values.  Focusing primarily on how the “PARAMETERS_d” is used to tell the Inference Engine which device to use, we follow the code in “main()” of “main.cpp”:
 
 1. First a map is declared to hold the plugins as they are loaded.  The mapping will allow the associated plugin InferencePlugin object to be found by name (e.g. "CPU")    
 
@@ -110,7 +110,7 @@ As a result of the macros used in the code above, the variables "FLAGS_m" and �
 
 ```cpp
    std::vector<std::pair<std::string, std::string>> cmdOptions = {
-            {FLAGS_d, FLAGS_m}
+            {PARAMETERS_d, PARAMETERS_m}
         };
 ```
 
@@ -133,29 +133,36 @@ for (auto && option : cmdOptions) {
 ```
 
 
-5. The plugin is created using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “FLAGS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
+5. The plugin is created using the Inference Engine’s PluginDispatcher API for the given device’s name.  Here "deviceName" is the value for “PARAMETERS_d” which came directly from the command line argument “-d” which is set to “CPU”, “GPU”, or “MYRIAD”, the exact names the Inference Engine knows for devices.
 
 ```cpp
          slog::info << "Loading plugin " << deviceName << slog::endl;
             InferencePlugin plugin = PluginDispatcher({"../../../lib/intel64", ""}).getPluginByDevice(deviceName);
 ```
+
+
 6. The plugin details are printed out:
 
 ```cpp 
            /** Printing plugin version **/
             printPluginVersion(plugin, std::cout);
 ```
+
+
 7. The created plugin is stored to be found by device name later:
 
 ```cpp
             pluginsForDevices[deviceName] = plugin;
 ```
+
+
 8. Finally the model is loaded passing in the plugin created for the specified device, again using the name given same as it appears on the command line ("Load" class will be described later):
 
 ```cpp
        // --------------------Load networks (Generated xml/bin files)-------------------------------------------
-        Load(FaceDetection).into(pluginsForDevices[FLAGS_d]);
+        Load(FaceDetection).into(pluginsForDevices[PARAMETERS_d]);
 ```
+
 
 ### Verifying Which Device is Running the Model
 
@@ -172,11 +179,17 @@ InferenceEngine:
 [ INFO ] Parsing input parameters
 [ INFO ] Reading input
 ```
+
+
 The application reporting that it is loading the CPU plugin:
+
 ```bash
 [ INFO ] Loading plugin CPU
 ```
+
+
 Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and its version:
+
 ```bash
 	API version ............ 1.0
 	Build .................. lnx_20180314
@@ -186,11 +199,15 @@ Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and it
 [ INFO ] Checking Face Detection inputs
 [ INFO ] Checking Face Detection outputs
 ```
+
+
 The application reporting that it is loading the CPU plugin for the face detection model:
+
 ```bash
 [ INFO ] Loading Face Detection model to the CPU plugin
 [ INFO ] Start inference
 ```
+
 
 Later in Tutorial Step 4, we cover loading multiple models onto different devices.  We will also look at how the models perform on different devices.  Until then, we will let all the models load and run on the default CPU device.
 
@@ -274,15 +291,15 @@ struct Load {
 To help explain how this works, an example using "Load" will be used which looks like:
 
 ```cpp
-Load(FaceDetection).into(pluginsForDevices[FLAGS_d]);
+Load(FaceDetection).into(pluginsForDevices[PARAMETERS_d]);
 ```
 
 
-The line is read as "Load FaceDetection into the plugin pluginsForDevices[FLAGS_d]" which is done as follows:
+The line is read as "Load FaceDetection into the plugin pluginsForDevices[PARAMETERS_d]" which is done as follows:
 
 1. Load(FaceDetection) is a constructor to initialize model object "detector" and returns a “Load” object
 
-2. "into()" is called on the returned object passing in the mapped plugin from “pluginsForDevices”.  The map returns the plugin mapped to “FLAGS_d”, which is the command line argument “CPU”, “GPU”, or “MYRIAD”.  The function into() then first checks if the model object is enabled and if it is:
+2. "into()" is called on the returned object passing in the mapped plugin from “pluginsForDevices”.  The map returns the plugin mapped to “PARAMETERS_d”, which is the command line argument “CPU”, “GPU”, or “MYRIAD”.  The function into() then first checks if the model object is enabled and if it is:
 
    1. Calls "plg.LoadNetwork(detector.read(),{})"  to load the model returned by “detector.read()” (which we will see later is reading in the model’s IR file) into the plugin.  The resulting object is stored in the model object (detetor.net) 
 
@@ -469,10 +486,10 @@ The input blob from the request is retrieved and then matU8ToBlob() is used to c
 
 ### FaceDetectionClass()
 
-On construction of a FaceDetectionClassobject, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for FaceDetectionClass class.
+On construction of a FaceDetectionClassobject, the base class constructor is called passing in the model to load specified in the command line argument PARAMETERS_m, the name to be used when printing out informational messages, and set the batch size to 1.  This initializes the BaseDetection subclass specifically for FaceDetectionClass class.
 
 ```cpp
-    FaceDetectionClass() : BaseDetection(FLAGS_m, "Face Detection", 1) {}
+    FaceDetectionClass() : BaseDetection(PARAMETERS_m, "Face Detection", 1) {}
 ```
 
 
@@ -487,7 +504,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
         slog::info << "Loading network files for Face Detection" << slog::endl;
         InferenceEngine::CNNNetReader netReader;
         /** Read network model **/
-        netReader.ReadNetwork(FLAGS_m);
+        netReader.ReadNetwork(PARAMETERS_m);
 ```
 
 
@@ -504,10 +521,10 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 
 ```cpp
         /** Extract model name and load it's weights **/
-        std::string binFileName = fileNameNoExt(FLAGS_m) + ".bin";
+        std::string binFileName = fileNameNoExt(PARAMETERS_m) + ".bin";
         netReader.ReadWeights(binFileName);
         /** Read labels (if any)**/
-        std::string labelFileName = fileNameNoExt(FLAGS_m) + ".labels";
+        std::string labelFileName = fileNameNoExt(PARAMETERS_m) + ".labels";
 
         std::ifstream inputFile(labelFileName);
         std::copy(std::istream_iterator<std::string>(inputFile),
@@ -599,7 +616,7 @@ The next function we will walkthrough is the FaceDetectorClass::read() function 
 10. Tthe name of the input blob (inputInfo.begin()->first) is saved for later use when getting a blob for input data.  Finally, the InferenceEngine::CNNNetwork object that references this model is returned.
 
 ```cpp
-        slog::info << "Loading Face Detection model to the "<< FLAGS_d << " plugin" << slog::endl;
+        slog::info << "Loading Face Detection model to the "<< PARAMETERS_d << " plugin" << slog::endl;
         input = inputInfo.begin()->first;
         return netReader.getNetwork();
     }
@@ -660,7 +677,7 @@ fetchResults() will parse the inference results saving them in the "Results" var
             Result r;
             r.label = static_cast<int>(detections[i * objectSize + 1]);
             r.confidence = detections[i * objectSize + 2];
-            if (r.confidence <= FLAGS_t) {
+            if (r.confidence <= PARAMETERS_t) {
                 continue;
             }
 
@@ -683,11 +700,11 @@ fetchResults() will parse the inference results saving them in the "Results" var
 7. A check to see if the application was requested to display the raw information (-r) and print it to the console if necessary.
 
 ```cpp
-            if (FLAGS_r) {
+            if (PARAMETERS_r) {
                 std::cout << "[" << i << "," << r.label << "] element, prob = " << r.confidence <<
                           "    (" << r.location.x << "," << r.location.y << ")-(" << r.location.width << ","
                           << r.location.height << ")"
-                          << ((r.confidence > FLAGS_t) ? " WILL BE RENDERED!" : "") << std::endl;
+                          << ((r.confidence > PARAMETERS_t) ? " WILL BE RENDERED!" : "") << std::endl;
             }
 ```
 
@@ -707,7 +724,7 @@ See the Inference Engine Development Guide [https://software.intel.com/inference
 
 We have now seen what happens behind the scenes in the FaceDetectionClass, we will move into the application code and see how it is used.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
@@ -737,14 +754,14 @@ using namespace InferenceEngine;
 ```
 
 
-## main()
+## main_function()
 
-1. In the main() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map stores created plugins to be indexed by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the FaceDetection object of type FaceDetectionClass.
+1. In the main_function() function, there are a map and vector that help make it easier to reference plugins for the Inference Engine. The map stores created plugins to be indexed by the device name of the plugin.  The vector pairs the input models with their corresponding devices using the command line arguments specifying model and device (this was also covered previously while explaining the path from command line to passing which device to use through the Inference Engine API).  Here also instantiates the FaceDetection object of type FaceDetectionClass.
 
 ```cpp
 std::map<std::string, InferencePlugin> pluginsForDevices;
 std::vector<std::pair<std::string, std::string>> cmdOptions = {
-   {FLAGS_d, FLAGS_m}
+   {PARAMETERS_d, PARAMETERS_m}
 };
 
 FaceDetectionClass FaceDetection;
@@ -796,7 +813,7 @@ for (auto && option : cmdOptions) {
 6. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
-Load(FaceDetection).into(pluginsForDevices[FLAGS_d]);
+Load(FaceDetection).into(pluginsForDevices[PARAMETERS_d]);
 ```
 
 
@@ -888,7 +905,7 @@ ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 After all the images have been processed (or you have chosen to stop analyzing input from the camera), if the "-pc" command line argument was used, the performance statistics are printed out to the command window and the application is exited.
 
 ```cpp
-if (FLAGS_pc) {
+if (PARAMETERS_pc) {
    FaceDetection.printPerformanceCounts();
 }
 ```
@@ -896,135 +913,173 @@ if (FLAGS_pc) {
 
 # Building and Running
 
-Now that we have walked through the code and learned what it will do, it is time to build the application and see it in action.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.  
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+### Start Arduino Create Web Editor
 
-2. Change to the directory containing Tutorial Step 2:
+If you do not already have a web browser open, open one such as the Firefox browser from the desktop or from a command line ("firefox &").  Once open, browse to the Arduino website [https://create.arduino.cc/](https://create.arduino.cc/) to begin.
 
-```bash
-cd tutorials/face_detection_tutorial/step_2
-```
+### Import Arduino Create Sketch
 
+1. After going to the Arduino website which should appear similar to below, open the Arduino Web Editor by clicking it.
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by sourcing the "setupvars.sh" script.
+![image alt text](../doc_support/step2_image_2.png)
 
-```bash
-source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
-```
+2. When the editor is first opened, it will show your last opened sketch and appear similar to below.
 
+![image alt text](../doc_support/step2_image_3.png)
 
-4. Now we need to create a directory to build the tutorial in and change to it.
+3. To begin to import this tutorial’s sketch, click on the up-arrow icon (hovering tooltip will say "Import") to the right of the “NEW SKETCH” button as shown below.
 
-```bash
-mkdir build
-cd build
-```
+![image alt text](../doc_support/step2_image_4.png)
 
+4. A "File Upload" window will appear, use it to browse to where the tutorials have been downloaded and select the file “face_detection_tutorial/step_2/fd_step_2_sketch.zip”, and then click the Open button.  After uploading and importing successfully, you will see a window similar to below.  Click the OK button to continue.
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+![image alt text](../doc_support/step2_image_5.png)
 
-```bash
-cmake -DCMAKE_BUILD_TYPE=Release ../
-make
-```
+5. With the sketch now imported, it will be open in the editor similar to below and you are now ready to build.  
 
+![image alt text](../doc_support/step2_image_6.png)
+
+### Build and Upload Sketch Executable
+
+1. From the Arduino Create Web Editor you build the executable and then upload it to your Arduino device.  After uploading, the executable with the same name as the sketch may be found in the "sketches" directory under your user’s home directory and may be run directly from the command line later if desired.  Before continuing, be sure that your device is ready as indicated in the box which will show “\<device name\> via Cloud” when connected as shown below for the device named “myUP2”. 
+
+![image alt text](../doc_support/step2_image_7.png)
+
+2. If unconnected and not ready, the device will appear with a line with red ‘X’ before the name as shown below.  To reconnect, you may need to refresh or reload the browser page, restart the Arduino Create Agent, or potentially run setup for your kit again.
+
+![image alt text](../doc_support/step2_image_8.png)
+
+3. After making sure your device is connected, to begin the build and upload process click on the right-arrow icon at the top of the editor as shown below.
+
+![image alt text](../doc_support/step2_image_9.png)
+
+4. During the build and upload process, you will see that the button has been replaced with "BUSY" as shown below along with status text at the bottom of the window saying “Updating \<sketch name\>”.
+
+![image alt text](../doc_support/step2_image_10.png)
+
+5. Below shows after a successful build and upload.  Note that the bottom of the editor will be updated with the status and below it the output of the build.  
+
+![image alt text](../doc_support/step2_image_11.png)
+
+6. Uploading will also start the sketch which you can verify by checking the status of the sketch by clicking the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step2_image_12.png)
+
+7. The status window will show all the sketches that have been uploaded to the device and the state of each as a "switch" similar below showing either “RUNNING” or “STOPPED”.  Clicking the switch will change the state of the sketch.  
+
+![image alt text](../doc_support/step2_image_13.png)
+
+8. For now, we will stop the sketch before continuing.  First click the "RUNNING" to change it to “STOPPED”, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step2_image_14.png)
 
 ## Run
 
-1. You now have an executable file to run.  In order to have it run the face detection model, we will need to add a couple of parameters to the command line:
+### How to Run the Executable
 
-   1. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
+1. Before starting a sketch, you will need to grant the root user access to the X server to open X windows by executing the following xhost command:
 
-   2. "-m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml”
+```Bash
+xhost +si:localuser:root 
+```
 
-   3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
-   ```bash
-   # Create variables for all models used by the tutorials to make
-   #  it easier to reference them with short names
-   
-   # check for variable set by setupvars.sh in the SDK, need it to find models
-   : ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
-   
-   modelDir=$InferenceEngine_DIR/../../intel_models
-   
-   # Face Detection Model - ADAS
-   modName=face-detection-adas-0001
-   export mFDA16=$modelDir/$modName/FP16/$modName.xml
-   export mFDA32=$modelDir/$modName/FP32/$modName.xml
-   
-   # Face Detection Model - Retail
-   modName=face-detection-retail-0004
-   export mFDR16=$modelDir/$modName/FP16/$modName.xml
-   export mFDR32=$modelDir/$modName/FP32/$modName.xml
-   
-   # Age and Gender Model
-   modName=age-gender-recognition-retail-0013
-   export mAG16=$modelDir/$modName/FP16/$modName.xml
-   export mAG32=$modelDir/$modName/FP32/$modName.xml
-   
-   # Head Pose Estimation Model
-   modName=head-pose-estimation-adas-0001
-   export mHP16=$modelDir/$modName/FP16/$modName.xml
-   export mHP32=$modelDir/$modName/FP32/$modName.xml
-   ```
-   
-   4. To use the script we source it: 
 
-   ```bash
-   source ../../scripts/setupenv.sh 
-   ```
-    
-   5. And now we can start referencing the variables for each model as: $mFDA16, $mFDA32, $mFDR16, $mFDR32, $mAG16, $mAG32, $mHP16, $mHP32
+2. From the command you should see the following response.  Note the xhost command will need to be run again after rebooting Linux.
 
-2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO toolkit installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
+```Bash
+localuser:root being added to access control list
+```
 
-3. Let us first run it on a single image, to see how it works.
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -i ../../data/face.jpg
+3. After uploading the sketch, it can be started and stopped without re-uploading.  To control and check the status of the sketch, click the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step2_image_15.png)
+
+4. The sketch status window will appear with a "switch" to the right of each sketch indicating RUNNING or STOPPED as shown below already STOPPED.  
+
+![image alt text](../doc_support/step2_image_16.png)
+
+5. Clicking the RUNNING or STOPPED will change the status between states.  When starting a tutorial exercise, be sure the sketch is stopped first and then start it running.  With the sketch STOPPED, we now click it to change it to RUNNING, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step2_image_17.png)
+
+### How to Set Runtime Parameters
+
+For flexibility and to minimize rebuilding and re-uploading the sketch when parameters change, the tutorial code allows setting parameters at runtime.  When the sketch first starts, it will first display all the current settings and then prompt for a parameters string before continuing.  Note that the sketch must first stop (or be stopped) and then restarted before accepting new parameter settings.  The steps below go through an example to set the image input parameter "i=\<video filename\>".
+
+1. Open the "Monitor" view by clicking “Monitor” at the left side of the Arduino Create Web Editor.  The monitor is effectively the console for the sketch.  The large box will display output (stdout) from the sketch while the box to the left of the SEND button is used to send input (stdin) to the sketch.  **Note**: Be sure to open the monitor before starting the sketch otherwise you may not see initial output during startup displayed.
+
+![image alt text](../doc_support/step2_image_18.png)
+
+2. Stop the sketch if running, then start it again.  The Monitor view should now show the prompt for new parameters similar to below.  Note that each parameter is shown with a description first ("Path to a video file…"), the type of input (“sid::string”), then the current setting as name=val (“i=cam”)..  
+
+![image alt text](../doc_support/step2_image_19.png)
+
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+
+![image alt text](../doc_support/step2_image_20.png)
+
+4. You may notice that default value for the parameter "m" is pretty long and may need to change especially when wanting to use an FP16 model for a device.  To make this easier, included in the tutorial “face_detection.hpp” code are additional parameters: “mFDA32” and “mFDA16”.  Instead of copying the full path, the parameter string’s ability to reference other parameters may be used such as “m=$mFDA16” which will change parameter “m” to now point to the FP16 version of the model as shown below.
+
+![image alt text](../doc_support/step2_image_21.png)
+
+5. When ready to run the sketch with the current parameter settings, leave the input box empty and press Enter or click the SEND button.  The sketch should continue with more output shown in the monitor output box similar to below.
+
+![image alt text](../doc_support/step2_image_22.png)
+
+### Running
+
+1. You now have an executable file to run.  In order to have it run the face detection model, we need to set the runtime parameters:
+
+   1. "i=\<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
+
+   2. "=m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml”
+
+   3. That is a lot to type and keep straight, so to help make the model names shorter to type and easier to read, let us use the helper parameters in "face_detection.hpp".  The previous setting now becomes “m=$mFDA32”.
+
+2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO™ toolkit installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
+
+3. Let us first run it on a single image, to see how it works.  Use the parameter settings string:
+
+```
+m=$mFDA32 i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg
 ```
 
 
 4. You will now see an output window open up with the image displayed.  Over the image, you will see text with the statistics of how long it took to perform the OpenCV input and output and model processing time.  You should also see a rectangle drawn around the face in the image that has been labeled with an instance number and confidence value.
 
-5. Let us see how the application handles a video file.  And let us also see how easy it is to have the application run a different face detection model by loading the face-detection-retail-0004 IR files by just changing the -m parameter from $mFDA32 to $mFDR32.
+5. Let us see how the application handles a video file.  And let us also see how easy it is to have the application run a different face detection model by loading the face-detection-retail-0004 IR files by just changing the "m=" parameter from $mFDA32 to $mFDR32.  Use the parameter settings string:
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDR32 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+```
+m=$mFDR32 i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
 6. Now, you should see a window open, playing the video.  Over each frame of the video, you will see a rectangle drawn around the face.  As the face moves around the image, the rectangle will follow it.
 
-7. Finally, let us see how the application works with the default camera input.
+7. Finally, let us see how the application works with the camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by using the parameter settings string:
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -i cam
 ```
-
-
-Or
-
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32
+m=$mFDA32 i=cam
 ```
 
 
 8. Now you will see a window displaying the input from the USB camera.  The performance statistics appear over the image, as the application processes each frame.  If there is a face in the image, you will see a rectangle surrounding the face with label and confidence value.  The rectangle will follow the face around the image as it moves and will change sizes to fit the face.
 
-9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
+9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close.
 
-10. You may remember the final step of the code walk-through, where we showed a step that printed out Performance Counts for the application.  This only happens if you specify the "-pc" command line option.  Let us run the application one more time to see what kind of output we get from printing those counts.
+10. You may remember the final step of the code walk-through, where we showed a step that printed out Performance Counts for the application.  This only happens if you specify the "-pc" command line option.  Let us run the application one more time to see what kind of output we get from printing those counts.  Use the parameter settings string:
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -i cam -pc
+```
+m=$mFDA32 i=cam pc=1
 ```
 
 
-11. When you exit the application this time, you will notice that the Xterm window is updated with the final statistics from the face detection model.  The extra output shows a detailed list of the various analysis steps the model performed during the last request (Note only one, not all of them for video) and how long the model spent on each step.  At the bottom of the list, it displays the total time spent performing the face inference.
+11. When you exit the application this time, you will notice that the Monitor is updated with the final statistics from the face detection model.  The extra output shows a detailed list of the various analysis steps the model performed during the last request (Note only one, not all of them for video) and how long the model spent on each step.  At the bottom of the list, it displays the total time spent performing the face inference.
 
 ```bash
 InferenceEngine: 
@@ -1058,15 +1113,17 @@ Total time: 91233    microseconds
 ```
 
 
-12. Above, is part of the output you will see in your console window.  It shows information on what the Inference Engine loaded, followed by the performance statistics gathered from running each layer within the model.  This includes the calculation run, the model layer type, the real time spent performing the calculation, the CPU time spent performing the calculation, and the type of calculation that was performed.  In this instance, since we loaded the model onto the CPU, the "realTime" and “cpu” time values are the same.  The last bit of information we see is the total time spent spent performing the face analysis.  In this example running on an UP Squared Apollo Lake Intel Pentium N4200, it was 91233 microseconds, or 0.091233 seconds.
+12. Above, is part of the output you will see in your console window.  It shows information on what the Inference Engine loaded, followed by the performance statistics gathered from running each layer within the model.  This includes the calculation run, the model layer type, the real time spent performing the calculation, the CPU time spent performing the calculation, and the type of calculation that was performed.  In this instance, since we loaded the model onto the CPU, the "realTime" and “cpu” time values are the same.  The last bit of information we see is the total time spent spent performing the face analysis.  In this example it was 91233 microseconds, or 0.091233 seconds.
 
 # Conclusion
 
 Congratulations on using a CNN model to detect faces!  You have now seen that the process can be done quite quickly.  The classes and helper functions that we added here are aimed at making it easy to add more models to the application by following the same pattern.  We will see it again in action in Step 3, when we add an age and gender inferring model, and then again in Step 4, when we add head pose estimation.
 
 # Navigation
+
 [Face Detection Tutorial](../Readme.md)
 
 [Face Detection Tutorial Step 1](../step_1/Readme.md)
 
 [Face Detection Tutorial Step 3](../step_3/Readme.md)
+

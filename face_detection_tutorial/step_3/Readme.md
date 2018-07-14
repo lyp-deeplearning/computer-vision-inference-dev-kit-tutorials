@@ -4,17 +4,17 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-3-add-a-second-model-age-and-gender-detection">Tutorial Step 3: Add a second model, Age and Gender Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#age-and-gender-detection-model">Age and Gender Detection Model</a></li><li><a href="#adding-the-age-and-gender-detection-model">Adding the Age and Gender Detection Model</a><ul><li><a href="#agegenderdetection">AgeGenderDetection</a><ul><li><a href="#agegenderdetection">AgeGenderDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li></ul></li></ul></li><li><a href="#using-agegenderdetection">Using AgeGenderDetection</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-3-add-a-second-model-age-and-gender-detection">Tutorial Step 3: Add a second model, Age and Gender Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#age-and-gender-detection-model">Age and Gender Detection Model</a></li><li><a href="#adding-the-age-and-gender-detection-model">Adding the Age and Gender Detection Model</a><ul><li><a href="#agegenderdetection">AgeGenderDetection</a><ul><li><a href="#agegenderdetection">AgeGenderDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li></ul></li></ul></li><li><a href="#using-agegenderdetection">Using AgeGenderDetection</a><ul><li><a href="#main-function">main_function()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-arduino-create-web-editor">Start Arduino Create Web Editor</a></li><li><a href="#import-arduino-create-sketch">Import Arduino Create Sketch</a></li><li><a href="#build-and-upload-sketch-executable">Build and Upload Sketch Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#how-to-set-runtime-parameters">How to Set Runtime Parameters</a></li><li><a href="#running">Running</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
-Welcome to Face Detection Tutorial Step 3.  Now that the application can detect faces in images, we now want the application to estimate the age and gender for each face.  The precompiled "age-gender-recognition-retail-0013" model included with the OpenVINO toolkit that we will be running was trained on approximately 20,000 faces.  When it sees a face within 45 degrees (left, right, above, or below) of straight-on, it is 96.6% accurate on determining gender.  It can also determine ages to within 6 years, on average.  A sample output showing the results where the ROI box is now labeled “[M|F],<age>” appears below.  The metrics reported now also include the time to run the age and gender model.
+Welcome to Face Detection Tutorial Step 3.  Now that the application can detect faces in images, we now want the application to estimate the age and gender for each face.  The precompiled "age-gender-recognition-retail-0013" model included with the OpenVINO™ toolkit that we will be running was trained on approximately 20,000 faces.  When it sees a face within 45 degrees (left, right, above, or below) of straight-on, it is 96.6% accurate on determining gender.  It can also determine ages to within 6 years, on average.  A sample output showing the results where the ROI box is now labeled “[M|F],<age>” appears below.  The metrics reported now also include the time to run the age and gender model.
 
 ![image alt text](../doc_support/step3_image_1.png)
 
 # Age and Gender Detection Model
 
-The OpenVINO toolkit provides a pre-compiled model for estimating age and gender from an image of a face.  You can find it at:
+The OpenVINO™ toolkit provides a pre-compiled model for estimating age and gender from an image of a face.  You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013
 
@@ -51,7 +51,7 @@ Gender accuracy: 96.66%</td>
 
 Thanks to the setup work done in Tutorial Step 2, adding the age and gender detection model in this step will just be a matter of deriving a new class from the BaseDetection class, adding an additional command line argument to specify the new model, and updating the application to run and track the statistics for the new model.  This means there will not be as much code to walk through this time.  That will let us focus on how to pass the important image inference results from the face detection model to the age and gender detection model.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
@@ -97,10 +97,10 @@ struct AgeGenderDetection : BaseDetection {
 
 ### AgeGenderDetection()
 
-On construction of a AgeGenderDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_ag, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_ag.  This initializes the BaseDetection subclass specifically for AgeGenderDetection.
+On construction of a AgeGenderDetection object, the base class constructor is called passing in the model to load specified in the command line argument PARAMETERS_m_ag, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_ag.  This initializes the BaseDetection subclass specifically for AgeGenderDetection.
 
 ```cpp
-    AgeGenderDetection() : BaseDetection(FLAGS_m_ag, "Age Gender", FLAGS_n_ag) {}
+    AgeGenderDetection() : BaseDetection(PARAMETERS_m_ag, "Age Gender", PARAMETERS_n_ag) {}
 ```
 
 
@@ -165,11 +165,11 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
         slog::info << "Loading network files for AgeGender" << slog::endl;
         InferenceEngine::CNNNetReader netReader;
         /** Read network model **/
-        netReader.ReadNetwork(FLAGS_m_ag);
+        netReader.ReadNetwork(PARAMETERS_m_ag);
 ```
 
 
-2. The maximum batch size is set to maxBatch (set using FLAGS_n_ag which defaults to 1).
+2. The maximum batch size is set to maxBatch (set using PARAMETERS_n_ag which defaults to 1).
 
 ```cpp
         /** Set batch size **/
@@ -182,7 +182,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 
 ```cpp
         /** Extract model name and load it's weights **/
-        std::string binFileName = fileNameNoExt(FLAGS_m_ag) + ".bin";
+        std::string binFileName = fileNameNoExt(PARAMETERS_m_ag) + ".bin";
         netReader.ReadWeights(binFileName);
 ```
 
@@ -256,7 +256,7 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 9. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
-        slog::info << "Loading Age Gender model to the "<< FLAGS_d_ag << " plugin" << slog::endl;
+        slog::info << "Loading Age Gender model to the "<< PARAMETERS_d_ag << " plugin" << slog::endl;
         _enabled = true;
         return netReader.getNetwork();
     }
@@ -268,13 +268,13 @@ The next function we will walkthrough is the AgeGenderDetection::read() function
 
 That takes care of specializing the BaseDetector class into the AgeGenderDetection class for the age and gender detection model.  We now move down into the main() function to see what additions have been made to use the age and gender detection model to process detected faces.
 
-## main()
+## main_function()
 
-1. In the main() function, the command line arguments FLAGS_d_ag and FLAGS_m_ag are added to cmdOptions.  Remember that the flags are defined in the car_detection.hpp file.
+1. In the main_function() function, the command line arguments PARAMETERS_d_ag and PARAMETERS_m_ag are added to cmdOptions.  Remember that the flags are defined in the face_detection.hpp file.
 
 ```cpp
 std::vector<std::pair<std::string, std::string>> cmdOptions = {
-   {FLAGS_d, FLAGS_m}, {FLAGS_d_ag, FLAGS_m_ag}
+   {PARAMETERS_d, PARAMETERS_m}, {PARAMETERS_d_ag, PARAMETERS_m_ag}
 };
 ```
 
@@ -289,7 +289,7 @@ AgeGenderDetection AgeGender;
 3. The model is loaded into the Inference Engine and associated with the device using the Load helper class previously covered.
 
 ```cpp
-Load(AgeGender).into(pluginsForDevices[FLAGS_d_ag]);
+Load(AgeGender).into(pluginsForDevices[PARAMETERS_d_ag]);
 ```
 
 
@@ -468,7 +468,7 @@ ocv_render_time = std::chrono::duration_cast<ms>(t1 - t0).count();
 The age and gender detection object is added to display the performance count information.
 
 ```cpp
-if (FLAGS_pc) {
+if (PARAMETERS_pc) {
    FaceDetection.printPerformanceCounts();
    AgeGender.printPerformanceCounts();
 }
@@ -477,84 +477,152 @@ if (FLAGS_pc) {
 
 # Building and Running
 
-Now that we have walked through the added code and learned what it does, it is time to build the application and see it in action using two models to infer image information.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.  
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+### Start Arduino Create Web Editor
 
-2. Change to the directory containing Tutorial Step 3:
+If you do not already have a web browser open, open one such as the Firefox browser from the desktop or from a command line ("firefox &").  Once open, browse to the Arduino website [https://create.arduino.cc/](https://create.arduino.cc/) to begin.
 
-```bash
-cd tutorials/face_detection_tutorial/step_3
-```
+### Import Arduino Create Sketch
 
+1. After going to the Arduino website which should appear similar to below, open the Arduino Web Editor by clicking it.
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
+![image alt text](../doc_support/step3_image_2.png)
 
-```bash
-source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
-```
+2. When the editor is first opened, it will show your last opened sketch and appear similar to below.
 
+![image alt text](../doc_support/step3_image_3.png)
 
-4. Now we need to create a directory to build the tutorial in and change to it.
+3. To begin to import this tutorial’s sketch, click on the up-arrow icon (hovering tooltip will say "Import") to the right of the “NEW SKETCH” button as shown below.
 
-```bash
-mkdir build
-cd build
-```
+![image alt text](../doc_support/step3_image_4.png)
 
+4. A "File Upload" window will appear, use it to browse to where the tutorials have been downloaded and select the file “face_detection_tutorial/step_3/fd_step_3_sketch.zip”, and then click the Open button.  After uploading and importing successfully, you will see a window similar to below.  Click the OK button to continue.
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+![image alt text](../doc_support/step3_image_5.png)
 
-```bash
-cmake -DCMAKE_BUILD_TYPE=Release ../
-make
-```
+5. With the sketch now imported, it will be open in the editor similar to below and you are now ready to build.  
 
+![image alt text](../doc_support/step3_image_6.png)
+
+### Build and Upload Sketch Executable
+
+1. From the Arduino Create Web Editor you build the executable and then upload it to your Arduino device.  After uploading, the executable with the same name as the sketch may be found in the "sketches" directory under your user’s home directory and may be run directly from the command line later if desired.  Before continuing, be sure that your device is ready as indicated in the box which will show “\<device name\> via Cloud” when connected as shown below for the device named “myUP2”. 
+
+![image alt text](../doc_support/step3_image_7.png)
+
+2. If unconnected and not ready, the device will appear with a line with red ‘X’ before the name as shown below.  To reconnect, you may need to refresh or reload the browser page, restart the Arduino Create Agent, or potentially run setup for your kit again.
+
+![image alt text](../doc_support/step3_image_8.png)
+
+3. After making sure your device is connected, to begin the build and upload process click on the right-arrow icon at the top of the editor as shown below.
+
+![image alt text](../doc_support/step3_image_9.png)
+
+4. During the build and upload process, you will see that the button has been replaced with "BUSY" as shown below along with status text at the bottom of the window saying “Updating \<sketch name\>”.
+
+![image alt text](../doc_support/step3_image_10.png)
+
+5. Below shows after a successful build and upload.  Note that the bottom of the editor will be updated with the status and below it the output of the build.  
+
+![image alt text](../doc_support/step3_image_11.png)
+
+6. Uploading will also start the sketch which you can verify by checking the status of the sketch by clicking the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step3_image_12.png)
+
+7. The status window will show all the sketches that have been uploaded to the device and the state of each as a "switch" similar below showing either “RUNNING” or “STOPPED”.  Clicking the switch will change the state of the sketch.  
+
+![image alt text](../doc_support/step3_image_13.png)
+
+8. For now, we will stop the sketch before continuing.  First click the "RUNNING" to change it to “STOPPED”, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step3_image_14.png)
 
 ## Run
 
-1. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+### How to Run the Executable
 
-```bash
-source ../../scripts/setupenv.sh 
+1. Before starting a sketch, you will need to grant the root user access to the X server to open X windows by executing the following xhost command:
+
+```Bash
+xhost +si:localuser:root 
 ```
 
 
-2. You now have the executable file to run ./intel64/Release/face_detection_tutorial.  In order to load the age and gender detection model, the "-m_ag" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
+2. From the command you should see the following response.  Note the xhost command will need to be run again after rebooting Linux.
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i ../../data/face.jpg
+```Bash
+localuser:root being added to access control list
 ```
 
 
-3. The output window will show the image overlaid with colored rectangles over each of the detected faces with labels showing the age and gender results.  The timing statistics for computing the results of each model along with OpenCV input and output times are also shown.  Next, let us try it on a video file.
+3. After uploading the sketch, it can be started and stopped without re-uploading.  To control and check the status of the sketch, click the "RUN/STOP" button as shown below.
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+![image alt text](../doc_support/step3_image_15.png)
+
+4. The sketch status window will appear with a "switch" to the right of each sketch indicating RUNNING or STOPPED as shown below already STOPPED.  
+
+![image alt text](../doc_support/step3_image_16.png)
+
+5. Clicking the RUNNING or STOPPED will change the status between states.  When starting a tutorial exercise, be sure the sketch is stopped first and then start it running.  With the sketch STOPPED, we now click it to change it to RUNNING, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step3_image_17.png)
+
+### How to Set Runtime Parameters
+
+For flexibility and to minimize rebuilding and re-uploading the sketch when parameters change, the tutorial code allows setting parameters at runtime.  When the sketch first starts, it will first display all the current settings and then prompt for a parameters string before continuing.  Note that the sketch must first stop (or be stopped) and then restarted before accepting new parameter settings.  The steps below go through an example to set the image input parameter "i=\<video filename\>".
+
+1. Open the "Monitor" view by clicking “Monitor” at the left side of the Arduino Create Web Editor.  The monitor is effectively the console for the sketch.  The large box will display output (stdout) from the sketch while the box to the left of the SEND button is used to send input (stdin) to the sketch.  **Note**: Be sure to open the monitor before starting the sketch otherwise you may not see initial output during startup displayed.
+
+![image alt text](../doc_support/step3_image_18.png)
+
+2. Stop the sketch if running, then start it again.  The Monitor view should now show the prompt for new parameters similar to below.  Note that each parameter is shown with a description first ("Path to a video file…"), the type of input (“sid::string”), then the current setting as name=val (“i=cam”)..  
+
+![image alt text](../doc_support/step3_image_19.png)
+
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+
+![image alt text](../doc_support/step3_image_20.png)
+
+4. You may notice that default value for the parameter "m" is pretty long and may need to change especially when wanting to use an FP16 model for a device.  To make this easier, included in the tutorial “face_detection.hpp” code are additional parameters: “mFDA32” and “mFDA16”.  Instead of copying the full path, the parameter string’s ability to reference other parameters may be used such as “m=$mFDA16” which will change parameter “m” to now point to the FP16 version of the model as shown below.
+
+![image alt text](../doc_support/step3_image_21.png)
+
+5. When ready to run the sketch with the current parameter settings, leave the input box empty and press Enter or click the SEND button.  The sketch should continue with more output shown in the monitor output box similar to below.
+
+![image alt text](../doc_support/step3_image_22.png)
+
+### Running
+
+1. You now have the executable file to run.  In order to load the age and gender detection model, the "m_ag=" parameter needs to be added followed by the full path to the model.  First let us see how it works on a single image file.  Use the parameter settings string:
+
+```
+m=$mFDA32 m_ag=$mAG32 i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg
 ```
 
 
-4. You will see rectangles that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.
+2. The output window will show the image overlaid with colored rectangles over each of the detected faces with labels showing the age and gender results.  The timing statistics for computing the results of each model along with OpenCV input and output times are also shown.  Next, let us try it on a video file.  Use the parameter settings string:
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -i cam
+```
+m=$mFDA32 m_ag=$mAG32 i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-Or
+3. You will see rectangles that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by using the parameter settings string:
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32
+```
+m=$mFDA32 m_ag=$mAG32 i=cam
 ```
 
 
-5. Again, you will see colored rectangles drawn around any faces that appear in the images, along with the results for age, gender, and the various render statistics.
+4. Again, you will see colored rectangles drawn around any faces that appear in the images, along with the results for age, gender, and the various render statistics.
 
 # Conclusion
 
-Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model.  And that is the power the OpenVINO toolkit brings to applications.  Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
+Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model.  This is the power the OpenVINO™ toolkit brings to applications.  Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
 
 # Navigation
 
@@ -563,3 +631,4 @@ Building on the single model application from Tutorial Step 2, this step has sho
 [Face Detection Tutorial Step 2](../step_2/Readme.md)
 
 [Face Detection Tutorial Step 4](../step_4/Readme.md)
+

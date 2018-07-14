@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-adding-a-third-model-head-pose-estimation">Tutorial Step 4: Adding a third model, Head Pose Estimation</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#head-pose-estimation-model">Head Pose Estimation Model</a></li><li><a href="#adding-the-head-pose-estimation-model">Adding the Head Pose Estimation Model</a><ul><li><a href="#headposedetection">HeadPoseDetection</a><ul><li><a href="#headposedetection">HeadPoseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li><li><a href="#buildcameramatrix">buildCameraMatrix()</a></li><li><a href="#drawaxes">drawAxes()</a></li></ul></li></ul></li><li><a href="#using-headposedetection">Using HeadPoseDetection</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#picking-the-right-models-for-the-right-devices">Picking the Right Models for the Right Devices</a><ul><li><a href="#what-determines-the-device-a-model-uses">What Determines the Device a Model Uses?</a></li><li><a href="#how-do-i-choose-the-specific-device-to-run-a-model">How Do I Choose the Specific Device to Run a Model?</a></li><li><a href="#are-there-models-that-cannot-be-loaded-onto-specific-devices">Are There Models That Cannot be Loaded onto Specific Devices?</a></li><li><a href="#are-some-devices-faster-than-others">Are Some Devices Faster Than Others?</a></li><li><a href="#are-some-devices-better-for-certain-types-of-models-than-other-devices">Are Some Devices Better for Certain Types of Models Than Other Devices?</a><ul><li><a href="#command-line-and-all-the-arguments">Command Line and All the Arguments</a></li><li><a href="#what-kind-of-performance-should-i-see">What Kind of Performance Should I See?</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-adding-a-third-model-head-pose-estimation">Tutorial Step 4: Adding a third model, Head Pose Estimation</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#head-pose-estimation-model">Head Pose Estimation Model</a></li><li><a href="#adding-the-head-pose-estimation-model">Adding the Head Pose Estimation Model</a><ul><li><a href="#headposedetection">HeadPoseDetection</a><ul><li><a href="#headposedetection">HeadPoseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li><li><a href="#buildcameramatrix">buildCameraMatrix()</a></li><li><a href="#drawaxes">drawAxes()</a></li></ul></li></ul></li><li><a href="#using-headposedetection">Using HeadPoseDetection</a><ul><li><a href="#main-function">main_function()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-arduino-create-web-editor">Start Arduino Create Web Editor</a></li><li><a href="#import-arduino-create-sketch">Import Arduino Create Sketch</a></li><li><a href="#build-and-upload-sketch-executable">Build and Upload Sketch Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#how-to-set-runtime-parameters">How to Set Runtime Parameters</a></li><li><a href="#running">Running</a></li></ul></li></ul></li><li><a href="#picking-the-right-models-for-the-right-devices">Picking the Right Models for the Right Devices</a><ul><li><a href="#what-determines-the-device-a-model-uses">What Determines the Device a Model Uses?</a></li><li><a href="#how-do-i-choose-the-specific-device-to-run-a-model">How Do I Choose the Specific Device to Run a Model?</a></li><li><a href="#are-there-models-that-cannot-be-loaded-onto-specific-devices">Are There Models That Cannot be Loaded onto Specific Devices?</a></li><li><a href="#are-some-devices-faster-than-others">Are Some Devices Faster Than Others?</a></li><li><a href="#are-some-devices-better-for-certain-types-of-models-than-other-devices">Are Some Devices Better for Certain Types of Models Than Other Devices?</a><ul><li><a href="#all-the-parameters">All the Parameters</a></li><li><a href="#what-kind-of-performance-should-i-see">What Kind of Performance Should I See?</a><ul><li><a href="#runtime-parameter-settings">Runtime Parameter Settings</a></li></ul></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
@@ -16,7 +16,7 @@ In the image above, the three axes intersect in the center of the head.  The blu
 
 # Head Pose Estimation Model
 
-The OpenVINO toolkit includes a pre-compiled model for estimating head pose from an image of a face.  You can find it at:
+The OpenVINO™ toolkit includes a pre-compiled model for estimating head pose from an image of a face.  You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001
 
@@ -55,7 +55,7 @@ Roll: 4.6 ± 5.6</td>
 
 As we saw in Tutorial Step 3, adding a new model is a relatively straight forward process.  To add another model is just a matter of deriving a new class for head pose estimation, add a new command line parameter, updating the application to run and track statistics for the new model, and then finally take those results and overlay them on the face.  Let us walkthrough the source code used to accomplish that.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -92,7 +92,7 @@ struct HeadPoseDetection : BaseDetection {
 ```
 
 
-3. The operator[] function is defiend to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob is calculated for the batch item.  Then a result object containing the data read for the batch index is returned.
+3. The operator[] function is defined to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob is calculated for the batch item.  Then, a result object containing the data read for the batch index is returned.
 
 ```cpp
     Results operator[] (int idx) const {
@@ -108,10 +108,10 @@ struct HeadPoseDetection : BaseDetection {
 
 ### HeadPoseDetection()
 
-On construction of a HeadPoseDetection object, the base class constructor is called passing in the model to load specified in the command line argument FLAGS_m_hp, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_hp.  This initializes the BaseDetection subclass specifically for HeadPoseDetection.
+On construction of a HeadPoseDetection object, the base class constructor is called passing in the model to load specified in the command line argument PARAMETERS_m_hp, the name to be used when we printing out informational messages, and set the batch size to the command line argument FLAFS_n_hp.  This initializes the BaseDetection subclass specifically for HeadPoseDetection.
 
 ```cpp
-    HeadPoseDetection() : BaseDetection(FLAGS_m_hp, "Head Pose", FLAGS_n_hp) {}
+    HeadPoseDetection() : BaseDetection(PARAMETERS_m_hp, "Head Pose", PARAMETERS_n_hp) {}
 ```
 
 
@@ -180,11 +180,11 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
         slog::info << "Loading network files for Head Pose detection " << slog::endl;
         InferenceEngine::CNNNetReader netReader;
         /** Read network model **/
-        netReader.ReadNetwork(FLAGS_m_hp);
+        netReader.ReadNetwork(PARAMETERS_m_hp);
 ```
 
 
-2. The maximum batch size is set to maxBatch (set using FLAGS_n_hp which defaults to 1).
+2. The maximum batch size is set to maxBatch (set using PARAMETERS_n_hp which defaults to 1).
 
 ```cpp
         /** Set batch size to maximum currently set to one provided from command line **/
@@ -196,7 +196,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 3. The IR .bin file of the model is read.
 
 ```cpp
-        std::string binFileName = fileNameNoExt(FLAGS_m_hp) + ".bin";
+        std::string binFileName = fileNameNoExt(PARAMETERS_m_hp) + ".bin";
         netReader.ReadWeights(binFileName);
 ```
 
@@ -264,7 +264,7 @@ The next function we will walkthrough is the HeadPoseDetection::read() function 
 8. Where the model will be loaded is logged, the model is marked as being enabled, and the InferenceEngine::CNNNetwork object containing the model is returned.
 
 ```cpp
-        slog::info << "Loading Head Pose model to the "<< FLAGS_d_hp << " plugin" << slog::endl;
+        slog::info << "Loading Head Pose model to the "<< PARAMETERS_d_hp << " plugin" << slog::endl;
 
         _enabled = true;
         return netReader.getNetwork();
@@ -292,15 +292,15 @@ drawAxes() is a utility function that is used to create the Yaw, Pitch and Roll 
 
 # Using HeadPoseDetection
 
-## main()
+## main_function()
 
-That takes care of specializing the BaseDetector class into the Head PoseDetection class for the head pose detection model.  We now move down into the main() function to see what additions have been made to use the head pose detection model to process detected faces.
+That takes care of specializing the BaseDetector class into the Head PoseDetection class for the head pose detection model.  We now move down into the main_function() function to see what additions have been made to use the head pose detection model to process detected faces.
 
-1. In the main() function, the command line arguments FLAGS_d_hp and FLAGS_m_hp are added to cmdOptions.  Remember that the flags are defined in the car_detection.hpp file.
+1. In the main() function, the command line arguments PARAMETERS_d_hp and PARAMETERS_m_hp are added to cmdOptions.  Remember that the flags are defined in the face_detection.hpp file.
 
 ```cpp
 std::vector<std::pair<std::string, std::string>> cmdOptions = {
-   {FLAGS_d, FLAGS_m}, {FLAGS_d_ag, FLAGS_m_ag}, {FLAGS_d_hp, FLAGS_m_hp}
+   {PARAMETERS_d, PARAMETERS_m}, {PARAMETERS_d_ag, PARAMETERS_m_ag}, {PARAMETERS_d_hp, PARAMETERS_m_hp}
 };
 ```
 
@@ -315,7 +315,7 @@ HeadPoseDetection HeadPose;
 3. The model is loaded into the Inference Engine and associate it with the device using the Load helper class previously covered.
 
 ```cpp
-Load(HeadPose).into(pluginsForDevices[FLAGS_d_hp]);
+Load(HeadPose).into(pluginsForDevices[PARAMETERS_d_hp]);
 ```
 
 
@@ -346,7 +346,7 @@ In the main "while(true)" loop, the inference results from the face detection mo
 
 ```Cpp
             	// enqueue input batch
-                //...AgeGender code...
+            	//...AgeGender code...
             	while ((headPoseFaceIdx < headPoseNumFacesToInfer) && (HeadPose.enquedFaces < HeadPose.maxBatch)) {
 ```
 
@@ -453,7 +453,7 @@ if (HeadPose.enabled()) {
 The head pose detection object is added to display the performance count information. 
 
 ```cpp
-if (FLAGS_pc) {
+if (PARAMETERS_pc) {
    FaceDetection.printPerformanceCounts();
    AgeGender.printPerformanceCounts();
    HeadPose.printPerformanceCounts();
@@ -463,84 +463,152 @@ if (FLAGS_pc) {
 
 # Building and Running
 
-Now let us build and run the complete application and see how it runs all three analysis models.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.  
 
 ## Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+### Start Arduino Create Web Editor
 
-2. Change to the directory containing Tutorial Step 4:
+If you do not already have a web browser open, open one such as the Firefox browser from the desktop or from a command line ("firefox &").  Once open, browse to the Arduino website [https://create.arduino.cc/](https://create.arduino.cc/) to begin.
 
-```bash
-cd tutorials/face_detection_tutorial/step_4
-```
+### Import Arduino Create Sketch
 
+1. After going to the Arduino website which should appear similar to below, open the Arduino Web Editor by clicking it.
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
+![image alt text](../doc_support/step4_image_2.png)
 
-```bash
-source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
-```
+2. When the editor is first opened, it will show your last opened sketch and appear similar to below.
 
+![image alt text](../doc_support/step4_image_3.png)
 
-4. Now we need to create a directory to build the tutorial in and change to it.
+3. To begin to import this tutorial’s sketch, click on the up-arrow icon (hovering tooltip will say "Import") to the right of the “NEW SKETCH” button as shown below.
 
-```bash
-mkdir build
-cd build
-```
+![image alt text](../doc_support/step4_image_4.png)
 
+4. A "File Upload" window will appear, use it to browse to where the tutorials have been downloaded and select the file “face_detection_tutorial/step_4/fd_step_4_sketch.zip”, and then click the Open button.  After uploading and importing successfully, you will see a window similar to below.  Click the OK button to continue.
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+![image alt text](../doc_support/step4_image_5.png)
 
-```bash
-cmake -DCMAKE_BUILD_TYPE=Release ../
-make
-```
+5. With the sketch now imported, it will be open in the editor similar to below and you are now ready to build.  
 
+![image alt text](../doc_support/step4_image_6.png)
+
+### Build and Upload Sketch Executable
+
+1. From the Arduino Create Web Editor you build the executable and then upload it to your Arduino device.  After uploading, the executable with the same name as the sketch may be found in the "sketches" directory under your user’s home directory and may be run directly from the command line later if desired.  Before continuing, be sure that your device is ready as indicated in the box which will show “\<device name\> via Cloud” when connected as shown below for the device named “myUP2”. 
+
+![image alt text](../doc_support/step4_image_7.png)
+
+2. If unconnected and not ready, the device will appear with a line with red ‘X’ before the name as shown below.  To reconnect, you may need to refresh or reload the browser page, restart the Arduino Create Agent, or potentially run setup for your kit again.
+
+![image alt text](../doc_support/step4_image_8.png)
+
+3. After making sure your device is connected, to begin the build and upload process click on the right-arrow icon at the top of the editor as shown below.
+
+![image alt text](../doc_support/step4_image_9.png)
+
+4. During the build and upload process, you will see that the button has been replaced with "BUSY" as shown below along with status text at the bottom of the window saying “Updating \<sketch name\>”.
+
+![image alt text](../doc_support/step4_image_10.png)
+
+5. Below shows after a successful build and upload.  Note that the bottom of the editor will be updated with the status and below it the output of the build.  
+
+![image alt text](../doc_support/step4_image_11.png)
+
+6. Uploading will also start the sketch which you can verify by checking the status of the sketch by clicking the "RUN/STOP" button as shown below.
+
+![image alt text](../doc_support/step4_image_12.png)
+
+7. The status window will show all the sketches that have been uploaded to the device and the state of each as a "switch" similar below showing either “RUNNING” or “STOPPED”.  Clicking the switch will change the state of the sketch.  
+
+![image alt text](../doc_support/step4_image_13.png)
+
+8. For now, we will stop the sketch before continuing.  First click the "RUNNING" to change it to “STOPPED”, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step4_image_14.png)
 
 ## Run
 
-1. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+### How to Run the Executable
 
-```bash
-source ../../scripts/setupenv.sh 
+1. Before starting a sketch, you will need to grant the root user access to the X server to open X windows by executing the following xhost command:
+
+```Bash
+xhost +si:localuser:root 
 ```
 
 
-2. You now have the executable file to run ./intel64/Release/face_detection_tutorial.  In order to load the head pose detection model, the "-m_hp" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
+2. From the command you should see the following response.  Note the xhost command will need to be run again after rebooting Linux.
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32 -i ../../data/face.jpg
+```Bash
+localuser:root being added to access control list
 ```
 
 
-3. The output window will show the image overlaid with colored rectangles over the faces, age and gender results for each face, and the timing statistics for computing the results.  Additionally, you will see red, green, and blue axes over each face, representing the head pose, or orientation, for the face.  Next, let us try it on a video file.
+3. After uploading the sketch, it can be started and stopped without re-uploading.  To control and check the status of the sketch, click the "RUN/STOP" button as shown below.
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32 -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+![image alt text](../doc_support/step4_image_15.png)
+
+4. The sketch status window will appear with a "switch" to the right of each sketch indicating RUNNING or STOPPED as shown below already STOPPED.  
+
+![image alt text](../doc_support/step4_image_16.png)
+
+5. Clicking the RUNNING or STOPPED will change the status between states.  When starting a tutorial exercise, be sure the sketch is stopped first and then start it running.  With the sketch STOPPED, we now click it to change it to RUNNING, then click the DONE button to close the window.  **Note**: Be sure to run only one tutorial sketch at a time to avoid overloading your device which may make it very slow or unresponsive.
+
+![image alt text](../doc_support/step4_image_17.png)
+
+### How to Set Runtime Parameters
+
+For flexibility and to minimize rebuilding and re-uploading the sketch when parameters change, the tutorial code allows setting parameters at runtime.  When the sketch first starts, it will first display all the current settings and then prompt for a parameters string before continuing.  Note that the sketch must first stop (or be stopped) and then restarted before accepting new parameter settings.  The steps below go through an example to set the image input parameter "i=\<video filename\>".
+
+1. Open the "Monitor" view by clicking “Monitor” at the left side of the Arduino Create Web Editor.  The monitor is effectively the console for the sketch.  The large box will display output (stdout) from the sketch while the box to the left of the SEND button is used to send input (stdin) to the sketch.  **Note**: Be sure to open the monitor before starting the sketch otherwise you may not see initial output during startup displayed.
+
+![image alt text](../doc_support/step4_image_18.png)
+
+2. Stop the sketch if running, then start it again.  The Monitor view should now show the prompt for new parameters similar to below.  Note that each parameter is shown with a description first ("Path to a video file…"), the type of input (“sid::string”), then the current setting as name=val (“i=cam”)..  
+
+![image alt text](../doc_support/step4_image_19.png)
+
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+
+![image alt text](../doc_support/step4_image_20.png)
+
+4. You may notice that default value for the parameter "m" is pretty long and may need to change especially when wanting to use an FP16 model for a device.  To make this easier, included in the tutorial “car_detection.hpp” code are additional parameters: “mFDA32” and “mFDA16”.  Instead of copying the full path, the parameter string’s ability to reference other parameters may be used such as “m=$mFDA16” which will change parameter “m” to now point to the FP16 version of the model as shown below.
+
+![image alt text](../doc_support/step4_image_21.png)
+
+5. When ready to run the sketch with the current parameter settings, leave the input box empty and press Enter or click the SEND button.  The sketch should continue with more output shown in the monitor output box similar to below.
+
+![image alt text](../doc_support/step4_image_22.png)
+
+### Running
+
+1. You now have the executable file to run.  In order to load the head pose detection model, the "m_hp" parameter needs to be added followed by the full path to the model.  First, let us see how it works on a single image file.  Use the parameter settings string:
+
+```
+m=$mFDA32 m_ag=$mAG32 m_hp=$mHP32 i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg
 ```
 
 
-4. You will see rectangles and the head pose axes that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.
+2. The output window will show the image overlaid with colored rectangles over the faces, age and gender results for each face, and the timing statistics for computing the results.  Additionally, you will see red, green, and blue axes over each face, representing the head pose, or orientation, for the face.  Next, let us try it on a video file.  Use the parameter settings string:
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32 -i cam
+```
+m=$mFDA32 m_ag=$mAG32 m_hp=$mHP32 i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-Or
+3. You will see rectangles and the head pose axes that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by using the parameter settings string:
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32
+```
+m=$mFDA32 m_ag=$mAG32 m_hp=$mHP32 i=cam
 ```
 
 
-5. Again, you will see colored rectangles drawn around any faces that appear in the images along with the results for age, gender, the axes representing the head poses, and the various render statistics.
+4. Again, you will see colored rectangles drawn around any faces that appear in the images along with the results for age, gender, the axes representing the head poses, and the various render statistics.
 
 # Picking the Right Models for the Right Devices
 
-Throughout this tutorial, we just had the application load the models onto the default CPU device.  Here we will explore using the other devices included in the UP Squared AI Vision Development Kit, the GPU and Myriad.  That brings up several questions that we should discuss to get a more complete idea of how to make the best use of our models and how to optimize the applications using the devices available.
+Throughout this tutorial, we just had the application load the models onto the default CPU device.  Here we will explore using the other devices included in the UP Squared* AI Vision Development Kit, the GPU and Myriad.  That brings up several questions that we should discuss to get a more complete idea of how to make the best use of our models and how to optimize the applications using the devices available.
 
 ## What Determines the Device a Model Uses?
 
@@ -554,7 +622,7 @@ Once you have made those decisions, you can use the command line arguments to ha
 
 ## How Do I Choose the Specific Device to Run a Model?
 
-In the application, we use command line parameters to specify which device to use for the models we load.  These are "-d", “-d_ag” and “-d_hp”, and they are used for the face detection model, age and gender estimation model, and head pose estimation model, respectively.  The available devices are “CPU”, “GPU” and “MYRIAD” that come with the UP Squared AI Vision Development Kit.
+In the application, we use command line parameters to specify which device to use for the models we load.  These are "-d", “-d_ag” and “-d_hp”, and they are used for the face detection model, age and gender estimation model, and head pose estimation model, respectively.  The available devices are “CPU”, “GPU” and “MYRIAD” that come with the UP Squared* AI Vision Development Kit.
 
 ## Are There Models That Cannot be Loaded onto Specific Devices?
 
@@ -566,246 +634,106 @@ The easy answer is "yes."  The more complex answer is that it can be more comple
 
 ## Are Some Devices Better for Certain Types of Models Than Other Devices?
 
-Again, the easy answer is "yes."  The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs.  This is one of the most powerful features of the Inference Engine and the OpenVINO toolkit.  It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling.  Our face detection application can do exactly that.  So let us see what we can learn about how these models work on different devices by running through the options.
+Again, the easy answer is "yes."  The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs.  This is one of the most powerful features of the Inference Engine and the OpenVINO™ toolkit.  It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling.  Our face detection application can do exactly that.  So let us see what we can learn about how these models work on different devices by running through the options.
 
-### Command Line and All the Arguments
+### All the Parameters
 
-Before we can get started, let us go over the command line parameters again.  We specify the model we want to load by using the "-m*" arguments, which device to load using the “-d*” arguments, and batch size using the “-n*” arguments.  The table below summarizes the arguments for all three models.
+Before we can get started, let us go over the command line parameters again.  We specify the model we want to load by using the "m*" parameters, which device to load using the “d*” parameters, and batch size using the “-n*” parameters.  The table below summarizes the parameters for all three models.
 
 <table>
   <tr>
     <td>Model</td>
-    <td>Model Argument</td>
-    <td>Device Argument</td>
-    <td>Batch Size Argument</td>
+    <td>Model Parameter</td>
+    <td>Device Parameter</td>
+    <td>Batch Size Parameter</td>
   </tr>
   <tr>
     <td>Face detection</td>
-    <td>-m</td>
-    <td>-d</td>
+    <td>m</td>
+    <td>d</td>
     <td>(none, always set to 1)</td>
   </tr>
   <tr>
     <td>Age and gender</td>
-    <td>-m_ag</td>
-    <td>-d_ag</td>
-    <td>-n_ag</td>
+    <td>m_ag</td>
+    <td>d_ag</td>
+    <td>n_ag</td>
   </tr>
   <tr>
     <td>Head pose</td>
-    <td>-m_hp</td>
-    <td>-d_hp</td>
-    <td>-n_hp</td>
+    <td>m_hp</td>
+    <td>d_hp</td>
+    <td>n_hp</td>
   </tr>
 </table>
 
 
 As we mentioned in the Key Concepts section, the batch size is the number of input data that the models will work on.  For the face detection model, the batch size is fixed to 1.  Even when processing input from a video or a camera, it will only processes a single image/frame at a time.  Depending on the content of the image data, it can return any number of faces.  The application lets us set the batch size on the other models dynamically and the default batch size is 1 for the age and gender and head pose models.  This will work for the Myriad which has a maximum batch size of 1.  Since we are not expecting many results in the test video provided, to simplify things and keep batch size from affecting performance results (something covered in the Car Detection Tutorial), we will use the default batch size of 1 for all models.
 
-Let us look at a sample command line that uses all the parameters so that we can see what it looks like.  For this example, we are running the application from the "step_4/build" directory.
+Let us look at a sample parameter settings string that uses all the parameters so that we can see what it looks like.
 
-```bash
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+```
+m=$mFDA32 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16.  We also specify "-i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4" so that we have a “known” data set to do our performance tests with.  This MP4 video file used from the OpenVINO toolkit samples is a hand-drawn face with a moving camera.  
+From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16.  We also specify "-i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4" so that we have a “known” data set to do our performance tests with.  This MP4 video file used from the OpenVINO™ toolkit samples is a hand-drawn face with a moving camera.  
 
 You can see that it is easy to change the model precision to match the device you want to run it on by changing the model to use the FP16 or FP32 using "16" and “32” built into the names of the variables..  It is easy to make up several test cases to see how the application and each of the inference model, perform.  Just remember that all models run on the CPU must be FP32, and all models run on the Myriad must be FP16.  Models run on the Myriad must also have their batch size set to 1.  Models run on the GPU can be either FP16 or FP32.
 
 ### What Kind of Performance Should I See?
 
-That depends on many things, from the specific combination of models and devices that you specified, to the other applications running on the development kit while you collect data.  There are are also different versions of the UP Squared board, with different CPU and GPU hardware.  So the exact data will vary from what appears in the chart below, however the general trends should be the same.  That said, let us take a look at some of the performance counts we observed.  
+That depends on many things, from the specific combination of models and devices that you specified, to the other applications running on the development kit while you collect data.  There are are also different versions of the UP Squared* board, with different CPU and GPU hardware.  So the exact data will vary from what appears in the chart below, however the general trends should be the same.  That said, let us take a look at some of the performance counts we observed.  
 
 The performance reported in milliseconds and using the "wallclock*" and “totalFramse” variables in the code that time the main loop.  When the application exits, it reports the wallclock time and average time and FPS of main loop for the input image source used.
 
-Below are ten command lines we used to generate some performance count data.  They do not cover all the possible combinations, but they do give a good indication of the top performance trends for each of the models on the different devices.  
+Below are ten command lines we used to generate some performance count data.  These do not cover all the possible combinations, but these do give a good indication of the top performance trends for each of the models on the different devices.  
 
-```bash
-# command line #1
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #2
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #3
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #4
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #5
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d MYRIAD -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #6
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d MYRIAD -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #7
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #8
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #9
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #10
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #11
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #12
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #13
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #14
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d MYRIAD -m_ag $mAG32 -d_ag CPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #15
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #16
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+#### Runtime Parameter Settings
+
+```
+# Parameter settings string #1
+m=$mFDA16 d=MYRIAD m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #2
+m=$mFDA16 d=MYRIAD m_ag=$mAG32 d_ag=CPU m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #3
+m=$mFDA16 d=MYRIAD m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #4
+m=$mFDA32 d=CPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #5
+m=$mFDA32 d=CPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #6
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #7
+m=$mFDA16 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #8
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #9
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #10
+m=$mFDA32 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #11
+m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #12
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #13
+m=$mFDA32 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #14
+m=$mFDA16 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #15
+m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Parameter settings string #16
+m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-<table>
-  <tr>
-    <td>Command Line # </td>
-    <td>Face Detection</td>
-    <td>Age Gender</td>
-    <td>Head Pose</td>
-    <td>Average Main Loop Time (ms)</td>
-    <td>Average Main Loop Time (FPS)</td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>MYRIAD, FP16</td>
-    <td>GPU, FP16</td>
-    <td>CPU, FP32</td>
-    <td>384.76</td>
-    <td>2.60</td>
-  </tr>
-  <tr>
-    <td>14</td>
-    <td>MYRIAD, FP16</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP16</td>
-    <td>385.30</td>
-    <td>2.60</td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>MYRIAD, FP16</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP32</td>
-    <td>378.30</td>
-    <td>2.64</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>252.25</td>
-    <td>3.96</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP32</td>
-    <td>217.73</td>
-    <td>4.59</td>
-  </tr>
-  <tr>
-    <td>8</td>
-    <td>CPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>157.93</td>
-    <td>6.33</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>GPU, FP16</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>154.26</td>
-    <td>6.48</td>
-  </tr>
-  <tr>
-    <td>11</td>
-    <td>CPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>GPU, FP16</td>
-    <td>135.51</td>
-    <td>7.38</td>
-  </tr>
-  <tr>
-    <td>16</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>134.50</td>
-    <td>7.43</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>GPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP32</td>
-    <td>133.54</td>
-    <td>7.49</td>
-  </tr>
-  <tr>
-    <td>13</td>
-    <td>GPU, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>CPU, FP32</td>
-    <td>132.05</td>
-    <td>7.57</td>
-  </tr>
-  <tr>
-    <td>7</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP16</td>
-    <td>130.94</td>
-    <td>7.64</td>
-  </tr>
-  <tr>
-    <td>9</td>
-    <td>GPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>126.89</td>
-    <td>7.88</td>
-  </tr>
-  <tr>
-    <td>12</td>
-    <td>GPU, FP16</td>
-    <td>CPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>124.21</td>
-    <td>8.05</td>
-  </tr>
-  <tr>
-    <td>10</td>
-    <td>GPU, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>114.38</td>
-    <td>8.74</td>
-  </tr>
-  <tr>
-    <td>15</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP16</td>
-    <td>97.40</td>
-    <td>10.27</td>
-  </tr>
-</table>
-
-
-Above is a matrix that shows some of the test cases that were run on a UP Squared Apollo Lake Intel Pentium N4200 to get performance data.  The analysis models are listed on the left, with the average main loop times on the right.  Each row lists the device the model was run on and the floating point precision.  
-
-From this, we can see several trends:  
+Performance is measured as the average time for the main loop to process all the input frames.  The average time, and inverse as frames-per-second (fps), with number of frames processed are reported on exit.  The results seen for the configurations listed above should improve starting from the first all the way to the last.  From the list, we can see several trends:  
 
 * Performance is generally faster on the GPU than on the CPU.  
 
 * FP16 performance is almost always faster than FP32 performance on any device.
 
-* The Myriad is shows up in the fastest and slowest performance numbers.  This is likely due to the architecture of the device and that is connected by USB for data transfers, instead of being more directly connected to memory like the CPU and GPU.  This means that more compute time needs to be spent moving data back and forth, across a slower connection.  So we can infer that models that require significant amounts of data to process would be better run on the CPU or GPU, while model that work on modest amounts of data transfer can be handled quite well by the Myriad.
+* Depending upon which model it runs, the Myriad shows up in the fastest and slowest performance numbers.  This is likely due to the device being connected by USB for data transfers instead of being directly connected to main system memory like the CPU and GPU.  This means that more time needs to be spent moving data back and forth across a slower connection, and the more data moved, the slower it is.  We can infer that models that require significant amounts of data to process would be better run on the CPU or GPU, while models that work on modest amounts of data can be handled well by the Myriad.
 
 In general, the best way to maximize performance is to put the most complex model on the fastest device.  Try to divide the work across the devices as much as possible to avoid overloading any one device.  If you do not need FP32 precision, you can speed up your applications by using FP16 models.
 
@@ -815,7 +743,7 @@ Something to note too is that the Myriad is only capable of running two analysis
 
 # Conclusion
 
-By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application.  This again shows the power the OpenVINO toolkit brings to applications by quickly being able to add another inference model.  We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
+By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application.  This again shows the power the OpenVINO™ toolkit brings to applications by quickly being able to add another inference model.  We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
 
 # Navigation
 
