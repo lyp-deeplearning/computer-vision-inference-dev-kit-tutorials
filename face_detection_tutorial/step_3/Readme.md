@@ -4,17 +4,17 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-3-add-a-second-model-age-and-gender-detection">Tutorial Step 3: Add a second model, Age and Gender Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#age-and-gender-detection-model">Age and Gender Detection Model</a></li><li><a href="#adding-the-age-and-gender-detection-model">Adding the Age and Gender Detection Model</a><ul><li><a href="#agegenderdetection">AgeGenderDetection</a><ul><li><a href="#agegenderdetection">AgeGenderDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li></ul></li></ul></li><li><a href="#using-agegenderdetection">Using AgeGenderDetection</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-3-add-a-second-model-age-and-gender-detection">Tutorial Step 3: Add a second model, Age and Gender Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#age-and-gender-detection-model">Age and Gender Detection Model</a></li><li><a href="#adding-the-age-and-gender-detection-model">Adding the Age and Gender Detection Model</a><ul><li><a href="#agegenderdetection">AgeGenderDetection</a><ul><li><a href="#agegenderdetection">AgeGenderDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li></ul></li></ul></li><li><a href="#using-agegenderdetection">Using AgeGenderDetection</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#command-line-using-make">Command Line using Make</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#intel-system-studio">IntelÂ® System Studio</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-intel-system-studio">Start IntelÂ® System Studio</a></li><li><a href="#create-project">Create Project</a></li><li><a href="#configure-project">Configure Project</a></li><li><a href="#build-executable">Build Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#create-run-configuration">Create Run Configuration</a></li><li><a href="#how-to-set-command-line-arguments">How to Set Command Line Arguments</a></li><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#running">Running</a></li></ul></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
-Welcome to Face Detection Tutorial Step 3.  Now that the application can detect faces in images, we now want the application to estimate the age and gender for each face.  The precompiled "age-gender-recognition-retail-0013" model included with the OpenVINO toolkit that we will be running was trained on approximately 20,000 faces.  When it sees a face within 45 degrees (left, right, above, or below) of straight-on, it is 96.6% accurate on determining gender.  It can also determine ages to within 6 years, on average.  A sample output showing the results where the ROI box is now labeled “[M|F],<age>” appears below.  The metrics reported now also include the time to run the age and gender model.
+Welcome to Face Detection Tutorial Step 3.  Now that the application can detect faces in images, we now want the application to estimate the age and gender for each face.  The precompiled "age-gender-recognition-retail-0013" model included with the OpenVINO™ toolkit that we will be running was trained on approximately 20,000 faces.  When it sees a face within 45 degrees (left, right, above, or below) of straight-on, it is 96.6% accurate on determining gender.  It can also determine ages to within 6 years, on average.  A sample output showing the results where the ROI box is now labeled “[M|F],<age>” appears below.  The metrics reported now also include the time to run the age and gender model.
 
 ![image alt text](../doc_support/step3_image_1.png)
 
 # Age and Gender Detection Model
 
-The OpenVINO toolkit provides a pre-compiled model for estimating age and gender from an image of a face.  You can find it at:
+The OpenVINO™ toolkit provides a pre-compiled model for estimating age and gender from an image of a face.  You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/age-gender-recognition-retail-0013
 
@@ -51,7 +51,7 @@ Gender accuracy: 96.66%</td>
 
 Thanks to the setup work done in Tutorial Step 2, adding the age and gender detection model in this step will just be a matter of deriving a new class from the BaseDetection class, adding an additional command line argument to specify the new model, and updating the application to run and track the statistics for the new model.  This means there will not be as much code to walk through this time.  That will let us focus on how to pass the important image inference results from the face detection model to the age and gender detection model.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
@@ -477,11 +477,15 @@ if (FLAGS_pc) {
 
 # Building and Running
 
-Now that we have walked through the added code and learned what it does, it is time to build the application and see it in action using two models to infer image information.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.  To do that, two ways are covered in the following sections: 1) Command line using "make" and 2) using Intel® System Studio (ISS).  Both ways do the same things, so choose according to your preference.
 
-## Build
+## Command Line using Make
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+The following covers how to build and run from the command line using "make".
+
+### Build
+
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 3:
 
@@ -490,7 +494,7 @@ cd tutorials/face_detection_tutorial/step_3
 ```
 
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
+3. The first step is to configure the build environment for the OpenVINO™ toolkit by running the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -513,7 +517,7 @@ make
 ```
 
 
-## Run
+### Run
 
 1. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
 
@@ -552,9 +556,245 @@ Or
 
 5. Again, you will see colored rectangles drawn around any faces that appear in the images, along with the results for age, gender, and the various render statistics.
 
+## Intel® System Studio
+
+The following covers how to build and run from within Intel® System Studio (ISS).
+
+### Build
+
+#### Start Intel® System Studio
+
+1. We need to start ISS using the desktop icon or the supplied scripts that will setup environment variables and launch the ISS Eclipse IDE.
+
+   1. Desktop icon: Locate and double-click the icon shown below on the desktop.
+
+![image alt text](../doc_support/step3_image_2.png)
+
+   2. Command line: Configure the build environment when using the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Be sure to source the helper script “scripts/setupenv.sh” which defines environment variables that point to inference models used so that short names may be used instead of long paths.  Then finally start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
+
+```bash
+source /opt/intel/computer_vision_sdk/bin/setupvars.sh
+# assumes shell is in step_* directory
+source ../scripts/setupenv.sh
+/opt/intel/system_studio_2018/iss_ide_eclipse-launcher.sh
+```
+
+
+2. At first, the ISS splash window will appear that looks like:
+
+![image alt text](../doc_support/step3_image_3.png)
+
+3. The splash window will automatically disappear and be replaced with the workspace selection window.  We will use the default workspace "/home/upsquared/system_studio/workspace", so click the “OK” button to continue.
+
+![image alt text](../doc_support/step3_image_4.png)
+
+4. The first time ISS is opened, the ISS IDE will show the "Getting Started" tab as shown.  We will not be using it so if it is present, close the tab using the “X” on the tab that is just to the right of “Getting Started”.
+
+![image alt text](../doc_support/step3_image_5.png)
+
+5. With the "Getting Started” tab now closed, the ISS IDE will default in the Intel® C/C++ perspective which appears similar to below:
+
+   1. **Note**: The perspective may be different if ISS has been started before and changes were made.  A different perspective may be open, such as the standard C/C++ perspective, or if the windows have been moved.
+
+![image alt text](../doc_support/step3_image_6.png)
+
+#### Create Project
+
+1. Before building the executable, a project must be created.  Start by opening File->New->Project...
+
+![image alt text](../doc_support/step3_image_7.png)
+
+2. Expand "C/C++", select “C++ Project”, and then click the Next button.
+
+   1. **Note**: If the "C/C++" wizard is not available, you will need to unhide it by going to Window->Preferences,”Intel System Studio”, unchecking the option “Hide unsupported wizards”, and then click the OK button.
+
+![image alt text](../doc_support/step3_image_8.png)
+
+3. The "C++ Project" window will appear.  Set the following items:
+
+   1. Set "Project name" to: face_detection_step_3
+
+   2. Uncheck the "Use default location" box, then click the Browse… button.  Using the file open dialog, browse to the tutorial “step_3” directory and then click the OK button.
+
+   3. Make sure under "Project type", the Executable->”Empty Project” is selected
+
+   4. Under "Toolchain", select “Linux GCC”
+
+   5. When complete the window should look similar to below.  Click the Finish button to continue.
+
+![image alt text](../doc_support/step3_image_9.png)
+
+4. You may see a "Open Associated Perspective?" window prompting to open the C/C++ perspective.  If so click the Yes button.
+
+![image alt text](../doc_support/step3_image_10.png)
+
+5. You now should be in the C/C++ perspective with the tutorial added as a project similar to below.
+
+![image alt text](../doc_support/step3_image_11.png)
+
+6. Note that the "Project Explorer" window shows the new project “face_detection_step_3”.
+
+![image alt text](../doc_support/step3_image_12.png)
+
+#### Configure Project
+
+1. To build the project, it must be configured to use the CMake files present.  Start by selecting the project in the "Project Explorer" window and then from the menu select Project->Properties.
+
+![image alt text](../doc_support/step3_image_13.png)
+
+2. The "Properties for …" window will appear.   First, expand “C/C++ Build” and select “Tool Chain Editor”.  Then in the “Current builder” drop-down list, select the “CMake Builder (portable)”.  Then click the Apply button.
+
+![image alt text](../doc_support/step3_image_14.png)
+
+3. Now change "Configuration" to “Release”, then again set “Current builder” to “CMake Builder (portable)”.  Then click the OK button.
+
+![image alt text](../doc_support/step3_image_15.png)
+
+4. At this point, if you open the source file main.cpp you will see include files not found and syntax errors listed in the "Problems" window.  These errors are not really errors and compiling the executable will succeed.  The false errors appear because the CMake builder does not automatically import include paths for the IDE’s code analysis (also referred to as the “Indexer”) from the CMake files.  To fix the false errors reported by the indexer, you must set some include paths and define a macro.  Start by again selecting the project in the “Project Explorer” window and then from the menu select Project->Properties.  Expand “C/C++ General” and then select “Paths and Symbols”.  With Configuration set to  “[All configurations]”, the path and symbol settings need to be set as follows:
+
+   1. On the Include tab for Language "GNU C++", the list of “Include directories” needs to have:
+
+      1. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include
+
+      2. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common
+
+      3. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension
+
+      4. /opt/intel/computer_vision_sdk/opencv/include
+
+      5. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples
+
+   2. On the Symbol tab for Language "GNU C++":
+
+      1. Symbol "__cplusplus" set to value “201103”
+
+   3. Instead of manually making all theses changes, a settings file that can be imported for all the above is included with the tutorial files under "system_studio/exported_paths_and_symbols.xml".  The following steps will use the settings file instead of entering manually.	
+
+5. Starting from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.   By default, “Select Configuration” should have “Debug” selected.  The window should appear similar to below.  Click the Finish button to complete (this will close the project properties window too).
+
+![image alt text](../doc_support/step3_image_16.png)
+
+6. Starting again from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.  This time under “Select Configuration”, select “Release”.  The window should appear similar to below.  Click the Finish button to complete.
+
+![image alt text](../doc_support/step3_image_17.png)
+
+7. Going back to Project->Properties, "C/C++ General"->“Paths and Symbols” should appear similar to below for the Includes and Symbols tabs.
+
+   1. **Note**: After these settings are made, to remove the false errors you may need to re-index the project by selecting from the menu Project->"C/C++ Index”->Rebuild
+
+![image alt text](../doc_support/step3_image_18.png)
+
+![image alt text](../doc_support/step3_image_19.png)
+
+#### Build Executable
+
+1. Now that the project is configured, we will build the executable.  We will be using the Release configuration build which is set by Project->"Build Configurations”->”Set Active” and selecting "Release”.
+
+![image alt text](../doc_support/step3_image_20.png)
+
+2. Build the executable using Project->"Build Project”.
+
+![image alt text](../doc_support/step3_image_21.png)
+
+3. The "Build Project" window will appear.  The first build will take a minute to complete because it is building all the sample libraries needed.  Click the “Run in Background” button to close the window and letting the build continue as we look at the consoles.
+
+![image alt text](../doc_support/step3_image_22.png)
+
+4. In the Console window you may see the output of CMake similar to below.  
+
+![image alt text](../doc_support/step3_image_23.png)
+
+5. To see the output of the compiler, we need to change to the build console.  To do so, click on the down-arrow to the right of the terminal icon, then select "CDT Build Console [...]".
+
+![image alt text](../doc_support/step3_image_24.png)
+
+6. When the build completes successfully, the Console will appear similar to below.
+
+![image alt text](../doc_support/step3_image_25.png)
+
+7. Now that the executable is built, we can move on to running it.
+
+### Run
+
+#### Create Run Configuration
+
+1. Before running the executable from within ISS, a run configuration must be created.  The quickest way to setup a new one is to just run the project and then edit the details.  To start this, from the Run menu, select "Run As" then “Local C/C++ Application”.
+
+![image alt text](../doc_support/step3_image_26.png)
+
+2. You may see a "C Local Application" window appear similar to below prompting to choose which binary to run.  If so, choose “face_detection_tutorial” and click the OK button.  **Note**: The other binaries listed are side effects from CMake and may be ignored.
+
+![image alt text](../doc_support/step3_image_27.png)
+
+3. The project’s executable will be started with the output appearing in the Console window.  At this point no command line arguments are given to the executable which will run (or exit) accordingly.  The models need to be specified so you should see an error and exit similar to below.
+
+![image alt text](../doc_support/step3_image_28.png)
+
+4. Since the default name used is the name of the executable, it is a good idea to have the run configuration’s name match the project to make it easier to distinguish it from multiple projects.  Begin by editing the run configuration’s name by first opening the run configuration up starting from the Run menu, selecting "Run Configurations…".
+
+![image alt text](../doc_support/step3_image_29.png)
+
+5. Under "C/C++ Application", select the correct project’s run configuration which will appear in the the Project setting.  Now edit the Name at the top changing to closer match the project name, here setting it to “face_detection_tutorial_step_3” as shown below.
+
+![image alt text](../doc_support/step3_image_30.png)
+
+#### How to Set Command Line Arguments
+
+1. The run configuration just created does not have any command line arguments being passed to it.  To add arguments when running the executable, you must edit the run configuration starting from the Run menu, selecting "Run Configurations…".  Depending upon how many configurations are present, you may need to select the one for the current project.  Initially the Main tab is selected which shows the main project settings similar to below.
+
+![image alt text](../doc_support/step3_image_31.png)
+
+2. To set command line arguments, select the Arguments tab which will appear similar to below.  
+
+   1. In the "Program arguments" area goes the command line arguments to be passed to the executable when run.  Here we have entered “-i cam” as an example.  Literal command line arguments will be passed exactly as they appear.  Environment variables require special treatment and are specified as “${env_var:\<var_name\>}” where “\<var_name\>” is the environment variable name.
+
+   2. Also shown is the "Working directory".  This is where the executable is run and by default set to the top project directory.  **Note**: This is important to know when command line arguments use relative paths.
+
+   3. When done, click the Run button to run the executable or the Close button to close the window.
+
+![image alt text](../doc_support/step3_image_32.png)
+
+#### How to Run the Executable
+
+1. Running the executable can always be done from the Run Configuration window using the Run button.  To run without opening the Run Configuration window is done using the Run Menu, "Run History", then selecting the name of the run configuration as shown below.  
+
+![image alt text](../doc_support/step3_image_33.png)
+
+#### Running
+
+1. Before starting ISS, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+
+```bash
+source ../../scripts/setupenv.sh 
+```
+
+
+2. You now have the executable file to run.  In order to load the age and gender detection model, the "-m_ag" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -m_ag ${env_var:mAG32} -i ../data/face.jpg
+```
+
+
+3. The output window will show the image overlaid with colored rectangles over each of the detected faces with labels showing the age and gender results.  The timing statistics for computing the results of each model along with OpenCV input and output times are also shown.  Next, let us try it on a video file.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -m_ag ${env_var:mAG32} -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+```
+
+
+4. You will see rectangles that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by setting the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -m_ag ${env_var:mAG32} -i cam
+```
+
+
+5. Again, you will see colored rectangles drawn around any faces that appear in the images, along with the results for age, gender, and the various render statistics.
+
 # Conclusion
 
-Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model.  And that is the power the OpenVINO toolkit brings to applications.  Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
+Building on the single model application from Tutorial Step 2, this step has shown that using a second inference model in an application is just as easy as using the first.  This also shows how powerful your applications can become by using one model to analyze the results you obtain from another model.  This is the power the OpenVINO™ toolkit brings to applications.  Continuing to Tutorial Step 4, we will expand the application once more by adding another model to estimate head pose based on the same face data that we used in Tutorial Step 3 to estimate age and gender.
 
 # Navigation
 
@@ -563,3 +803,4 @@ Building on the single model application from Tutorial Step 2, this step has sho
 [Face Detection Tutorial Step 2](../step_2/Readme.md)
 
 [Face Detection Tutorial Step 4](../step_4/Readme.md)
+

@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-using-asynchronous-api">Tutorial Step 4: Using Asynchronous API</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#using-the-asynchronous-api">Using the Asynchronous API</a><ul><li><a href="#command-line-arguments">Command Line Arguments</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#basedetection">BaseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#resultisready">resultIsReady()</a></li><li><a href="#requestsinprocess">requestsInProcess()</a></li><li><a href="#cansubmitrequest">canSubmitRequest()</a></li></ul></li><li><a href="#vehicledetection-class">VehicleDetection Class</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#vehicleattribsdetection-class">VehicleAttribsDetection Class</a><ul><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#main">main()</a><ul><li><a href="#report-async-mode">Report Async Mode</a></li><li><a href="#increase-storage">Increase Storage</a></li><li><a href="#add-pipeline-data-fields-and-storage">Add Pipeline Data Fields and Storage</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-start-inferring-a-batch-of-frames">Pipeline Stage #0: Prepare and Start Inferring a Batch of Frames</a></li><li><a href="#pipeline-stage-1-process-vehicles-inference-results">Pipeline Stage #1: Process Vehicles Inference Results</a></li><li><a href="#pipeline-stage-2-start-inferring-vehicle-attributes">Pipeline Stage #2: Start Inferring Vehicle Attributes</a></li><li><a href="#pipeline-stage-3-process-vehicle-attribute">Pipeline Stage #3: Process Vehicle Attribute</a></li><li><a href="#pipeline-stage-4-render-results">Pipeline Stage #4: Render Results</a></li><li><a href="#end-of-loop">End of Loop</a></li></ul></li></ul></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-using-asynchronous-api">Tutorial Step 4: Using Asynchronous API</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#using-the-asynchronous-api">Using the Asynchronous API</a><ul><li><a href="#command-line-arguments">Command Line Arguments</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#basedetection">BaseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#resultisready">resultIsReady()</a></li><li><a href="#requestsinprocess">requestsInProcess()</a></li><li><a href="#cansubmitrequest">canSubmitRequest()</a></li></ul></li><li><a href="#vehicledetection-class">VehicleDetection Class</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#vehicleattribsdetection-class">VehicleAttribsDetection Class</a><ul><li><a href="#enqueue">enqueue()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li><li><a href="#main">main()</a><ul><li><a href="#report-async-mode">Report Async Mode</a></li><li><a href="#increase-storage">Increase Storage</a></li><li><a href="#add-pipeline-data-fields-and-storage">Add Pipeline Data Fields and Storage</a></li><li><a href="#main-loop">Main Loop</a><ul><li><a href="#pipeline-stage-0-prepare-and-start-inferring-a-batch-of-frames">Pipeline Stage #0: Prepare and Start Inferring a Batch of Frames</a></li><li><a href="#pipeline-stage-1-process-vehicles-inference-results">Pipeline Stage #1: Process Vehicles Inference Results</a></li><li><a href="#pipeline-stage-2-start-inferring-vehicle-attributes">Pipeline Stage #2: Start Inferring Vehicle Attributes</a></li><li><a href="#pipeline-stage-3-process-vehicle-attribute">Pipeline Stage #3: Process Vehicle Attribute</a></li><li><a href="#pipeline-stage-4-render-results">Pipeline Stage #4: Render Results</a></li><li><a href="#end-of-loop">End of Loop</a></li></ul></li></ul></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#command-line-using-make">Command Line using Make</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#intel-system-studio">Intel® System Studio</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-intel-system-studio">Start Intel® System Studio</a></li><li><a href="#create-project">Create Project</a></li><li><a href="#configure-project">Configure Project</a></li><li><a href="#build-executable">Build Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#create-run-configuration">Create Run Configuration</a></li><li><a href="#how-to-set-command-line-arguments">How to Set Command Line Arguments</a></li><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#running">Running</a></li></ul></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
@@ -36,7 +36,7 @@ In Car Detection Tutorial Step 4, we will see how the code from Tutorial Step 3 
 
 In the Key Concepts section we learned the difference between the synchronous and asynchronous API.  Here we will see the changes necessary for asynchronous applied.  Below are code walkthroughs of the changes made to code from Tutorial Step 3 focusing primarily on the changes made rather than the entire code when possible.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal window or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -283,7 +283,7 @@ enqueue() has the changes:
 
 fetchResults() has the changes:
 
-1. "resultsFetched" has been replaced with check that “outputRequest” is valid
+1. "resultsFetched" has been replaced with check that “outputRequest” is valid:
 
 ```cpp
         if (nullptr == outputRequest) {
@@ -441,7 +441,7 @@ The main loop sees changes to add new pipeline stages and to make each stage to 
 
 #### Pipeline Stage #0: Prepare and Start Inferring a Batch of Frames
 
-Stage #0 from Tutorial Step 3 does both submit and wait for a inference request.  For asynchronous operation, it is broken up into Stage #0 to do the submit and Stage #1 to do the wait.  The new Stage #0 looks very much like the first half up through submitting the inference request with a couple changes:
+Stage #0 from Tutorial Step 3 does both submit and wait for a inference request.  For asynchronous operation, it is broken up into Stage #0 to do the submit and Stage #1 to do the wait.  The new Stage #0 looks very much like the first half, up through submitting the inference request with a couple changes:
 
 1. In addition to if there are input frames still available ("haveMoreFrames"), Stage #0 now also checks to see if an input frame buffer is available via !inputFramePtrs.empty()  and that there is a request available to use via VehicleDetection.canSubmitRequest():
 
@@ -512,7 +512,8 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 
 5. Each input frame in the batch that was input to the vehicle detection model now becomes its own input frame going forward down the pipeline:
 
-```				// prepare a FramePipelineFifoItem for each batched frame to get its detection results
+```Cpp
+				// prepare a FramePipelineFifoItem for each batched frame to get its detection results
 				std::vector<FramePipelineFifoItem> batchedFifoItems;
 				for (auto && bFrame : ps0s1i.batchOfInputFrames) {
 					FramePipelineFifoItem fpfi;
@@ -685,7 +686,7 @@ Stage #3 is responsible for checking for and then processing vehicle attributes 
 ```
 
 
-5. First a check is made to see if there is work to be done.  When running synchronously (!runningAsync) and if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, a check is made to see if a result is ready, then the stage is entered to wait for the result (which will be a short wait).
+5. First, a check is made to see if there is work to be done.  When running synchronously (!runningAsync) and if there is a request in progress, then enter the stage to wait for results.  When running asynchronously, a check is made to see if a result is ready, then the stage is entered to wait for the result (which will be a short wait).
 
 ```Cpp
 						if ((!runningAsync && VehicleAttribs.requestsInProcess()) || VehicleAttribs.resultIsReady()) {
@@ -790,11 +791,15 @@ Finally, the end of the main loop now checks to see that all stages are done bef
 
 # Building and Running
 
-Now let us build and run the complete application and see how it runs all three analysis models.
+Now let us build and run the complete application and see how it runs all three analysis models.  To do that, two ways are covered in the following sections: 1) Command line using "make" and 2) using Intel® System Studio (ISS).  Both ways do the same things, so choose according to your preference.
 
-## Build
+## Command Line using Make
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+The following covers how to build and run from the command line using "make".
+
+### Build
+
+1. Open up a terminal or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -810,7 +815,7 @@ source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
-4. Now we need to create a directory to build the tutorial in and change to it.
+4. Now, create a directory to build the tutorial in and change to it.
 
 ```bash
 mkdir build
@@ -818,7 +823,7 @@ cd build
 ```
 
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then run Make to build the executable.
 
 ```bash
 cmake -DCMAKE_BUILD_TYPE=Release ../
@@ -826,9 +831,9 @@ make
 ```
 
 
-## Run
+### Run
 
-1. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+1. Before running, be sure to source the helper script.  That will make it easier to use environment variables instead of long names to the models:
 
 ```bash
 source ../../scripts/setupenv.sh 
@@ -842,7 +847,7 @@ source ../../scripts/setupenv.sh
 ```
 
 
-3. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Now run the command again in asynchronous mode using the option "-n_async 2":
+3. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Run the command again in asynchronous mode using the option "-n_async 2":
 
 ```bash
 ./intel64/Release/car_detection_tutorial -m $mVLP32 -m_va $mVA32 -i ../../data/car_1.bmp -n_async 2
@@ -880,7 +885,267 @@ source ../../scripts/setupenv.sh
 
 9. User exercise: Modify the last commands used to try different combinations of GPU and Myriad to find the fastest asynchronous combination for your hardware.
 
-    1. Hint: You may need to increase well beyond  "-n_async 16" to hit the point of diminishing returns.
+**Hint**: You may need to increase well beyond  "-n_async 16" to hit the point of diminishing returns.
+
+## Intel® System Studio
+
+The following covers how to build and run from within Intel® System Studio (ISS).
+
+### Build
+
+#### Start Intel® System Studio
+
+1. We need to start ISS using the desktop icon or the supplied scripts that will setup environment variables and launch the ISS Eclipse IDE.
+
+   1. Desktop icon: Locate and double-click the icon shown below on the desktop.
+
+![image alt text](../doc_support/step4_image_1.png)
+
+   2. Command line: Configure the build environment when using the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Be sure to source the helper script “scripts/setupenv.sh” which defines environment variables that point to inference models used so that short names may be used instead of long paths.  Then finally start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
+
+```bash
+source /opt/intel/computer_vision_sdk/bin/setupvars.sh
+# assumes shell is in step_* directory
+source ../scripts/setupenv.sh
+/opt/intel/system_studio_2018/iss_ide_eclipse-launcher.sh
+```
+
+
+2. At first, the ISS splash window will appear that looks like:
+
+![image alt text](../doc_support/step4_image_2.png)
+
+3. The splash window will automatically disappear and be replaced with the workspace selection window.  We will use the default workspace "/home/upsquared/system_studio/workspace", so click the “OK” button to continue.
+
+![image alt text](../doc_support/step4_image_3.png)
+
+4. The first time ISS is opened, the ISS IDE will show the "Getting Started" tab as shown.  We will not be using it so if it is present, close the tab using the “X” on the tab that is just to the right of “Getting Started”.
+
+![image alt text](../doc_support/step4_image_4.png)
+
+5. With the "Getting Started” tab now closed, the ISS IDE will default in the Intel® C/C++ perspective which appears similar to below:
+
+   1. **Note**: The perspective may be different if ISS has been started before and changes were made.  A different perspective may be open, such as the standard C/C++ perspective, or if the windows have been moved.
+
+![image alt text](../doc_support/step4_image_5.png)
+
+#### Create Project
+
+1. Before building the executable, a project must be created.  Start by opening File->New->Project...
+
+![image alt text](../doc_support/step4_image_6.png)
+
+2. Expand "C/C++", select “C++ Project”, and then click the Next button.
+
+   1. **Note**: If the "C/C++" wizard is not available, you will need to unhide it by going to Window->Preferences,”Intel System Studio”, unchecking the option “Hide unsupported wizards”, and then click the OK button.
+
+![image alt text](../doc_support/step4_image_7.png)
+
+3. The "C++ Project" window will appear.  Set the following items:
+
+   1. Set "Project name" to: car_detection_step_4
+
+   2. Uncheck the "Use default location" box, then click the Browse… button.  Using the file open dialog, browse to the tutorial “step_4” directory and then click the OK button.
+
+   3. Make sure under "Project type", the Executable->”Empty Project” is selected
+
+   4. Under "Toolchain", select “Linux GCC”
+
+   5. When complete the window should look similar to below.  Click the Finish button to continue.
+
+![image alt text](../doc_support/step4_image_8.png)
+
+4. You may see a "Open Associated Perspective?" window prompting to open the C/C++ perspective.  If so click the Yes button.
+
+![image alt text](../doc_support/step4_image_9.png)
+
+5. You now should be in the C/C++ perspective with the tutorial added as a project similar to below.
+
+![image alt text](../doc_support/step4_image_10.png)
+
+6. Note that the "Project Explorer" window shows the new project “car_detection_step_4”.
+
+![image alt text](../doc_support/step4_image_11.png)
+
+#### Configure Project
+
+1. To build the project, it must be configured to use the CMake files present.  Start by selecting the project in the "Project Explorer" window and then from the menu select Project->Properties.
+
+![image alt text](../doc_support/step4_image_12.png)
+
+2. The "Properties for …" window will appear.   First, expand “C/C++ Build” and select “Tool Chain Editor”.  Then in the “Current builder” drop-down list, select the “CMake Builder (portable)”.  Then click the Apply button.
+
+![image alt text](../doc_support/step4_image_13.png)
+
+3. Now change "Configuration" to “Release”, then again set “Current builder” to “CMake Builder (portable)”.  Then click the OK button.
+
+![image alt text](../doc_support/step4_image_14.png)
+
+4. At this point, if you open the source file main.cpp you will see include files not found and syntax errors listed in the "Problems" window.  These errors are not really errors and compiling the executable will succeed.  The false errors appear because the CMake builder does not automatically import include paths for the IDE’s code analysis (also referred to as the “Indexer”) from the CMake files.  To fix the false errors reported by the indexer, you must set some include paths and define a macro.  Start by again selecting the project in the “Project Explorer” window and then from the menu select Project->Properties.  Expand “C/C++ General” and then select “Paths and Symbols”.  With Configuration set to  “[All configurations]”, the path and symbol settings need to be set as follows:
+
+   1. On the Include tab for Language "GNU C++", the list of “Include directories” needs to have:
+
+      1. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include
+
+      2. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common
+
+      3. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension
+
+      4. /opt/intel/computer_vision_sdk/opencv/include
+
+      5. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples
+
+   2. On the Symbol tab for Language "GNU C++":
+
+      1. Symbol "__cplusplus" set to value “201103”
+
+   3. Instead of manually making all theses changes, a settings file that can be imported for all the above is included with the tutorial files under "system_studio/exported_paths_and_symbols.xml".  The following steps will use the settings file instead of entering manually.	
+
+5. Starting from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.   By default, “Select Configuration” should have “Debug” selected.  The window should appear similar to below.  Click the Finish button to complete (this will close the project properties window too).
+
+![image alt text](../doc_support/step4_image_15.png)
+
+6. Starting again from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.  This time under “Select Configuration”, select “Release”.  The window should appear similar to below.  Click the Finish button to complete.
+
+![image alt text](../doc_support/step4_image_16.png)
+
+7. Going back to Project->Properties, "C/C++ General"->“Paths and Symbols” should appear similar to below for the Includes and Symbols tabs.
+
+   1. **Note**: After these settings are made, to remove the false errors you may need to re-index the project by selecting from the menu Project->"C/C++ Index”->Rebuild
+
+![image alt text](../doc_support/step4_image_17.png)
+
+![image alt text](../doc_support/step4_image_18.png)
+
+#### Build Executable
+
+1. Now that the project is configured, we will build the executable.  We will be using the Release configuration build which is set by Project->"Build Configurations”->”Set Active” and selecting "Release”.
+
+![image alt text](../doc_support/step4_image_19.png)
+
+2. Build the executable using Project->"Build Project”.
+
+![image alt text](../doc_support/step4_image_20.png)
+
+3. The "Build Project" window will appear.  The first build will take a minute to complete because it is building all the sample libraries needed.  Click the “Run in Background” button to close the window and letting the build continue as we look at the consoles.
+
+![image alt text](../doc_support/step4_image_21.png)
+
+4. In the Console window you may see the output of CMake similar to below.  
+
+![image alt text](../doc_support/step4_image_22.png)
+
+5. To see the output of the compiler, we need to change to the build console.  To do so, click on the down-arrow to the right of the terminal icon, then select "CDT Build Console [...]".
+
+![image alt text](../doc_support/step4_image_23.png)
+
+6. When the build completes successfully, the Console will appear similar to below.
+
+![image alt text](../doc_support/step4_image_24.png)
+
+7. Now that the executable is built, we can move on to running it.
+
+### Run
+
+#### Create Run Configuration
+
+1. Before running the executable from within ISS, a run configuration must be created.  The quickest way to setup a new one is to just run the project and then edit the details.  To start this, from the Run menu, select "Run As" then “Local C/C++ Application”.
+
+![image alt text](../doc_support/step4_image_25.png)
+
+2. You may see a "C Local Application" window appear similar to below prompting to choose which binary to run.  If so, choose “car_detection_tutorial” and click the OK button.  **Note**: The other binaries listed are side effects from CMake and may be ignored.
+
+![image alt text](../doc_support/step4_image_26.png)
+
+3. The project’s executable will be started with the output appearing in the Console window.  At this point no command line arguments are given to the executable which will run (or exit) accordingly.  The models need to be specified so you should see an error and exit similar to below.
+
+![image alt text](../doc_support/step4_image_27.png)
+
+4. Since the default name used is the name of the executable, it is a good idea to have the run configuration’s name match the project to make it easier to distinguish it from multiple projects.  Begin by editing the run configuration’s name by first opening the run configuration up starting from the Run menu, selecting "Run Configurations…".
+
+![image alt text](../doc_support/step4_image_28.png)
+
+5. Under "C/C++ Application", select the correct project’s run configuration which will appear in the the Project setting.  Now edit the Name at the top changing to closer match the project name, here setting it to “car_detection_tutorial_step_4” as shown below.
+
+![image alt text](../doc_support/step4_image_29.png)
+
+#### How to Set Command Line Arguments
+
+1. The run configuration just created does not have any command line arguments being passed to it.  To add arguments when running the executable, you must edit the run configuration starting from the Run menu, selecting "Run Configurations…".  Depending upon how many configurations are present, you may need to select the one for the current project.  Initially the Main tab is selected which shows the main project settings similar to below.
+
+![image alt text](../doc_support/step4_image_30.png)
+
+2. To set command line arguments, select the Arguments tab which will appear similar to below.  
+
+   1. In the "Program arguments" area goes the command line arguments to be passed to the executable when run.  Here we have entered “-i cam” as an example.  Literal command line arguments will be passed exactly as they appear.  Environment variables require special treatment and are specified as “${env_var:\<var_name\>}” where “\<var_name\>” is the environment variable name.
+
+   2. Also shown is the "Working directory".  This is where the executable is run and by default set to the top project directory.  **Note**: This is important to know when command line arguments use relative paths.
+
+   3. When done, click the Run button to run the executable or the Close button to close the window.
+
+![image alt text](../doc_support/step4_image_31.png)
+
+#### How to Run the Executable
+
+1. Running the executable can always be done from the Run Configuration window using the Run button.  To run without opening the Run Configuration window is done using the Run Menu, "Run History", then selecting the name of the run configuration as shown below.  
+
+![image alt text](../doc_support/step4_image_32.png)
+
+#### Running
+
+1. Before starting ISS, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+
+```bash
+source ../scripts/setupenv.sh 
+```
+
+
+2. First, let us see how it works on a single image file using default synchronous mode.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mVLP32} -m_va ${env_var:mVA32} -i ../data/car_1.bmp
+```
+
+
+3. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Now run the command again in asynchronous mode using the option "-n_async 2":
+
+```
+-m ${env_var:mVLP32} -m_va ${env_var:mVA32} -i ../data/car_1.bmp -n_async 2
+```
+
+
+4. The performance should be the same because a single image was run which is effectively the same as running synchronously since each pipeline stage must wait for the one image to process.
+
+5. Next, let us try it on a video file.  Set the command line arguments for the run configuration to: 
+
+```
+-m ${env_var:mVLP32} -m_va ${env_var:mVA32} -i ../data/car-detection.mp4 -n_async 1
+```
+
+
+6. Over each frame of the video, you will see green rectangles drawn around the cars as they move through the parking lot.  Now run the command again in asynchronous mode using the option "-n_async 2":
+
+```
+-m ${env_var:mVLP32} -m_va ${env_var:mVA32} -i ../data/car-detection.mp4 -n_async 2
+```
+
+
+7. Unexpectedly, asynchronous mode should have made the video take longer to run by >10%.  Why would that be?  With the main loop now running asynchronously and not blocking, it is now an additional thread running on the CPU along with the inference models.  Now let us shift running the models to other devices, first in synchronous mode then asynchronous with increasing -n_async value using the command line arguments for the run configuration:
+
+```
+-m ${env_var:mVLP16} -d GPU -m_va ${env_var:mVA16} -d_va MYRIAD -i ../data/car-detection.mp4 -n_async 1
+-m ${env_var:mVLP16} -d GPU -m_va ${env_var:mVA16} -d_va MYRIAD -i ../data/car-detection.mp4 -n_async 2
+-m ${env_var:mVLP16} -d GPU -m_va ${env_var:mVA16} -d_va MYRIAD -i ../data/car-detection.mp4 -n_async 4
+-m ${env_var:mVLP16} -d GPU -m_va ${env_var:mVA16} -d_va MYRIAD -i ../data/car-detection.mp4 -n_async 8
+-m ${env_var:mVLP16} -d GPU -m_va ${env_var:mVA16} -d_va MYRIAD -i ../data/car-detection.mp4 -n_async 16
+```
+
+
+8. Asynchronous mode should be faster by some amount for "-n_async 2" then a little more for “-n_async 4” and “-n_async 8”, then not really noticeable for “-n_async 8”.  The improvements come from the CPU running in parallel more and more with the GPU and Myriad.  The absence of improvement shows when the CPU is doing less in parallel and is waiting on the other devices.  This is referred to as “diminishing returns” and will vary across devices and inference models.
+
+9. User exercise: Modify the last commands used to try different combinations of GPU and Myriad to find the fastest asynchronous combination for your hardware.
+
+   1. **Hint**: You may need to increase well beyond  "-n_async 16" to hit the point of diminishing returns.
 
 # Conclusion
 

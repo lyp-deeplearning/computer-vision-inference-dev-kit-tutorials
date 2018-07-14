@@ -4,11 +4,11 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first model, Face Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#face-detection-models">Face Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-face-detection-model">Adding the Face Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#facedetectionclass">FaceDetectionClass</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#facedetectionclass">FaceDetectionClass()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-facedetectionclass">Using FaceDetectionClass</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first model, Face Detection</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#face-detection-models">Face Detection Models</a><ul><li><a href="#how-do-i-specify-which-device-the-model-will-run-on">How Do I Specify Which Device the Model Will Run On?</a><ul><li><a href="#verifying-which-device-is-running-the-model">Verifying Which Device is Running the Model</a></li></ul></li></ul></li><li><a href="#adding-the-face-detection-model">Adding the Face Detection Model</a><ul><li><a href="#helper-functions-and-classes">Helper Functions and Classes</a><ul><li><a href="#matu8toblob">matU8ToBlob</a></li><li><a href="#load">Load</a></li><li><a href="#basedetection-class">BaseDetection Class</a><ul><li><a href="#read">read()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#wait">wait()</a></li><li><a href="#enabled">enabled()</a></li><li><a href="#printperformanccount">printPerformancCount()</a></li></ul></li></ul></li><li><a href="#facedetectionclass">FaceDetectionClass</a><ul><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#facedetectionclass">FaceDetectionClass()</a></li><li><a href="#read">read()</a></li><li><a href="#fetchresults">fetchResults()</a></li></ul></li></ul></li><li><a href="#using-facedetectionclass">Using FaceDetectionClass</a><ul><li><a href="#header-files">Header Files</a></li><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#command-line-using-make">Command Line using Make</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#intel-system-studio">IntelÂ® System Studio</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-intel-system-studio">Start IntelÂ® System Studio</a></li><li><a href="#create-project">Create Project</a></li><li><a href="#configure-project">Configure Project</a></li><li><a href="#build-executable">Build Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#create-run-configuration">Create Run Configuration</a></li><li><a href="#how-to-set-command-line-arguments">How to Set Command Line Arguments</a></li><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#running">Running</a></li></ul></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
-Welcome to the Face Detection Tutorial Step 2.  This is the step of the tutorial where it gets its name by processing image data and detecting faces.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad to perform face detection.  You may recall from the OpenVINO toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO toolkit to load and run models on devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do face detection on the input image and then output the results.  
+Welcome to the Face Detection Tutorial Step 2.  This is the step of the tutorial where it gets its name by processing image data and detecting faces.  We get this ability by having the application use the Inference Engine to load and run the Intermediate Representation (IR) of a CNN model on the selected hardware device CPU, GPU, or Myriad to perform face detection.  You may recall from the OpenVINO™ toolkit overview, an IR model is a compiled version of a CNN (e.g. from Caffe) that has been optimized using the Model Optimizer for use with the Inference Engine.  This is where we start to see the power of the OpenVINO™ toolkit to load and run models on devices.  In this tutorial step, we will use the Inference Engine to run a pre-compiled model to do face detection on the input image and then output the results.  
 
 A sample output showing the results where a Region of Interest (ROI) box appears around the detected face below.  The metrics reported include the time for OpenCV capture and display along with the time to run the face detection model.  The detected face gets a box around it along with a label as shown below.
 
@@ -16,7 +16,7 @@ A sample output showing the results where a Region of Interest (ROI) box appears
 
 # Face Detection Models
 
-The OpenVINO toolkit includes two pre-compiled face detection models located at:
+The OpenVINO™ toolkit includes two pre-compiled face detection models located at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001
 
@@ -26,7 +26,7 @@ The OpenVINO toolkit includes two pre-compiled face detection models located at:
 
       * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml
 
-   * More detail may be found the OpenVINO toolkit at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
+   * More detail may be found the OpenVINO™ toolkit at:       file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/description/face-detection-adas-0001.html
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004
 
@@ -36,7 +36,7 @@ The OpenVINO toolkit includes two pre-compiled face detection models located at:
 
       * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/FP32/face-detection-retail-0004.xml
 
-   * More detail may be found in the OpenVINO toolkit at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
+   * More detail may be found in the OpenVINO™ toolkit at: file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-retail-0004/description/face-detection-retail-0004.html
 
 Each model may be used to perform face detection, the difference is how complex each underlying model is for the results it is capable of producing as shown in the summary below (for more details, see the descriptions HTML pages for each model): 
 
@@ -139,23 +139,30 @@ for (auto && option : cmdOptions) {
          slog::info << "Loading plugin " << deviceName << slog::endl;
             InferencePlugin plugin = PluginDispatcher({"../../../lib/intel64", ""}).getPluginByDevice(deviceName);
 ```
+
+
 6. The plugin details are printed out:
 
 ```cpp 
            /** Printing plugin version **/
             printPluginVersion(plugin, std::cout);
 ```
+
+
 7. The created plugin is stored to be found by device name later:
 
 ```cpp
             pluginsForDevices[deviceName] = plugin;
 ```
+
+
 8. Finally the model is loaded passing in the plugin created for the specified device, again using the name given same as it appears on the command line ("Load" class will be described later):
 
 ```cpp
        // --------------------Load networks (Generated xml/bin files)-------------------------------------------
         Load(FaceDetection).into(pluginsForDevices[FLAGS_d]);
 ```
+
 
 ### Verifying Which Device is Running the Model
 
@@ -172,11 +179,17 @@ InferenceEngine:
 [ INFO ] Parsing input parameters
 [ INFO ] Reading input
 ```
+
+
 The application reporting that it is loading the CPU plugin:
+
 ```bash
 [ INFO ] Loading plugin CPU
 ```
+
+
 Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and its version:
+
 ```bash
 	API version ............ 1.0
 	Build .................. lnx_20180314
@@ -186,11 +199,15 @@ Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and it
 [ INFO ] Checking Face Detection inputs
 [ INFO ] Checking Face Detection outputs
 ```
+
+
 The application reporting that it is loading the CPU plugin for the face detection model:
+
 ```bash
 [ INFO ] Loading Face Detection model to the CPU plugin
 [ INFO ] Start inference
 ```
+
 
 Later in Tutorial Step 4, we cover loading multiple models onto different devices.  We will also look at how the models perform on different devices.  Until then, we will let all the models load and run on the default CPU device.
 
@@ -707,7 +724,7 @@ See the Inference Engine Development Guide [https://software.intel.com/inference
 
 We have now seen what happens behind the scenes in the FaceDetectionClass, we will move into the application code and see how it is used.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
@@ -896,11 +913,15 @@ if (FLAGS_pc) {
 
 # Building and Running
 
-Now that we have walked through the code and learned what it will do, it is time to build the application and see it in action.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.  To do that, two ways are covered in the following sections: 1) Command line using "make" and 2) using Intel® System Studio (ISS).  Both ways do the same things, so choose according to your preference.
 
-## Build
+## Command Line using Make
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+The following covers how to build and run from the command line using "make".
+
+### Build
+
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
@@ -909,7 +930,7 @@ cd tutorials/face_detection_tutorial/step_2
 ```
 
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by sourcing the "setupvars.sh" script.
+3. The first step is to configure the build environment for the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -932,7 +953,7 @@ make
 ```
 
 
-## Run
+### Run
 
 1. You now have an executable file to run.  In order to have it run the face detection model, we will need to add a couple of parameters to the command line:
 
@@ -976,10 +997,11 @@ make
    ```bash
    source ../../scripts/setupenv.sh 
    ```
-    
+   
+   
    5. And now we can start referencing the variables for each model as: $mFDA16, $mFDA32, $mFDR16, $mFDR32, $mAG16, $mAG32, $mHP16, $mHP32
 
-2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO toolkit installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
+2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO™ toolkit installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
 
 3. Let us first run it on a single image, to see how it works.
 
@@ -1015,7 +1037,7 @@ Or
 
 8. Now you will see a window displaying the input from the USB camera.  The performance statistics appear over the image, as the application processes each frame.  If there is a face in the image, you will see a rectangle surrounding the face with label and confidence value.  The rectangle will follow the face around the image as it moves and will change sizes to fit the face.
 
-9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
+9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the terminal.
 
 10. You may remember the final step of the code walk-through, where we showed a step that printed out Performance Counts for the application.  This only happens if you specify the "-pc" command line option.  Let us run the application one more time to see what kind of output we get from printing those counts.
 
@@ -1024,7 +1046,7 @@ Or
 ```
 
 
-11. When you exit the application this time, you will notice that the Xterm window is updated with the final statistics from the face detection model.  The extra output shows a detailed list of the various analysis steps the model performed during the last request (Note only one, not all of them for video) and how long the model spent on each step.  At the bottom of the list, it displays the total time spent performing the face inference.
+11. When you exit the application this time, you will notice that the terminal is updated with the final statistics from the face detection model.  The extra output shows a detailed list of the various analysis steps the model performed during the last request (Note only one, not all of them for video) and how long the model spent on each step.  At the bottom of the list, it displays the total time spent performing the face inference.
 
 ```bash
 InferenceEngine: 
@@ -1058,15 +1080,343 @@ Total time: 91233    microseconds
 ```
 
 
-12. Above, is part of the output you will see in your console window.  It shows information on what the Inference Engine loaded, followed by the performance statistics gathered from running each layer within the model.  This includes the calculation run, the model layer type, the real time spent performing the calculation, the CPU time spent performing the calculation, and the type of calculation that was performed.  In this instance, since we loaded the model onto the CPU, the "realTime" and “cpu” time values are the same.  The last bit of information we see is the total time spent spent performing the face analysis.  In this example running on an UP Squared Apollo Lake Intel Pentium N4200, it was 91233 microseconds, or 0.091233 seconds.
+12. Above, is part of the output you will see in your console window.  It shows information on what the Inference Engine loaded, followed by the performance statistics gathered from running each layer within the model.  This includes the calculation run, the model layer type, the real time spent performing the calculation, the CPU time spent performing the calculation, and the type of calculation that was performed.  In this instance, since we loaded the model onto the CPU, the "realTime" and “cpu” time values are the same.  The last bit of information we see is the total time spent spent performing the face analysis.  In this example it was 91233 microseconds, or 0.091233 seconds.
+
+## Intel® System Studio
+
+The following covers how to build and run from within Intel® System Studio (ISS).
+
+### Build
+
+#### Start Intel® System Studio
+
+1. We need to start ISS using the desktop icon or the supplied scripts that will setup environment variables and launch the ISS Eclipse IDE.
+
+   1. Desktop icon: Locate and double-click the icon shown below on the desktop.
+
+![image alt text](../doc_support/step2_image_2.png)
+
+   2. Command line: Configure the build environment when using the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Be sure to source the helper script “scripts/setupenv.sh” which defines environment variables that point to inference models used so that short names may be used instead of long paths.  Then finally start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
+
+```bash
+source /opt/intel/computer_vision_sdk/bin/setupvars.sh
+# assumes shell is in step_* directory
+source ../scripts/setupenv.sh
+/opt/intel/system_studio_2018/iss_ide_eclipse-launcher.sh
+```
+
+
+2. At first, the ISS splash window will appear that looks like:
+
+![image alt text](../doc_support/step2_image_3.png)
+
+3. The splash window will automatically disappear and be replaced with the workspace selection window.  We will use the default workspace "/home/upsquared/system_studio/workspace", so click the “OK” button to continue.
+
+![image alt text](../doc_support/step2_image_4.png)
+
+4. The first time ISS is opened, the ISS IDE will show the "Getting Started" tab as shown.  We will not be using it so if it is present, close the tab using the “X” on the tab that is just to the right of “Getting Started”.
+
+![image alt text](../doc_support/step2_image_5.png)
+
+5. With the "Getting Started” tab now closed, the ISS IDE will default in the Intel® C/C++ perspective which appears similar to below:
+
+   1. **Note**: The perspective may be different if ISS has been started before and changes were made.  A different perspective may be open, such as the standard C/C++ perspective, or if the windows have been moved.
+
+![image alt text](../doc_support/step2_image_6.png)
+
+#### Create Project
+
+1. Before building the executable, a project must be created.  Start by opening File->New->Project...
+
+![image alt text](../doc_support/step2_image_7.png)
+
+2. Expand "C/C++", select “C++ Project”, and then click the Next button.
+
+   1. **Note**: If the "C/C++" wizard is not available, you will need to unhide it by going to Window->Preferences,”Intel System Studio”, unchecking the option “Hide unsupported wizards”, and then click the OK button.
+
+![image alt text](../doc_support/step2_image_8.png)
+
+3. The "C++ Project" window will appear.  Set the following items:
+
+   1. Set "Project name" to: face_detection_step_2
+
+   2. Uncheck the "Use default location" box, then click the Browse… button.  Using the file open dialog, browse to the tutorial “step_2” directory and then click the OK button.
+
+   3. Make sure under "Project type", the Executable->”Empty Project” is selected
+
+   4. Under "Toolchain", select “Linux GCC”
+
+   5. When complete the window should look similar to below.  Click the Finish button to continue.
+
+![image alt text](../doc_support/step2_image_9.png)
+
+4. You may see a "Open Associated Perspective?" window prompting to open the C/C++ perspective.  If so click the Yes button.
+
+![image alt text](../doc_support/step2_image_10.png)
+
+5. You now should be in the C/C++ perspective with the tutorial added as a project similar to below.
+
+![image alt text](../doc_support/step2_image_11.png)
+
+6. Note that the "Project Explorer" window shows the new project “face_detection_step_2”.
+
+![image alt text](../doc_support/step2_image_12.png)
+
+#### Configure Project
+
+1. To build the project, it must be configured to use the CMake files present.  Start by selecting the project in the "Project Explorer" window and then from the menu select Project->Properties.
+
+![image alt text](../doc_support/step2_image_13.png)
+
+2. The "Properties for …" window will appear.   First, expand “C/C++ Build” and select “Tool Chain Editor”.  Then in the “Current builder” drop-down list, select the “CMake Builder (portable)”.  Then click the Apply button.
+
+![image alt text](../doc_support/step2_image_14.png)
+
+3. Now change "Configuration" to “Release”, then again set “Current builder” to “CMake Builder (portable)”.  Then click the OK button.
+
+![image alt text](../doc_support/step2_image_15.png)
+
+4. At this point, if you open the source file main.cpp you will see include files not found and syntax errors listed in the "Problems" window.  These errors are not really errors and compiling the executable will succeed.  The false errors appear because the CMake builder does not automatically import include paths for the IDE’s code analysis (also referred to as the “Indexer”) from the CMake files.  To fix the false errors reported by the indexer, you must set some include paths and define a macro.  Start by again selecting the project in the “Project Explorer” window and then from the menu select Project->Properties.  Expand “C/C++ General” and then select “Paths and Symbols”.  With Configuration set to  “[All configurations]”, the path and symbol settings need to be set as follows:
+
+   1. On the Include tab for Language "GNU C++", the list of “Include directories” needs to have:
+
+      1. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include
+
+      2. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common
+
+      3. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension
+
+      4. /opt/intel/computer_vision_sdk/opencv/include
+
+      5. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples
+
+   2. On the Symbol tab for Language "GNU C++":
+
+      1. Symbol "__cplusplus" set to value “201103”
+
+   3. Instead of manually making all theses changes, a settings file that can be imported for all the above is included with the tutorial files under "system_studio/exported_paths_and_symbols.xml".  The following steps will use the settings file instead of entering manually.	
+
+5. Starting from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.   By default, “Select Configuration” should have “Debug” selected.  The window should appear similar to below.  Click the Finish button to complete (this will close the project properties window too).
+
+![image alt text](../doc_support/step2_image_16.png)
+
+6. Starting again from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.  This time under “Select Configuration”, select “Release”.  The window should appear similar to below.  Click the Finish button to complete.
+
+![image alt text](../doc_support/step2_image_17.png)
+
+7. Going back to Project->Properties, "C/C++ General"->“Paths and Symbols” should appear similar to below for the Includes and Symbols tabs.
+
+   1. **Note**: After these settings are made, to remove the false errors you may need to re-index the project by selecting from the menu Project->"C/C++ Index”->Rebuild
+
+![image alt text](../doc_support/step2_image_18.png)
+
+![image alt text](../doc_support/step2_image_19.png)
+
+#### Build Executable
+
+1. Now that the project is configured, we will build the executable.  We will be using the Release configuration build which is set by Project->"Build Configurations”->”Set Active” and selecting "Release”.
+
+![image alt text](../doc_support/step2_image_20.png)
+
+2. Build the executable using Project->"Build Project”.
+
+![image alt text](../doc_support/step2_image_21.png)
+
+3. The "Build Project" window will appear.  The first build will take a minute to complete because it is building all the sample libraries needed.  Click the “Run in Background” button to close the window and letting the build continue as we look at the consoles.
+
+![image alt text](../doc_support/step2_image_22.png)
+
+4. In the Console window you may see the output of CMake similar to below.  
+
+![image alt text](../doc_support/step2_image_23.png)
+
+5. To see the output of the compiler, we need to change to the build console.  To do so, click on the down-arrow to the right of the terminal icon, then select "CDT Build Console [...]".
+
+![image alt text](../doc_support/step2_image_24.png)
+
+6. When the build completes successfully, the Console will appear similar to below.
+
+![image alt text](../doc_support/step2_image_25.png)
+
+7. Now that the executable is built, we can move on to running it.
+
+### Run
+
+#### Create Run Configuration
+
+1. Before running the executable from within ISS, a run configuration must be created.  The quickest way to setup a new one is to just run the project and then edit the details.  To start this, from the Run menu, select "Run As" then “Local C/C++ Application”.
+
+![image alt text](../doc_support/step2_image_26.png)
+
+2. You may see a "C Local Application" window appear similar to below prompting to choose which binary to run.  If so, choose “face_detection_tutorial” and click the OK button.  **Note**: The other binaries listed are side effects from CMake and may be ignored.
+
+![image alt text](../doc_support/step2_image_27.png)
+
+3. The project’s executable will be started with the output appearing in the Console window.  At this point no command line arguments are given to the executable which will run (or exit) accordingly.  The models need to be specified so you should see an error and exit similar to below.
+
+![image alt text](../doc_support/step2_image_28.png)
+
+4. Since the default name used is the name of the executable, it is a good idea to have the run configuration’s name match the project to make it easier to distinguish it from multiple projects.  Begin by editing the run configuration’s name by first opening the run configuration up starting from the Run menu, selecting "Run Configurations…".
+
+![image alt text](../doc_support/step2_image_29.png)
+
+5. Under "C/C++ Application", select the correct project’s run configuration which will appear in the the Project setting.  Now edit the Name at the top changing to closer match the project name, here setting it to “face_detection_tutorial_step_2” as shown below.
+
+![image alt text](../doc_support/step2_image_30.png)
+
+#### How to Set Command Line Arguments
+
+1. The run configuration just created does not have any command line arguments being passed to it.  To add arguments when running the executable, you must edit the run configuration starting from the Run menu, selecting "Run Configurations…".  Depending upon how many configurations are present, you may need to select the one for the current project.  Initially the Main tab is selected which shows the main project settings similar to below.
+
+![image alt text](../doc_support/step2_image_31.png)
+
+2. To set command line arguments, select the Arguments tab which will appear similar to below.  
+
+   1. In the "Program arguments" area goes the command line arguments to be passed to the executable when run.  Here we have entered “-i cam” as an example.  Literal command line arguments will be passed exactly as they appear.  Environment variables require special treatment and are specified as “${env_var:\<var_name\>}” where “\<var_name\>” is the environment variable name.
+
+   2. Also shown is the "Working directory".  This is where the executable is run and by default set to the top project directory.  **Note**: This is important to know when command line arguments use relative paths.
+
+   3. When done, click the Run button to run the executable or the Close button to close the window.
+
+![image alt text](../doc_support/step2_image_32.png)
+
+#### How to Run the Executable
+
+1. Running the executable can always be done from the Run Configuration window using the Run button.  To run without opening the Run Configuration window is done using the Run Menu, "Run History", then selecting the name of the run configuration as shown below.  
+
+![image alt text](../doc_support/step2_image_33.png)
+
+#### Running
+
+1. You now have an executable file to run.  In order to have it run the face detection model, we will need to add a couple of parameters to the command line:
+
+   1. "-i \<input-image-or-video-file\>" to specify an input image or video file instead of using the USB camera by default
+
+   2. "-m \<model-xml-file\>"  to specify where to find the module.  For example: -m  /opt/intel/computer_vision_sdk/deployment_tools/intel_models/face-detection-adas-0001/FP32/face-detection-adas-0001.xml”
+
+   3. That is a lot to type and keep straight, so to help make the model names shorter to type  and easier to read, let us use the helper script scripts/setupenv.sh that sets up shell variables we can use.  For reference, here are the contents of scripts/setupenv.sh:
+
+```bash
+# Create variables for all models used by the tutorials to make
+#  it easier to reference them with short names
+
+# check for variable set by setupvars.sh in the SDK, need it to find models
+: ${InferenceEngine_DIR:?Must source the setupvars.sh in the SDK to set InferenceEngine_DIR}
+
+modelDir=$InferenceEngine_DIR/../../intel_models
+
+# Face Detection Model - ADAS
+modName=face-detection-adas-0001
+export mFDA16=$modelDir/$modName/FP16/$modName.xml
+export mFDA32=$modelDir/$modName/FP32/$modName.xml
+
+# Face Detection Model - Retail
+modName=face-detection-retail-0004
+export mFDR16=$modelDir/$modName/FP16/$modName.xml
+export mFDR32=$modelDir/$modName/FP32/$modName.xml
+
+# Age and Gender Model
+modName=age-gender-recognition-retail-0013
+export mAG16=$modelDir/$modName/FP16/$modName.xml
+export mAG32=$modelDir/$modName/FP32/$modName.xml
+
+# Head Pose Estimation Model
+modName=head-pose-estimation-adas-0001
+export mHP16=$modelDir/$modName/FP16/$modName.xml
+export mHP32=$modelDir/$modName/FP32/$modName.xml
+```
+
+
+   4. To use the script we source it using the command below.  **Note**: The script must be source’d before starting ISS in order to pass along the environment variables to the executable when running from ISS.  
+
+```bash
+source ../../scripts/setupenv.sh 
+```
+
+
+2. Again, we will be using images and video files that are included with this tutorial or part of the OpenVINO™ toolkit installation in our sample instructions.  Once you have seen the application working, feel free to try it on your own images and videos.
+
+3. Let us first run it on a single image, to see how it works.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -i ../data/face.jpg
+```
+
+
+4. You will now see an output window open up with the image displayed.  Over the image, you will see text with the statistics of how long it took to perform the OpenCV input and output and model processing time.  You should also see a rectangle drawn around the face in the image that has been labeled with an instance number and confidence value.
+
+5. Let us see how the application handles a video file.  And let us also see how easy it is to have the application run a different face detection model by loading the face-detection-retail-0004 IR files by just changing the -m parameter from ${env_var:mFDA32} to ${env_var:mFDR32}.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDR32} -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+```
+
+
+6. Now, you should see a window open, playing the video.  Over each frame of the video, you will see a rectangle drawn around the face.  As the face moves around the image, the rectangle will follow it.
+
+7. Finally, let us see how the application works with the camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by setting the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -i cam
+```
+
+
+8. Now you will see a window displaying the input from the USB camera.  The performance statistics appear over the image, as the application processes each frame.  If there is a face in the image, you will see a rectangle surrounding the face with label and confidence value.  The rectangle will follow the face around the image as it moves and will change sizes to fit the face.
+
+9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close.
+
+10. You may remember the final step of the code walk-through, where we showed a step that printed out Performance Counts for the application.  This only happens if you specify the "-pc" command line option.  Let us run the application one more time to see what kind of output we get from printing those counts.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -i cam -pc
+```
+
+
+11. When you exit the application this time, you will notice that the Console window is updated with the final statistics from the face detection model.  The extra output shows a detailed list of the various analysis steps the model performed during the last request (Note only one, not all of them for video) and how long the model spent on each step.  At the bottom of the list, it displays the total time spent performing the face inference.
+
+```bash
+InferenceEngine: 
+	API version ............ 1.0
+	Build .................. 10073
+[ INFO ] Parsing input parameters
+[ INFO ] Reading input
+[ INFO ] Loading plugin CPU
+
+	API version ............ 1.0
+	Build .................. lnx_20180314
+	Description ....... MKLDNNPlugin
+
+[ INFO ] Loading network files for Face Detection
+[ INFO ] Batch size is set to  1
+[ INFO ] Checking Face Detection inputs
+[ INFO ] Checking Face Detection outputs
+[ INFO ] Loading Face Detection model to the CPU plugin
+[ INFO ] Start inference 
+[ INFO ] Press 's' key to save a snapshot, press any other key to stop
+[ INFO ] Press 's' key to save a snapshot, press any other key to exit
+[ INFO ] Performance counts for Face Detection
+
+Mul_788/Fused_Mul_1070/Fus... EXECUTED       layerType: ScaleShift         realTime: 946        cpu: 946            execType: unknown
+conv1                         EXECUTED       layerType: Convolution        realTime: 2586       cpu: 2586           execType: jit_sse42
+conv2_1/dw                    EXECUTED       layerType: Convolution        realTime: 1484       cpu: 1484           execType: jit_sse42_dw
+conv2_1/sep                   EXECUTED       layerType: Convolution        realTime: 5594       cpu: 5594           execType: jit_sse42_1x1
+conv2_2/dw                    EXECUTED       layerType: Convolution        realTime: 1860       cpu: 1860           execType: jit_sse42_dw
+Total time: 91233    microseconds
+[ INFO ] Execution successful
+```
+
+
+12. Above, is part of the output you will see in your console window.  It shows information on what the Inference Engine loaded, followed by the performance statistics gathered from running each layer within the model.  This includes the calculation run, the model layer type, the real time spent performing the calculation, the CPU time spent performing the calculation, and the type of calculation that was performed.  In this instance, since we loaded the model onto the CPU, the "realTime" and “cpu” time values are the same.  The last bit of information we see is the total time spent spent performing the face analysis.  In this example it was 91233 microseconds, or 0.091233 seconds.
 
 # Conclusion
 
 Congratulations on using a CNN model to detect faces!  You have now seen that the process can be done quite quickly.  The classes and helper functions that we added here are aimed at making it easy to add more models to the application by following the same pattern.  We will see it again in action in Step 3, when we add an age and gender inferring model, and then again in Step 4, when we add head pose estimation.
 
 # Navigation
+
 [Face Detection Tutorial](../Readme.md)
 
 [Face Detection Tutorial Step 1](../step_1/Readme.md)
 
 [Face Detection Tutorial Step 3](../step_3/Readme.md)
+

@@ -4,7 +4,7 @@
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-adding-a-third-model-head-pose-estimation">Tutorial Step 4: Adding a third model, Head Pose Estimation</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#head-pose-estimation-model">Head Pose Estimation Model</a></li><li><a href="#adding-the-head-pose-estimation-model">Adding the Head Pose Estimation Model</a><ul><li><a href="#headposedetection">HeadPoseDetection</a><ul><li><a href="#headposedetection">HeadPoseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li><li><a href="#buildcameramatrix">buildCameraMatrix()</a></li><li><a href="#drawaxes">drawAxes()</a></li></ul></li></ul></li><li><a href="#using-headposedetection">Using HeadPoseDetection</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#picking-the-right-models-for-the-right-devices">Picking the Right Models for the Right Devices</a><ul><li><a href="#what-determines-the-device-a-model-uses">What Determines the Device a Model Uses?</a></li><li><a href="#how-do-i-choose-the-specific-device-to-run-a-model">How Do I Choose the Specific Device to Run a Model?</a></li><li><a href="#are-there-models-that-cannot-be-loaded-onto-specific-devices">Are There Models That Cannot be Loaded onto Specific Devices?</a></li><li><a href="#are-some-devices-faster-than-others">Are Some Devices Faster Than Others?</a></li><li><a href="#are-some-devices-better-for-certain-types-of-models-than-other-devices">Are Some Devices Better for Certain Types of Models Than Other Devices?</a><ul><li><a href="#command-line-and-all-the-arguments">Command Line and All the Arguments</a></li><li><a href="#what-kind-of-performance-should-i-see">What Kind of Performance Should I See?</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#tutorial-step-4-adding-a-third-model-head-pose-estimation">Tutorial Step 4: Adding a third model, Head Pose Estimation</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#head-pose-estimation-model">Head Pose Estimation Model</a></li><li><a href="#adding-the-head-pose-estimation-model">Adding the Head Pose Estimation Model</a><ul><li><a href="#headposedetection">HeadPoseDetection</a><ul><li><a href="#headposedetection">HeadPoseDetection()</a></li><li><a href="#submitrequest">submitRequest()</a></li><li><a href="#enqueue">enqueue()</a></li><li><a href="#read">read()</a></li><li><a href="#buildcameramatrix">buildCameraMatrix()</a></li><li><a href="#drawaxes">drawAxes()</a></li></ul></li></ul></li><li><a href="#using-headposedetection">Using HeadPoseDetection</a><ul><li><a href="#main">main()</a></li><li><a href="#main-loop">Main Loop</a></li><li><a href="#post-main-loop">Post-Main Loop</a></li></ul></li><li><a href="#building-and-running">Building and Running</a><ul><li><a href="#command-line-using-make">Command Line using Make</a><ul><li><a href="#build">Build</a></li><li><a href="#run">Run</a></li></ul></li><li><a href="#intel-system-studio">IntelÂ® System Studio</a><ul><li><a href="#build">Build</a><ul><li><a href="#start-intel-system-studio">Start IntelÂ® System Studio</a></li><li><a href="#create-project">Create Project</a></li><li><a href="#configure-project">Configure Project</a></li><li><a href="#build-executable">Build Executable</a></li></ul></li><li><a href="#run">Run</a><ul><li><a href="#create-run-configuration">Create Run Configuration</a></li><li><a href="#how-to-set-command-line-arguments">How to Set Command Line Arguments</a></li><li><a href="#how-to-run-the-executable">How to Run the Executable</a></li><li><a href="#running">Running</a></li></ul></li></ul></li></ul></li><li><a href="#picking-the-right-models-for-the-right-devices">Picking the Right Models for the Right Devices</a><ul><li><a href="#what-determines-the-device-a-model-uses">What Determines the Device a Model Uses?</a></li><li><a href="#how-do-i-choose-the-specific-device-to-run-a-model">How Do I Choose the Specific Device to Run a Model?</a></li><li><a href="#are-there-models-that-cannot-be-loaded-onto-specific-devices">Are There Models That Cannot be Loaded onto Specific Devices?</a></li><li><a href="#are-some-devices-faster-than-others">Are Some Devices Faster Than Others?</a></li><li><a href="#are-some-devices-better-for-certain-types-of-models-than-other-devices">Are Some Devices Better for Certain Types of Models Than Other Devices?</a><ul><li><a href="#command-line-and-all-the-arguments">Command Line and All the Arguments</a><ul><li><a href="#command-line-from-step-4build-directory">Command Line (from "step_4/build" directory):</a></li><li><a href="#system-studio-run-configuration-arguments">System Studio Run Configuration Arguments:</a></li></ul></li><li><a href="#what-kind-of-performance-should-i-see">What Kind of Performance Should I See?</a><ul><li><a href="#command-lines">Command Lines:</a></li><li><a href="#system-studio-run-configuration-arguments">System Studio Run Configuration Arguments:</a></li></ul></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#navigation">Navigation</a></li></ul></div><p></p>
 
 # Introduction
 
@@ -16,7 +16,7 @@ In the image above, the three axes intersect in the center of the head.  The blu
 
 # Head Pose Estimation Model
 
-The OpenVINO toolkit includes a pre-compiled model for estimating head pose from an image of a face.  You can find it at:
+The OpenVINO™ toolkit includes a pre-compiled model for estimating head pose from an image of a face.  You can find it at:
 
 * /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001
 
@@ -55,7 +55,7 @@ Roll: 4.6 ± 5.6</td>
 
 As we saw in Tutorial Step 3, adding a new model is a relatively straight forward process.  To add another model is just a matter of deriving a new class for head pose estimation, add a new command line parameter, updating the application to run and track statistics for the new model, and then finally take those results and overlay them on the face.  Let us walkthrough the source code used to accomplish that.
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -92,7 +92,7 @@ struct HeadPoseDetection : BaseDetection {
 ```
 
 
-3. The operator[] function is defiend to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob is calculated for the batch item.  Then a result object containing the data read for the batch index is returned.
+3. The operator[] function is defined to give a convenient way to retrieve the head pose results from the data contained in the inference request’s output blob.  The index to the appropriate locations in the blob is calculated for the batch item.  Then, a result object containing the data read for the batch index is returned.
 
 ```cpp
     Results operator[] (int idx) const {
@@ -346,7 +346,7 @@ In the main "while(true)" loop, the inference results from the face detection mo
 
 ```Cpp
             	// enqueue input batch
-                //...AgeGender code...
+            	//...AgeGender code...
             	while ((headPoseFaceIdx < headPoseNumFacesToInfer) && (HeadPose.enquedFaces < HeadPose.maxBatch)) {
 ```
 
@@ -463,11 +463,15 @@ if (FLAGS_pc) {
 
 # Building and Running
 
-Now let us build and run the complete application and see how it runs all three analysis models.
+Now that we have looked at the code and understand how the program works, let us compile and run to see it in action.  To do that, two ways are covered in the following sections: 1) Command line using "make" and 2) using Intel® System Studio (ISS).  Both ways do the same things, so choose according to your preference.
 
-## Build
+## Command Line using Make
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+The following covers how to build and run from the command line using "make".
+
+### Build
+
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 4:
 
@@ -476,7 +480,7 @@ cd tutorials/face_detection_tutorial/step_4
 ```
 
 
-3. The first step is to configure the build environment for the OpenVINO toolkit by running the "setupvars.sh" script.
+3. The first step is to configure the build environment for the OpenVINO™ toolkit by running the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -491,7 +495,7 @@ cd build
 ```
 
 
-5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then we run Make to build the executable.
+5. The last thing we need to do before compiling is to configure the build settings and build the executable.  We do this by running CMake to set the build target and file locations.  Then, we run Make to build the executable.
 
 ```bash
 cmake -DCMAKE_BUILD_TYPE=Release ../
@@ -499,7 +503,7 @@ make
 ```
 
 
-## Run
+### Run
 
 1. Before running, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
 
@@ -508,7 +512,7 @@ source ../../scripts/setupenv.sh
 ```
 
 
-2. You now have the executable file to run ./intel64/Release/face_detection_tutorial.  In order to load the head pose detection model, the "-m_hp" flag needs to be added  followed by the full path to the model.  First let us see how it works on a single image file:
+2. You now have the executable file to run ./intel64/Release/face_detection_tutorial.  In order to load the head pose detection model, the "-m_hp" flag needs to be added  followed by the full path to the model.  First, let us see how it works on a single image file:
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -m_ag $mAG32 -m_hp $mHP32 -i ../../data/face.jpg
@@ -538,9 +542,245 @@ Or
 
 5. Again, you will see colored rectangles drawn around any faces that appear in the images along with the results for age, gender, the axes representing the head poses, and the various render statistics.
 
+## Intel® System Studio
+
+The following covers how to build and run from within Intel® System Studio (ISS).
+
+### Build
+
+#### Start Intel® System Studio
+
+1. We need to start ISS using the desktop icon or the supplied scripts that will setup environment variables and launch the ISS Eclipse IDE.
+
+   1. Desktop icon: Locate and double-click the icon shown below on the desktop.
+
+![image alt text](../doc_support/step4_image_2.png)
+
+   2. Command line: Configure the build environment when using the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Be sure to source the helper script “scripts/setupenv.sh” which defines environment variables that point to inference models used so that short names may be used instead of long paths.  Then finally start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
+
+```bash
+source /opt/intel/computer_vision_sdk/bin/setupvars.sh
+# assumes shell is in step_* directory
+source ../scripts/setupenv.sh
+/opt/intel/system_studio_2018/iss_ide_eclipse-launcher.sh
+```
+
+
+2. At first, the ISS splash window will appear that looks like:
+
+![image alt text](../doc_support/step4_image_3.png)
+
+3. The splash window will automatically disappear and be replaced with the workspace selection window.  We will use the default workspace "/home/upsquared/system_studio/workspace", so click the “OK” button to continue.
+
+![image alt text](../doc_support/step4_image_4.png)
+
+4. The first time ISS is opened, the ISS IDE will show the "Getting Started" tab as shown.  We will not be using it so if it is present, close the tab using the “X” on the tab that is just to the right of “Getting Started”.
+
+![image alt text](../doc_support/step4_image_5.png)
+
+5. With the "Getting Started” tab now closed, the ISS IDE will default in the Intel® C/C++ perspective which appears similar to below:
+
+   1. **Note**: The perspective may be different if ISS has been started before and changes were made.  A different perspective may be open, such as the standard C/C++ perspective, or if the windows have been moved.
+
+![image alt text](../doc_support/step4_image_6.png)
+
+#### Create Project
+
+1. Before building the executable, a project must be created.  Start by opening File->New->Project...
+
+![image alt text](../doc_support/step4_image_7.png)
+
+2. Expand "C/C++", select “C++ Project”, and then click the Next button.
+
+   1. **Note**: If the "C/C++" wizard is not available, you will need to unhide it by going to Window->Preferences,”Intel System Studio”, unchecking the option “Hide unsupported wizards”, and then click the OK button.
+
+![image alt text](../doc_support/step4_image_8.png)
+
+3. The "C++ Project" window will appear.  Set the following items:
+
+   1. Set "Project name" to: face_detection_step_4
+
+   2. Uncheck the "Use default location" box, then click the Browse… button.  Using the file open dialog, browse to the tutorial “step_4” directory and then click the OK button.
+
+   3. Make sure under "Project type", the Executable->”Empty Project” is selected
+
+   4. Under "Toolchain", select “Linux GCC”
+
+   5. When complete the window should look similar to below.  Click the Finish button to continue.
+
+![image alt text](../doc_support/step4_image_9.png)
+
+4. You may see a "Open Associated Perspective?" window prompting to open the C/C++ perspective.  If so click the Yes button.
+
+![image alt text](../doc_support/step4_image_10.png)
+
+5. You now should be in the C/C++ perspective with the tutorial added as a project similar to below.
+
+![image alt text](../doc_support/step4_image_11.png)
+
+6. Note that the "Project Explorer" window shows the new project “face_detection_step_4”.
+
+![image alt text](../doc_support/step4_image_12.png)
+
+#### Configure Project
+
+1. To build the project, it must be configured to use the CMake files present.  Start by selecting the project in the "Project Explorer" window and then from the menu select Project->Properties.
+
+![image alt text](../doc_support/step4_image_13.png)
+
+2. The "Properties for …" window will appear.   First, expand “C/C++ Build” and select “Tool Chain Editor”.  Then in the “Current builder” drop-down list, select the “CMake Builder (portable)”.  Then click the Apply button.
+
+![image alt text](../doc_support/step4_image_14.png)
+
+3. Now change "Configuration" to “Release”, then again set “Current builder” to “CMake Builder (portable)”.  Then click the OK button.
+
+![image alt text](../doc_support/step4_image_15.png)
+
+4. At this point, if you open the source file main.cpp you will see include files not found and syntax errors listed in the "Problems" window.  These errors are not really errors and compiling the executable will succeed.  The false errors appear because the CMake builder does not automatically import include paths for the IDE’s code analysis (also referred to as the “Indexer”) from the CMake files.  To fix the false errors reported by the indexer, you must set some include paths and define a macro.  Start by again selecting the project in the “Project Explorer” window and then from the menu select Project->Properties.  Expand “C/C++ General” and then select “Paths and Symbols”.  With Configuration set to  “[All configurations]”, the path and symbol settings need to be set as follows:
+
+   1. On the Include tab for Language "GNU C++", the list of “Include directories” needs to have:
+
+      1. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include
+
+      2. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common
+
+      3. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension
+
+      4. /opt/intel/computer_vision_sdk/opencv/include
+
+      5. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples
+
+   2. On the Symbol tab for Language "GNU C++":
+
+      1. Symbol "__cplusplus" set to value “201103”
+
+   3. Instead of manually making all theses changes, a settings file that can be imported for all the above is included with the tutorial files under "system_studio/exported_paths_and_symbols.xml".  The following steps will use the settings file instead of entering manually.	
+
+5. Starting from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.   By default, “Select Configuration” should have “Debug” selected.  The window should appear similar to below.  Click the Finish button to complete (this will close the project properties window too).
+
+![image alt text](../doc_support/step4_image_16.png)
+
+6. Starting again from Project->Properties, "C/C++ General"->“Paths and Symbols”, import the paths and symbols needed by the indexer by clicking the “Import Settings…” button.  The “Import” window will appear.  Select the “Settings file” by clicking on the “Browse…” button then browsing to the XML file supplied with the tutorial to select the file “system_studio/exported_paths_and_symbols.xml”.  This time under “Select Configuration”, select “Release”.  The window should appear similar to below.  Click the Finish button to complete.
+
+![image alt text](../doc_support/step4_image_17.png)
+
+7. Going back to Project->Properties, "C/C++ General"->“Paths and Symbols” should appear similar to below for the Includes and Symbols tabs.
+
+   1. **Note**: After these settings are made, to remove the false errors you may need to re-index the project by selecting from the menu Project->"C/C++ Index”->Rebuild
+
+![image alt text](../doc_support/step4_image_18.png)
+
+![image alt text](../doc_support/step4_image_19.png)
+
+#### Build Executable
+
+1. Now that the project is configured, we will build the executable.  We will be using the Release configuration build which is set by Project->"Build Configurations”->”Set Active” and selecting "Release”.
+
+![image alt text](../doc_support/step4_image_20.png)
+
+2. Build the executable using Project->"Build Project”.
+
+![image alt text](../doc_support/step4_image_21.png)
+
+3. The "Build Project" window will appear.  The first build will take a minute to complete because it is building all the sample libraries needed.  Click the “Run in Background” button to close the window and letting the build continue as we look at the consoles.
+
+![image alt text](../doc_support/step4_image_22.png)
+
+4. In the Console window you may see the output of CMake similar to below.  
+
+![image alt text](../doc_support/step4_image_23.png)
+
+5. To see the output of the compiler, we need to change to the build console.  To do so, click on the down-arrow to the right of the terminal icon, then select "CDT Build Console [...]".
+
+![image alt text](../doc_support/step4_image_24.png)
+
+6. When the build completes successfully, the Console will appear similar to below.
+
+![image alt text](../doc_support/step4_image_25.png)
+
+7. Now that the executable is built, we can move on to running it.
+
+### Run
+
+#### Create Run Configuration
+
+1. Before running the executable from within ISS, a run configuration must be created.  The quickest way to setup a new one is to just run the project and then edit the details.  To start this, from the Run menu, select "Run As" then “Local C/C++ Application”.
+
+![image alt text](../doc_support/step4_image_26.png)
+
+2. You may see a "C Local Application" window appear similar to below prompting to choose which binary to run.  If so, choose “face_detection_tutorial” and click the OK button.  **Note**: The other binaries listed are side effects from CMake and may be ignored.
+
+![image alt text](../doc_support/step4_image_27.png)
+
+3. The project’s executable will be started with the output appearing in the Console window.  At this point no command line arguments are given to the executable which will run (or exit) accordingly.  The models need to be specified so you should see an error and exit similar to below.
+
+![image alt text](../doc_support/step4_image_28.png)
+
+4. Since the default name used is the name of the executable, it is a good idea to have the run configuration’s name match the project to make it easier to distinguish it from multiple projects.  Begin by editing the run configuration’s name by first opening the run configuration up starting from the Run menu, selecting "Run Configurations…".
+
+![image alt text](../doc_support/step4_image_29.png)
+
+5. Under "C/C++ Application", select the correct project’s run configuration which will appear in the the Project setting.  Now edit the Name at the top changing to closer match the project name, here setting it to “face_detection_tutorial_step_4” as shown below.
+
+![image alt text](../doc_support/step4_image_30.png)
+
+#### How to Set Command Line Arguments
+
+1. The run configuration just created does not have any command line arguments being passed to it.  To add arguments when running the executable, you must edit the run configuration starting from the Run menu, selecting "Run Configurations…".  Depending upon how many configurations are present, you may need to select the one for the current project.  Initially the Main tab is selected which shows the main project settings similar to below.
+
+![image alt text](../doc_support/step4_image_31.png)
+
+2. To set command line arguments, select the Arguments tab which will appear similar to below.  
+
+   1. In the "Program arguments" area goes the command line arguments to be passed to the executable when run.  Here we have entered “-i cam” as an example.  Literal command line arguments will be passed exactly as they appear.  Environment variables require special treatment and are specified as “${env_var:\<var_name\>}” where “\<var_name\>” is the environment variable name.
+
+   2. Also shown is the "Working directory".  This is where the executable is run and by default set to the top project directory.  **Note**: This is important to know when command line arguments use relative paths.
+
+   3. When done, click the Run button to run the executable or the Close button to close the window.
+
+![image alt text](../doc_support/step4_image_32.png)
+
+#### How to Run the Executable
+
+1. Running the executable can always be done from the Run Configuration window using the Run button.  To run without opening the Run Configuration window is done using the Run Menu, "Run History", then selecting the name of the run configuration as shown below.  
+
+![image alt text](../doc_support/step4_image_33.png)
+
+#### Running
+
+1. Before starting ISS, be sure to source the helper script that will make it easier to use environment variables instead of long names to the models:
+
+```bash
+source ../../scripts/setupenv.sh 
+```
+
+
+2. You now have the executable file to run.  In order to load the head pose detection model, the "-m_hp" flag needs to be added  followed by the full path to the model.  First, let us see how it works on a single image file.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -m_ag ${env_var:mAG32} -m_hp ${env_var:mHP32} -i ../data/face.jpg
+```
+
+
+3. The output window will show the image overlaid with colored rectangles over the faces, age and gender results for each face, and the timing statistics for computing the results.  Additionally, you will see red, green, and blue axes over each face, representing the head pose, or orientation, for the face.  Next, let us try it on a video file.  Set the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -m_ag ${env_var:mAG32} -m_hp ${env_var:mHP32} -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+```
+
+
+4. You will see rectangles and the head pose axes that follow the faces around the image (if the faces move), accompanied by age and gender results for the faces, and the timing statistics for processing each frame of the video.  Finally, let us see how it works for camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by setting the command line arguments for the run configuration to:
+
+```
+-m ${env_var:mFDA32} -m_ag ${env_var:mAG32} -m_hp ${env_var:mHP32} -i cam
+```
+
+
+5. Again, you will see colored rectangles drawn around any faces that appear in the images along with the results for age, gender, the axes representing the head poses, and the various render statistics.
+
 # Picking the Right Models for the Right Devices
 
-Throughout this tutorial, we just had the application load the models onto the default CPU device.  Here we will explore using the other devices included in the UP Squared AI Vision Development Kit, the GPU and Myriad.  That brings up several questions that we should discuss to get a more complete idea of how to make the best use of our models and how to optimize the applications using the devices available.
+Throughout this tutorial, we just had the application load the models onto the default CPU device.  Here we will explore using the other devices included in the UP Squared* AI Vision Development Kit, the GPU and Myriad.  That brings up several questions that we should discuss to get a more complete idea of how to make the best use of our models and how to optimize the applications using the devices available.
 
 ## What Determines the Device a Model Uses?
 
@@ -554,7 +794,7 @@ Once you have made those decisions, you can use the command line arguments to ha
 
 ## How Do I Choose the Specific Device to Run a Model?
 
-In the application, we use command line parameters to specify which device to use for the models we load.  These are "-d", “-d_ag” and “-d_hp”, and they are used for the face detection model, age and gender estimation model, and head pose estimation model, respectively.  The available devices are “CPU”, “GPU” and “MYRIAD” that come with the UP Squared AI Vision Development Kit.
+In the application, we use command line parameters to specify which device to use for the models we load.  These are "-d", “-d_ag” and “-d_hp”, and they are used for the face detection model, age and gender estimation model, and head pose estimation model, respectively.  The available devices are “CPU”, “GPU” and “MYRIAD” that come with the UP Squared* AI Vision Development Kit.
 
 ## Are There Models That Cannot be Loaded onto Specific Devices?
 
@@ -566,7 +806,7 @@ The easy answer is "yes."  The more complex answer is that it can be more comple
 
 ## Are Some Devices Better for Certain Types of Models Than Other Devices?
 
-Again, the easy answer is "yes."  The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs.  This is one of the most powerful features of the Inference Engine and the OpenVINO toolkit.  It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling.  Our face detection application can do exactly that.  So let us see what we can learn about how these models work on different devices by running through the options.
+Again, the easy answer is "yes."  The truth is that it can be difficult to know what model will run best on what device without actually loading the model on a device and seeing how it performs.  This is one of the most powerful features of the Inference Engine and the OpenVINO™ toolkit.  It is very easy to write applications that allow you to get up and running quickly to test many combinations of models and devices, without requiring significant code changes or even recompiling.  Our face detection application can do exactly that.  So let us see what we can learn about how these models work on different devices by running through the options.
 
 ### Command Line and All the Arguments
 
@@ -602,210 +842,117 @@ Before we can get started, let us go over the command line parameters again.  We
 
 As we mentioned in the Key Concepts section, the batch size is the number of input data that the models will work on.  For the face detection model, the batch size is fixed to 1.  Even when processing input from a video or a camera, it will only processes a single image/frame at a time.  Depending on the content of the image data, it can return any number of faces.  The application lets us set the batch size on the other models dynamically and the default batch size is 1 for the age and gender and head pose models.  This will work for the Myriad which has a maximum batch size of 1.  Since we are not expecting many results in the test video provided, to simplify things and keep batch size from affecting performance results (something covered in the Car Detection Tutorial), we will use the default batch size of 1 for all models.
 
-Let us look at a sample command line that uses all the parameters so that we can see what it looks like.  For this example, we are running the application from the "step_4/build" directory.
+Let us look at a sample command line that uses all the parameters so that we can see what it looks like.
+
+#### Command Line (from "step_4/build" directory):
 
 ```bash
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16.  We also specify "-i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4" so that we have a “known” data set to do our performance tests with.  This MP4 video file used from the OpenVINO toolkit samples is a hand-drawn face with a moving camera.  
+#### System Studio Run Configuration Arguments:
+
+```
+-m ${env_var:mFDA32} -d GPU -m_ag ${env_var:mAG16} -d_ag MYRIAD -m_hp ${env_var:mHP16} -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+```
+
+
+From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16.  We also specify "-i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4" so that we have a “known” data set to do our performance tests with.  This MP4 video file used from the OpenVINO™ toolkit samples is a hand-drawn face with a moving camera.  
 
 You can see that it is easy to change the model precision to match the device you want to run it on by changing the model to use the FP16 or FP32 using "16" and “32” built into the names of the variables..  It is easy to make up several test cases to see how the application and each of the inference model, perform.  Just remember that all models run on the CPU must be FP32, and all models run on the Myriad must be FP16.  Models run on the Myriad must also have their batch size set to 1.  Models run on the GPU can be either FP16 or FP32.
 
 ### What Kind of Performance Should I See?
 
-That depends on many things, from the specific combination of models and devices that you specified, to the other applications running on the development kit while you collect data.  There are are also different versions of the UP Squared board, with different CPU and GPU hardware.  So the exact data will vary from what appears in the chart below, however the general trends should be the same.  That said, let us take a look at some of the performance counts we observed.  
+That depends on many things, from the specific combination of models and devices that you specified, to the other applications running on the development kit while you collect data.  There are are also different versions of the UP Squared* board, with different CPU and GPU hardware.  So the exact data will vary from what appears in the chart below, however the general trends should be the same.  That said, let us take a look at some of the performance counts we observed.  
 
 The performance reported in milliseconds and using the "wallclock*" and “totalFramse” variables in the code that time the main loop.  When the application exits, it reports the wallclock time and average time and FPS of main loop for the input image source used.
 
-Below are ten command lines we used to generate some performance count data.  They do not cover all the possible combinations, but they do give a good indication of the top performance trends for each of the models on the different devices.  
+Below are ten command lines we used to generate some performance count data.  These do not cover all the possible combinations, but these do give a good indication of the top performance trends for each of the models on the different devices.  
+
+#### Command Lines:
 
 ```bash
 # command line #1
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #2
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #3
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #4
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #5
 ./intel64/Release/face_detection_tutorial -m $mFDA16 -d MYRIAD -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #6
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d MYRIAD -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #7
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #8
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #9
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #10
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #11
-./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #12
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #13
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #14
+# command line #2
 ./intel64/Release/face_detection_tutorial -m $mFDA16 -d MYRIAD -m_ag $mAG32 -d_ag CPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #15
-./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
-# command line #16
+# command line #3
+./intel64/Release/face_detection_tutorial -m $mFDA16 -d MYRIAD -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #4
+./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #5
+./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #6
+./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #7
+./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #8
+./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP32 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #9
 ./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #10
+./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP32 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #11
+./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP32 -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #12
+./intel64/Release/face_detection_tutorial -m $mFDA32 -d CPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #13
+./intel64/Release/face_detection_tutorial -m $mFDA32 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #14
+./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG32 -d_ag CPU -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #15
+./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag MYRIAD -m_hp $mHP16 -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# command line #16
+./intel64/Release/face_detection_tutorial -m $mFDA16 -d GPU -m_ag $mAG16 -d_ag GPU -m_hp $mHP16 -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
 ```
 
 
-<table>
-  <tr>
-    <td>Command Line # </td>
-    <td>Face Detection</td>
-    <td>Age Gender</td>
-    <td>Head Pose</td>
-    <td>Average Main Loop Time (ms)</td>
-    <td>Average Main Loop Time (FPS)</td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td>MYRIAD, FP16</td>
-    <td>GPU, FP16</td>
-    <td>CPU, FP32</td>
-    <td>384.76</td>
-    <td>2.60</td>
-  </tr>
-  <tr>
-    <td>14</td>
-    <td>MYRIAD, FP16</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP16</td>
-    <td>385.30</td>
-    <td>2.60</td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>MYRIAD, FP16</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP32</td>
-    <td>378.30</td>
-    <td>2.64</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>252.25</td>
-    <td>3.96</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP32</td>
-    <td>217.73</td>
-    <td>4.59</td>
-  </tr>
-  <tr>
-    <td>8</td>
-    <td>CPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>157.93</td>
-    <td>6.33</td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td>GPU, FP16</td>
-    <td>CPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>154.26</td>
-    <td>6.48</td>
-  </tr>
-  <tr>
-    <td>11</td>
-    <td>CPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>GPU, FP16</td>
-    <td>135.51</td>
-    <td>7.38</td>
-  </tr>
-  <tr>
-    <td>16</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>134.50</td>
-    <td>7.43</td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td>GPU, FP32</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP32</td>
-    <td>133.54</td>
-    <td>7.49</td>
-  </tr>
-  <tr>
-    <td>13</td>
-    <td>GPU, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>CPU, FP32</td>
-    <td>132.05</td>
-    <td>7.57</td>
-  </tr>
-  <tr>
-    <td>7</td>
-    <td>CPU, FP32</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP16</td>
-    <td>130.94</td>
-    <td>7.64</td>
-  </tr>
-  <tr>
-    <td>9</td>
-    <td>GPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>126.89</td>
-    <td>7.88</td>
-  </tr>
-  <tr>
-    <td>12</td>
-    <td>GPU, FP16</td>
-    <td>CPU, FP32</td>
-    <td>MYRIAD, FP16</td>
-    <td>124.21</td>
-    <td>8.05</td>
-  </tr>
-  <tr>
-    <td>10</td>
-    <td>GPU, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>MYRIAD, FP16</td>
-    <td>114.38</td>
-    <td>8.74</td>
-  </tr>
-  <tr>
-    <td>15</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP16</td>
-    <td>GPU, FP16</td>
-    <td>97.40</td>
-    <td>10.27</td>
-  </tr>
-</table>
+#### System Studio Run Configuration Arguments:
+
+```
+# Run configuration arguments #1
+-m ${env_var:mFDA16} -d MYRIAD -m_ag ${env_var:mAG16} -d_ag GPU -m_hp ${env_var:mHP32} -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #2
+-m ${env_var:mFDA16} -d MYRIAD -m_ag ${env_var:mAG32} -d_ag CPU -m_hp ${env_var:mHP16} -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #3
+-m ${env_var:mFDA16} -d MYRIAD -m_ag ${env_var:mAG16} -d_ag GPU -m_hp ${env_var:mHP32} -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #4
+-m ${env_var:mFDA32} -d CPU -m_ag ${env_var:mAG32} -d_ag CPU -m_hp ${env_var:mHP32} -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #5
+-m ${env_var:mFDA32} -d CPU -m_ag ${env_var:mAG32} -d_ag CPU -m_hp ${env_var:mHP32} -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #6
+-m ${env_var:mFDA32} -d CPU -m_ag ${env_var:mAG16} -d_ag MYRIAD -m_hp ${env_var:mHP16} -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #7
+-m ${env_var:mFDA16} -d GPU -m_ag ${env_var:mAG32} -d_ag CPU -m_hp ${env_var:mHP32} -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #8
+-m ${env_var:mFDA32} -d CPU -m_ag ${env_var:mAG16} -d_ag GPU -m_hp ${env_var:mHP32} -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #9
+-m ${env_var:mFDA32} -d CPU -m_ag ${env_var:mAG16} -d_ag GPU -m_hp ${env_var:mHP16} -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #10
+-m ${env_var:mFDA32} -d GPU -m_ag ${env_var:mAG32} -d_ag CPU -m_hp ${env_var:mHP32} -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #11
+-m ${env_var:mFDA16} -d GPU -m_ag ${env_var:mAG16} -d_ag MYRIAD -m_hp ${env_var:mHP32} -d_hp CPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #12
+-m ${env_var:mFDA32} -d CPU -m_ag ${env_var:mAG16} -d_ag GPU -m_hp ${env_var:mHP16} -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #13
+-m ${env_var:mFDA32} -d GPU -m_ag ${env_var:mAG16} -d_ag MYRIAD -m_hp ${env_var:mHP16} -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #14
+-m ${env_var:mFDA16} -d GPU -m_ag ${env_var:mAG32} -d_ag CPU -m_hp ${env_var:mHP16} -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #15
+-m ${env_var:mFDA16} -d GPU -m_ag ${env_var:mAG16} -d_ag MYRIAD -m_hp ${env_var:mHP16} -d_hp MYRIAD -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+# Run configuration arguments #16
+-m ${env_var:mFDA16} -d GPU -m_ag ${env_var:mAG16} -d_ag GPU -m_hp ${env_var:mHP16} -d_hp GPU -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+```
 
 
-Above is a matrix that shows some of the test cases that were run on a UP Squared Apollo Lake Intel Pentium N4200 to get performance data.  The analysis models are listed on the left, with the average main loop times on the right.  Each row lists the device the model was run on and the floating point precision.  
-
-From this, we can see several trends:  
+Performance is measured as the average time for the main loop to process all the input frames.  The average time, and inverse as frames-per-second (fps), with number of frames processed are reported on exit.  The results seen for the configurations listed above should improve starting from the first all the way to the last.  From the list, we can see several trends:  
 
 * Performance is generally faster on the GPU than on the CPU.  
 
 * FP16 performance is almost always faster than FP32 performance on any device.
 
-* The Myriad is shows up in the fastest and slowest performance numbers.  This is likely due to the architecture of the device and that is connected by USB for data transfers, instead of being more directly connected to memory like the CPU and GPU.  This means that more compute time needs to be spent moving data back and forth, across a slower connection.  So we can infer that models that require significant amounts of data to process would be better run on the CPU or GPU, while model that work on modest amounts of data transfer can be handled quite well by the Myriad.
+* Depending upon which model it runs, the Myriad shows up in the fastest and slowest performance numbers.  This is likely due to the device being connected by USB for data transfers instead of being directly connected to main system memory like the CPU and GPU.  This means that more time needs to be spent moving data back and forth across a slower connection, and the more data moved, the slower it is.  We can infer that models that require significant amounts of data to process would be better run on the CPU or GPU, while models that work on modest amounts of data can be handled well by the Myriad.
 
 In general, the best way to maximize performance is to put the most complex model on the fastest device.  Try to divide the work across the devices as much as possible to avoid overloading any one device.  If you do not need FP32 precision, you can speed up your applications by using FP16 models.
 
@@ -815,7 +962,7 @@ Something to note too is that the Myriad is only capable of running two analysis
 
 # Conclusion
 
-By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application.  This again shows the power the OpenVINO toolkit brings to applications by quickly being able to add another inference model.  We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
+By adding the head pose estimation model to the application from Tutorial Step 3, you have now seen the final step in assembling the full application.  This again shows the power the OpenVINO™ toolkit brings to applications by quickly being able to add another inference model.  We also discussed how to load the inference models onto different devices to distribute the workload and find the optimal device to get the best performance from the models.
 
 # Navigation
 
