@@ -1,42 +1,24 @@
 # cv-sdk-tutorials
 
-## [Face Detection Tutorial](face_detection_tutorial/Readme.md)
-- Inference Engine Overview
-- Key Concepts
-  + Floating Point Precision
-  + Batch Size (brief)
-- Tutorial Steps
-  + Tutorial Step 1: Create the Base OpenCV Application
-    + gflags library to parse command line arguments
-    + Using OpenCV for video input and output to window
-  + Tutorial Step 2: Add the first Model, Face Detection
-    + Helper functions matU9ToBlob() and Load()
-    + BaseDetection class
-    + FaceDetectionClass class
-  + Tutorial Step 3: Add the Second Model, Age and Gender
-    + AgeGenderDetection class
-  + Tutorial Step 4: Add the Third Model, Head Pose 
-    + HeadPoseDetection class
-    + Picking the Right Models for the Right Devices 
+# **NOTE**: Tutorials exist on branches according to tool coverage (command line and Intel® System Studio, and Arduino Create) and are versioned according to the targeted OpenVINO™ toolkit release.  The "master" branch, specifically this file, is only used for pointing to the different versions of the tutorials.
+# Branches
+## Version 2018 R1.2
+### Command line and Intel® System Studio:
+- #### [Branch Top](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r1_2)
+- #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r1_2/face_detection_tutorial/Readme.md)
+- #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r1_2/car_detection_tutorial/Readme.md)
+### Arduino Create:
+- #### [Branch Top](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r1_2_arduino)
+- #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r1_2_arduino/face_detection_tutorial/Readme.md)
+- #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r1_2_arduino/car_detection_tutorial/Readme.md)
 
-## [Car Detection Tutorial](car_detection_tutorial/Readme.md)
-- Inference Engine Overview
-- Key Concepts
-  + Batch Size (detailed)
-  + Image Processing Pipeline
-  + Synchronous vs. Asynchronous API
-- Tutorial Steps
-  + Tutorial Step 1: Create the Base OpenCV Application
-    + gflags library to parse command line arguments
-    + Using OpenCV for video input and output to window
-  + Tutorial Step 2: Add the first Model, Vehicle Detection
-    + Helper functions matU9ToBlob() and Load()
-    + BaseDetection class
-    + VehicleDetection class
-    + Batch size (exercise)
-  + Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection
-    + VehicleAttribsDetection class 
-    + Running combinations of models on devices (exercise)
-  + Tutorial Step 4: Using the Asynchronous API
-    + Changes made to Tutorial Step 3 for converting from synchronouse to asynchronous
-    + Synchronous vs. Asynchronous performance (exercise)
+## Version 2018 R2.0
+### Command line and Intel® System Studio:
+- #### [Branch Top](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r2_0)
+- #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r2_0/face_detection_tutorial/Readme.md)
+- #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r2_0/car_detection_tutorial/Readme.md)
+### Arduino Create:
+- #### **NOTE**: As of 7/15/2018, the current version of the OpenVINO™ toolkit on Arduino Create Web is version 2018 R1.2.  These tutorials will compile, however, the sketch will crash after being uploaded to a device with OpenVINO™ toolkit 2018 R2.0 installed.
+- #### [Branch Top](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r1_2_arduino)
+- #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r2_0_arduino/face_detection_tutorial/Readme.md)
+- #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/cv-sdk-tutorials/tree/openvino_toolkit_r2_0_arduino/car_detection_tutorial/Readme.md)
