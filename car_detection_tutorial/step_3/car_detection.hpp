@@ -37,8 +37,11 @@
 static const char mVLP16[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP16);
 static const char mVLP32[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP32);
 
-static const char mVA16[] = MOD2PATH("vehicle-attributes-recognition-barrier-0010", FP16);
-static const char mVA32[] = MOD2PATH("vehicle-attributes-recognition-barrier-0010", FP32);
+static const char mVDR16[] = MOD2PATH("vehicle-detection-adas-0002", FP16);
+static const char mVDR32[] = MOD2PATH("vehicle-detection-adas-0002", FP32);
+
+static const char mVA16[] = MOD2PATH("vehicle-attributes-recognition-barrier-0039", FP16);
+static const char mVA32[] = MOD2PATH("vehicle-attributes-recognition-barrier-0039", FP32);
 
 // make each path a parameter that can be referenced as "$*" when setting other parameters.
 //    Example: m=$mVLP16 will result in PARAMETERS_m=value-of(mVLP16)
@@ -46,6 +49,8 @@ static const char mVA32[] = MOD2PATH("vehicle-attributes-recognition-barrier-001
 static const char model_path_message[] = "Path to model";
 DEFINE_string(mVLP32, mVLP32, model_path_message);
 DEFINE_string(mVLP16, mVLP16, model_path_message);
+DEFINE_string(mVDR32, mVDR32, model_path_message);
+DEFINE_string(mVDR16, mVDR16, model_path_message);
 DEFINE_string(mVA32, mVA32, model_path_message);
 DEFINE_string(mVA16, mVA16, model_path_message);
 
@@ -113,6 +118,9 @@ DEFINE_string(m_va, mVA32, vehicle_attribs_model_message);
 /// \brief device the target device for vehicle detection infer on <br>
 DEFINE_string(d, "GPU", target_device_message);
 
+/// \brief batch size for running vehicle detection <br>
+DEFINE_uint32(n, 1, num_batch_message);
+
 /// \brief device the target device for vehicle attributes detection on <br>
 DEFINE_string(d_va, "GPU", target_device_message_vehicle_attribs);
 
@@ -168,6 +176,7 @@ static void showParameters() {
     printParameter("i");
     printParameter("m");
     printParameter("d");
+    printParameter("n");
     printParameter("m_va");
     printParameter("d_va");
     printParameter("n_va");

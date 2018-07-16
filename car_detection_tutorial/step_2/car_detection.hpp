@@ -37,12 +37,17 @@
 static const char mVLP16[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP16);
 static const char mVLP32[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP32);
 
+static const char mVDR16[] = MOD2PATH("vehicle-detection-adas-0002", FP16);
+static const char mVDR32[] = MOD2PATH("vehicle-detection-adas-0002", FP32);
+
 // make each path a parameter that can be referenced as "$*" when setting other parameters.
 //    Example: m=$mVLP16 will result in PARAMETERS_m=value-of(mVLP16)
 //    As parameters they can also be overwritten if desired.
 static const char model_path_message[] = "Path to model";
 DEFINE_string(mVLP32, mVLP32, model_path_message);
 DEFINE_string(mVLP16, mVLP16, model_path_message);
+DEFINE_string(mVDR32, mVDR32, model_path_message);
+DEFINE_string(mVDR16, mVDR16, model_path_message);
 
 /// @brief message for help argument
 static const char help_message[] = "Print a usage message";
@@ -102,6 +107,9 @@ DEFINE_string(m, mVLP32, vehicle_detection_model_message);
 /// \brief device the target device for vehicle detection infer on <br>
 DEFINE_string(d, "GPU", target_device_message);
 
+/// \brief batch size for running vehicle detection <br>
+DEFINE_uint32(n, 1, num_batch_message);
+
 
 /// \brief Enable per-layer performance report
 DEFINE_bool(pc, false, performance_counter_message);
@@ -151,6 +159,7 @@ static void showParameters() {
     printParameter("i");
     printParameter("m");
     printParameter("d");
+    printParameter("n");
     printParameter("t");
     printParameter("r");
     printParameter("no_wait");
