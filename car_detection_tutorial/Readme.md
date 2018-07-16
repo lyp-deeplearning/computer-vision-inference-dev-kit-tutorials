@@ -85,7 +85,7 @@ git clone https://github.com/intel-iot-devkit/cv-sdk-tutorials.git
 
 ```Bash
 cd cv-sdk-tutorials
-git checkout openvino_toolkit_r1_2
+git checkout openvino_toolkit_r2_0
 ```
 
 
@@ -111,7 +111,7 @@ cd tutorials
 3. Download the subdirectory for just this tutorial from the repository:
 
 ```Bash
-svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/branches/openvino_toolkit_r1_2/car_detection_tutorial
+svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/branches/openvino_toolkit_r2_0/car_detection_tutorial
 ```
 
 
