@@ -41,7 +41,7 @@ In the Key Concepts section we learned the difference between the synchronous an
 2. Change to the directory containing Tutorial Step 4:
 
 ```bash
-cd tutorials/car_detection_tutorial/step_4
+cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_4
 ```
 
 
@@ -804,7 +804,7 @@ The following covers how to build and run from the command line using "make".
 2. Change to the directory containing Tutorial Step 4:
 
 ```bash
-cd tutorials/car_detection_tutorial/step_4
+cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_4
 ```
 
 

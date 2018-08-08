@@ -73,7 +73,7 @@ To create the command line argument: -m \<model-IR-xml-file\>, where \<model-IR-
 
 ```cpp
 /// @brief message for assigning vehicle detection inference to device
-static const char target_device_message[] = "Specify the target device for Vehicle Detection (CPU, GPU, FPGA, MYRYAD, or HETERO). ";
+static const char target_device_message[] = "Specify the target device for Vehicle Detection (CPU, GPU, FPGA, MYRIAD, or HETERO). ";
 
 /// \brief device the target device for vehicle detection infer on <br>
 DEFINE_string(d, "CPU", target_device_message);
@@ -691,7 +691,7 @@ We have now seen what happens behind the scenes in the VehicleDetection class, w
 2. Change to the directory containing Tutorial Step 2:
 
 ```bash
-cd tutorials/car_detection_tutorial/step_2
+cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_2
 ```
 
 
@@ -1099,7 +1099,7 @@ The following covers how to build and run from the command line using "make".
 2. Change to the directory containing Tutorial Step 2:
 
 ```bash
-cd tutorials/car_detection_tutorial/step_2
+cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_2
 ```
 
 

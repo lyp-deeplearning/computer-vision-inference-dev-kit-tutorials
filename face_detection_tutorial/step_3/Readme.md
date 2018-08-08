@@ -56,7 +56,7 @@ Thanks to the setup work done in Tutorial Step 2, adding the age and gender dete
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
-cd tutorials/face_detection_tutorial/step_3
+cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_3
 ```
 
 
@@ -409,7 +409,7 @@ if (AgeGender.enabled()) {
 ```
 
 
-11. Label the fae with age and gender results if the model is enabled otherwise use a simple label.
+11. Label the face with age and gender results if the model is enabled otherwise use a simple label.
 
 ```cpp
                 out.str("");
@@ -490,7 +490,7 @@ The following covers how to build and run from the command line using "make".
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
-cd tutorials/face_detection_tutorial/step_3
+cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_3
 ```
 
 
