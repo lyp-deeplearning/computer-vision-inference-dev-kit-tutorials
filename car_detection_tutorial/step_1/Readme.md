@@ -89,8 +89,7 @@ Above is how the "i" parameter is done, all other arguments are handled similarl
 2. Change to the directory containing Tutorial Step 1:
 
 ```bash
-cd tutorials/car_detection_tutorial/
-cd step_1
+cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_1
 ```
 
 
@@ -388,7 +387,7 @@ i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
 4. Next, let us see how the application handles a video file.  When prompted, enter the parameter string: 
 
 ```
-i==tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 

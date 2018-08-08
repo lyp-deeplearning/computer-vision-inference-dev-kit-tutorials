@@ -56,7 +56,7 @@ Thanks to the setup work done in Tutorial Step 2, adding the age and gender dete
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
-cd tutorials/face_detection_tutorial/step_3
+cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_3
 ```
 
 
