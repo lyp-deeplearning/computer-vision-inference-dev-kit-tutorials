@@ -729,7 +729,7 @@ We have now seen what happens behind the scenes in the FaceDetectionClass, we wi
 2. Change to the directory containing Tutorial Step 2:
 
 ```bash
-cd tutorials/face_detection_tutorial/step_2
+cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_2
 ```
 
 
@@ -926,7 +926,7 @@ The following covers how to build and run from the command line using "make".
 2. Change to the directory containing Tutorial Step 2:
 
 ```bash
-cd tutorials/face_detection_tutorial/step_2
+cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_2
 ```
 
 
