@@ -41,7 +41,7 @@ In the Key Concepts section we learned the difference between the synchronous an
 2. Change to the directory containing Tutorial Step 4:
 
 ```bash
-cd tutorials/car_detection_tutorial/step_4
+cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_4
 ```
 
 
@@ -921,7 +921,7 @@ m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/c
 2. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Run the command again in asynchronous mode using the parameter setting "n_async=2":
 
 ```
-m=$mVLP32 m_va=$mVA32 i= tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp -n_async 2
+m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp -n_async 2
 ```
 
 
