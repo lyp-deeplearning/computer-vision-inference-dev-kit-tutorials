@@ -56,7 +56,7 @@ Thanks to the setup work done in Tutorial Step 2, adding the age and gender dete
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_3
+cd tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/step_3
 ```
 
 
@@ -490,7 +490,7 @@ The following covers how to build and run from the command line using "make".
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_3
+cd tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/step_3
 ```
 
 

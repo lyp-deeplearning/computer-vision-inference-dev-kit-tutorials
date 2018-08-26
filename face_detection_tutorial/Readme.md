@@ -77,14 +77,14 @@ cd tutorials
 3. Clone the repository:
 
 ```Bash
-git clone https://github.com/intel-iot-devkit/cv-sdk-tutorials.git
+git clone https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git
 ```
 
 
 4. Change to the top git repository and check out correct version:
 
 ```Bash
-cd cv-sdk-tutorials
+cd computer-vision-inference-dev-kit-tutorials
 git checkout openvino_toolkit_r1_2
 ```
 
@@ -103,15 +103,15 @@ cd face_detection_tutorial
 2. Create a "tutorials" directory where we can download the Face Detection tutorial and then change to it:
 
 ```Bash
-mkdir -p tutorials/cv-sdk-tutorials
-cd tutorials/cv-sdk-tutorials
+mkdir -p tutorials/computer-vision-inference-dev-kit-tutorials
+cd tutorials/computer-vision-inference-dev-kit-tutorials
 ```
 
 
 3. Download the subdirectory for just this tutorial for the specific version from the repository:
 
 ```Bash
-svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/branches/openvino_toolkit_r1_2/face_detection_tutorial
+svn export https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git/branches/openvino_toolkit_r1_2/face_detection_tutorial
 ```
 
 
