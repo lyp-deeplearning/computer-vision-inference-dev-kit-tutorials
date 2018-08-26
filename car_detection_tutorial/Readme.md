@@ -77,14 +77,14 @@ cd tutorials
 3. Clone the repository:
 
 ```Bash
-git clone https://github.com/intel-iot-devkit/cv-sdk-tutorials.git
+git clone https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git
 ```
 
 
 4. Change to the top git repository and check out correct version:
 
 ```Bash
-cd cv-sdk-tutorials
+cd computer-vision-inference-dev-kit-tutorials
 git checkout openvino_toolkit_r2_0
 ```
 
@@ -103,15 +103,15 @@ cd car_detection_tutorial
 2. Create a "tutorials" directory where we can download the Car Detection tutorial and then change to it:
 
 ```Bash
-mkdir -p tutorials/cv-sdk-tutorials
-cd tutorials/cv-sdk-tutorials
+mkdir -p tutorials/computer-vision-inference-dev-kit-tutorials
+cd tutorials/computer-vision-inference-dev-kit-tutorials
 ```
 
 
 3. Download the subdirectory for just this tutorial from the repository:
 
 ```Bash
-svn export https://github.com/intel-iot-devkit/cv-sdk-tutorials.git/branches/openvino_toolkit_r2_0/car_detection_tutorial
+svn export https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git/branches/openvino_toolkit_r2_0/car_detection_tutorial
 ```
 
 
