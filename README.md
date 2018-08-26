@@ -1,4 +1,4 @@
-# cv-sdk-tutorials
+# computer-vision-inference-dev-kit-tutorials
 
 ## [Face Detection Tutorial](face_detection_tutorial/Readme.md)
 - Inference Engine Overview

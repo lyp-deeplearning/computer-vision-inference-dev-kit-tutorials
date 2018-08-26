@@ -690,7 +690,7 @@ We have now seen what happens behind the scenes in the VehicleDetection class, w
 2. Change to the directory containing Tutorial Step 2:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_2
+cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/step_2
 ```
 
 
@@ -1191,7 +1191,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ![image alt text](../doc_support/step2_image_19.png)
 
-3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
 
 ![image alt text](../doc_support/step2_image_20.png)
 
@@ -1218,7 +1218,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 3. First let us first run it on a single image, to see how it works.  Use the parameter settings string:
 
 ```
-m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
+m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
@@ -1227,7 +1227,7 @@ m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
 5. Let us see how the application handles a video file.  Use the parameter settings string:
 
 ```
-m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 
@@ -1255,15 +1255,15 @@ In the previous commands the batch size was 1 by default.  This means inference 
 First let us run the single image through each of the batch sizes 1, 2, 4, 8, and 16 using the parameters strings below.
 
 ```
-m=$mVDR32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp n=1
+m=$mVDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp n=1
 
-m=$mVDR32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp n=2
+m=$mVDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp n=2
 
-m=$mVDR32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp n=4
+m=$mVDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp n=4
 
-m=$mVDR32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp n=8
+m=$mVDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp n=8
 
-m=$mVDR32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp n=16
+m=$mVDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp n=16
 ```
 
 
@@ -1278,14 +1278,14 @@ Now let us run on the CPU using the video to see what happens.
 1. First, run the video with a batch size of 1 on the CPU using the parameters string:  
 
 ```
-m=$mVDR32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n=1
+m=$mVDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n=1
 ```
 
 
 2. Now, jump to the largest batch size of 16 running the parameters string:
 
 ```
-m=$mVDR32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n=16
+m=$mVDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n=16
 ```
 
 
@@ -1300,14 +1300,14 @@ Now we will repeat the same exercise on the GPU using the two commands:
 1. First, run the video with a batch size of 1 on the GPU using the parameters string:  
 
 ```
-m=$mVDR16 d=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n=1
+m=$mVDR16 d=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n=1
 ```
 
 
 2. Now, jump to the largest batch size of 16 running the parameters string:
 
 ```
-m=$mVDR16 d=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n=16
+m=$mVDR16 d=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n=16
 ```
 
 

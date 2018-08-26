@@ -41,7 +41,7 @@ In the Key Concepts section we learned the difference between the synchronous an
 2. Change to the directory containing Tutorial Step 4:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_4
+cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/step_4
 ```
 
 
@@ -897,7 +897,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ![image alt text](../doc_support/step4_image_18.png)
 
-3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
 
 ![image alt text](../doc_support/step4_image_19.png)
 
@@ -914,14 +914,14 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 1. First, let us see how it works on a single image file using default synchronous mode.  Use the parameter settings string:
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
+m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
 2. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Run the command again in asynchronous mode using the parameter setting "n_async=2":
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp -n_async 2
+m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp -n_async 2
 ```
 
 
@@ -930,25 +930,25 @@ m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/c
 4. Next, let us try it on a video file.  Use the parameter settings string:
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
+m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
 ```
 
 
 5. Over each frame of the video, you will see green rectangles drawn around the cars as they move through the parking lot.  Now run the command again in asynchronous mode using the parameter setting "n_async=2":
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 -n_async 2
+m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 -n_async 2
 ```
 
 
 6. Unexpectedly, asynchronous mode should have made the video take longer to run by >10%.  Why would that be?  With the main loop now running asynchronously and not blocking, it is now an additional thread running on the CPU along with the inference models.  Now let us shift running the models to other devices, first in synchronous mode then asynchronous with increasing n_async value using the using the parameter settings strings:
 
 ```
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=2
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=4
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=8
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=16
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=2
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=4
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=8
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=16
 ```
 
 
