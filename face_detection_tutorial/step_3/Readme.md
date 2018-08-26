@@ -56,7 +56,7 @@ Thanks to the setup work done in Tutorial Step 2, adding the age and gender dete
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/face_detection_tutorial/step_3
+cd tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/step_3
 ```
 
 
@@ -583,7 +583,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ![image alt text](../doc_support/step3_image_19.png)
 
-3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/face.jpg” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
 
 ![image alt text](../doc_support/step3_image_20.png)
 
@@ -600,7 +600,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 1. You now have the executable file to run.  In order to load the age and gender detection model, the "m_ag=" parameter needs to be added followed by the full path to the model.  First let us see how it works on a single image file.  Use the parameter settings string:
 
 ```
-m=$mFDA32 m_ag=$mAG32 i=tutorials/cv-sdk-tutorials/face_detection_tutorial/data/face.jpg
+m=$mFDA32 m_ag=$mAG32 i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/face.jpg
 ```
 
 

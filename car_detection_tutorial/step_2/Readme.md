@@ -691,7 +691,7 @@ We have now seen what happens behind the scenes in the VehicleDetection class, w
 2. Change to the directory containing Tutorial Step 2:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_2
+cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/step_2
 ```
 
 
@@ -1192,7 +1192,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ![image alt text](../doc_support/step2_image_19.png)
 
-3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
 
 ![image alt text](../doc_support/step2_image_20.png)
 
@@ -1219,7 +1219,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 3. First let us first run it on a single image, to see how it works.  Use the parameter settings string:
 
 ```
-m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
+m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
@@ -1228,7 +1228,7 @@ m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
 5. Let us see how the application handles a video file.  Use the parameter settings string:
 
 ```
-m=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 

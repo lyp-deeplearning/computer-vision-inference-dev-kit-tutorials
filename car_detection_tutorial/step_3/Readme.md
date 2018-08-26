@@ -56,7 +56,7 @@ Thanks to the setup work done in Tutorial Step 2, adding the vehicle attributes 
 2. Change to the directory containing Tutorial Step 3:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_3
+cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/step_3
 ```
 
 
@@ -599,7 +599,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ![image alt text](../doc_support/step3_image_19.png)
 
-3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
 
 ![image alt text](../doc_support/step3_image_20.png)
 
@@ -616,14 +616,14 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 1. You now have the executable file to run.  In order to load the vehicle attribute detection model, the "m_va" parameter needs to be set followed by the full path to the model.  First let us see how it works on a single image file.  Use the parameter settings string:
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
+m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
 2. The output window will show the image overlaid with colored rectangles over each of the detected vehicles and license plates.  There will also be text within the vehicle box indicating type and color.  The timing statistics for inferring the vehicle attribute results are also shown.  Next, let us try it on a video file.  Use the parameter settings string:
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 
@@ -646,33 +646,33 @@ The list of the parameter setting strings used:
 
 ```
 # Parameter settings string #1
-m=$mVLP32 d=CPU m_va=$mVA32 d_va=CPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=CPU m_va=$mVA32 d_va=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #2
-m=$mVLP32 d=CPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=CPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #3
-m=$mVLP16 d=MYRIAD m_va=$mVA32 d_va=CPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP16 d=MYRIAD m_va=$mVA32 d_va=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #4
-m=$mVLP16 d=MYRIAD m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP16 d=MYRIAD m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #5
-m=$mVLP32 d=CPU m_va=$mVA32 d_va=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=CPU m_va=$mVA32 d_va=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #6
-m=$mVLP32 d=CPU m_va=$mVA16 d_va=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=CPU m_va=$mVA16 d_va=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #7
-m=$mVLP16 d=MYRIAD m_va=$mVA32 d_va=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP16 d=MYRIAD m_va=$mVA32 d_va=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #8
-m=$mVLP16 d=MYRIAD m_va=$mVA16 d_va=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP16 d=MYRIAD m_va=$mVA16 d_va=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #9
-m=$mVLP32 d=GPU m_va=$mVA32 d_va=CPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=GPU m_va=$mVA32 d_va=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #10
-m=$mVLP16 d=GPU m_va=$mVA32 d_va=CPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP16 d=GPU m_va=$mVA32 d_va=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #11
-m=$mVLP32 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #12
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #13
-m=$mVLP32 d=GPU m_va=$mVA32 d_va=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=GPU m_va=$mVA32 d_va=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 # Parameter settings string #14
-m=$mVLP32 d=GPU m_va=$mVA16 d_va=GPU i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 d=GPU m_va=$mVA16 d_va=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 

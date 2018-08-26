@@ -89,7 +89,7 @@ Above is how the "i" parameter is done, all other arguments are handled similarl
 2. Change to the directory containing Tutorial Step 1:
 
 ```bash
-cd tutorials/cv-sdk-tutorials/car_detection_tutorial/step_1
+cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/step_1
 ```
 
 
@@ -361,7 +361,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ![image alt text](../doc_support/step1_image_18.png)
 
-3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
+3. To change parameters, enter a string "name=val" for each parameter with a space ‘ ‘ between each “name=val”.  To change the video input file, we might use something like “i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp” and press Enter or click the SEND button.  The parameters are displayed again with the new setting and a new prompt as shown below.  Note that relative paths are relative to the the user’s home directory where sketches are run.
 
 ![image alt text](../doc_support/step1_image_19.png)
 
@@ -376,7 +376,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 2. First, let us use the application to view a single image file.  We do this by setting the "i=\<video filename\>" parameter.  When prompted, enter the parameter string: 
 
 ```
-i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
+i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
@@ -387,7 +387,7 @@ i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car_1.bmp
 4. Next, let us see how the application handles a video file.  When prompted, enter the parameter string: 
 
 ```
-i=tutorials/cv-sdk-tutorials/car_detection_tutorial/data/car-detection.mp4
+i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 
