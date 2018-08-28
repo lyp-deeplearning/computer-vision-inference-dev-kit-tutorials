@@ -1182,7 +1182,7 @@ make
 5. Let us see how the application handles a video file.
 
 ```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVA32 -i ../../car-detection.mp4
+./intel64/Release/car_detection_tutorial -m $mVA32 -i ../../car-detection.mp4
 ```
 
 
@@ -1191,14 +1191,14 @@ make
 7. Finally, let us see how the application works with the default camera input.
 
 ```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVA32 -i cam
+./intel64/Release/car_detection_tutorial -m $mVA32 -i cam
 ```
 
 
 Or
 
 ```bash
-./intel64/Release/vehicle_detection_tutorial -m $mVA32
+./intel64/Release/car_detection_tutorial -m $mVA32
 ```
 
 
