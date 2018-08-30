@@ -34,8 +34,8 @@
 #define MODEL_DIR "/opt/intel/computer_vision_sdk/deployment_tools/intel_models/"
 #define MOD2PATH(modName, fPrec) MODEL_DIR "/" modName "/" #fPrec "/" modName ".xml"
 
-static const char mVLP16[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP16);
-static const char mVLP32[] = MOD2PATH("vehicle-license-plate-detection-barrier-0007", FP32);
+static const char mVLP16[] = MOD2PATH("vehicle-license-plate-detection-barrier-0106", FP16);
+static const char mVLP32[] = MOD2PATH("vehicle-license-plate-detection-barrier-0106", FP32);
 
 static const char mVDR16[] = MOD2PATH("vehicle-detection-adas-0002", FP16);
 static const char mVDR32[] = MOD2PATH("vehicle-detection-adas-0002", FP32);
