@@ -240,15 +240,11 @@ void matU8ToBlob(const cv::Mat& orig_image, InferenceEngine::Blob::Ptr& blob, in
 ```
 
 
-2. A check is made to see if the input image matches the dimensions of images that the model is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  A check is made to make sure that an input with either height or width <1 is not stored, returning 0 to indicate nothing was done.
+2. A check is made to see if the input image matches the dimensions of images that the model is expecting.  If the dimensions do not match, then use the OpenCV function cv::resize to resize it.  
 
 ```cpp
     cv::Mat resized_image(orig_image);
     if (width != orig_image.size().width || height!= orig_image.size().height) {
-    	   // ignore rectangles with either dimension < 1
-    	   if (orig_image.size().width < 1 || orig_image.size().height < 1) {
-    		return 0;
-    	   }
         cv::resize(orig_image, resized_image, cv::Size(width, height));
     }
 ```
