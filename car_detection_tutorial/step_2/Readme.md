@@ -1169,7 +1169,7 @@ make
 3. Let us first run it on a single image, to see how it works.
 
 ```bash
-./intel64/Release/car_detection_tutorial -m $mVA32 -i ../../data/car_1.bmp
+./intel64/Release/car_detection_tutorial -m $mVLP32 -i ../../data/car_1.bmp
 ```
 
 
@@ -1178,7 +1178,7 @@ make
 5. Let us see how the application handles a video file.
 
 ```bash
-./intel64/Release/car_detection_tutorial -m $mVA32 -i ../../car-detection.mp4
+./intel64/Release/car_detection_tutorial -m $mVLP32 -i ../../car-detection.mp4
 ```
 
 
@@ -1187,14 +1187,14 @@ make
 7. Finally, let us see how the application works with the default camera input.
 
 ```bash
-./intel64/Release/car_detection_tutorial -m $mVA32 -i cam
+./intel64/Release/car_detection_tutorial -m $mVLP32 -i cam
 ```
 
 
 Or
 
 ```bash
-./intel64/Release/car_detection_tutorial -m $mVA32
+./intel64/Release/car_detection_tutorial -m $mVLP32
 ```
 
 
@@ -1449,7 +1449,7 @@ source ../scripts/setupenv.sh
 3. Let us first run it on a single image, to see how it works.  Set the command line arguments for the run configuration to:
 
 ```
--m ${env_var:mVA32} -i ../data/car_1.bmp
+-m ${env_var:mVLP32} -i ../data/car_1.bmp
 ```
 
 
@@ -1458,7 +1458,7 @@ source ../scripts/setupenv.sh
 5. Let us see how the application handles a video file.  Set the command line arguments for the run configuration to: 
 
 ```
--m ${env_var:mVA32} -i ../car-detection.mp4
+-m ${env_var:mVLP32} -i ../car-detection.mp4
 ```
 
 
@@ -1467,7 +1467,7 @@ source ../scripts/setupenv.sh
 7. Finally, let us see how the application works with the default camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by setting the command line arguments for the run configuration to:
 
 ```
--m ${env_var:mVA32} -i cam
+-m ${env_var:mVLP32} -i cam
 ```
 
 
