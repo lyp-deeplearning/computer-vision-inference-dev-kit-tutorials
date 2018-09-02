@@ -69,6 +69,8 @@ static const char target_device_message_vehicle_attribs[] = "Specify the target 
 
 /// @brief message for number of simultaneously vehicle attributes detections using dynamic batch
 static const char num_batch_va_message[] = "Specify number of maximum simultaneously processed vehicles for Vehicle Attributes Detection ( default is 1)";
+/// @brief message auto_resize input flag
+static const char auto_resize_message[] = "Enable auto-resize (ROI crop & data resize) of input during inference.";
 
 /// @brief message for performance counters
 static const char performance_counter_message[] = "Enable per-layer performance report.";
@@ -110,6 +112,8 @@ DEFINE_string(d, "GPU", target_device_message);
 /// \brief batch size for running vehicle detection <br>
 DEFINE_uint32(n, 1, num_batch_message);
 
+/// \brief Define flag for enabling auto-resize of inputs for all models <br>
+DEFINE_bool(auto_resize, false, auto_resize_message);
 
 /// \brief Enable per-layer performance report
 DEFINE_bool(pc, false, performance_counter_message);
@@ -160,6 +164,7 @@ static void showParameters() {
     printParameter("m");
     printParameter("d");
     printParameter("n");
+    printParameter("auto_resize");
     printParameter("t");
     printParameter("r");
     printParameter("no_wait");
