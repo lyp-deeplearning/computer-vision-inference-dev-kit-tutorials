@@ -1218,7 +1218,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 3. First let us first run it on a single image, to see how it works.  Use the parameter settings string:
 
 ```
-m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
+m=$mVLP32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
@@ -1227,7 +1227,7 @@ m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_t
 5. Let us see how the application handles a video file.  Use the parameter settings string:
 
 ```
-m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
+m=$mVLP32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
 ```
 
 
@@ -1236,7 +1236,7 @@ m=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_t
 7. Finally, let us see how the application works with the default camera input.  The camera is the default source, so we do this by running the application without using any parameters or we can still specify the camera using "cam" by using the parameter settings string:
 
 ```
-m=$mVA32 i=cam
+m=$mVLP32 i=cam
 ```
 
 
