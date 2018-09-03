@@ -1182,7 +1182,7 @@ make
 5. Let us see how the application handles a video file.
 
 ```bash
-./intel64/Release/car_detection_tutorial -m $mVLP32 -i ../../car-detection.mp4
+./intel64/Release/car_detection_tutorial -m $mVLP32 -i ../../data/car-detection.mp4
 ```
 
 
@@ -1467,7 +1467,7 @@ source ../scripts/setupenv.sh
 5. Let us see how the application handles a video file.  Set the command line arguments for the run configuration to: 
 
 ```
--m ${env_var:mVLP32} -i ../car-detection.mp4
+-m ${env_var:mVLP32} -i ../data/car-detection.mp4
 ```
 
 
