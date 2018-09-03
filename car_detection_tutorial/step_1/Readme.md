@@ -280,7 +280,7 @@ make
 4. Next, let us see how the application handles a video file:
 
 ```bash
-./intel64/Release/car_detection_tutorial -i ../../data/car-detection.mp4
+./intel64/Release/car_detection_tutorial -i ../../data/cars_768x768.h264
 ```
 
 
