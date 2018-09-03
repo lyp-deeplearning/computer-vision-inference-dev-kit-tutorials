@@ -282,7 +282,7 @@ make
 4. Next, let us see how the application handles a video file:
 
 ```bash
-./intel64/Release/face_detection_tutorial -i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+./intel64/Release/face_detection_tutorial -i ../../data/head-pose-face-detection-female-and-male.mp4
 ```
 
 
@@ -524,7 +524,7 @@ source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 4. Next, let us see how the application handles a video file.  Set the command line arguments for the run configuration to: 
 
 ```
--i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+-i ../data/head-pose-face-detection-female-and-male.mp4
 ```
 
 

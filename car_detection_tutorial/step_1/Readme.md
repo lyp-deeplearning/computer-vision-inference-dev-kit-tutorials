@@ -522,7 +522,7 @@ source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 4. Next, let us see how the application handles a video file.  Set the command line arguments for the run configuration to: 
 
 ```
--i ../data/car-detection.mp4
+-i ../data/cars_768x768.h264
 ```
 
 
