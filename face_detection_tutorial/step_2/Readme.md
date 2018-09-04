@@ -1375,13 +1375,13 @@ source ../../scripts/setupenv.sh
 
 ```bash
 InferenceEngine: 
-	API version ............ 1.1
+	API version ............ (N.N)
 	Build .................. (string)
 [ INFO ] Parsing input parameters
 [ INFO ] Reading input
 [ INFO ] Loading plugin CPU
 
-	API version ............ 1.1
+	API version ............ (N.N)
 	Build .................. (string)
 	Description ....... MKLDNNPlugin
 

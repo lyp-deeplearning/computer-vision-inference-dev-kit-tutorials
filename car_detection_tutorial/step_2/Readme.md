@@ -1059,7 +1059,7 @@ Stage 1 takes the inference results gathered in the previous stage and renders t
 ```
 
 
-2. outputFrame is set to the frame being processed and frame rectangles are drawn for all the vehicles that were detected during inference.
+2. outputFrame is set to the frame being processed and frame rectangles are drawn for all the vehicles and license plates (if model detects licenses plates too) that were detected during inference.
 
 ```cpp
             cv::Mat& outputFrame = *(ps0s1i.outputFrame);
@@ -1168,7 +1168,7 @@ The following covers how to build and run from the command line using "make".
 
 ### Build
 
-1. Open up an Xterm window or use an existing window to get to a command shell prompt.
+1. Open up a terminal (such as xterm) or use an existing terminal to get to a command shell prompt.
 
 2. Change to the directory containing Tutorial Step 2:
 
@@ -1279,7 +1279,7 @@ Or
 
 8. Now you will see a window displaying the input from the USB camera.  If the vehicle detection model sees anything it detects as any type of vehicle (car, van, etc.), it will draw a green rectangle around it.  Red rectangles will be drawn around anything that is detected as a license plate (if model detects license plates too).  Unless you have a car in your office, or a parking lot outside a nearby window, the display may not be very exciting.
 
-9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the XTerm window.
+9. When you want to exit the program, make sure the output window is active and press a key.  The output window will close and control will return to the terminal window.
 
 ## Intel® System Studio
 

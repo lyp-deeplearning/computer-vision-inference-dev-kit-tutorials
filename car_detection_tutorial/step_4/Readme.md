@@ -536,7 +536,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-6. The results are iterated through putting detected vehicles and license plates with the associated input frame:
+6. The results are iterated through putting detected vehicles and license plates (if model detects licenses plates too) with the associated input frame:
 
 ```Cpp
 				// store results for next pipeline stage
@@ -604,7 +604,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 						if (VehicleAttribs.enquedVehicles >= VehicleAttribs.maxBatch) {
 							break;
 						}
-					 VehicleAttribs.enqueue(*ps1s2i.outputFrame, ps1s2i.vehicleLocations[rib]);
+						VehicleAttribs.enqueue(*ps1s2i.outputFrame, ps1s2i.vehicleLocations[rib]);
 					}
 ```
 
