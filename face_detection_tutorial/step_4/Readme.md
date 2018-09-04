@@ -592,7 +592,7 @@ m=$mFDA32 m_ag=$mAG32 m_hp=$mHP32 i=tutorials/computer-vision-inference-dev-kit-
 2. The output window will show the image overlaid with colored rectangles over the faces, age and gender results for each face, and the timing statistics for computing the results.  Additionally, you will see red, green, and blue axes over each face, representing the head pose, or orientation, for the face.  Next, let us try it on a video file.  Use the parameter settings string:
 
 ```
-m=$mFDA32 m_ag=$mAG32 m_hp=$mHP32 i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 m_ag=$mAG32 m_hp=$mHP32 i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 ```
 
 
@@ -672,11 +672,11 @@ As we mentioned in the Key Concepts section, the batch size is the number of inp
 Let us look at a sample parameter settings string that uses all the parameters so that we can see what it looks like.
 
 ```
-m=$mFDA32 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 ```
 
 
-From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16.  We also specify "-i /opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4" so that we have a “known” data set to do our performance tests with.  This MP4 video file used from the OpenVINO™ toolkit samples is a hand-drawn face with a moving camera.  
+From this command line, we see that the application will load the FP32 face detection model onto the GPU, the FP16 age and gender model on the Myriad, using a batch size of 1, and the FP16 head pose model onto the GPU, with a batch size of 16.  We also specify "-i tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4" so that we have a “known” data set to do our performance tests with.  This MP4 video file used from the OpenVINO™ toolkit samples is a hand-drawn face with a moving camera.  
 
 You can see that it is easy to change the model precision to match the device you want to run it on by changing the model to use the FP16 or FP32 using "16" and “32” built into the names of the variables..  It is easy to make up several test cases to see how the application and each of the inference model, perform.  Just remember that all models run on the CPU must be FP32, and all models run on the Myriad must be FP16.  Models run on the Myriad must also have their batch size set to 1.  Models run on the GPU can be either FP16 or FP32.
 
@@ -692,37 +692,37 @@ Below are ten command lines we used to generate some performance count data.  Th
 
 ```
 # Parameter settings string #1
-m=$mFDA16 d=MYRIAD m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=MYRIAD m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #2
-m=$mFDA16 d=MYRIAD m_ag=$mAG32 d_ag=CPU m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=MYRIAD m_ag=$mAG32 d_ag=CPU m_hp=$mHP16 d_hp=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #3
-m=$mFDA16 d=MYRIAD m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=MYRIAD m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #4
-m=$mFDA32 d=CPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=CPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #5
-m=$mFDA32 d=CPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=CPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #6
-m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #7
-m=$mFDA16 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #8
-m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP32 d_hp=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #9
-m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #10
-m=$mFDA32 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP32 d_hp=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #11
-m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP32 d_hp=CPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP32 d_hp=CPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #12
-m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=CPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #13
-m=$mFDA32 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA32 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #14
-m=$mFDA16 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=GPU m_ag=$mAG32 d_ag=CPU m_hp=$mHP16 d_hp=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #15
-m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=MYRIAD m_hp=$mHP16 d_hp=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 # Parameter settings string #16
-m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=GPU i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDA16 d=GPU m_ag=$mAG16 d_ag=GPU m_hp=$mHP16 d_hp=GPU i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 ```
 
 

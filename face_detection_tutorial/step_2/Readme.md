@@ -174,8 +174,8 @@ Inference Engine reporting its version:
 
 ```bash
 InferenceEngine: 
-	API version ............ 1.0
-	Build .................. 10073
+	API version ............ (N.N)
+	Build .................. (string)
 [ INFO ] Parsing input parameters
 [ INFO ] Reading input
 ```
@@ -191,8 +191,8 @@ The application reporting that it is loading the CPU plugin:
 Inference Engine reports that it has loaded the CPU plugin (MKLDNNPlugin) and its version:
 
 ```bash
-	API version ............ 1.0
-	Build .................. lnx_20180314
+	API version ............ (N.N)
+	Build .................. (string)
 	Description ....... MKLDNNPlugin
 [ INFO ] Loading network files for Face Detection
 [ INFO ] Batch size is set to  1
@@ -1054,7 +1054,7 @@ m=$mFDA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection
 5. Let us see how the application handles a video file.  And let us also see how easy it is to have the application run a different face detection model by loading the face-detection-retail-0004 IR files by just changing the "m=" parameter from $mFDA32 to $mFDR32.  Use the parameter settings string:
 
 ```
-m=$mFDR32 i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+m=$mFDR32 i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 ```
 
 
@@ -1082,14 +1082,14 @@ m=$mFDA32 i=cam pc=1
 
 ```bash
 InferenceEngine: 
-	API version ............ 1.1
-	Build .................. 11653
+	API version ............ (N.N)
+	Build .................. (string)
 [ INFO ] Parsing input parameters
 [ INFO ] Reading input
 [ INFO ] Loading plugin CPU
 
-	API version ............ 1.1
-	Build .................. lnx_20180510
+	API version ............ (N.N)
+	Build .................. (string)
 	Description ....... MKLDNNPlugin
 
 [ INFO ] Loading network files for Face Detection

@@ -389,7 +389,7 @@ i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/
 4. Next, let us see how the application handles a video file.  When prompted, enter the parameter string:
 
 ```
-i=/opt/intel/computer_vision_sdk/openvx/samples/samples/face_detection/face.mp4
+i=tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial/data/head-pose-face-detection-female-and-male.mp4
 ```
 
 

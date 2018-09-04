@@ -387,7 +387,7 @@ i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/d
 4. Next, let us see how the application handles a video file.  When prompted, enter the parameter string: 
 
 ```
-i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4
+i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264
 ```
 
 
