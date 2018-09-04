@@ -49,7 +49,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/
 
 ## Command Line Arguments
 
-The command line argument -n_async has been added to control how many outstanding API requests are to be allowed when running each model.  Setting -n_async to 1 is effectively the same as synchronous mode since later stages in the pipeline will not have anything to do until the results appear.  The following code in car_detection.hpp adds the -n_async argument to appear in the code as the variable PARAMETERS_n_async:
+The command line argument n_async has been added to control how many outstanding API requests are to be allowed when running each model.  Setting n_async to 1 is effectively the same as synchronous mode since later stages in the pipeline will not have anything to do until the results appear.  The following code in car_detection.hpp adds the n_async argument to appear in the code as the variable PARAMETERS_n_async:
 
 ``` Cpp
 /// @brief message async function flag
@@ -93,7 +93,7 @@ In the code:
 
 * outputRequest - holds the current output request for retrieving outputs
 
-* maxSubmittedRequests - the maximum number of outstanding requests allowed (set using -n_async)
+* maxSubmittedRequests - the maximum number of outstanding requests allowed (set using n_async)
 
 ### BaseDetection()
 
@@ -272,10 +272,16 @@ enqueue() has the changes:
 ```
 
 
-2. The single "request" has been replaced to use current input request “requests[inputRequestIdx]”:
+2. The single "request" has been replaced to use current input request “requests[inputRequestIdx]” when using auto resize or not:
 
-```cpp
-        auto  inputBlob = requests[inputRequestIdx]->GetBlob(input);
+```Cpp
+       if (FLAGS_auto_resize) {
+            inputBlob = wrapMat2Blob(frame);
+            requests[inputRequestIdx]->SetBlob(input, inputBlob);
+       } else {
+		inputBlob = requests[inputRequestIdx]->GetBlob(input);
+		matU8ToBlob<uint8_t >(frame, inputBlob, enquedFrames);
+    	 }
 ```
 
 
@@ -329,10 +335,17 @@ enqueue() has the changes:
 ```
 
 
-2. The single "request" has been replaced to use current input request “requests[inputRequestIdx]”:
+2. The single "request" has been replaced to use current input request “requests[inputRequestIdx]” when using auto resize or not:
 
 ```cpp
-        auto  inputBlob = requests[inputRequestIdx]->GetBlob(input);
+        if (FLAGS_auto_resize) {
+            // ... same cropping code ... 
+            requests[inputRequestIdx]->SetBlob(inputName, inputBlob);
+        } else {
+        	// ... same cropping code ... 
+        	inputBlob = requests[inputRequestIdx]->GetBlob(inputName);
+		matU8ToBlob<uint8_t >(cropped, inputBlob, enquedVehicles);
+    	}
 ```
 
 
@@ -523,7 +536,7 @@ Stage #1 is responsible for checking for and then processing vehicle inference r
 ```
 
 
-6. The results are iterated through putting detected vehicles and license plates with the associated input frame:
+6. The results are iterated through putting detected vehicles and license plates (if model detects licenses plates too) with the associated input frame:
 
 ```Cpp
 				// store results for next pipeline stage
@@ -591,9 +604,7 @@ Stage #1 from Tutorial Step 3 does both submit and wait for a inference request.
 						if (VehicleAttribs.enquedVehicles >= VehicleAttribs.maxBatch) {
 							break;
 						}
-						auto clippedRect = ps1s2i.vehicleLocations[rib] & cv::Rect(0, 0, width, height);
-						auto Vehicle = (*ps1s2i.outputFrame)(clippedRect);
-						VehicleAttribs.enqueue(Vehicle);
+						VehicleAttribs.enqueue(*ps1s2i.outputFrame, ps1s2i.vehicleLocations[rib]);
 					}
 ```
 
@@ -901,7 +912,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ![image alt text](../doc_support/step4_image_19.png)
 
-4. You may notice that default value for the parameter "m" is pretty long and may need to change especially when wanting to use an FP16 model for a device.  To make this easier, included in the tutorial “car_detection.hpp” code are additional parameters: “mVLP32” and “mVLP16”.  Instead of copying the full path, the parameter string’s ability to reference other parameters may be used such as “m=$mVLP16” which will change parameter “m” to now point to the FP16 version of the model as shown below.
+4. You may notice that default value for the parameter "m" is pretty long and may need to change especially when wanting to use an FP16 model for a device.  To make this easier, included in the tutorial “car_detection.hpp” code are additional parameters: “mVDR32” and “mVDR16”.  Instead of copying the full path, the parameter string’s ability to reference other parameters may be used such as “m=$mVDR16” which will change parameter “m” to now point to the FP16 version of the model as shown below.
 
 ![image alt text](../doc_support/step4_image_20.png)
 
@@ -914,14 +925,14 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 1. First, let us see how it works on a single image file using default synchronous mode.  Use the parameter settings string:
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
+m=$mVDR32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp
 ```
 
 
-2. The output window will show the image overlaid with colored rectangles over the cars and license plate along with and the timing statistics for computing the results.  Run the command again in asynchronous mode using the parameter setting "n_async=2":
+2. The output window will show the image overlaid with colored rectangles over the cars and license plate (if model detects licenses plates too) along with and the timing statistics for computing the results.  Run the command again in asynchronous mode using the parameter setting "n_async=2":
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp -n_async 2
+m=$mVDR32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car_1.bmp n_async=2
 ```
 
 
@@ -930,25 +941,25 @@ m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/ca
 4. Next, let us try it on a video file.  Use the parameter settings string:
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
+m=$mVDR32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264 n_async=1
 ```
 
 
 5. Over each frame of the video, you will see green rectangles drawn around the cars as they move through the parking lot.  Now run the command again in asynchronous mode using the parameter setting "n_async=2":
 
 ```
-m=$mVLP32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 -n_async 2
+m=$mVDR32 m_va=$mVA32 i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264 n_async=2
 ```
 
 
 6. Unexpectedly, asynchronous mode should have made the video take longer to run by >10%.  Why would that be?  With the main loop now running asynchronously and not blocking, it is now an additional thread running on the CPU along with the inference models.  Now let us shift running the models to other devices, first in synchronous mode then asynchronous with increasing n_async value using the using the parameter settings strings:
 
 ```
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=1
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=2
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=4
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=8
-m=$mVLP16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/car-detection.mp4 n_async=16
+m=$mVDR16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264 n_async=1
+m=$mVDR16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264 n_async=2
+m=$mVDR16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264 n_async=4
+m=$mVDR16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264 n_async=8
+m=$mVDR16 d=GPU m_va=$mVA16 d_va=MYRIAD i=tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/data/cars_768x768.h264 n_async=16
 ```
 
 
