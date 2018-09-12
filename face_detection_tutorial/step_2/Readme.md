@@ -671,20 +671,20 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
    6. Width of ROI
 
-```cpp
-            float image_id = detections[i * objectSize + 0];
-            Result r;
-            r.label = static_cast<int>(detections[i * objectSize + 1]);
-            r.confidence = detections[i * objectSize + 2];
-            if (r.confidence <= PARAMETERS_t) {
-                continue;
-            }
+   ```cpp
+               float image_id = detections[i * objectSize + 0];
+               Result r;
+               r.label = static_cast<int>(detections[i * objectSize + 1]);
+               r.confidence = detections[i * objectSize + 2];
+               if (r.confidence <= PARAMETERS_t) {
+                   continue;
+               }
 
-            r.location.x = detections[i * objectSize + 3] * width;
-            r.location.y = detections[i * objectSize + 4] * height;
-            r.location.width = detections[i * objectSize + 5] * width - r.location.x;
-            r.location.height = detections[i * objectSize + 6] * height - r.location.y;
-```
+               r.location.x = detections[i * objectSize + 3] * width;
+               r.location.y = detections[i * objectSize + 4] * height;
+               r.location.width = detections[i * objectSize + 5] * width - r.location.x;
+               r.location.height = detections[i * objectSize + 6] * height - r.location.y;
+   ```
 
 
 6. If the returned image_id is not valid, no more valid outputs are expected so exit the loop.
