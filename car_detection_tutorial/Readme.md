@@ -224,11 +224,11 @@ Using the Inference Engine API follows the basic steps briefly described below. 
 
    2. Parse and process the output blob(s) according to the output format specified by the model
 
-In tutorial Steps 2 and 3 we will walkthrough the code that specifically integrates each of the models used in the application.  
+   In tutorial Steps 2 and 3 we will walkthrough the code that specifically integrates each of the models used in the application.  
 
-More details on the Inference Engine can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
+   More details on the Inference Engine can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
 
-and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
+   and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
 
 #### Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries
 
