@@ -629,23 +629,23 @@ fetchResults() will parse the inference results saving them in the "Results" var
 
    7. Height of ROI
 
-```cpp
-      for (int i = 0; i < maxProposalCount; i++) {
-         int proposalOffset = i * objectSize;
-         float image_id = detections[proposalOffset + 0];
-         Result r;
-         r.batchIndex = image_id;
-         r.label = static_cast<int>(detections[proposalOffset + 1]);
-         r.confidence = detections[proposalOffset + 2];
-         if (r.confidence <= PARAMETERS_t) {
-            continue;
-         }
-         r.location.x = detections[proposalOffset + 3] * width;
-         r.location.y = detections[proposalOffset + 4] * height;
-         r.location.width = detections[proposalOffset + 5] * width - r.location.x;
-         r.location.height = detections[proposalOffset + 6] * height - r.location.y;
+   ```cpp
+         for (int i = 0; i < maxProposalCount; i++) {
+            int proposalOffset = i * objectSize;
+            float image_id = detections[proposalOffset + 0];
+            Result r;
+            r.batchIndex = image_id;
+            r.label = static_cast<int>(detections[proposalOffset + 1]);
+            r.confidence = detections[proposalOffset + 2];
+            if (r.confidence <= PARAMETERS_t) {
+               continue;
+            }
+            r.location.x = detections[proposalOffset + 3] * width;
+            r.location.y = detections[proposalOffset + 4] * height;
+            r.location.width = detections[proposalOffset + 5] * width - r.location.x;
+            r.location.height = detections[proposalOffset + 6] * height - r.location.y;
 
-```
+   ```
 
 
 6. If the returned image_id is not valid, no more valid outputs are expected so exit the loop.
