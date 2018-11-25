@@ -99,7 +99,8 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/
 
 1. These header files are included to define helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
 
-```cpp
+```Cpp
+#define USE_OPENCV 1
 #include <common.hpp>
 #include "slog.hpp"
 ```
@@ -127,8 +128,8 @@ if (!(PARAMETERS_i == "cam" ? cap.open(0) : cap.open(PARAMETERS_i))) {
 2. The width and height of the image source are stored for use later.  
 
 ```cpp
-const size_t width  = (size_t) cap.get(CV_CAP_PROP_FRAME_WIDTH);
-const size_t height = (size_t) cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+const size_t width  = (size_t) cap.get(cv::CAP_PROP_FRAME_WIDTH);
+const size_t height = (size_t) cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 ```
 
 

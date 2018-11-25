@@ -41,9 +41,9 @@
 
 #include <inference_engine.hpp>
 
+#define USE_OPENCV 1
 #include <common.hpp>
 #include "slog.hpp"
-#include "mkldnn/mkldnn_extension_ptr.hpp"
 #include <extension/ext_list.hpp>
 
 #include <opencv2/opencv.hpp>
@@ -83,10 +83,9 @@ bool promptForParameters() {
         throw std::logic_error("Parameter -m is not set");
     }
 
-    if (FLAGS_auto_resize) {
+    if (PARAMETERS_auto_resize) {
     	slog::warn << "auto_resize=1, forcing all batch sizes to 1" << slog::endl;
-    	FLAGS_n = 1;
-    	FLAGS_n_va = 1;
+    	PARAMETERS_n = 1;
     }
     return true;
 }
@@ -336,8 +335,8 @@ int main_function() {
         if (!(PARAMETERS_i == "cam" ? cap.open(0) : cap.open(PARAMETERS_i))) {
             throw std::logic_error("Cannot open input file or camera: " + PARAMETERS_i);
         }
-        const size_t width  = (size_t) cap.get(CV_CAP_PROP_FRAME_WIDTH);
-        const size_t height = (size_t) cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+        const size_t width  = (size_t) cap.get(cv::CAP_PROP_FRAME_WIDTH);
+        const size_t height = (size_t) cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 
         // ---------------------Load plugins for inference engine------------------------------------------------
         std::map<std::string, InferencePlugin> pluginsForDevices;
@@ -385,8 +384,8 @@ int main_function() {
 
                 if (!PARAMETERS_l.empty()) {
                     // CPU(MKLDNN) extensions are loaded as a shared library and passed as a pointer to base extension
-                    auto extension_ptr = make_so_pointer<InferenceEngine::MKLDNNPlugin::IMKLDNNExtension>(PARAMETERS_l);
-                    plugin.AddExtension(std::static_pointer_cast<IExtension>(extension_ptr));
+                    auto extension_ptr = make_so_pointer<IExtension>(PARAMETERS_l);
+                    plugin.AddExtension(extension_ptr);
                 }
             } else if (!PARAMETERS_c.empty()) {
                 // Load Extensions for other plugins not CPU

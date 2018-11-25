@@ -40,9 +40,9 @@
 
 #include <inference_engine.hpp>
 
+#define USE_OPENCV 1
 #include <common.hpp>
 #include "slog.hpp"
-#include "mkldnn/mkldnn_extension_ptr.hpp"
 #include <extension/ext_list.hpp>
 
 #include <opencv2/opencv.hpp>
@@ -109,8 +109,8 @@ int main_function() {
         if (!(PARAMETERS_i == "cam" ? cap.open(0) : cap.open(PARAMETERS_i))) {
             throw std::logic_error("Cannot open input file or camera: " + PARAMETERS_i);
         }
-        const size_t width  = (size_t) cap.get(CV_CAP_PROP_FRAME_WIDTH);
-        const size_t height = (size_t) cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+        const size_t width  = (size_t) cap.get(cv::CAP_PROP_FRAME_WIDTH);
+        const size_t height = (size_t) cap.get(cv::CAP_PROP_FRAME_HEIGHT);
 
         // read input (video) frame
         cv::Mat frame;

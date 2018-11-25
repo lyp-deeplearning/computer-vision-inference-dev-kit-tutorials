@@ -64,11 +64,7 @@ static const char target_device_message[] = "Specify the target device for Vehic
 /// @brief message for number of simultaneously vehicle detections using dynamic batch
 static const char num_batch_message[] = "Specify number of maximum simultaneously processed frames for Vehicle Detection";
 
-/// @brief message for assigning vehicle attributes to device
-static const char target_device_message_vehicle_attribs[] = "Specify the target device for Vehicle Attributes (CPU, GPU, FPGA, or MYRIAD)";
 
-/// @brief message for number of simultaneously vehicle attributes detections using dynamic batch
-static const char num_batch_va_message[] = "Specify number of maximum simultaneously processed vehicles for Vehicle Attributes Detection ( default is 1)";
 /// @brief message auto_resize input flag
 static const char auto_resize_message[] = "Enable auto-resize (ROI crop & data resize) of input during inference.";
 

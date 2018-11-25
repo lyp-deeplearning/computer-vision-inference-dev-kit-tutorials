@@ -747,7 +747,6 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/face_detection_tutorial
 
 ```cpp
 #include "face_detection.hpp"
-#include "mkldnn/mkldnn_extension_ptr.hpp"
 #include <ext_list.hpp>
 using namespace InferenceEngine;
 ```
