@@ -87,7 +87,7 @@ git clone https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-
 
 ```Bash
 cd computer-vision-inference-dev-kit-tutorials
-git checkout openvino_toolkit_r3_0_arduino
+git checkout openvino_toolkit_r4_0_arduino
 ```
 
 
@@ -113,7 +113,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials
 3. Download the subdirectory for just this tutorial for the specific version from the repository:
 
 ```Bash
-svn export https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git/branches/openvino_toolkit_r3_0_arduino/face_detection_tutorial
+svn export https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git/branches/openvino_toolkit_r4_0_arduino/face_detection_tutorial
 ```
 
 
