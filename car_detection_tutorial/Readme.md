@@ -1,6 +1,6 @@
 # Car Detection Tutorial
 
-**Note**: This tutorial has been written using OpenVINO™ toolkit version 2018 R4.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
+**Note**: This tutorial has been written using OpenVINO™ toolkit version 2018 R3.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
 
 # Table of Contents
 
@@ -279,7 +279,7 @@ Batch size refers to the number of input data to be inferred during a single inf
 
 * By default, batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.  
 
-* The Dynamic Batching feature, available as of OpenVINO™ toolkit 2018 R4.0, makes batch size a maximum number of inputs that will be inferred for each submitted request to the Inference Engine API with the actual number of inputs set per request.  To enable and use the Dynamic Batching feature in the API:
+* The Dynamic Batching feature, available as of OpenVINO™ toolkit 2018 R3.0, makes batch size a maximum number of inputs that will be inferred for each submitted request to the Inference Engine API with the actual number of inputs set per request.  To enable and use the Dynamic Batching feature in the API:
 
    * Enable Dynamic Batching while loading the model using InferenceEngine::InferencePlugin::LoadNetwork(), set the configuration option "PluginConfigParams::KEY_DYN_BATCH_ENABLED" to “PluginConfigParams::YES” 
 
@@ -309,7 +309,7 @@ Often, the dimensions of the input data does not match the required dimensions o
 
 2. Resize the ROI data from its dimensions to match the required dimensions of the inference model’s input 
 
-This tutorial and the many samples in the OpenVINO™ toolkit use OpenCV or the Inference Engine’s image pre-processing API (available as of 2018 R4.0) to perform resizing and cropping of input data.  The next sections outline how both are used.
+This tutorial and the many samples in the OpenVINO™ toolkit use OpenCV or the Inference Engine’s image pre-processing API (available as of 2018 R3.0) to perform resizing and cropping of input data.  The next sections outline how both are used.
 
 ### OpenCV
 

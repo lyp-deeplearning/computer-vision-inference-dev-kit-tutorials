@@ -1,6 +1,6 @@
 # Face Detection Tutorial
 
-**Note**: This tutorial has been written using OpenVINO™ toolkit version 2018 R4.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
+**Note**: This tutorial has been written using OpenVINO™ toolkit version 2018 R3.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
 
 # Table of Contents
 
