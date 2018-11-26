@@ -11,6 +11,8 @@
 - #### [Branch Top](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r4_0_arduino)
 - #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r4_0_arduino/face_detection_tutorial/Readme.md)
 - #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r4_0_arduino/car_detection_tutorial/Readme.md)
+- ##### **NOTE**: The Car Detection Steps 3 and 4 will fail during link with an error similar to: "/tmp/093733374/cd_step_3_sketch/cd_step_3_sketch.ino:343: undefined reference to `InferenceEngine::make_shared_blob(std::shared_ptr<InferenceEngine::Blob> const&, InferenceEngine::ROI const&)'
+- ##### **As of 11/25/2018, the investigation into a fix is still in progress**
 
 ## Version 2018 R3.0
 ### Command line and Intel® System Studio:
