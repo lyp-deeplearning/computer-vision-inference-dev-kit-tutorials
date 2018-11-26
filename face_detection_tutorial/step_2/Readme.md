@@ -1102,7 +1102,7 @@ The following covers how to build and run from within Intel® System Studio (ISS
    source /opt/intel/computer_vision_sdk/bin/setupvars.sh
    # assumes shell is in step_* directory
    source ../scripts/setupenv.sh
-   /opt/intel/system_studio_2018/iss_ide_eclipse-launcher.sh
+   /opt/intel/system_studio_2019/iss_ide_eclipse-launcher.sh
    ```
 
 
@@ -1130,9 +1130,7 @@ The following covers how to build and run from within Intel® System Studio (ISS
 
 ![image alt text](../doc_support/step2_image_7.png)
 
-2. Expand "C/C++", select “C++ Project”, and then click the Next button.
-
-   1. **Note**: If the "C/C++" wizard is not available, you will need to unhide it by going to Window->Preferences,”Intel System Studio”, unchecking the option “Hide unsupported wizards”, and then click the OK button.
+2. Expand "Other Generic Eclipse", expand “C/C++”, select “C++ Project”, and then click the Next button.
 
 ![image alt text](../doc_support/step2_image_8.png)
 
