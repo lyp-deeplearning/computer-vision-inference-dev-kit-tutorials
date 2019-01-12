@@ -106,7 +106,7 @@ cd tutorials/face_detection_tutorial/step_1
 ```
 
 
-2. The opencv.hpp file is included for the Intel® optimized OpenCV libraries included in the OpenVINO™ toolkit.
+2. The opencv.hpp file is included for the Intel® optimized OpenCV libraries included in the Intel® Distribution of OpenVINO™ toolkit.
 
 ```cpp
 #include <opencv2/opencv.hpp>
@@ -374,7 +374,7 @@ For flexibility and to minimize rebuilding and re-uploading the sketch when para
 
 ### Running
 
-1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO™ toolkit and this tutorial, but you can also use your own images and video.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared* board, it will print an error message and exit.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
+1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the Intel® Distribution of OpenVINO™ toolkit and this tutorial, but you can also use your own images and video.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared* board, it will print an error message and exit.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
 
 2. First, let us use the application to view a single image file.  We do this by setting the "i=\<video filename\>" parameter.  When prompted, enter the parameter string: 
 

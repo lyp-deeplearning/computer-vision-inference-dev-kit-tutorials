@@ -1,16 +1,16 @@
 # Car Detection Tutorial for Arduino Create
 
-**Note**: This tutorial has been written using OpenVINO™ toolkit version 2018 R4.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
+**Note**: This tutorial has been written using Intel® Distribution of OpenVINO™ toolkit version 2018 R4.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#car-detection-tutorial-for-arduino-create">Car Detection Tutorial for Arduino Create</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#option-1-using-git-clone-to-clone-the-entire-repository">Option #1: Using Git Clone to Clone the Entire Repository</a></li><li><a href="#option-2-using-svn-export-to-download-only-this-tutorial">Option #2: Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#setting-up-arduino-create-web">Setting Up Arduino Create Web</a><ul><li><a href="#start-setup-guide">Start Setup Guide</a></li><li><a href="#login-or-create-an-account">Login or Create an Account</a></li><li><a href="#set-up-your-device">Set Up Your Device</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO™ Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#batch-size">Batch Size</a><ul><li><a href="#batch-size-and-its-effects-on-input-and-output-data-is-model-dependent">Batch Size and Its Effects on Input and Output Data is Model Dependent</a></li><li><a href="#how-batch-size-is-set">How Batch Size is Set</a></li><li><a href="#dynamic-batching">Dynamic Batching</a></li><li><a href="#how-does-batch-size-affect-performance-and-latency">How Does Batch Size Affect Performance and Latency?</a></li></ul></li><li><a href="#input-preprocessing">Input Preprocessing</a><ul><li><a href="#opencv">OpenCV</a></li><li><a href="#inference-engines-image-pre-processing-api">Inference Engine’s Image Pre-processing API</a></li><li><a href="#when-to-use-opencv-or-the-inference-engines-image-pre-processing-api">When to use OpenCV or the Inference Engine’s Image Pre-processing API</a></li></ul></li><li><a href="#image-processing-pipeline">Image Processing Pipeline</a></li><li><a href="#synchronous-vs-asynchronous-api">Synchronous vs. Asynchronous API</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first Model, Vehicle Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-vehicle-attributes-detection">Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection</a></li><li><a href="#tutorial-step-4-using-the-asynchronous-api">Tutorial Step 4: Using the Asynchronous API</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#car-detection-tutorial-for-arduino-create">Car Detection Tutorial for Arduino Create</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#option-1-using-git-clone-to-clone-the-entire-repository">Option #1: Using Git Clone to Clone the Entire Repository</a></li><li><a href="#option-2-using-svn-export-to-download-only-this-tutorial">Option #2: Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#setting-up-arduino-create-web">Setting Up Arduino Create Web</a><ul><li><a href="#start-setup-guide">Start Setup Guide</a></li><li><a href="#login-or-create-an-account">Login or Create an Account</a></li><li><a href="#set-up-your-device">Set Up Your Device</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">Intel® Distribution of OpenVINO™ Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the Intel® Distribution of OpenVINO™ Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#batch-size">Batch Size</a><ul><li><a href="#batch-size-and-its-effects-on-input-and-output-data-is-model-dependent">Batch Size and Its Effects on Input and Output Data is Model Dependent</a></li><li><a href="#how-batch-size-is-set">How Batch Size is Set</a></li><li><a href="#dynamic-batching">Dynamic Batching</a></li><li><a href="#how-does-batch-size-affect-performance-and-latency">How Does Batch Size Affect Performance and Latency?</a></li></ul></li><li><a href="#input-preprocessing">Input Preprocessing</a><ul><li><a href="#opencv">OpenCV</a></li><li><a href="#inference-engines-image-pre-processing-api">Inference Engine’s Image Pre-processing API</a></li><li><a href="#when-to-use-opencv-or-the-inference-engines-image-pre-processing-api">When to use OpenCV or the Inference Engine’s Image Pre-processing API</a></li></ul></li><li><a href="#image-processing-pipeline">Image Processing Pipeline</a></li><li><a href="#synchronous-vs-asynchronous-api">Synchronous vs. Asynchronous API</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-vehicle-detection">Tutorial Step 2: Add the first Model, Vehicle Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-vehicle-attributes-detection">Tutorial Step 3: Add the Second Model, Vehicle Attributes Detection</a></li><li><a href="#tutorial-step-4-using-the-asynchronous-api">Tutorial Step 4: Using the Asynchronous API</a></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
 
 # Introduction
 
-The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared* hardware included in the UP Squared* AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Car Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared* hardware.
+The purpose of this tutorial is to examine a sample application that was created using the Intel® Distribution of Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared* hardware included in the UP Squared* AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Car Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running it on the UP Squared* hardware.
 
-This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the third step, the application will be able to detect a vehicle and report the vehicle type (e.g. car, van, etc) and color.  In the final step, the application is improved using the Inference Engine asynchronous API to perform inference in parallel with the main processing loop.  Before that, some key concepts related to using the OpenVINO™ toolkit will be introduced and later seen along the way within the steps.  
+This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the third step, the application will be able to detect a vehicle and report the vehicle type (e.g. car, van, etc) and color.  In the final step, the application is improved using the Inference Engine asynchronous API to perform inference in parallel with the main processing loop.  Before that, some key concepts related to using the Intel® Distribution of OpenVINO™ toolkit will be introduced and later seen along the way within the steps.  
 
 # Getting Started
 
@@ -40,7 +40,7 @@ The UP Squared* AI Vision Development Kit comes ready to go with all the hardwar
 
 * Software (pre-installed in the kit)
 
-   * OpenVINO™ toolkit
+   * Intel® Distribution of OpenVINO™ toolkit
 
       * Inference Engine with plugins support for CPU, GPU, and Myriad
 
@@ -196,9 +196,9 @@ On the Arduino website, there is a setup guide for the UP Squared* AI Vision Kit
 
 ![image alt text](./doc_support/step0_image_8.png)
 
-## OpenVINO™ Toolkit Overview and Terminology 
+## Intel® Distribution of OpenVINO™ Toolkit Overview and Terminology 
 
-Let us begin with a brief overview of the OpenVINO™ toolkit and what this tutorial will be covering.  The OpenVINO™ toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel® hardware while maximizing performance. This is done using the Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit) included within the OpenVINO™ toolkit with its main components shown below.
+Let us begin with a brief overview of the Intel® Distribution of OpenVINO™ toolkit and what this tutorial will be covering.  The Intel® Distribution of OpenVINO™ toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel® hardware while maximizing performance. This is done using the Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit) included within the Intel® Distribution of OpenVINO™ toolkit with its main components shown below.
 
 ![image alt text](./doc_support/step0_image_9.png)
 
@@ -280,26 +280,26 @@ More details on the Inference Engine can be found in the "Integrating Inference 
 
 and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
 
-#### Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries
+#### Setting Up Command Line to Use the Intel® Distribution of OpenVINO™ Toolkit Executables and Libraries
 
-Whenever running the OpenVINO™ toolkit tools, compiling, or running the user application, always remember to source the script:
+Whenever running the Intel® Distribution of OpenVINO™ toolkit tools, compiling, or running the user application, always remember to source the script:
 
 ```Bash
 source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
-This script sets up the executable and library paths along with environment variables used by the OpenVINO™ toolkit tools as well as this tutorial.  **Note**: This is not required when running Arduino Create from the web.
+This script sets up the executable and library paths along with environment variables used by the Intel® Distribution of OpenVINO™ toolkit tools as well as this tutorial.  **Note**: This is not required when running Arduino Create from the web.
 
 ### Where Do the Inference Models Come from?
 
-An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
+An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the Intel® Distribution of OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
 
 # Key Concepts
 
 Before going into the samples in the tutorial steps, first we will go over some key concepts that will be covered in this tutorial.  For more related concepts, please see the  [Face Detection Tutorials](../face_detection_tutorial/Readme.md) that covers and answers the questions:
 
-* Intel® OpenCV - Why is it included in the OpenVINO™ toolkit?
+* Intel® OpenCV - Why is it included in the Intel® Distribution of OpenVINO™ toolkit?
 
 * Floating Point Precision - What is it and why does it matter?
 
@@ -329,7 +329,7 @@ Batch size refers to the number of input data to be inferred during a single inf
 
 * By default, batch size is a fixed number of inputs that will be inferred for each submitted request to the Inference Engine API regardless of how many inputs contain valid data.  Depending upon the model, invalid inputs may also result in false detections and additional unnecessary processing.  
 
-* The Dynamic Batching feature, available as of OpenVINO™ toolkit 2018 R3.0, makes batch size a maximum number of inputs that will be inferred for each submitted request to the Inference Engine API with the actual number of inputs set per request.  To enable and use the Dynamic Batching feature in the API:
+* The Dynamic Batching feature, available as of Intel® Distribution of OpenVINO™ toolkit 2018 R3.0, makes batch size a maximum number of inputs that will be inferred for each submitted request to the Inference Engine API with the actual number of inputs set per request.  To enable and use the Dynamic Batching feature in the API:
 
    * Enable Dynamic Batching while loading the model using InferenceEngine::InferencePlugin::LoadNetwork(), set the configuration option "PluginConfigParams::KEY_DYN_BATCH_ENABLED" to “PluginConfigParams::YES” 
 
@@ -359,7 +359,7 @@ Often, the dimensions of the input data does not match the required dimensions o
 
 2. Resize the ROI data from its dimensions to match the required dimensions of the inference model’s input 
 
-This tutorial and the many samples in the OpenVINO™ toolkit use OpenCV or the Inference Engine’s image pre-processing API (available as of 2018 R3.0) to perform resizing and cropping of input data.  The next sections outline how both are used.
+This tutorial and the many samples in the Intel® Distribution of OpenVINO™ toolkit use OpenCV or the Inference Engine’s image pre-processing API (available as of 2018 R3.0) to perform resizing and cropping of input data.  The next sections outline how both are used.
 
 ### OpenCV
 
@@ -529,9 +529,9 @@ Congratulations! you have completed the Car Detection Tutorial.  After going thr
 
 # References and More Information
 
-OpenVINO™ toolkit main page: [https://software.intel.com/openvino-toolkit](https://software.intel.com/openvino-toolkit)
+Intel® Distribution of OpenVINO™ toolkit main page: [https://software.intel.com/openvino-toolkit](https://software.intel.com/openvino-toolkit)
 
-OpenVINO™ toolkit documentation page: [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
+Intel® Distribution of OpenVINO™ toolkit documentation page: [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
 
 Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit): [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/openvino-toolkit/deep-learning-cv)
 
