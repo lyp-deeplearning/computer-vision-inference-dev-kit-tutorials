@@ -101,7 +101,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/
 1. These header files are included to define helpful utility classes used to simplify common tasks as well as some functions for making logging easier.
 
 ```cpp
-#include <samples/common.hpp>
+#include <samples/ocv_common.hpp>
 #include <samples/slog.hpp>
 ```
 
