@@ -16,7 +16,7 @@ Every application needs some way of getting data in and data out.  Let us now ta
 
 ## Parsing Command Line Arguments
 
-To make it easier to set everything from the input video file to which model and device is to be used, command line arguments to the application will be used.  To parse the command line arguments, the application will use the "gflags" helper library that comes with the OpenVINO™ toolkit samples.  Here we will briefly go over the primary functions that are used.  For reference, the full source code for the gflags library may be found in the OpenVINO™ toolkit samples directory: 
+To make it easier to set everything from the input video file to which model and device is to be used, command line arguments to the application will be used.  To parse the command line arguments, the application will use the "gflags" helper library that comes with the Intel® Distribution of OpenVINO™ toolkit samples.  Here we will briefly go over the primary functions that are used.  For reference, the full source code for the gflags library may be found in the Intel® Distribution of OpenVINO™ toolkit samples directory: 
 
 ```bash
 /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/thirdparty/gflags
@@ -106,7 +106,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/
 ```
 
 
-2. The opencv.hpp file is included for the Intel® optimized OpenCV libraries included in the OpenVINO™ toolkit.
+2. The opencv.hpp file is included for the Intel® optimized OpenCV libraries included in the Intel® Distribution of OpenVINO™ toolkit.
 
 ```cpp
 #include <opencv2/opencv.hpp>
@@ -246,7 +246,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/
 ```
 
 
-3. First, we need to configure the build environment when using the OpenVINO™ toolkit by running the "setupvars.sh" script.  In a terminal type:
+3. First, we need to configure the build environment when using the Intel® Distribution of OpenVINO™ toolkit by running the "setupvars.sh" script.  In a terminal type:
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -273,7 +273,7 @@ make
 
 ### Run
 
-1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO™ toolkit and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared* board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
+1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the Intel® Distribution of OpenVINO™ toolkit and this tutorial, but you can also use your own images.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared* board, it will print an error message and return to the command prompt.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
 
 2. First, let us use the application to view a single image file.  We do this by using a "-i" parameter followed by the name of an image file.  In a terminal, run:
 
@@ -325,7 +325,7 @@ The following covers how to build and run from within Intel® System Studio (ISS
 
 ![image alt text](../doc_support/step1_image_1.png)
 
-   2. Command line: Configure the build environment when using the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Then start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
+   2. Command line: Configure the build environment when using the Intel® Distribution of OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Then start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
 
    ```bash
    source /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -513,7 +513,7 @@ The following covers how to build and run from within Intel® System Studio (ISS
 
 #### Running
 
-1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the OpenVINO™ toolkit and this tutorial, but you can also use your own images and video.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared* board, it will print an error message and exit.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
+1. Now, it is time to run the application.  We will run it using each type of input (image file, video file, camera) so you will know what to expect.  We have included commands that will have the application load images or videos that come with the Intel® Distribution of OpenVINO™ toolkit and this tutorial, but you can also use your own images and video.  If the application cannot find an image, or if you have not connected the USB camera to the UP Squared* board, it will print an error message and exit.  If that happens, check the path to the image or video file, to make sure it is correct and try again.
 
 2. First, let us use the application to view a single image file.  We do this by using a "-i" parameter followed by the name of an image file.  Set the command line arguments for the run configuration to: 
 

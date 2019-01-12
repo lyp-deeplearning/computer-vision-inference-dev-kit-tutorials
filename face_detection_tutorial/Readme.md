@@ -1,16 +1,16 @@
 # Face Detection Tutorial
 
-**Note**: This tutorial has been written using OpenVINO™ toolkit version 2018 R5.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
+**Note**: This tutorial has been written using Intel® Distribution of OpenVINO™ toolkit version 2018 R5.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
 
 # Table of Contents
 
-<p></p><div class="table-of-contents"><ul><li><a href="#face-detection-tutorial">Face Detection Tutorial</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#option-1-using-git-clone-to-clone-the-entire-repository">Option #1: Using Git Clone to Clone the Entire Repository</a></li><li><a href="#option-2-using-svn-export-to-download-only-this-tutorial">Option #2: Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">OpenVINO™ Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#intel-opencv">Intel® OpenCV</a></li><li><a href="#floating-point-precision">Floating Point Precision</a><ul><li><a href="#why-would-we-choose-one-precision-over-the-other">Why Would We Choose One Precision Over the Other?</a></li><li><a href="#what-if-we-specify-the-wrong-precision-for-a-device">What If We Specify the Wrong Precision for a Device?</a></li></ul></li><li><a href="#batch-size">Batch Size</a></li><li><a href="#heterogenous-plugin">Heterogenous Plugin</a><ul><li><a href="#how-are-layers-assigned-to-devices">How are Layers Assigned to Devices?</a></li><li><a href="#what-if-the-devices-use-different-precisions">What If the Devices Use Different Precisions?</a></li><li><a href="#how-do-we-know-which-device-executed-which-layers">How Do We Know Which Device Executed Which Layers?</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first Model, Face Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-age-and-gender">Tutorial Step 3: Add the Second Model, Age and Gender</a></li><li><a href="#tutorial-step-4-add-the-third-model-head-pose">Tutorial Step 4: Add the Third Model, Head Pose</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
+<p></p><div class="table-of-contents"><ul><li><a href="#face-detection-tutorial">Face Detection Tutorial</a></li><li><a href="#table-of-contents">Table of Contents</a></li><li><a href="#introduction">Introduction</a></li><li><a href="#getting-started">Getting Started</a><ul><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#downloading-the-tutorial-from-the-git-repository">Downloading the Tutorial from the Git Repository</a><ul><li><a href="#option-1-using-git-clone-to-clone-the-entire-repository">Option #1: Using Git Clone to Clone the Entire Repository</a></li><li><a href="#option-2-using-svn-export-to-download-only-this-tutorial">Option #2: Using SVN Export to Download Only This Tutorial</a></li><li><a href="#tutorial-files">Tutorial FIles</a></li></ul></li><li><a href="#openvino-toolkit-overview-and-terminology">Intel® Distribution of OpenVINO™ Toolkit Overview and Terminology</a><ul><li><a href="#using-the-inference-engine">Using the Inference Engine</a><ul><li><a href="#inference-engine-api-integration-flow">Inference Engine API Integration Flow</a></li><li><a href="#setting-up-command-line-to-use-the-openvino-toolkit-executables-and-libraries">Setting Up Command Line to Use the Intel® Distribution of OpenVINO™ Toolkit Executables and Libraries</a></li></ul></li><li><a href="#where-do-the-inference-models-come-from">Where Do the Inference Models Come from?</a></li></ul></li></ul></li><li><a href="#key-concepts">Key Concepts</a><ul><li><a href="#intel-opencv">Intel® OpenCV</a></li><li><a href="#floating-point-precision">Floating Point Precision</a><ul><li><a href="#why-would-we-choose-one-precision-over-the-other">Why Would We Choose One Precision Over the Other?</a></li><li><a href="#what-if-we-specify-the-wrong-precision-for-a-device">What If We Specify the Wrong Precision for a Device?</a></li></ul></li><li><a href="#batch-size">Batch Size</a></li><li><a href="#heterogenous-plugin">Heterogenous Plugin</a><ul><li><a href="#how-are-layers-assigned-to-devices">How are Layers Assigned to Devices?</a></li><li><a href="#what-if-the-devices-use-different-precisions">What If the Devices Use Different Precisions?</a></li><li><a href="#how-do-we-know-which-device-executed-which-layers">How Do We Know Which Device Executed Which Layers?</a></li></ul></li><li><a href="#tutorial-step-1-create-the-base-opencv-application">Tutorial Step 1: Create the Base OpenCV Application</a></li><li><a href="#tutorial-step-2-add-the-first-model-face-detection">Tutorial Step 2: Add the first Model, Face Detection</a></li><li><a href="#tutorial-step-3-add-the-second-model-age-and-gender">Tutorial Step 3: Add the Second Model, Age and Gender</a></li><li><a href="#tutorial-step-4-add-the-third-model-head-pose">Tutorial Step 4: Add the Third Model, Head Pose</a></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references-and-more-information">References and More Information</a></li></ul></div><p></p>
 
 # Introduction
 
-The purpose of this tutorial is to examine a sample application that was created using the Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared* hardware included in the UP Squared* AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Face Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running on the UP Squared* hardware.
+The purpose of this tutorial is to examine a sample application that was created using the Intel® Distribution of Open Visual Inference & Neural Network Optimization (OpenVINO™) toolkit and UP Squared* hardware included in the UP Squared* AI Vision Development Kit.  The application is able to run inference models on the CPU, GPU and VPU devices to process images.  The models can be used to process video from the USB camera, an existing video file, or still image files.  To do that, we will download the latest Face Detection Tutorial from GitHub and then walk through the sample code for each step before compiling and running on the UP Squared* hardware.
 
-This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the final step, the complete application will be able to detect a face, report age and gender for the face, and draw a 3D axis representing the head pose for each face.  Before that, some key concepts related to using the OpenVINO™ toolkit will be introduced and later seen along the way within the steps.  
+This tutorial will start from a base application that can read in image data and output the image to a window.  From there, each step adds deep learning models that will process the image data and make inferences.  In the final step, the complete application will be able to detect a face, report age and gender for the face, and draw a 3D axis representing the head pose for each face.  Before that, some key concepts related to using the Intel® Distribution of OpenVINO™ toolkit will be introduced and later seen along the way within the steps.  
 
 # Getting Started
 
@@ -40,7 +40,7 @@ The UP Squared* AI Vision Development Kit comes ready to go with all the hardwar
 
 * Software (pre-installed in the kit)
 
-   * OpenVINO™ toolkit
+   * Intel® Distribution of OpenVINO™ toolkit
 
       * Inference Engine with plugins support for CPU, GPU, and Myriad
 
@@ -146,9 +146,9 @@ In the "face_detection_tutorial" directory you will see:
 
 * Readme.md - The top level of this tutorial (this page)
 
-## OpenVINO™ Toolkit Overview and Terminology 
+## Intel® Distribution of OpenVINO™ Toolkit Overview and Terminology 
 
-Let us begin with a brief overview of the OpenVINO™ toolkit and what this tutorial will be covering.  The OpenVINO™ toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel® hardware while maximizing performance. This is done using the Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit) included within the OpenVINO™ toolkit with its main components shown below.
+Let us begin with a brief overview of the Intel® Distribution of OpenVINO™ toolkit and what this tutorial will be covering.  The Intel® Distribution of OpenVINO™ toolkit enables the quick deployment of convolutional neural networks (CNN) for heterogeneous execution on Intel® hardware while maximizing performance. This is done using the Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit) included within the Intel® Distribution of OpenVINO™ toolkit with its main components shown below.
 
 ![image alt text](./doc_support/step0_image_0.png)
 
@@ -230,20 +230,20 @@ More details on the Inference Engine can be found in the "Integrating Inference 
 
 and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
 
-#### Setting Up Command Line to Use the OpenVINO™ Toolkit Executables and Libraries
+#### Setting Up Command Line to Use the Intel® Distribution of OpenVINO™ Toolkit Executables and Libraries
 
-Whenever running the OpenVINO™ toolkit tools, compiling, or running the user application, always remember to source the script:
+Whenever running the Intel® Distribution of OpenVINO™ toolkit tools, compiling, or running the user application, always remember to source the script:
 
 ```Bash
 source /opt/intel/computer_vision_sdk/bin/setupvars.sh
 ```
 
 
-This script sets up the executable and library paths along with environment variables used by the OpenVINO™ toolkit tools as well as this tutorial.
+This script sets up the executable and library paths along with environment variables used by the Intel® Distribution of OpenVINO™ toolkit tools as well as this tutorial.
 
 ### Where Do the Inference Models Come from?
 
-An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
+An inference model may come from any of the supported sources and workflows such as Caffe, TensorFlow, and Apache MXNet.  For this tutorial, we will use models that have already been compiled by the Model Optimizer into .bin and .xml files and supplied within the Intel® Distribution of OpenVINO™ toolkit samples.  The development and compiling of models is beyond the scope of this tutorial, for more information see [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/en-us/openvino-toolkit/deep-learning-cv)
 
 # Key Concepts
 
@@ -251,7 +251,7 @@ Before going into the samples in the tutorial steps, first we will go over some 
 
 ## Intel® OpenCV
 
-For the application that we will cover in Step 1, the OpenCV libraries included in the OpenVINO™ toolkit will be used.  You may be wondering: Why is OpenCV included in the OpenVINO™ toolkit along with the Inference Engine?  The first big reason is: They are the fastest implementation of OpenCV functions for Intel® devices.  The Intel® libraries have been optimized to run on each Intel® CPU, GPU, and Myriad device.  It also helps that by including in the libraries in the OpenVINO™ toolkit, you get the complete set of libraries and always get the necessary version.  
+For the application that we will cover in Step 1, the OpenCV libraries included in the Intel® Distribution of OpenVINO™ toolkit will be used.  You may be wondering: Why is OpenCV included in the Intel® Distribution of OpenVINO™ toolkit along with the Inference Engine?  The first big reason is: They are the fastest implementation of OpenCV functions for Intel® devices.  The Intel® libraries have been optimized to run on each Intel® CPU, GPU, and Myriad device.  It also helps that by including in the libraries in the Intel® Distribution of OpenVINO™ toolkit, you get the complete set of libraries and always get the necessary version.  
 
 The second big reason: All the extensions and additional libraries that come with Intel®’s OpenCV.  One such library is the Photography Vision Library (PVL).  PVL includes advanced implementations by Intel® already optimized for power and performance on Intel® devices to do face, blink, and smile detection along with recognizing faces.
 
@@ -348,7 +348,7 @@ In this tutorial, face detection is done frame-by-frame expecting few results so
 
 ## Heterogenous Plugin
 
-As described in the OpenVINO™ Toolkit overview, the Inference Engine includes a plugin library for each supported physical (e.g CPU, GPU, VPU, etc.) device.  In addition to physical devices, the Inference Engine includes the "Heterogenous Plugin" (also referred to as “Hetero Plugin”) which may be used to run an inference model on multiple physical devices.  The plugin does this by assigning the layers within the inference model to be executed on the different plugins for the devices.  The Heteo Plugin is intended for:
+As described in the Intel® Distribution of OpenVINO™ toolkit overview, the Inference Engine includes a plugin library for each supported physical (e.g CPU, GPU, VPU, etc.) device.  In addition to physical devices, the Inference Engine includes the "Heterogenous Plugin" (also referred to as “Hetero Plugin”) which may be used to run an inference model on multiple physical devices.  The plugin does this by assigning the layers within the inference model to be executed on the different plugins for the devices.  The Heteo Plugin is intended for:
 
 1. Using a device(s) to accelerate the layers it supports best and execute less supported layers on a fallback devices like CPU.
 
@@ -459,9 +459,9 @@ Congratulations! you have completed the Face Detection Tutorial.  After going th
 
 # References and More Information
 
-OpenVINO™ toolkit main page: [https://software.intel.com/openvino-toolkit](https://software.intel.com/openvino-toolkit)
+Intel® Distribution of OpenVINO™ toolkit main page: [https://software.intel.com/openvino-toolkit](https://software.intel.com/openvino-toolkit)
 
-OpenVINO™ toolkit documentation page: [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
+Intel® Distribution of OpenVINO™ toolkit documentation page: [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
 
 Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit): [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/openvino-toolkit/deep-learning-cv)
 

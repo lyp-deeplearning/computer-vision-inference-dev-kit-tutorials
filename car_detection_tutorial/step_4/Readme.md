@@ -819,7 +819,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/
 ```
 
 
-3. The first step is to configure the build environment for the OpenCV toolkit by sourcing the "setupvars.sh" script.
+3. The first step is to configure the build environment for the Intel® Distribution of OpenVINO™ toolkit by sourcing the "setupvars.sh" script.
 
 ```bash
 source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
@@ -912,7 +912,7 @@ The following covers how to build and run from within Intel® System Studio (ISS
 
 ![image alt text](../doc_support/step4_image_1.png)
 
-   2. Command line: Configure the build environment when using the OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Be sure to source the helper script “scripts/setupenv.sh” which defines environment variables that point to inference models used so that short names may be used instead of long paths.  Then finally start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
+   2. Command line: Configure the build environment when using the Intel® Distribution of OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Be sure to source the helper script “scripts/setupenv.sh” which defines environment variables that point to inference models used so that short names may be used instead of long paths.  Then finally start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
 
    ```bash
    source /opt/intel/computer_vision_sdk/bin/setupvars.sh
