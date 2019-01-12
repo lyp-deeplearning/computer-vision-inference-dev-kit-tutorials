@@ -1,7 +1,14 @@
 # computer-vision-inference-dev-kit-tutorials
 
-# **NOTE**: Tutorials exist on branches according to tool coverage (command line and Intel® System Studio, and Arduino Create) and are versioned according to the targeted OpenVINO™ toolkit release.  The "master" branch, specifically this file, is only used for pointing to the different versions of the tutorials.
+# **NOTE**: Tutorials exist on branches according to tool coverage (command line and Intel® System Studio, and Arduino Create) and are versioned according to the targeted Intel® Distribution of OpenVINO™ toolkit release.  The "master" branch, specifically this file, is only used for pointing to the different versions of the tutorials.
 # Branches
+## Version 2018 R5.0
+### Command line and Intel® System Studio:
+- #### [Branch Top](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r4_0)
+- #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r4_0/face_detection_tutorial/Readme.md)
+- #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r4_0/car_detection_tutorial/Readme.md)
+### Arduino Create:
+- ##### **As of 1/12/19, Arduino Create is still running R4.0**
 ## Version 2018 R4.0
 ### Command line and Intel® System Studio:
 - #### [Branch Top](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r4_0)
