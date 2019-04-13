@@ -1,5 +1,5 @@
 # This script uses the model downloader script located in the OpenVINO installation
-#  to download all the necessary models used in the tutorial
+# to download all the necessary models used in the tutorial
 
 # model downloader Python script
 modelDownloader=/opt/intel/openvino/deployment_tools/tools/model_downloader/downloader.py
@@ -8,7 +8,7 @@ modelDownloader=/opt/intel/openvino/deployment_tools/tools/model_downloader/down
 scriptDir=`cd $(dirname $BASH_SOURCE); pwd`
 mkdir $scriptDir/../../../tutorial_models
 mkdir $scriptDir/../../../tutorial_models/car_detection
-modelDir=`cd $scriptDir/../../../tutorial_models; pwd`
+modelDir=`cd $scriptDir/../../../tutorial_models/car_detection; pwd`
 
 # prefix to see output from this script 
 prefix="[get_models.sh]:"

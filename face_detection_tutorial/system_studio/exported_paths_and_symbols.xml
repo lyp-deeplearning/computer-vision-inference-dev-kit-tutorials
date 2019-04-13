@@ -2,27 +2,27 @@
 <cdtprojectproperties>
 <section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
 <language name="C++ Source File">
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include</includepath>
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common</includepath>
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension</includepath>
-<includepath>/opt/intel/computer_vision_sdk/opencv/include</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/include</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/samples/common</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/src/extension</includepath>
+<includepath>/opt/intel/openvino/opencv/include</includepath>
 
 </language>
 <language name="C Source File">
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include</includepath>
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples</includepath>
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension</includepath>
-<includepath>/opt/intel/computer_vision_sdk/opencv/include</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/include</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/samples/common</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/src/extension</includepath>
+<includepath>/opt/intel/openvino/opencv/include</includepath>
 
 </language>
 <language name="Object File">
 
 </language>
 <language name="Assembly Source File">
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include</includepath>
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples</includepath>
-<includepath>/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension</includepath>
-<includepath>/opt/intel/computer_vision_sdk/opencv/include</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/include</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/samples/common</includepath>
+<includepath>/opt/intel/openvino/deployment_tools/inference_engine/src/extension</includepath>
+<includepath>/opt/intel/openvino/opencv/include</includepath>
 
 </language>
 </section>
