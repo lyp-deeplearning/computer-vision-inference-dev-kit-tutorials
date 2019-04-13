@@ -249,7 +249,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials/car_detection_tutorial/
 3. First, we need to configure the build environment when using the Intel® Distribution of OpenVINO™ toolkit by running the "setupvars.sh" script.  In a terminal type:
 
 ```bash
-source  /opt/intel/computer_vision_sdk/bin/setupvars.sh
+source  /opt/intel/openvino/bin/setupvars.sh
 ```
 
 
@@ -328,7 +328,7 @@ The following covers how to build and run from within Intel® System Studio (ISS
    2. Command line: Configure the build environment when using the Intel® Distribution of OpenVINO™ toolkit by sourcing the "setupvars.sh" script.  Then start ISS using the supplied script that will setup environment variables and launch the ISS Eclipse IDE.
 
    ```bash
-   source /opt/intel/computer_vision_sdk/bin/setupvars.sh
+   source /opt/intel/openvino/bin/setupvars.sh
    /opt/intel/system_studio_2019/iss_ide_eclipse-launcher.sh
    ```
 

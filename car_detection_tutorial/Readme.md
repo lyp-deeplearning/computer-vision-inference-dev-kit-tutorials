@@ -1,6 +1,6 @@
 # Car Detection Tutorial
 
-**Note**: This tutorial has been written using Intel® Distribution of OpenVINO™ toolkit version 2018 R5.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
+**Note**: This tutorial has been written using Intel® Distribution of OpenVINO™ toolkit version 2019 R1.0 and is for use with this version only.   Using this tutorial with any other version may not be correct.
 
 # Table of Contents
 
@@ -85,7 +85,7 @@ git clone https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-
 
 ```Bash
 cd computer-vision-inference-dev-kit-tutorials
-git checkout openvino_toolkit_r5_0
+git checkout openvino_toolkit_2019_r1_0
 ```
 
 
@@ -111,7 +111,7 @@ cd tutorials/computer-vision-inference-dev-kit-tutorials
 3. Download the subdirectory for just this tutorial from the repository:
 
 ```Bash
-svn export https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git/branches/openvino_toolkit_r5_0/car_detection_tutorial
+svn export https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials.git/branches/openvino_toolkit_2019_r1_0/car_detection_tutorial
 ```
 
 
@@ -252,7 +252,7 @@ and the Inference Engine API documentation located at: /opt/intel/computer_visio
 Whenever running the Intel® Distribution of OpenVINO™ toolkit tools, compiling, or running the user application, always remember to source the script:
 
 ```Bash
-source /opt/intel/computer_vision_sdk/bin/setupvars.sh
+source /opt/intel/openvino/bin/setupvars.sh
 ```
 
 
