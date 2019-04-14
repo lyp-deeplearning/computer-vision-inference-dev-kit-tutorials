@@ -994,15 +994,13 @@ The following covers how to build and run from within Intel® System Studio (ISS
 
    1. On the Include tab for Language "GNU C++", the list of “Include directories” needs to have:
 
-      1. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include
+      1. /opt/intel/openvino/deployment_tools/inference_engine/include
 
-      2. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common
+      2. /opt/intel/openvino/deployment_tools/inference_engine/samples/common
 
-      3. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension
+      3. /opt/intel/openvino/deployment_tools/inference_engine/src/extension
 
-      4. /opt/intel/computer_vision_sdk/opencv/include
-
-      5. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples
+      4. /opt/intel/openvino/opencv/include
 
    2. On the Symbol tab for Language "GNU C++":
 

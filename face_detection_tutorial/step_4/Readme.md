@@ -16,19 +16,11 @@ In the image above, the three axes intersect in the center of the head.  The blu
 
 # Head Pose Estimation Model
 
-The Intel® Distribution of OpenVINO™ toolkit includes a pre-compiled model for estimating head pose from an image of a face.  You can find it at:
+The Intel® Distribution of OpenVINO™ toolkit provides pre-trained models in the Open Model Zoo that have been trained to estimate head position from an image of a face.  The model used by this tutorial is the "[head-pose-estimation-adas-0001](https://github.com/opencv/open_model_zoo/blob/master/intel_models/head-pose-estimation-adas-0001/description/head-pose-estimation-adas-0001.md)" which was downloaded and compiled for FP16 and FP32 during setup using the model downloader script.  The available model locations are:
 
-* /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001
-
-   * Available model locations:
-
-      * FP16: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001/FP16/head-pose-estimation-adas-0001.xml
-
-      * FP32: /opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001/FP32/head-pose-estimation-adas-0001.xml
-
-   * More details can be found at:
-
-      * file:///opt/intel/computer_vision_sdk/deployment_tools/intel_models/head-pose-estimation-adas-0001/description/head-pose-estimation-adas-0001.html
+* FP16: tutorials/tutorial_models/face_detection/Transportation/object_attributes/headpose/vanilla_cnn/dldt/head-pose-estimation-adas-0001-fp16.xml
+* FP32: tutorials/tutorial_models/face_detection/Transportation/object_attributes/headpose/vanilla_cnn/dldt/head-pose-estimation-adas-0001.xml
+* More details on the model can be found at: https://github.com/opencv/open_model_zoo/blob/master/intel_models/head-pose-estimation-adas-0001/description/head-pose-estimation-adas-0001.md
 
 The results it is capable of producing are shown in the summary below (for more details, see the descriptions HTML pages for each model): 
 
@@ -50,6 +42,7 @@ Roll: 4.6 ± 5.6</td>
   </tr>
 </table>
 
+Note that the model is already compiled for both FP16 and FP32.  You will need to make sure you choose the correct precision for the device you want to run it on.
 
 # Adding the Head Pose Estimation Model
 
@@ -637,15 +630,13 @@ The following covers how to build and run from within Intel® System Studio (ISS
 
    1. On the Include tab for Language "GNU C++", the list of “Include directories” needs to have:
 
-      1. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include
+      1. /opt/intel/openvino/deployment_tools/inference_engine/include
 
-      2. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common
+      2. /opt/intel/openvino/deployment_tools/inference_engine/samples/common
 
-      3. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension
+      3. /opt/intel/openvino/deployment_tools/inference_engine/src/extension
 
-      4. /opt/intel/computer_vision_sdk/opencv/include
-
-      5. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples
+      4. /opt/intel/openvino/opencv/include
 
    2. On the Symbol tab for Language "GNU C++":
 

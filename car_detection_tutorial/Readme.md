@@ -243,9 +243,7 @@ Using the Inference Engine API follows the basic steps briefly described below. 
 
 In tutorial Steps 2 and 3 we will walkthrough the code that specifically integrates each of the models used in the application.  
 
-More details on the Inference Engine can be found in the "Integrating Inference Engine into Your Application" section of the Inference Engine Development Guide [https://software.intel.com/inference-engine-devguide](https://software.intel.com/inference-engine-devguide)
-
-and the Inference Engine API documentation located at: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
+More details on the Inference Engine can be found in the "Integrate the Inference Engine New Request API with Your Application" section of the [Inference Engine Development Guide](https://docs.openvinotoolkit.org/latest/_docs_IE_DG_Deep_Learning_Inference_Engine_DevGuide.html).
 
 #### Setting Up Command Line to Use the Intel® Distribution of OpenVINO™ Toolkit Executables and Libraries
 
@@ -302,7 +300,7 @@ Batch size refers to the number of input data to be inferred during a single inf
 
    * Before starting inference using the request object, set the actual batch size of inputs using InferenceEngine::InferRequest::SetBatch() function.
 
-   * Note: Dynamic Batching may not work on all models and devices.   For example, the vehicle detection models referenced by this tutorials cannot use Dynamic Batching.  Presently only CPU and GPU devices are supported when using models with supported layer types.  For more details, please see: /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/DynamicBatching.html
+   * Note: Dynamic Batching may not work on all models and devices.   For example, the vehicle detection models referenced by this tutorials cannot use Dynamic Batching.  Presently only CPU and GPU devices are supported when using models with supported layer types.  For more details, please see [Using Dynamic Batching Feature](https://docs.openvinotoolkit.org/latest/_docs_IE_DG_DynamicBatching.html)
 
 ### How Does Batch Size Affect Performance and Latency?
 
@@ -368,9 +366,9 @@ When using the Inference Engine’s image pre-processing API, resizing and cropp
 
 For more information, please see:
 
-* /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/IntegrateIEInAppNewAPI.html
+* [Integrate the Inference Engine New Request API with Your Application](https://docs.openvinotoolkit.org/latest/_docs_IE_DG_Deep_Learning_Inference_Engine_DevGuide.html)
 
-* /opt/intel/computer_vision_sdk/deployment_tools/documentation/docs/KnownIssuesLimitations.html
+* [Known Issues and Limitations](https://docs.openvinotoolkit.org/latest/_docs_IE_DG_Known_Issues_Limitations.html)
 
 ### When to use OpenCV or the Inference Engine’s Image Pre-processing API
 
@@ -498,7 +496,7 @@ Congratulations! you have completed the Car Detection Tutorial.  After going thr
 
 Intel® Distribution of OpenVINO™ toolkit main page: [https://software.intel.com/openvino-toolkit](https://software.intel.com/openvino-toolkit)
 
-Intel® Distribution of OpenVINO™ toolkit documentation page: [https://software.intel.com/openvino-toolkit/documentation](https://software.intel.com/openvino-toolkit/documentation)
+Intel® Distribution of OpenVINO™ toolkit documentation page: [https://docs.openvinotoolkit.org/](https://docs.openvinotoolkit.org/)
 
 Intel® Deep Learning Deployment Toolkit (Intel® DL Deployment Toolkit): [https://software.intel.com/openvino-toolkit/deep-learning-cv](https://software.intel.com/openvino-toolkit/deep-learning-cv)
 

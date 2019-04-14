@@ -19,7 +19,7 @@ Every application needs some way of getting data in and data out.  Let us now ta
 To make it easier to set everything from the input video file to which model and device is to be used, command line arguments to the application will be used.  To parse the command line arguments, the application will use the "gflags" helper library that comes with the Intel® Distribution of OpenVINO™ toolkit samples.  Here we will briefly go over the primary functions that are used.  For reference, the full source code for the gflags library may be found in the Intel® Distribution of OpenVINO™ toolkit samples directory: 
 
 ```bash
-/opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/thirdparty/gflags
+/opt/intel/openvino/deployment_tools/inference_engine/samples/thirdparty/gflags
 ```
 
 
@@ -405,15 +405,13 @@ The following covers how to build and run from within Intel® System Studio (ISS
 
    1. On the Include tab for Language "GNU C++", the list of “Include directories” needs to have:
 
-      1. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/include
+      1. /opt/intel/openvino/deployment_tools/inference_engine/include
 
-      2. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common
+      2. /opt/intel/openvino/deployment_tools/inference_engine/samples/common
 
-      3. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/extension
+      3. /opt/intel/openvino/deployment_tools/inference_engine/src/extension
 
-      4. /opt/intel/computer_vision_sdk/opencv/include
-
-      5. /opt/intel/computer_vision_sdk/deployment_tools/inference_engine/samples/common/samples
+      4. /opt/intel/openvino/opencv/include
 
    2. On the Symbol tab for Language "GNU C++":
 
