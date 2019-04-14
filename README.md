@@ -8,7 +8,7 @@
 - #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_2019_r1_0/face_detection_tutorial/Readme.md)
 - #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_2019_r1_0/car_detection_tutorial/Readme.md)
 ### Arduino Create:
-- ##### **As of 4/14/19, Arduino Create is running R4.0**
+- ##### **As of 4/14/19, Arduino Create is running 2018 R4.0**
 
 ## Version 2018 R5.0
 ### Command line and Intel® System Studio:
@@ -16,7 +16,7 @@
 - #### [Face Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r5_0/face_detection_tutorial/Readme.md)
 - #### [Car Detection Tutorial](https://github.com/intel-iot-devkit/computer-vision-inference-dev-kit-tutorials/tree/openvino_toolkit_r5_0/car_detection_tutorial/Readme.md)
 ### Arduino Create:
-- ##### **As of 4/14/19, Arduino Create is running R4.0**
+- ##### **As of 4/14/19, Arduino Create is running 2018 R4.0**
 
 ## Version 2018 R4.0
 ### Command line and Intel® System Studio:
